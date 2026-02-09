@@ -18,6 +18,10 @@ const Hero = () => {
               <p className=' font-semibold text-[29px]'>10000+</p>
               <p>Verified Listings</p>
             </div>
+             <div className=''>
+              <p className=' font-semibold text-[29px]'>10000+</p>
+              <p>Verified Listings</p>
+            </div>
           </div>
     </div>
   )
