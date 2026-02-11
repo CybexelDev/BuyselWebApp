@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { } from "lucide-react";
-import apartments from '../../assets/images/icons/apartments.svg'
-import location from '../../assets/images/icons/location (1).svg'
-
-
+import apartments from "../../assets/images/icons/apartments.svg";
+import location from "../../assets/images/icons/location (1).svg";
 
 function PropertySearch() {
   const [activeTab, setActiveTab] = useState("Rent");
@@ -11,69 +8,90 @@ function PropertySearch() {
   const tabs = ["Rent", "Buy", "Sell", "Agent", "Lease"];
 
   return (
-    <div className="relative w-full flex justify-center mb-16">
+    <div className="relative w-full flex justify-center px-6 sm:px-2 mb-16">
 
-      <div className="w-[1043px]  h-[154px] bg-[#f2f2f2] rounded-[39px] px-8  shadow-sm instrument-sans">
-        <div className="flex flex-row items-center justify-between gap-[31px] mb-5 pt-[25px]">
-          <h2 className=" text-[20px] font-[600] text-[#453131]">
+      <div className="w-full max-w-[1043px] bg-[#f2f2f2] rounded-[39px] px-4 sm:px-6 lg:px-6 shadow-sm instrument-sans">
+
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 mb-5 pt-6">
+
+          <h2 className="text-[18px] sm:text-[20px] font-[600] text-[#453131] text-center lg:text-left">
             Search for available Properties
           </h2>
 
-          <div className="flex items-center host-grotesk justify-center  gap-[31px] px-10   w-[352px] h-[30px]">
+          {/* Tabs */}
+          <div className="flex  gap-2 sm:gap-1 host-grotesk mb-0 md:mb-2">
+
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={` flex items-center w-[73px] h-[30px]   justify-center ${
+                className={`flex items-center justify-center w-[60px] sm:w-[73px] h-[30px] rounded-[9px] text-sm sm:text-[17px] ${
                   activeTab === tab
-                    ? "bg-black text-white font-[600] px-[19px]  rounded-[9px] text-[17.55px] "
-                    : "text-[#938181]  font-[500] "
+                    ? "bg-black text-white font-[600]"
+                    : "text-[#938181] font-[500]"
                 }`}
               >
                 {tab}
               </button>
             ))}
+
           </div>
         </div>
 
         {/* Search Section */}
-        <div className="flex flex-row gap-3">
+     <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[269px_269px_269px_152px] gap-4 pb-6 justify-center">
+  {/* Location */}
+  <div className="poppins flex items-center w-auto lg:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3">
+    <input
+      type="text"
+      placeholder="Location"
+      className="bg-transparent w-full outline-none text-[12px] text-gray-700 placeholder-[#888888ED]"
+    />
+    <img src={location} alt="location" className="w-5" />
+  </div>
 
-          <div className="poppins flex items-center h-[52px] w-[269px] bg-[#dfd7d7] rounded-[17px] px-2">
-            <input
-              type="text"
-              placeholder="Location"
-              className="bg-transparent w-full outline-none text-[12px] font-[400] text-gray-700 placeholder-[#888888ED]"
-            />
-            <img src={location} alt="location" />
-          </div>
+  {/* Property */}
+  <div className="poppins flex items-center w-auto lg:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3">
+    <input
+      type="text"
+      placeholder="Property Type"
+      className="bg-transparent w-full outline-none text-[12px] text-gray-700 placeholder-[#888888ED]"
+    />
+    <img src={apartments} alt="apartment" className="w-5" />
+  </div>
 
-          <div className="poppins flex items-center h-[52px] w-[269px] bg-[#dfd7d7] rounded-[17px] px-2">
-            <input
-              type="text"
-              placeholder="Property Type"
-              className="bg-transparent w-full outline-none text-[12px] font-[400] text-gray-700 placeholder-[#888888ED]"
-            />
-            <img src={apartments} alt="apartment" />
-          </div>
+  {/* Budget */}
+  <div className="poppins flex items-center w-auto lg:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3">
+    <input
+      type="text"
+      placeholder="Budget"
+      className="bg-transparent w-full outline-none text-[12px] text-gray-700 placeholder-[#888888ED]"
+    />
 
-          <div className="poppins flex items-center h-[52px] w-[269px] bg-[#dfd7d7] rounded-[17px] px-2">
-            <input
-              type="text"
-              placeholder="Budget"
-              className="bg-transparent w-full outline-none text-[12px] font-[400] text-gray-700 placeholder-[#888888ED]"
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="#000" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2M8 8a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2h-1.535q.27.466.409 1H15a1 1 0 1 1 0 2h-1.126a4.01 4.01 0 0 1-2.302 2.68L13.6 16.2a1 1 0 0 1-1.2 1.6l-3.992-2.994A.99.99 0 0 1 8 14c0-.257.103-.504.27-.683A1 1 0 0 1 9 13h1a2 2 0 0 0 1.732-1H9a1 1 0 1 1 0-2h2.732A2 2 0 0 0 10 9H9a1 1 0 0 1-1-1"/></g></svg>
-          </div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="25"
+      viewBox="0 0 256 256"
+    >
+      <path
+        fill="#000"
+        d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24m38.32 72H176a8 8 0 0 1 0 16h-8.19A44.06 44.06 0 0 1 124 152h-12.68l53.59 41.69a8 8 0 1 1-9.82 12.62l-72-56A8 8 0 0 1 88 136h36a28 28 0 0 0 27.71-24H88a8 8 0 0 1 0-16h61.29A28 28 0 0 0 124 80H88a8 8 0 0 1 0-16h88a8 8 0 0 1 0 16h-18.08a43.9 43.9 0 0 1 8.4 16"
+      />
+    </svg>
+  </div>
 
-          <button className="w-[152px] h-[52px]  bg-[#6ABD11ED]  text-white font-semibold px-8 py-3 rounded-[17px]">
-            <span className=" font-[700] text-[15px] ">Search Now</span>
-          </button>
-        </div>
+  <button className="instrument-sans h-[52px] w-[152px] bg-[#6ABD11ED] text-white font-[600] rounded-[17px] text-[15px] mx-auto sm:mx-0">
+    Search Now
+  </button>
+</div>
+
       </div>
 
+      {/* Social Icons */}
+   <div className="absolute -top-[55px] sm:-top-[35px] right-10 sm:right-18 flex gap-2">
 
-        <div className="absolute left-[1330px] -top-[13px] flex  w-[85px] h-[26px] gap-[6px] ">
   <a href="https://facebook.com" target="_blank">
     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26 " viewBox="0 0 20 20"><path fill="#000" d="M10 .4C4.698.4.4 4.698.4 10s4.298 9.6 9.6 9.6s9.6-4.298 9.6-9.6S15.302.4 10 .4m2.274 6.634h-1.443c-.171 0-.361.225-.361.524V8.6h1.805l-.273 1.486H10.47v4.461H8.767v-4.461H7.222V8.6h1.545v-.874c0-1.254.87-2.273 2.064-2.273h1.443z"/></svg>
   </a>
@@ -85,12 +103,11 @@ function PropertySearch() {
     <a href="https://instagram.com" target="_blank">
      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><mask id="SVGlgxcXbAS" fill="#fff"><path fill-rule="evenodd" d="M2.184 21.331a.4.4 0 0 0 .487.494l4.607-1.204a10 10 0 0 0 4.76 1.207h.004c5.486 0 9.958-4.446 9.958-9.912a9.83 9.83 0 0 0-2.914-7.011A9.92 9.92 0 0 0 12.042 2c-5.486 0-9.958 4.446-9.958 9.911c0 1.739.458 3.447 1.33 4.954zM8.886 7.17c.183.005.386.015.579.443c.128.285.343.81.519 1.238c.137.333.249.607.277.663c.065.128.104.275.02.448l-.028.058c-.068.14-.116.24-.23.37l-.143.17c-.085.104-.17.206-.242.278c-.129.128-.262.266-.114.522s.668 1.098 1.435 1.777a6.6 6.6 0 0 0 1.903 1.2q.105.045.17.076c.257.128.41.108.558-.064c.149-.173.643-.749.817-1.005c.168-.256.34-.216.578-.128c.238.089 1.504.71 1.761.837l.143.07c.179.085.3.144.352.23c.064.109.064.62-.148 1.222c-.218.6-1.267 1.176-1.742 1.22l-.135.016c-.436.052-.988.12-2.956-.655c-2.426-.954-4.027-3.32-4.35-3.799l-.053-.076l-.005-.008c-.148-.197-1.049-1.402-1.049-2.646c0-1.19.587-1.81.854-2.092l.047-.05a.95.95 0 0 1 .687-.32c.173 0 .347 0 .495.005" clip-rule="evenodd"/></mask><path fill="#000" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-width="2.9" d="M2.184 21.331a.4.4 0 0 0 .487.494l4.607-1.204a10 10 0 0 0 4.76 1.207h.004c5.486 0 9.958-4.446 9.958-9.912a9.83 9.83 0 0 0-2.914-7.011A9.92 9.92 0 0 0 12.042 2c-5.486 0-9.958 4.446-9.958 9.911c0 1.739.458 3.447 1.33 4.954zM8.886 7.17c.183.005.386.015.579.443c.128.285.343.81.519 1.238c.137.333.249.607.277.663c.065.128.104.275.02.448l-.028.058c-.068.14-.116.24-.23.37l-.143.17c-.085.104-.17.206-.242.278c-.129.128-.262.266-.114.522s.668 1.098 1.435 1.777a6.6 6.6 0 0 0 1.903 1.2q.105.045.17.076c.257.128.41.108.558-.064c.149-.173.643-.749.817-1.005c.168-.256.34-.216.578-.128c.238.089 1.504.71 1.761.837l.143.07c.179.085.3.144.352.23c.064.109.064.62-.148 1.222c-.218.6-1.267 1.176-1.742 1.22l-.135.016c-.436.052-.988.12-2.956-.655c-2.426-.954-4.027-3.32-4.35-3.799l-.053-.076l-.005-.008c-.148-.197-1.049-1.402-1.049-2.646c0-1.19.587-1.81.854-2.092l.047-.05a.95.95 0 0 1 .687-.32c.173 0 .347 0 .495.005Z" clip-rule="evenodd" mask="url(#SVGlgxcXbAS)"/></svg>
   </a>
-</div>
 
-
-
+      </div>
 
     </div>
   );
 }
-export default PropertySearch
+
+export default PropertySearch;

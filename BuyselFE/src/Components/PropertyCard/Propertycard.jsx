@@ -10,7 +10,7 @@ import { useState } from "react";
 
 
 
-function Propertycard({ property }) {
+function  Propertycard({ property }) {
 
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,13 +31,13 @@ function Propertycard({ property }) {
 
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden w-[311px] h-[375px]">
+<div className="bg-white rounded-2xl overflow-hidden w-full sm:w-[305px] h-[375px]">
 
       <div className="relative flex justify-center pt-2">
         <img
           src={images[currentIndex]}
           alt={property.title}
-          className="w-[292px] h-[182px] rounded-[22px] object-cover "
+          className="w-[290px] h-[182px] rounded-[22px] object-cover "
         />
 
         <div className="absolute top-4 right-6 flex gap-1 ">
