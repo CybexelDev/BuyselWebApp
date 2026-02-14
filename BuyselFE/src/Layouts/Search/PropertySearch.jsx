@@ -8,9 +8,9 @@ function PropertySearch() {
   const tabs = ["Rent", "Buy", "Sell", "Agent", "Lease"];
 
   return (
-    <div className="relative w-full flex justify-center px-6 sm:px-2 mb-16">
+    <div className="relative w-full flex justify-center px-6 sm:px-2 md:px-4  mb-16">
 
-      <div className="w-full max-w-[1043px] bg-[#f2f2f2] rounded-[39px] px-4 sm:px-6 lg:px-6 shadow-sm instrument-sans">
+      <div className="w-full max-w-[1043px] bg-[#f2f2f2] rounded-[39px] px-4 sm:px-6 lg:px- shadow-sm instrument-sans">
 
         {/* Header */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-4 mb-5 pt-6">
@@ -26,7 +26,7 @@ function PropertySearch() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`flex items-center justify-center w-[60px] sm:w-[73px] h-[30px] rounded-[9px] text-sm sm:text-[17px] ${
+                className={`flex items-center justify-center w-[50px] sm:w-[73px] h-[30px] rounded-[9px] text-sm sm:text-[17px] ${
                   activeTab === tab
                     ? "bg-black text-white font-[600]"
                     : "text-[#938181] font-[500]"
@@ -42,7 +42,7 @@ function PropertySearch() {
         {/* Search Section */}
      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[269px_269px_269px_152px] gap-4 pb-6 justify-center">
   {/* Location */}
-  <div className="poppins flex items-center w-auto lg:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3">
+  <div className="poppins flex items-center w-auto lg:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3 ml-2">
     <input
       type="text"
       placeholder="Location"
@@ -62,7 +62,7 @@ function PropertySearch() {
   </div>
 
   {/* Budget */}
-  <div className="poppins flex items-center w-auto lg:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3">
+  <div className="poppins flex items-center w-auto lg:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3 ">
     <input
       type="text"
       placeholder="Budget"
@@ -81,10 +81,12 @@ function PropertySearch() {
       />
     </svg>
   </div>
+  <div className="flex justify-center">
 
-  <button className="instrument-sans h-[52px] w-[152px] bg-[#6ABD11ED] text-white font-[600] rounded-[17px] text-[15px] mx-auto sm:mx-0">
+  <button className="instrument-sans w-[152px] sm:w-[220px] h-[52px] md:w-[220px] lg:w-[152px] bg-[#6ABD11ED] text-white font-[600] rounded-[17px] text-[15px] mx-auto lg:mr-[10px]">
     Search Now
   </button>
+  </div>
 </div>
 
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./featured.css";
 import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
 import Featuredcard from "../../Components/PropertyCard/Propertycard";
@@ -6,9 +6,10 @@ import axios from "axios";
 
 const Featured = () => {
   const [featured, setFeatured] = useState([]);
-  const [startIndex, setStartIndex] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(0); // Responsive
 
+  const sliderRef = useRef(null);
+
+  // Fetch Data
   useEffect(() => {
     axios
       .get("http://localhost:5000/properties")
@@ -16,53 +17,29 @@ const Featured = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
-  const handleResize = () => {
-    if (window.innerWidth < 640) {
-      setItemsPerPage(1);
-    } else {
-      setItemsPerPage(4);
+  // Scroll Right
+  const scrollNext = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({
+        left: 330, // Card width + gap
+        behavior: "smooth",
+      });
     }
   };
 
-  handleResize();
-}, []);
-
-
-
-let startX = 0;
-const handleTouchStart = (e) => {
-  if (window.innerWidth >= 640) return;
-  startX = e.touches[0].clientX;
-};
-
-const handleTouchEnd = (e) => {
-  if (window.innerWidth >= 640) return;
-  const endX = e.changedTouches[0].clientX;
-  const distance = startX - endX;
-
-  if (distance > 50) handleNext();      // swipe left → next
-  else if (distance < -50) handlePrev(); // swipe right → prev
-};
-
-
-
-
-  const handleNext = () => {
-    if (startIndex + itemsPerPage < featured.length) {
-      setStartIndex((prev) => prev + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (startIndex > 0) {
-      setStartIndex((prev) => prev - 1);
+  // Scroll Left
+  const scrollPrev = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({
+        left: -330,
+        behavior: "smooth",
+      });
     }
   };
 
   return (
-    <div className="pt-5 px-6 sm:px-14 relative">
-      <div className="featured-cta-container px-4 sm:px-16">
+    <div className="pt-5 relative">
+      <div className="featured-cta-container px-4 sm:px-8 md:px-12 lg:px-16">
 
         {/* Heading */}
         <div className="featured-cta-logo-container">
@@ -76,57 +53,53 @@ const handleTouchEnd = (e) => {
           </div>
         </div>
 
-{/* slider */}
-<div className="overflow-hidden mt-8 w-full">
-  <div
-    className="flex transition-transform duration-500 ease-in-out"
-    onTouchStart={handleTouchStart}
-    onTouchEnd={handleTouchEnd}
-    style={{
-       transform: `translateX(-${startIndex * (100 / itemsPerPage)}%)`,
-    }}
-    
-  >
-    {featured.map((property) => (
-      <div
-        key={property.id}
-        className="w-full sm:w-1/4 flex-shrink-0 px-2"
-      >
-        <Featuredcard property={property} />
-      </div>
-    ))}
-  </div>
-</div>
-
-
+        {/* Slider */}
+        <div className="overflow-hidden mt-8 w-full">
+          <div
+            ref={sliderRef}
+            className="flex overflow-x-auto gap-5 scrollbar-hide scroll-smooth snap-x snap-mandatory"
+          >
+            {featured.map((property) => (
+              <div
+                key={property.id}
+                className="flex-shrink-0 max-w-[311px] snap-start"
+              >
+                <Featuredcard property={property} />
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Bottom Section */}
         <div className="flex items-center justify-between w-full px-4 sm:px-0 sm:pl-4 pt-4 sm:pt-6">
-          <button className="instrument-sans flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black">
+
+          {/* Explore Button */}
+          <button className="instrument-sans flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black pl-1">
             Explore More
             <span className="flex items-center justify-center w-[22px] md:w-[25px] h-[22px] md:h-[25px] rounded-full bg-black text-white">
-             <ArrowRight className="w-[13px] h-[13px] sm:w-4 sm:h-4" />
+              <ArrowRight className="w-[13px] h-[13px] sm:w-4 sm:h-4" />
             </span>
           </button>
 
+          {/* Slider Buttons */}
           <div className="flex gap-3">
 
             <button
-              onClick={handlePrev}
-              disabled={startIndex === 0}
-              className="w-[26px] sm:w-[37px]  h-[26px] sm:h-[37px] flex items-center justify-center rounded-full bg-black text-white
+              onClick={scrollPrev}
+              className="w-[26px] sm:w-[37px] h-[26px] sm:h-[37px]
+              flex items-center justify-center rounded-full bg-black text-white
               shadow-[0_3px_5px_rgba(0,0,0,0.45)]"
             >
-              <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6"/>
+              <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
             </button>
 
             <button
-              onClick={handleNext}
-              disabled={startIndex + itemsPerPage >= featured.length}
-              className="w-[26px] sm:w-[37px]  h-[26px] sm:h-[37px] flex items-center justify-center rounded-full bg-black text-white
-              shadow-[0_3px_5px_rgba(0,0,0,0.45)]"
+              onClick={scrollNext}
+              className="w-[26px] sm:w-[37px] h-[26px] sm:h-[37px]
+              flex items-center justify-center rounded-full bg-black text-white
+              shadow-[0_2px_4px_0_#00000040]"
             >
-              <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6"/>
+              <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
             </button>
 
           </div>

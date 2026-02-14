@@ -31,13 +31,13 @@ function  Propertycard({ property }) {
 
 
   return (
-<div className="bg-white rounded-2xl overflow-hidden w-full sm:w-[305px] h-[375px]">
+<div className="bg-white rounded-2xl overflow-hidden  w-[313px] h-[375px]">
 
       <div className="relative flex justify-center pt-2">
         <img
           src={images[currentIndex]}
           alt={property.title}
-          className="w-[290px] h-[182px] rounded-[22px] object-cover "
+          className="w-[296px] h-[182px] rounded-[22px] object-cover "
         />
 
         <div className="absolute top-4 right-6 flex gap-1 ">
@@ -60,15 +60,17 @@ function  Propertycard({ property }) {
 
       
 
-      <div className="px-4 pt-2 ">
+      <div className="px-2 pt-2 ">
 
         <div className="flex flex-row space-x-3 justify-between items-center">
-  <h3 className="instrument-sans font-[600] text-[13px]  leading-[100%] text-black">
-    {property.title}
-    
-  </h3>
+  <h3 className="instrument-sans font-[600] text-[13px] leading-[100%] text-black">
+  {property.title.length > 18
+    ? property.title.slice(0, 18) + "..."
+    : property.title}
+</h3>
 
- <button className="bg-[#6ABD117A] p-2 rounded-full hover:bg-[#6ABD11AA]">
+
+ <button className="bg-[#b8e08d] p-2 rounded-full ">
  <img src={icon} alt="icon" className="h-[12px] w-[12px]" />
 </button>
 
@@ -122,8 +124,8 @@ function  Propertycard({ property }) {
         href={`tel:${property.contact}`}
 className="flex items-center justify-center gap-2 flex-1 rounded-xl shadow-md shadow-gray-300/100"
       >
-<svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 24 24"><path fill="#000" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.98.98 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02c-.37-1.11-.56-2.3-.56-3.53c0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99"/></svg>        
-<span className="instrument-sans font-[700] text-[14px]">Call</span>
+<svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 24 24"><path fill="#000" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.98.98 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02c-.37-1.11-.56-2.3-.56-3.53c0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99"/></svg>
+<span className="instrument-sans font-[700] text-[14px] -ml-[5px]">Call</span>
       </a>
     </div>
 
