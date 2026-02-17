@@ -1,7 +1,8 @@
 import React from 'react'
-import Hero from '../../Layouts/Hero/Hero'
-import HomePremiumAppartment from '../../Layouts/HomePremiumAppartment/HomePremiumAppartment'
-import Ad from '../../Layouts/Ad/Ad'
+import Hero from '../../Layouts/Home/Hero/Hero'
+import HomePremiumAppartment from '../../Layouts/Home/HomePremiumAppartment/HomePremiumAppartment'
+import Ad from '../../Layouts/Home/Ad/Ad'
+import AddPropertyAndAgent from '../../Layouts/Home/AddProperyAndAgent/AddPropertyAndAgent'
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
     <Hero />
     <HomePremiumAppartment />
     <Ad />
+    <AddPropertyAndAgent />
     </>
   )
 }
