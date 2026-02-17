@@ -18,6 +18,7 @@ const Footer = () => {
           px-6 md:px-8 lg:px-10
           instrument-sans"
                 >
+                    {/* coloumn first */}
 <div className="col-span-2 md:col-span-1 text-center md:text-left flex flex-col items-center md:items-start">
                         <img
                             src={logo}
@@ -67,6 +68,7 @@ const Footer = () => {
                             </svg>
                         </div>
                     </div>
+                    {/* Column 2 - Pages */}
 
                     <div>
                         <h3 className="font-medium mb-3 md:mb-4 text-[16px] md:text-[17px] lg:text-[18px]">

@@ -1,5 +1,4 @@
 import React from 'react'
-// Keep your existing imports...
 import image1 from "../../../assets/images/discover/image1.png"
 import image2 from "../../../assets/images/discover/image2.png"
 import image3 from "../../../assets/images/discover/image3.png"
@@ -29,7 +28,7 @@ const properties = [
 ];
 
 function DiscoverLayout() {
-  // Reusable card component to avoid repetition
+  // card
   const PropertyCard = ({ item, isDesktop }) => (
    <div
   key={item.id}
