@@ -1,5 +1,5 @@
 import React from "react";
-import badge from '../../assets/images/icons/badge (2).svg'
+import badge from '../../../assets/images/icons/badge(2).svg'
 
 
 function Agentssection (){
@@ -7,7 +7,7 @@ function Agentssection (){
     {
       tag: "Agents",
       title: "High-Visibility Property Agent",
-      desc: "Verified local agents for basic property\nneeds.",
+      desc: "Verified local agents for basic property needs.",
       features: [
         "Verified profiles",
         "Standard listings",
@@ -40,7 +40,7 @@ function Agentssection (){
   ];
 
   return (
-    <section className="w-full py-16">
+    <section className="w-full py-12">
       <div className=" mx-[30px] lg:mx-[74px]">
         <h2 className=" text-black host-grotesk font-[500] text-[24px] leading-[100%]">
           Meet Our Trusted Agents
@@ -53,7 +53,7 @@ function Agentssection (){
               className="bg-white relative rounded-[30px] overflow-hidden p-[22px]
              w-full lg:w-1/3
              h-[350px]
-             shadow-[0px_4px_17.7px_0px_#4B3A3A40]"
+             shadow-[0px_4px_17.7px_0px_#4B3A3A40] flex flex-col "
 
             >
               <span className="inline-flex absolute  top-[16px] -left-[6px] items-center h-[35px]  gap-[5px] bg-[#1C1C1CED] text-white text-sm  px-[16px] rounded-[10px] mb-5">
@@ -61,7 +61,7 @@ function Agentssection (){
                 {item.tag}
               </span>
 
-              <h3 className="instrument-sans text-[18px] pt-[60px] font-[600] leading-[100%] mb-[14px] text-black
+              <h3 className="instrument-sans text-[18px] pt-[60px] font-[600] leading-[100%] pb-[14px] text-black
                  truncate whitespace-nowrap overflow-hidden"
                >
                 {item.title}
@@ -101,8 +101,9 @@ function Agentssection (){
 
 
              <button className=" inline-flex items-center justify-center px-[20px] h-[45px]
-          bg-[#383434] text-[#F0F0F0] mb-[20px] sm:mb-[37px]
-               rounded-[12px] gap-[10px]">
+          bg-[#383434] text-[#F0F0F0] mb-[20px] sm:mb-[20px]
+               rounded-[12px] gap-[10px] mt-auto
+self-start">
                 {item.btn}
               </button>
             </div>

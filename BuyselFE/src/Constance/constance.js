@@ -1,5 +1,10 @@
-{
-  "properties": [
+import user1 from '../assets/images/Buyselbehind/user1.png'
+import user2 from '../assets/images/Buyselbehind/user2.png'
+import user3 from '../assets/images/Buyselbehind/user3.png'
+
+
+
+export const properties= [
     {
       "id": 1,
       "title": "Luxury Sea View Villa",
@@ -609,4 +614,76 @@
       ]
     }
   ]
-}
+
+
+
+
+export const HomeAboutimages = [
+  {
+    id: 1,
+    image: user1,
+    alt: "Director",
+  },
+  {
+    id: 2,
+    image: user2,
+    alt: "Director",
+  },
+  {
+    id: 3,
+    image: user3,
+    alt: "Director",
+  },
+];
+
+
+export const userReviews = [
+  {
+    title: "Finding a home was never this easy.",
+    text: "BuySel helped me find a verified apartment within my budget. The process was simple, transparent and fast.",
+    name: "Priya S Menon",
+    role: "Home Buyer – Coimbatore",
+    rating: 4,
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+  },
+  {
+    title: "Best for renting properties.",
+    text: "The filters and location search made it easy to find rental homes. Agents were responsive and professional.",
+    name: "Amit Kumar",
+    role: "Tenant – Bangalore",
+    rating: 5,
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+  },
+  {
+    title: "Great platform for owners.",
+    text: "Received genuine enquiries within days.",
+    name: "Ravi Sharma",
+    role: "Owner – Delhi",
+    rating: 4,
+    image: "https://randomuser.me/api/portraits/men/45.jpg",
+  },
+  {
+    title: "Smooth buying process.",
+    text: "Very transparent and reliable service.",
+    name: "Neha Patel",
+    role: "Buyer – Ahmedabad",
+    rating: 5,
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+  },
+  {
+    title: "Helpful agents.",
+    text: "Agents were professional and responsive.",
+    name: "Suresh Iyer",
+    role: "Tenant – Chennai",
+    rating: 4,
+    image: "https://randomuser.me/api/portraits/men/50.jpg",
+  },
+  {
+    title: "Easy property listing.",
+    text: "Listing was simple and I got leads quickly.",
+    name: "Anita Roy",
+    role: "Owner – Kolkata",
+    rating: 5,
+    image: "https://randomuser.me/api/portraits/women/52.jpg",
+  },
+];

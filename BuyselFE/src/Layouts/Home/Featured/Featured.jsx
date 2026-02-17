@@ -1,23 +1,21 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./featured.css";
 import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
-import Featuredcard from "../../Components/PropertyCard/Propertycard";
-import axios from "axios";
+import Featuredcard from "../../../Components/PropertyCard/Propertycard";
+
+import { properties } from "../../../Constance/constance";
 
 const Featured = () => {
   const [featured, setFeatured] = useState([]);
 
   const sliderRef = useRef(null);
 
-  // Fetch Data
+
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/properties")
-      .then((res) => setFeatured(res.data))
-      .catch((err) => console.log(err));
+     setFeatured(properties)
   }, []);
 
-  // Scroll Right
+
   const scrollNext = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({
@@ -27,7 +25,7 @@ const Featured = () => {
     }
   };
 
-  // Scroll Left
+
   const scrollPrev = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({
@@ -53,7 +51,7 @@ const Featured = () => {
           </div>
         </div>
 
-        {/* Slider */}
+
         <div className="overflow-hidden mt-8 w-full">
           <div
             ref={sliderRef}
@@ -70,10 +68,10 @@ const Featured = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
+
         <div className="flex items-center justify-between w-full px-4 sm:px-0 sm:pl-4 pt-4 sm:pt-6">
 
-          {/* Explore Button */}
+
           <button className="instrument-sans flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black pl-1">
             Explore More
             <span className="flex items-center justify-center w-[22px] md:w-[25px] h-[22px] md:h-[25px] rounded-full bg-black text-white">
@@ -81,12 +79,12 @@ const Featured = () => {
             </span>
           </button>
 
-          {/* Slider Buttons */}
+
           <div className="flex gap-3">
 
             <button
               onClick={scrollPrev}
-              className="w-[26px] sm:w-[37px] h-[26px] sm:h-[37px]
+            className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px]
               flex items-center justify-center rounded-full bg-black text-white
               shadow-[0_3px_5px_rgba(0,0,0,0.45)]"
             >
@@ -95,9 +93,9 @@ const Featured = () => {
 
             <button
               onClick={scrollNext}
-              className="w-[26px] sm:w-[37px] h-[26px] sm:h-[37px]
+            className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px]
               flex items-center justify-center rounded-full bg-black text-white
-              shadow-[0_2px_4px_0_#00000040]"
+              shadow-[0_3px_5px_rgba(0,0,0,0.45)]"
             >
               <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
             </button>
