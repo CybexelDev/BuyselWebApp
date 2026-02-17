@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import './hero.css'
-import logo from '../../assets/images/logo/logo.png'
-import line from '../../assets/images/header/line.png'
+import logo from '../../../assets/images/logo/logo.png'
+import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
 
-import img from "../../assets/images/carousel/he.png"
-import img2 from "../../assets/images/carousel/he.png"
-import img3 from "../../assets/images/carousel/he.png"
-import Navbar from "../../Components/Navbar/Navbar";
+import img from "../../../assets/images/carousel/he.png"
+import img2 from "../../../assets/images/carousel/he.png"
+import img3 from "../../../assets/images/carousel/he.png"
+import Navbar from "../../../Components/Navbar/Navbar";
 
 const Hero = () => {
   const images = [img, img2, img3];

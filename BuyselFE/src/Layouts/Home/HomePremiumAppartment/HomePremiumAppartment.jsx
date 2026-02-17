@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { premiumHomes } from "../../Constance/constance";
+import { premiumHomes } from "../../../Constance/constance";
 
 
 
