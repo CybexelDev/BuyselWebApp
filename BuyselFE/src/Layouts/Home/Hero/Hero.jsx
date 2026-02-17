@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import './hero.css'
 import logo from '../../../assets/images/logo/logo.png'
@@ -31,12 +32,14 @@ const Hero = () => {
   return (
     <div className='p-5 relative'>
        <Navbar />
+
       <div className="footer-cta-container">
         <div class="footer-cta-logo-container ">
           <div className='flex items-center justify-center'>
             <img src={logo} alt="logo" className="footer-cta-logo w-[100px] " />
           </div>
         </div>
+
 
         <div className="flex flex-row gap-1 mt-[-20px]">
 
@@ -110,6 +113,7 @@ const Hero = () => {
           <p className='instrument-sans text-[16px]'>Commission Free</p>
         </div>
       </div>
+
     </div>
   )
 }
