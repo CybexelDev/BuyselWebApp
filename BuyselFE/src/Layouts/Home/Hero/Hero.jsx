@@ -65,7 +65,7 @@ const Hero = () => {
                   <ArrowUpRight className="w-3 h-3 text-[#fff]" strokeWidth={2.5} />
                 </div>
               </div> */}
-              <ButtonHead />
+              <ButtonHead text="Get Started" />
             </div>
 
           </div>

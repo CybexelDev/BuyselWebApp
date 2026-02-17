@@ -12,7 +12,7 @@ function PropertySearch() {
   return (
     <div className="relative w-full flex justify-center px-6 sm:px-2 md:px-4  mb-16">
 
-      <div className="w-full max-w-[1043px] bg-[#f2f2f2] rounded-[39px] px-4 sm:px-6 lg:px- shadow-sm instrument-sans">
+      <div className="w-full max-w-[1043px] bg-[#f2f2f2] rounded-[39px] px-4 sm:px-6 lg:px-[28px] shadow-sm instrument-sans z-40">
 
         <div className="flex flex-col lg:flex-row items-center justify-between gap-4 mb-5 pt-6">
 
@@ -93,8 +93,6 @@ function PropertySearch() {
 
       {/* Social Icons */}
      <div className="absolute w-full flex items-center justify-between xl:flex-col xl:items-end lg:gap-[63px] xl:right-10 xl:-top-[10px] sm:-top-[50px] -top-[50px] px-10 xl:px-6">
-
-
   <div className="flex  gap-2">
   <a href="https://facebook.com" target="_blank">
     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26 " viewBox="0 0 20 20"><path fill="#000" d="M10 .4C4.698.4.4 4.698.4 10s4.298 9.6 9.6 9.6s9.6-4.298 9.6-9.6S15.302.4 10 .4m2.274 6.634h-1.443c-.171 0-.361.225-.361.524V8.6h1.805l-.273 1.486H10.47v4.461H8.767v-4.461H7.222V8.6h1.545v-.874c0-1.254.87-2.273 2.064-2.273h1.443z"/></svg>
