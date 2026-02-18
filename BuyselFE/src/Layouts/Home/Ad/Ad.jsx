@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from "react";
 import imgs from "../../../assets/images/ad/ad2.png"
+import './ad.css'
 
 export default function ad() {
 

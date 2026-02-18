@@ -32,14 +32,12 @@ const Hero = () => {
   return (
     <div className='p-5 relative'>
        <Navbar />
-
       <div className="footer-cta-container">
         <div class="footer-cta-logo-container ">
           <div className='flex items-center justify-center'>
             <img src={logo} alt="logo" className="footer-cta-logo w-[100px] " />
           </div>
         </div>
-
 
         <div className="flex flex-row gap-1 mt-[-20px]">
 
@@ -52,6 +50,7 @@ const Hero = () => {
             <div className="flex flex-col justify-center h-full gap-4"  >
               <p className="text-[35px] instrument-sans font-bold ">Start Your<br />Commission-<span className="text-[#b8b8b8]">Free</span><br />Journey Today!</p>
               <p className="text-[16px] text-[#000000] max-w-[400px] host-grotesk">Discover lands, homes, commercial buildings, hotels, malls and investment properties — all verified and listed by genuine owners and trusted agents.</p>
+
 
               {/* <div className="w-fit relative">
               <button className=" head-btn relative gap-3 bg-[#7AC943] hover:bg-[#6BB535] text-white px-5 py-2 w-fit rounded-[15px] transition-all duration-200 shadow-md hover:shadow-lg rounded-l-2xl"
@@ -113,7 +112,6 @@ const Hero = () => {
           <p className='instrument-sans text-[16px]'>Commission Free</p>
         </div>
       </div>
-
     </div>
   )
 }
