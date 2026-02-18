@@ -33,7 +33,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+        featured: true
+
     },
 
     {
@@ -89,7 +91,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
@@ -117,7 +121,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
       {
       "id": 5,
@@ -202,7 +208,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
@@ -230,9 +238,11 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },{
-      "id": 6,
+      "id": 9,
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
@@ -260,7 +270,7 @@ export const properties= [
     },
 
     {
-      "id": 7,
+      "id": 10,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -288,7 +298,7 @@ export const properties= [
     },
 
     {
-      "id": 8,
+      "id": 11,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -314,7 +324,7 @@ export const properties= [
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ]
     },{
-      "id": 6,
+      "id": 12,
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
@@ -338,11 +348,13 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
-      "id": 7,
+      "id": 13,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -370,7 +382,7 @@ export const properties= [
     },
 
     {
-      "id": 8,
+      "id": 14,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -396,7 +408,7 @@ export const properties= [
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ]
     },{
-      "id": 6,
+      "id": 15,
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
@@ -424,7 +436,7 @@ export const properties= [
     },
 
     {
-      "id": 7,
+      "id": 16,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -448,11 +460,13 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
-      "id": 8,
+      "id": 17,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -478,7 +492,7 @@ export const properties= [
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ]
     },  {
-      "id": 7,
+      "id": 18,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -502,11 +516,13 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
-      "id": 8,
+      "id": 19,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -530,9 +546,11 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },{
-      "id": 6,
+      "id": 20,
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
@@ -556,11 +574,13 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
-      "id": 7,
+      "id": 21,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -588,7 +608,7 @@ export const properties= [
     },
 
     {
-      "id": 8,
+      "id": 22,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -612,7 +632,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     }
   ]
 
