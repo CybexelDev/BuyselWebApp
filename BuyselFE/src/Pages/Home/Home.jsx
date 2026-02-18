@@ -16,12 +16,14 @@ const Home = () => {
     <Hero />
     <PropertySearch />
     <Featured />
+    <HomePremiumAppartment />
+     <Ad />
+    <AddPropertyAndAgent />
     <Agentssection />
     <About />
     <Review />
-    <HomePremiumAppartment />
-    <Ad />
-    <AddPropertyAndAgent />
+   
+   
     </>
   )
 }
