@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import StatsCards from './Card'
 import { HomeAboutimages } from '../../../Constance/constance'
+import ButtonHead from '../../../Components/ButtonHead/ButtonHead'
 
 function About() {
     const[about,setAbout]=useState([])
@@ -23,23 +24,13 @@ function About() {
 
         <div className='mt-[18px]'>
           <h2 className='mb-2 instrument-sans font-[700] text-[24px] leading-[100%] text-black'>About BuySel</h2>
-          <p className='host-grotesk font-[600] text-[16px] leading-[25px] text-[#5b5050] w-full md:max-w-[70%] lg:max-w-[50%]'>
+          <p className='mb-[17px] host-grotesk font-[600] text-[16px] leading-[25px] text-[#5b5050] w-full md:max-w-[70%] lg:max-w-[50%]'>
             BuySel is a modern real estate platform designed to make property searching simple and transparent.
              We offer verified listings, trusted agents and a smooth experience for buying, renting and leasing.
              With smart filters and clear details, BuySel helps you find the right property quickly and confidently.</p>
-
-             <button
-  className="
-    host-grotesk mt-[17px]
-    flex items-center justify-center
-    bg-[#F2F2F2] text-black font-[600]
-    text-[16px]
-     h-[41px] min-w-[178px] leading-[100%]
-    rounded-[8px]
-  "
->
-  Learn More
-</button>
+            
+            <ButtonHead color='bg-[#edebeb]' text="Learn More" textColor='black' hover="" />
+             
         </div>
 
         <StatsCards />

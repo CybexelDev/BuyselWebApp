@@ -1,12 +1,12 @@
 import { ArrowUpRight } from 'lucide-react';
 
-export default function ButtonHead() {
+export default function ButtonHead({color="bg-[#7AC943]", text,textColor="text-white",hover="bg-[#6BB535]"}) {
     return (
         <div className="w-fit relative">
-            <button className=" head-btn relative gap-3 bg-[#7AC943] hover:bg-[#6BB535] text-white px-5 py-2 w-fit rounded-[15px] transition-all duration-200 shadow-md hover:shadow-lg rounded-l-2xl"
+            <button className={`head-btn relative gap-3 ${color} hover:${hover} ${textColor} px-5 py-2 w-fit rounded-[15px] transition-all duration-200 shadow-md hover:shadow-lg rounded-l-2xl`}
             >
                 <span className="font-semibold ">
-                    Get Started &nbsp; &nbsp;&nbsp; &nbsp;
+                    {text} &nbsp; &nbsp;&nbsp; &nbsp;
                 </span>
 
             </button>
