@@ -11,7 +11,7 @@ import image9 from "../../../assets/images/discover/image9.png"
 import image10 from "../../../assets/images/discover/image10.png"
 import image11 from "../../../assets/images/discover/image11.png"
 import image12 from "../../../assets/images/discover/image12.png"
-
+// discover
 const properties = [
   { id: 1, image: image1, height: "h-[203px]", offset: "mt-30", text: ["Shops &", "Showrooms"] },
   { id: 2, image: image2, height: "h-[309px]", text: ["Independent", "Houses"] },
