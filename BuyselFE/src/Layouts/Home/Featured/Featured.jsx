@@ -61,7 +61,7 @@ const Featured = () => {
             {featured.map((property) => (
               <div
                 key={property.id}
-                className="flex-shrink-0 max-w-[311px] snap-start"
+                className="flex-shrink-0 w-[311px] snap-start"
               >
                 <Featuredcard property={property} />
               </div>
