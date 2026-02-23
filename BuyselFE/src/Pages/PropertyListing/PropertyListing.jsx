@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { properties } from '../../Constance/constance'
 import PropertiesSection from '../../Layouts/PropertyListing/Properties'
+import Header from '../../Layouts/PropertyListing/Header/Header'
+import MapSection from '../../Layouts/PropertyDetail/MapSection/MapSection'
 
 
 function PropertListing() {
@@ -9,12 +11,14 @@ function PropertListing() {
     useEffect(()=>{
          setData(properties)
          console.log(data)           
-    },[])
+     },[])
+         
+   
   return (
     <>
-    <PropertiesSection propertiesData={data} />
+     <Header/>
+      <PropertiesSection propertiesData={data} />
     </>
-
   )
 }
 
