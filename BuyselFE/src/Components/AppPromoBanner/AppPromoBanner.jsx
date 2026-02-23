@@ -15,7 +15,7 @@ const AppPromoBanner = () => {
     absolute inset-0 opacity-10 pointer-events-none
     bg-no-repeat
     bg-[length:120%_auto] 
-bg-[position:center_41.3%]
+    bg-[position:center_41.3%]
     md:bg-[length:98%_auto]
     md:bg-bottom
     md:bg-left
@@ -47,7 +47,7 @@ bg-[position:center_41.3%]
           </p>
           
           <div className="flex  justify-center xl:justify-start gap-4 -mt-4">
-<button className="flex items-center gap-2 bg-black 
+              <button className="flex items-center gap-2 bg-black 
                    w-[160px] sm:w-[189px] 
                    h-[55px] sm:h-[59px] 
                    rounded-full">
@@ -58,7 +58,7 @@ bg-[position:center_41.3%]
               </div>
             </button>
 
-<button className="flex items-center gap-2 bg-black 
+                <button className="flex items-center gap-2 bg-black 
                    w-[160px] sm:w-[189px] 
                    h-[55px] sm:h-[59px] 
                    rounded-full">
