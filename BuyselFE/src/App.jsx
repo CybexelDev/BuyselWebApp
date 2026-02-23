@@ -1,16 +1,18 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Home from './Pages/Home/Home'
 import PropertListing from './Pages/PropertyListing/PropertyListing'
+import AgentListing from './Pages/Agents/Agents'
+import Profile from './Pages/Profile/Profile'
 
 function App() {
   
   return (
     <>
       <Home />
-      {/* <PropertListing /> */}
+      {/* <PropertListing />
+      <AgentListing />
+      <Profile /> */}
     </>
   )
 }

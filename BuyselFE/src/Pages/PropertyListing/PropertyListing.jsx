@@ -8,9 +8,7 @@ function PropertListing() {
 
     useEffect(()=>{
          setData(properties)
-         console.log(data)
-         console.log("mounting");
-         
+         console.log(data)           
     },[])
   return (
     <>
