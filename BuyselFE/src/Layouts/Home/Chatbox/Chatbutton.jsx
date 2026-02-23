@@ -10,7 +10,7 @@ function Chatbutton() {
     <>
       <div
         onClick={() => setOpen(true)}
-        className=" w-[35px] h-[35px] md:w-[40px] md:h-[40px] xl:w-[65px] xl:h-[65px] rounded-full bg-black flex justify-center items-center cursor-pointer">
+        className=" w-[35px] h-[35px] md:w-[40px] md:h-[40px] xl:w-[65px] xl:h-[65px] rounded-full bg-black flex justify-center items-center z-10 cursor-pointer">
     <img src={msg} alt="message" className="w-1/2 h-1/2 sm:w-1/2 sm:h-1/2 md:w-3/5 md:h-3/5 xl:w-3/5 xl:h-3/5" />
     </div>
 

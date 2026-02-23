@@ -12,7 +12,8 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
 
 
   useEffect(() => {
-     setFeatured(properties)
+      const featuredProperties = properties.filter(prop => prop.featured);
+     setFeatured(featuredProperties)
   }, []);
 
 
@@ -36,8 +37,8 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
   };
 
   return (
-    <div className="pt-5 relative">
-      <div className="featured-cta-container px-4 sm:px-8 md:px-12 lg:px-16">
+    <div className="pt-5 px-5 relative">
+      <div className="featured-cta-container px-6 sm:px-6 md:px-10 lg:px-14">
 
         {/* Heading */}
         <div className="featured-cta-logo-container">
@@ -60,7 +61,7 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
             {featured.map((property) => (
               <div
                 key={property.id}
-                className="flex-shrink-0 max-w-[311px] snap-start"
+                className="flex-shrink-0 w-[311px] snap-start"
               >
                 <Featuredcard property={property} />
               </div>

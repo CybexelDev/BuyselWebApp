@@ -33,7 +33,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+        featured: true
+
     },
 
     {
@@ -89,7 +91,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
@@ -117,7 +121,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
       {
       "id": 5,
@@ -202,7 +208,9 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
@@ -230,9 +238,11 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },{
-      "id": 6,
+      "id": 9,
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
@@ -260,7 +270,7 @@ export const properties= [
     },
 
     {
-      "id": 7,
+      "id": 10,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -288,7 +298,7 @@ export const properties= [
     },
 
     {
-      "id": 8,
+      "id": 11,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -314,7 +324,7 @@ export const properties= [
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ]
     },{
-      "id": 6,
+      "id": 12,
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
@@ -338,11 +348,13 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
-      "id": 7,
+      "id": 13,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -370,7 +382,7 @@ export const properties= [
     },
 
     {
-      "id": 8,
+      "id": 14,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -396,7 +408,7 @@ export const properties= [
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ]
     },{
-      "id": 6,
+      "id": 15,
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
@@ -424,7 +436,7 @@ export const properties= [
     },
 
     {
-      "id": 7,
+      "id": 16,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -448,11 +460,13 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },
 
     {
-      "id": 8,
+      "id": 17,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -478,7 +492,95 @@ export const properties= [
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ]
     },  {
-      "id": 7,
+      "id": 18,
+      "title": "Independent Duplex House",
+      "location": "Anna Nagar, Chennai",
+      "price": 12500000,
+      "status": "For Sale",
+      "type": "House",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": "2100 sq.ft | 3BHK",
+      "furnished": "Unfurnished",
+      "parking": 2,
+      "yearBuilt": 2015,
+      "owner": "Suresh Kumar",
+      "contact": "9988776655",
+      "description": "Spacious duplex with terrace garden and calm residential surroundings.",
+      "amenities": [
+        "Terrace",
+        "Security",
+        "Water Supply",
+        "Power Backup"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ],
+          featured: true
+
+    },
+
+    {
+      "id": 19,
+      "title": "Budget Studio Flat",
+      "location": "Karol Bagh, Delhi",
+      "price": 18000,
+      "status": "For Rent",
+      "type": "Studio",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "area": "450 sq.ft | 2BHK",
+      "furnished": "Fully Furnished",
+      "parking": 0,
+      "yearBuilt": 2021,
+      "owner": "Neha Gupta",
+      "contact": "9012345678",
+      "description": "Affordable studio flat suitable for students and working professionals.",
+      "amenities": [
+        "Lift",
+        "Security",
+        "WiFi",
+        "Housekeeping"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ],
+          featured: true
+
+    },{
+      "id": 20,
+      "title": "Modern 2BHK Apartment",
+      "location": "Whitefield, Bangalore",
+      "price": 4200000,
+      "status": "For Rent",
+      "type": "Apartment",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": "1150 sq.ft | 2BHK",
+      "furnished": "Semi Furnished",
+      "parking": 1,
+      "yearBuilt": 2018,
+      "owner": "Ankit Verma",
+      "contact": "9123456789",
+      "description": "Well-designed apartment close to IT parks, malls, and metro stations.",
+      "amenities": [
+        "Lift",
+        "Security",
+        "Club House",
+        "Children Park"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ],
+          featured: true
+
+    },
+
+    {
+      "id": 21,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -506,7 +608,7 @@ export const properties= [
     },
 
     {
-      "id": 8,
+      "id": 22,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
@@ -530,9 +632,11 @@ export const properties= [
       "images": [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
+      ],
+          featured: true
+
     },{
-      "id": 6,
+      "id": 23,
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
@@ -560,7 +664,115 @@ export const properties= [
     },
 
     {
-      "id": 7,
+      "id": 24,
+      "title": "Independent Duplex House",
+      "location": "Anna Nagar, Chennai",
+      "price": 12500000,
+      "status": "For Sale",
+      "type": "House",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": "2100 sq.ft | 3BHK",
+      "furnished": "Unfurnished",
+      "parking": 2,
+      "yearBuilt": 2015,
+      "owner": "Suresh Kumar",
+      "contact": "9988776655",
+      "description": "Spacious duplex with terrace garden and calm residential surroundings.",
+      "amenities": [
+        "Terrace",
+        "Security",
+        "Water Supply",
+        "Power Backup"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ]
+    },{
+      "id": 25,
+      "title": "Modern 2BHK Apartment",
+      "location": "Whitefield, Bangalore",
+      "price": 4200000,
+      "status": "For Rent",
+      "type": "Apartment",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": "1150 sq.ft | 2BHK",
+      "furnished": "Semi Furnished",
+      "parking": 1,
+      "yearBuilt": 2018,
+      "owner": "Ankit Verma",
+      "contact": "9123456789",
+      "description": "Well-designed apartment close to IT parks, malls, and metro stations.",
+      "amenities": [
+        "Lift",
+        "Security",
+        "Club House",
+        "Children Park"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ]
+    },
+
+    {
+      "id": 26,
+      "title": "Independent Duplex House",
+      "location": "Anna Nagar, Chennai",
+      "price": 12500000,
+      "status": "For Sale",
+      "type": "House",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": "2100 sq.ft | 3BHK",
+      "furnished": "Unfurnished",
+      "parking": 2,
+      "yearBuilt": 2015,
+      "owner": "Suresh Kumar",
+      "contact": "9988776655",
+      "description": "Spacious duplex with terrace garden and calm residential surroundings.",
+      "amenities": [
+        "Terrace",
+        "Security",
+        "Water Supply",
+        "Power Backup"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ]
+    },{
+      "id": 27,
+      "title": "Modern 2BHK Apartment",
+      "location": "Whitefield, Bangalore",
+      "price": 4200000,
+      "status": "For Rent",
+      "type": "Apartment",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": "1150 sq.ft | 2BHK",
+      "furnished": "Semi Furnished",
+      "parking": 1,
+      "yearBuilt": 2018,
+      "owner": "Ankit Verma",
+      "contact": "9123456789",
+      "description": "Well-designed apartment close to IT parks, malls, and metro stations.",
+      "amenities": [
+        "Lift",
+        "Security",
+        "Club House",
+        "Children Park"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ]
+    },
+
+    {
+      "id": 28,
       "title": "Independent Duplex House",
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
@@ -586,34 +798,6 @@ export const properties= [
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ]
     },
-
-    {
-      "id": 8,
-      "title": "Budget Studio Flat",
-      "location": "Karol Bagh, Delhi",
-      "price": 18000,
-      "status": "For Rent",
-      "type": "Studio",
-      "bedrooms": 1,
-      "bathrooms": 1,
-      "area": "450 sq.ft | 2BHK",
-      "furnished": "Fully Furnished",
-      "parking": 0,
-      "yearBuilt": 2021,
-      "owner": "Neha Gupta",
-      "contact": "9012345678",
-      "description": "Affordable studio flat suitable for students and working professionals.",
-      "amenities": [
-        "Lift",
-        "Security",
-        "WiFi",
-        "Housekeeping"
-      ],
-      "images": [
-        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
-        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
-      ]
-    }
   ]
 
 
@@ -717,3 +901,122 @@ export const premiumHomes = [
     image:v3,
   },
 ];
+
+
+
+
+
+export const wishlist =[
+   {
+      "id": 1,
+      "title": "Budget Studio Flat",
+      "location": "Karol Bagh, Delhi",
+      "price": 18000,
+      "status": "For Rent",
+      "type": "Studio",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "area": "450 sq.ft | 2BHK",
+      "furnished": "Fully Furnished",
+      "parking": 0,
+      "yearBuilt": 2021,
+      "owner": "Neha Gupta",
+      "contact": "9012345678",
+      "description": "Affordable studio flat suitable for students and working professionals.",
+      "amenities": [
+        "Lift",
+        "Security",
+        "WiFi",
+        "Housekeeping"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ]
+    },{
+      "id": 2,
+      "title": "Modern 2BHK Apartment",
+      "location": "Whitefield, Bangalore",
+      "price": 4200000,
+      "status": "For Rent",
+      "type": "Apartment",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": "1150 sq.ft | 2BHK",
+      "furnished": "Semi Furnished",
+      "parking": 1,
+      "yearBuilt": 2018,
+      "owner": "Ankit Verma",
+      "contact": "9123456789",
+      "description": "Well-designed apartment close to IT parks, malls, and metro stations.",
+      "amenities": [
+        "Lift",
+        "Security",
+        "Club House",
+        "Children Park"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ],
+          featured: true
+
+    },
+
+    {
+      "id": 3,
+      "title": "Independent Duplex House",
+      "location": "Anna Nagar, Chennai",
+      "price": 12500000,
+      "status": "For Sale",
+      "type": "House",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": "2100 sq.ft | 3BHK",
+      "furnished": "Unfurnished",
+      "parking": 2,
+      "yearBuilt": 2015,
+      "owner": "Suresh Kumar",
+      "contact": "9988776655",
+      "description": "Spacious duplex with terrace garden and calm residential surroundings.",
+      "amenities": [
+        "Terrace",
+        "Security",
+        "Water Supply",
+        "Power Backup"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ]
+    },
+
+    {
+      "id": 4,
+      "title": "Budget Studio Flat",
+      "location": "Karol Bagh, Delhi",
+      "price": 18000,
+      "status": "For Rent",
+      "type": "Studio",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "area": "450 sq.ft | 2BHK",
+      "furnished": "Fully Furnished",
+      "parking": 0,
+      "yearBuilt": 2021,
+      "owner": "Neha Gupta",
+      "contact": "9012345678",
+      "description": "Affordable studio flat suitable for students and working professionals.",
+      "amenities": [
+        "Lift",
+        "Security",
+        "WiFi",
+        "Housekeeping"
+      ],
+      "images": [
+        "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
+        "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
+      ]
+    }
+
+]
