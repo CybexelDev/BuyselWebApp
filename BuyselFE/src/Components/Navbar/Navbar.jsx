@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import login from "../../assets/images/icons/login.png";
 
-const Navbar = () => {
+const Navbar = ({
+  gap = "lg:gap-[31px]",
+  top = "top-9",
+  text = "text-[14px]",
+  color = "text-[#676767]"
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="absolute top-9 left-0 w-full z-40 px-6 lg:px-13">
+    <header className={`absolute ${top} left-0 w-full z-40 px-6 lg:px-[49px]`}>
       <div className="flex items-center justify-between py-3">
-
         {/* LEFT MENU – Desktop */}
-        <nav className="hidden lg:flex gap-6 poppins text-[#676767] text-[14px] font-[500]">
-          {["About Us", "Properties", "Agent", "Blogs", "Contact"].map(
+        <nav
+          className={`hidden lg:flex ${gap} poppins ${color} ${text} font-[500]`}
+        >
+          {["Home", "About Us", "Properties", "Agent", "Blogs", "Contact"].map(
             (item) => (
               <p
                 key={item}
@@ -18,7 +24,7 @@ const Navbar = () => {
               >
                 {item}
               </p>
-            )
+            ),
           )}
         </nav>
 
@@ -32,7 +38,7 @@ const Navbar = () => {
 
         {/* MOBILE MENU BUTTON */}
         <button
-          className="lg:hidden relative z-50 flex flex-col gap-1"
+          className="lg:hidden relative z-50 flex flex-col gap-1 ml-1"
           onClick={() => setOpen(!open)}
         >
           <span
@@ -69,7 +75,7 @@ const Navbar = () => {
               >
                 {item}
               </p>
-            )
+            ),
           )}
 
           <button className="bg-[#6fba19] hover:bg-[#6BB535] text-white px-8 py-3 transition-all duration-200 shadow-md hover:shadow-lg rounded-[14px] cursor-pointer flex items-center gap-2">

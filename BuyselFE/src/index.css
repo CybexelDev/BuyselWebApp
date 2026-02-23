@@ -4,16 +4,20 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 .roboto {
   font-family: "Roboto", sans-serif;
 }
 
+.manrope {
+  font-family: "Manrope", sans-serif;
+}
 
 .inter {
   font-family: "Inter", sans-serif;
@@ -54,12 +58,6 @@
 }
 
 
-.host-grotesk{
-  font-family: "Host Grotesk", sans-serif;
-}
-.poppins {
-    font-family: "Poppins", sans-serif;
-}
 
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

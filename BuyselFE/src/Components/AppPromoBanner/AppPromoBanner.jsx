@@ -8,6 +8,9 @@ import Apple from '../../assets/images/appPromotionalBanner/Apple.png'
 // AppBanner
 const AppPromoBanner = () => {
   return (
+    <div className=' relative '>
+
+       <div className=' h-[150px] w-full bg-white hidden top-0 left-0 z-50'></div>
     <section className="relative w-full mt-20  h-auto xl:h-[459px] bg-[#84CC16] flex items-center px-6 py-6 pb-10 md:pb-10 xl:py-12 xl:px-20 overflow-visible xl:overflow-visible">
       
     <div
@@ -27,12 +30,12 @@ bg-[position:center_41.3%]
 <div className='border-[1px] border-white'></div>
       <div className="container mx-auto grid grid-cols-1 xl:grid-cols-2 gap-12 items-center relative z-10">
         
-        <div className="relative h-[350px] xl:h-[580px] flex justify-center xl:justify-start">
-          <div className="absolute  xl:top-[10px] -top-13  xl:-bottom-9 z-20  xl:ml-30">
+        <div className="relative h-[350px] xl:h-[459px] flex justify-center xl:justify-start">
+          <div className="absolute -mt-15 xl:-mt-0 xl:bottom-[-7px]  xl:ml-30">
             <img 
               src={mainPhone}
               alt="App Preview"
-              className="h-[380px] xl:h-[520px] w-auto object-contain  ml-3 md:ml-0" 
+              className="h-[390px] xl:h-[500px] w-auto "
             />
           </div>
         </div>
@@ -73,6 +76,7 @@ bg-[position:center_41.3%]
 
       </div>
     </section>
+     </div>
   );
 };
 

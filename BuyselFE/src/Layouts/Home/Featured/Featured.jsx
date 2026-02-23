@@ -5,7 +5,7 @@ import Featuredcard from "../../../Components/PropertyCard/Propertycard";
 
 import { properties } from "../../../Constance/constance";
 
-const Featured = () => {
+const Featured = ({title="Featured Listings",subTitle="Handpicked properties from trusted owners and agents."}) => {
   const [featured, setFeatured] = useState([]);
 
   const sliderRef = useRef(null);
@@ -43,10 +43,10 @@ const Featured = () => {
         <div className="featured-cta-logo-container">
           <div className="flex flex-col items-center justify-center instrument-sans pb-0 sm:pb-1">
             <h2 className="font-[600] text-[16px] sm:text-[24px] text-center">
-              Featured Listings
+            {title}
             </h2>
             <p className="font-[500] text-[8px] sm:text-[16px] text-[#a79a9a] text-center">
-              Handpicked properties from trusted owners and agents.
+              {subTitle}
             </p>
           </div>
         </div>
