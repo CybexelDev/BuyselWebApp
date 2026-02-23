@@ -12,13 +12,13 @@ function App() {
   
   return (
     <>
-      <Home />
-      {/* <PropertListing />
-      <AgentListing />
-      <Profile /> */}
+      {/* <Home /> */}
+       <PropertListing />
+      {/* <AgentListing /> */}
+      {/* <Profile />  */}
         {/* <PropertListing/>  */}
    {/* <PropertyDetail/> */}
-   <Profile/>
+   {/* <Profile/> */}
   
       {/* <Blog/> */}
       
