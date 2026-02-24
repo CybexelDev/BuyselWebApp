@@ -15,7 +15,7 @@ function App() {
 
   return (
     <>
-
+ {/* App page */}
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
