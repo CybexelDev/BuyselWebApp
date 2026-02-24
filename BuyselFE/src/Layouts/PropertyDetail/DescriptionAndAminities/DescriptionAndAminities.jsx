@@ -12,6 +12,7 @@ export const DescriptionAndAminities = ({ data }) => {
   }, [data])
 
   return (
+    <>
     <div className='md:px-16 px-3 py-5'>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
@@ -26,7 +27,6 @@ export const DescriptionAndAminities = ({ data }) => {
 
             <ul className="space-y-4 mt-2 host-grotesk">
               {detail?.keySellingPoint?.map((item, index) => (
-
                 <li key={index} className="flex items-start gap-3">
                   <span className="mt-2 w-1 h-1 bg-[#4C4545] rounded-full"></span>
                   <p className="text-[#4C4545] text-sm leading-relaxed">
@@ -41,17 +41,14 @@ export const DescriptionAndAminities = ({ data }) => {
           <div className=''>
             <p className='host-grotesk text-[24px] font-[700] text-[#181818] mt-6'>Amenities & Features</p>
             <div className='flex flex-wrap gap-4 host-grotesk mt-4'>
-
               {detail?.amenities?.map((item, index) => (
                 <div key={index} className='bg-[#74c222] rounded-[14px] px-7 py-3 flex gap-1 host-grotesk text-[15px] text-[#ffffff] cursor-pointer'>
                   <img className='w-[14px] h-[14px] object-contain mt-1 ' src={item?.icon} />
                   {item?.name}
                 </div>
               ))}
-
             </div>
           </div>
-
         </div>
 
         <div class="md:col-span-4">
@@ -89,11 +86,10 @@ export const DescriptionAndAminities = ({ data }) => {
             <button className="w-full host-grotesk bg-black text-[#79C41A] py-4 rounded-2xl text-lg font-medium shadow-lg hover:opacity-90 transition">
               Submit
             </button>
-
           </div>
         </div>
-
       </div>
     </div >
+    </>
   )
 }
