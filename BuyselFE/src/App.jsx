@@ -1,10 +1,15 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
 import Home from './Pages/Home/Home'
 import PropertListing from './Pages/PropertyListing/PropertyListing'
+import AgentListing from './Pages/Agents/Agents'
+import Header from './Layouts/PropertyListing/Header/Header'
+import Blog from './Pages/Blog/Blog'
+import PropertyDetail from './Pages/PropertyDetail/PropertyDetail'
+import Profile from './Pages/Profile/Profile'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PropertListing from './Pages/PropertyListing/PropertyListing'
 import Agents from './Pages/Agents/Agents';
-import PropertyDetail from './Pages/PropertyDetail/PropertyDetail';
 
 
 function App() {

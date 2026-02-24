@@ -22,7 +22,7 @@ const Home = () => {
     <PropertySearch />
     <Featured />
     <HomePremiumAppartment />
-     <Ad />
+    <Ad />
     <AddPropertyAndAgent />
     <Agentssection />
     <About />
@@ -31,7 +31,6 @@ const Home = () => {
     <FAQSection/>
     <AppPromoBanner/>
     <Footer/>
-
     </>
   )
 }
