@@ -8,7 +8,6 @@ import Blog from './Pages/Blog/Blog'
 import PropertyDetail from './Pages/PropertyDetail/PropertyDetail'
 import Profile from './Pages/Profile/Profile'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PropertListing from './Pages/PropertyListing/PropertyListing'
 import Agents from './Pages/Agents/Agents';
 
 
@@ -22,6 +21,8 @@ function App() {
           <Route path="/propertyListing" element={<PropertListing />} />
           <Route path="/Agents" element={<Agents />} />
           <Route path="/propertyDetail" element={<PropertyDetail />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>
