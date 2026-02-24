@@ -26,6 +26,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
+
+        
+      
     </>
   )
 }
