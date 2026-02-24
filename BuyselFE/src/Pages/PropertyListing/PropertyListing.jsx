@@ -7,7 +7,7 @@ import Footer from '../../Components/Footer/Footer'
 
 
 function PropertListing() {
-    const[data,setData] = useState([])
+  const [data, setData] = useState([])
 
     useEffect(()=>{
          setData(properties)
@@ -17,10 +17,9 @@ function PropertListing() {
    
   return (
     <>
-     <Header/>
+      <Header/>
       <PropertiesSection propertiesData={data} />
       <Footer/>
-
     </>
   )
 }
