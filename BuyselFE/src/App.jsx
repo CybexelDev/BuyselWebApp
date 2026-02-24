@@ -13,9 +13,9 @@ function App() {
   return (
     <>
       {/* <Home /> */}
-       <PropertListing />
+       {/* <PropertListing /> */}
       {/* <AgentListing /> */}
-      {/* <Profile />  */}
+      <Profile /> 
         {/* <PropertListing/>  */}
    {/* <PropertyDetail/> */}
    {/* <Profile/> */}
