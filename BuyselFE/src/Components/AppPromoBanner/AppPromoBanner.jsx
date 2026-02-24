@@ -30,6 +30,7 @@ bg-[position:center_41.3%]
 <div className='border-[1px] border-white'></div>
       <div className="container mx-auto grid grid-cols-1 xl:grid-cols-2 gap-12 items-center relative z-10">
         
+
         <div className="relative h-[350px] xl:h-[459px] flex justify-center xl:justify-start">
           <div className="absolute -mt-15 xl:-mt-0 xl:bottom-[-7px]  xl:ml-30">
             <img 
@@ -50,7 +51,9 @@ bg-[position:center_41.3%]
           </p>
           
           <div className="flex  justify-center xl:justify-start gap-4 -mt-4">
-<button className="flex items-center gap-2 bg-black 
+
+              <button className="flex items-center gap-2 bg-black 
+
                    w-[160px] sm:w-[189px] 
                    h-[55px] sm:h-[59px] 
                    rounded-full">
@@ -77,6 +80,7 @@ bg-[position:center_41.3%]
       </div>
     </section>
      </div>
+
   );
 };
 
