@@ -9,6 +9,14 @@ import MapSection from '../../Layouts/PropertyDetail/MapSection/MapSection'
 import Featured from '../../Layouts/Home/Featured/Featured'
 import AppPromoBanner from '../../Components/AppPromoBanner/AppPromoBanner'
 import Footer from '../../Components/Footer/Footer'
+import i1 from "../../assets/images/propertDetail/i1.png"
+import i2 from "../../assets/images/propertDetail/i2.png"
+import i3 from "../../assets/images/propertDetail/i3.png"
+import i4 from "../../assets/images/propertDetail/i4.png"
+import i5 from "../../assets/images/propertDetail/i5.png"
+import i6 from "../../assets/images/propertDetail/i6.png"
+import i7 from "../../assets/images/propertDetail/i7.png"
+import { DescriptionAndAminities } from '../../Layouts/PropertyDetail/DescriptionAndAminities/DescriptionAndAminities'
 function PropertyDetail() {
 
 const productDetail = {
@@ -27,8 +35,54 @@ const productDetail = {
     { name: "Apollo Hospital", distance: 2.1, type: "hospital" },
     { name: "Phoenix Marketcity", distance: 3.4, type: "shopping_mall" }
   ],
-
-  seller: {
+  description:"Check out this 3 bhk house for sale in Saibaba Colony, a popular residential locality that contains many of the in-Demand properties in coimbatore. The floor plan additionally contains 3 bedrooms, 3 bathrooms and 2 balconies. All in all, the independent house is spread over a super built up area of 2750 sq.Ft. This is a ready to move house, which is 5-10 years old. The ownership right of this property is co-Operative society. By paying just 1.5 crore",
+  keySellingPoint:[
+    {content:"Prime location in Whitefield with excellent connectivity"},
+    {content:"Spacious rooms with large windows and natural ventilation"},
+    {content:"Modular kitchen with chimney and hob"},
+    {content:"Gated community with 24/7 security"},
+    {content:"Close to major IT parks (Prestige Tech Park, ITPL)"},
+    {content:"Well-connected to metro station and main road"}
+  ],
+  address:"Kalapatti, Coimbatore, Tamil Nadu",
+  amenities:[
+    {
+     _id:"1",
+     icon: i1,
+     name:"Water supplay"
+    },
+    {
+     _id:"2",
+     icon: i2,
+     name:"Gated Community"
+    },
+    {
+     _id:"3",
+     icon: i3,
+     name:"Near by Hospital"
+    },
+    {
+     _id:"4",
+     icon: i4,
+     name:"Kids’ Play Area"
+    },
+    {
+     _id:"5",
+     icon: i5,
+     name:"CCTV Surveillance"
+    },
+    {
+     _id:"6",
+     icon: i6,
+     name:"Solar Panels & Green Energy"
+    },
+    {
+     _id:"7",
+     icon: i7,
+     name:"Near bus stop"
+    },
+  ],
+  seller:{
     company: "Ravi Rentals",
     name: "Arun Kumar",
     phone: "+91 9876543210",
@@ -52,16 +106,15 @@ const productDetail = {
 
   return (
     <div>
-
         <HeaderProperty property={productDetail}/>
+        <DescriptionAndAminities data={productDetail} />
         <MapSection address={productDetail.fullAddress} latitude={productDetail.latitude}
         longitude={productDetail.longitude} landmarks={productDetail.landmarks}
         />
         <Featured  title="Similar Properties" subTitle='Explore our latest listings for sale, rent and lease across'/>
-         <AppPromoBanner/>
-    <Footer/>
-        </div>
-
+        <AppPromoBanner/>
+        <Footer/>
+    </div>
   )
 }
 

@@ -47,6 +47,7 @@ const ProfileHeader = () => {
   className="
     relative
     lg:absolute
+    bottom-40
     lg:left-6
     lg:top-50
     z-20
@@ -58,7 +59,7 @@ const ProfileHeader = () => {
     lg:items-center
     gap-6
 
-    mt-40 lg:mt-0
+    mt-0 lg:mt-0
     px-6 lg:px-0
   "
 >
@@ -80,7 +81,7 @@ const ProfileHeader = () => {
     </h2>
 
     <p className="text-gray-500 mt-1">
-      📍 Chennai, Tamil Nadu
+      <img></img> Chennai, Tamil Nadu
     </p>
 
     <div className="flex gap-4 mt-4 flex-wrap justify-center lg:justify-start">
