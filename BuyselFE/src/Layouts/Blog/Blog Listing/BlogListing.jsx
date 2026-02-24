@@ -141,12 +141,12 @@ const featuredBlogs = [
 ];
 
 const BlogsListing = () => {
-  const [activeCategory, setActiveCategory] = useState("Residential");
+  const [activeCategory, setActiveCategory] = useState(null);
 const [currentPage, setCurrentPage] = useState(1);
 
-const filteredBlogs = blogs.filter(
+const filteredBlogs = activeCategory? blogs.filter(
   (blog) => blog.category === activeCategory
-);
+):blogs ;
 const blogsPerPage = 6;
 const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
 const indexOfLastBlog = currentPage * blogsPerPage;
@@ -167,15 +167,19 @@ onClick={() => {
   setActiveCategory(cat);
   setCurrentPage(1);
 }}          className={`px-6 sm:px-9 lg:px-11 
-                      py-2 
-                      rounded-full 
-                      text-sm sm:text-base 
-                      whitespace-nowrap
-                      cursor-pointer 
-                      font-[400] 
-                      transition 
-                      host-grotesk
-                      bg-[#6ABD11ED] text-white`}
+  py-2 
+  rounded-full 
+  text-sm sm:text-base 
+  whitespace-nowrap
+  cursor-pointer 
+  font-[400] 
+  transition 
+  host-grotesk
+  ${
+    activeCategory === cat
+      ? "bg-[#000000ed] text-[#6ABD11ED]"
+      : "bg-[#6ABD11ED] text-white"
+  }`}
         >
           {cat}
         </button>
