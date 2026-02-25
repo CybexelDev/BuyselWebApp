@@ -35,7 +35,7 @@ function  Propertycard({ property,color="bg-[#FFFFFF]",shadow,hideWhatsapp=false
   return (
 <div className={`${color} rounded-2xl overflow-hidden  w-full h-[375px] ${shadow}`}>
 
-      <div className="relative flex justify-center pt-2 px-2">
+      <div className="relative flex justify-center pt-2 px-[4px] sm:px-2">
         <img
           src={images[currentIndex]}
           alt={property.title}
