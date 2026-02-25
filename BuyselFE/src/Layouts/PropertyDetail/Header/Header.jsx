@@ -66,7 +66,7 @@ useEffect(() => {
   return () => window.removeEventListener("keydown", handleKey);
 }, []);
     return (
-        <div className='px-4 md:px-5 py-3 relative'>
+        <div className='px-2 md:px-5 py-3 relative'>
             <Navbar top="top-[18px]" />
             <div className="detail-cta-container">
                 <div className="detail-cta-logo-container ">

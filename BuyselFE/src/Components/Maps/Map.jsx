@@ -1,6 +1,6 @@
 const MapEmbed = ({ latitude, longitude, height = "300px" }) => {
   return (
-    <div className="bg-white p-2 rounded-[40px] shadow-md border-[2px] border-white ">
+    <div className="bg-white p-2 rounded-[40px]  border-[1px] border-white ">
       <div className="rounded-2xl overflow-hidden">
         <iframe
           width="100%"
