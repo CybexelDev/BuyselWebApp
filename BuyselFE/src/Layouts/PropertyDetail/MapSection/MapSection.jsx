@@ -2,7 +2,7 @@ import Map from "../../../Components/Maps/Map"
 
 const MapSection = ({ address, latitude, longitude, landmarks }) => {
   return (
-    <section className="px-6 md:px-12 lg:px-16 mt-0 md:mt-0 py-0 lg:py-1 bg-white mb-10 relative">
+    <section className="px-3 md:px-12 lg:px-16 mt-0 md:mt-0 py-0 lg:py-1 bg-white mb-10 relative">
 
       {/* Heading */}
       <div className="mb-4 lg:-mb-15 relative z-20">
@@ -16,7 +16,7 @@ const MapSection = ({ address, latitude, longitude, landmarks }) => {
 
  
       <div className="lg:hidden z-30 -mb-24 relative pt-4 w-full">
-        <div className="rounded-2xl overflow-hidden shadow-md w-full  xl:w-[80%] mx-auto">
+        <div className="rounded-2xl overflow-hidden  w-full  xl:w-[80%] mx-auto px-5">
           <Map
             latitude={latitude}
             longitude={longitude}

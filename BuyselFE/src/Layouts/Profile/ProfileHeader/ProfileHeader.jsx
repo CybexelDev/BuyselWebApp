@@ -4,6 +4,7 @@ import './profileHeader.css'
 import logo from '../../../assets/images/logo/logo.png'
 import house from '../../../assets/images/profile/house.png'
 import profile from '../../../assets/images/profile/profile.png'
+import location from '../../../assets/images/profile/location.png'
 
 
 import line from '../../../assets/images/header/line.png'
@@ -12,7 +13,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Navbar from "../../../Components/Navbar/Navbar";
 const ProfileHeader = () => {
   return (
-    <div className="relative p-5">
+    <div className="relative p-5 ">
 
             <Navbar top="top-[18px]" />
 
@@ -42,30 +43,35 @@ const ProfileHeader = () => {
     
 
       </div>
-         
 <div
   className="
-    relative
-    lg:absolute
-    bottom-40
+    absolute
+
+    bottom-[-56px]
+    left-0
+    md:bottom-[-100px]
+    
+   
+    lg:right-15
     lg:left-6
     lg:top-50
-    z-20
-
+    lg:bottom-0
+    lg:mb-0
+        z-20
     flex
     flex-col
     lg:flex-row
-    items-center
     lg:items-center
-    gap-6
-
+    gap-2 lg:gap-6
     mt-0 lg:mt-0
-    px-6 lg:px-0
+    px-4 lg:px-0
   "
 >
 
   {/* LEFT: Profile Image */}
-  <div className="w-28 h-28 md:w-[213px] md:h-[213px] rounded-full overflow-hidden border-4 border-white shadow-lg flex-shrink-0 ">
+  <div className="w-30 h-30 sm:w-28 sm:h-28 md:w-[200px] l md:h-[200px] lg:w-[213px] lg:h-[213px] 
+                  rounded-full overflow-hidden 
+                  border-4 border-white shadow-lg flex-shrink-0">
     <img
       src={profile}
       alt="profile"
@@ -74,23 +80,37 @@ const ProfileHeader = () => {
   </div>
 
   {/* RIGHT: Content */}
-  <div className="flex flex-col items-center lg:items-start text-center lg:text-left mt-10 host-grotesk">
+  <div className="flex flex-col items-start  lg:items-start 
+                  text-center lg:ml-0 lg:text-center ml-5 lg:ml-0
+                   lg:mt-10 host-grotesk">
 
-    <h2 className="text-[24px] text-[#393939] md:text-2xl font-medium">
+    <h2 className="text-[16px] sm:text-[20px] md:text-2xl 
+                   text-[#393939] font-medium">
       Raja Kumar
     </h2>
 
-    <p className="text-gray-500 mt-1">
-      <img></img> Chennai, Tamil Nadu
+    <p className="text-[#393939] mt-1 text-[13px] sm:text-base flex font-medium ml-[-7px]">
+      <img src={location} className="w-[26px] h-[24px]"/>
+      Chennai Tamil Nadu
     </p>
 
-    <div className="flex gap-4 mt-4 flex-wrap justify-center lg:justify-start">
-      <button className="bg-black text-white px-5 py-2 rounded-lg">
+    <div className="flex gap-3 sm:gap-4  mb-7 mt-2 lg:mb-0 lg:mt-4 
+                    flex-nowrap justify-start lg:justify-start">
+
+      <button className="bg-[#2B2E28] text-white 
+                         px-3 py-2 sm:px-5 sm:py-2 
+                         text-sm 
+                         rounded-lg text-wrap instrument-sans text-[16px] font-[550]" >
         Edit Profile
       </button>
-      <button className="bg-gray-200 px-5 py-2 rounded-lg">
+
+      <button className="bg-gray-200 
+                         px-2 py-1.5 sm:px-5 sm:py-2 
+                         text-sm sm:text-base
+                         rounded-lg instrument-sans text-[16px] font-[550]">
         Change Password
       </button>
+
     </div>
 
   </div>

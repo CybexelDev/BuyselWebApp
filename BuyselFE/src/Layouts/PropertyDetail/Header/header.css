@@ -6,6 +6,7 @@
     margin: 0 auto 60px auto;
     
     /* Mobile/Tablet height and padding */
+    padding: 0px 7px;
     min-height: 42vh; 
     height: auto;
     padding-bottom: 30px; 
