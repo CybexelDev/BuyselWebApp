@@ -4,6 +4,7 @@ import './profileHeader.css'
 import logo from '../../../assets/images/logo/logo.png'
 import house from '../../../assets/images/profile/house.png'
 import profile from '../../../assets/images/profile/profile.png'
+import location from '../../../assets/images/profile/location.png'
 
 
 import line from '../../../assets/images/header/line.png'
@@ -88,15 +89,16 @@ const ProfileHeader = () => {
       Raja Kumar
     </h2>
 
-    <p className="text-gray-500 mt-1 text-[13px] sm:text-base">
-      Chennai, Tamil Nadu
+    <p className="text-[#393939] mt-1 text-[13px] sm:text-base flex font-medium ml-[-7px]">
+      <img src={location} className="w-[26px] h-[24px]"/>
+      Chennai Tamil Nadu
     </p>
 
-    <div className="flex gap-3 sm:gap-4 mt-4 
+    <div className="flex gap-3 sm:gap-4  mb-7 mt-2 lg:mb-0 lg:mt-4 
                     flex-nowrap justify-start lg:justify-start">
 
       <button className="bg-[#2B2E28] text-white 
-                         px-5 py-2 sm:px-6 sm:py-2
+                         px-3 py-2 sm:px-5 sm:py-2 
                          text-sm 
                          rounded-lg text-wrap instrument-sans text-[16px] font-[550]" >
         Edit Profile
