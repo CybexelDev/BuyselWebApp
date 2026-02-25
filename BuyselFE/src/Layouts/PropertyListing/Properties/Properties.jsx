@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Propertycard from '../../Components/PropertyCard/Propertycard'
+import Propertycard from '../../../Components/PropertyCard/Propertycard'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 function PropertiesSection({ propertiesData }) {
@@ -54,7 +54,7 @@ useEffect(() => {
   const totalPages = Math.ceil(propertiesData.length / itemsPerPage);
 
   return (
-    <div className='py-8 px-1 md:px-6 lg:px-8 mb-28'>
+    <div className='py-8 px-1 md:px-6 lg:px-8 mb-2'>
 
 
       {/* property Listing */}

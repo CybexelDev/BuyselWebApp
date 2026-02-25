@@ -1070,3 +1070,16 @@ export const wishlist =[
     }
 
 ]
+
+
+export const user = {
+  id: "BSU-10245",
+  fullName: "Raja Kumar",
+  email: "rajakumar@gmail.com",
+  phone: "+91 9123456789",
+  altPhone1: "+91 9123456789",
+  altPhone2: "+91 9123456789",
+  accountStatus: "Active",
+  verificationStatus: "Mobile",
+  createdOn: "12 Dec 2025",
+};
