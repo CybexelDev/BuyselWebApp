@@ -131,7 +131,7 @@ const ProfileDashboard = ({users}) => {
 
       <div className="text-sm space-y-3 md:space-y-4 lg:space-y-[10px] xl:space-y-[12px]">
 
-        {/* Row 1 */}
+        {/* Row one */}
         <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row
                         sm:justify-between sm:items-center md:items-start lg:items-center
                         gap-1
