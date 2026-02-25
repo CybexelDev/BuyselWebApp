@@ -88,7 +88,7 @@ const ProfileHeader = () => {
                    text-[#393939] font-medium">
       Raja Kumar
     </h2>
-
+  {/* for push */}
     <p className="text-[#393939] mt-1 text-[13px] sm:text-base flex font-medium ml-[-7px]">
       <img src={location} className="w-[26px] h-[24px]"/>
       Chennai Tamil Nadu
