@@ -13,7 +13,7 @@ export const DescriptionAndAminities = ({ data }) => {
 
   return (
     <>
-    <div className='md:px-16 px-3 py-5'>
+    <div className='md:px-16 px-3 py-1  md:py-5'>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
         <div class="md:col-span-8 ">
@@ -40,9 +40,9 @@ export const DescriptionAndAminities = ({ data }) => {
           {/* aminties here daa */}
           <div className=''>
             <p className='host-grotesk text-[24px] font-[700] text-[#181818] mt-6'>Amenities & Features</p>
-            <div className='flex flex-wrap gap-4 host-grotesk mt-4'>
+            <div className='flex flex-wrap gap-2 md:gap-4 host-grotesk mt-4'>
               {detail?.amenities?.map((item, index) => (
-                <div key={index} className='bg-[#74c222] rounded-[14px] px-7 py-3 flex gap-1 host-grotesk text-[15px] text-[#ffffff] cursor-pointer'>
+                <div key={index} className='bg-[#74c222] rounded-[14px] px-3 md:px-7 py-2 md:py-3 flex gap-1 host-grotesk text-[14px] md:text-[15px] text-[#ffffff] cursor-pointer'>
                   <img className='w-[14px] h-[14px] object-contain mt-1 ' src={item?.icon} />
                   {item?.name}
                 </div>
