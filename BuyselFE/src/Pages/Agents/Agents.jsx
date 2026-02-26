@@ -10,7 +10,7 @@ const Agents = () => {
     <Header />
     <AgentsList />
     <JoinAgents />
-    <Footer />
+    <Footer/>
     </>
   )
 }

@@ -10,6 +10,7 @@ export const properties= [
       "id": 1,
       "title": "Luxury Sea View Villa",
       "location": "Bandra West, Mumbai",
+      "category":"Lease",
       "price": 85000000,
       "status": "For Sale",
       "type": "Villa",
@@ -45,6 +46,8 @@ export const properties= [
       "price": 4200000,
       "status": "For Rent",
       "type": "Apartment",
+            "category":"Lease",
+
       "bedrooms": 2,
       "bathrooms": 2,
       "area": "1150 sq.ft | 2BHK",
@@ -75,6 +78,8 @@ export const properties= [
       "type": "House",
       "bedrooms": 3,
       "bathrooms": 3,
+            "category":"Lease",
+
       "area": "2100 sq.ft | 3BHK",
       "furnished": "Unfurnished",
       "parking": 2,
@@ -105,6 +110,8 @@ export const properties= [
       "type": "Studio",
       "bedrooms": 1,
       "bathrooms": 1,
+            "category":"Lease",
+
       "area": "450 sq.ft | 2BHK",
       "furnished": "Fully Furnished",
       "parking": 0,
@@ -132,6 +139,8 @@ export const properties= [
       "price": 85000000,
       "status": "For Sale",
       "type": "Villa",
+            "category":"Lease",
+
       "bedrooms": 4,
       "bathrooms": 4,
       "area": "3200 sq.ft | 3BHK",
@@ -162,6 +171,8 @@ export const properties= [
       "price": 4200000,
       "status": "For Rent",
       "type": "Apartment",
+            "category":"Lease",
+
       "bedrooms": 2,
       "bathrooms": 2,
       "area": "1150 sq.ft | 2BHK",
@@ -190,6 +201,8 @@ export const properties= [
       "price": 12500000,
       "status": "For Sale",
       "type": "House",
+            "category":"Lease",
+
       "bedrooms": 3,
       "bathrooms": 3,
       "area": "2100 sq.ft | 3BHK",
@@ -220,6 +233,8 @@ export const properties= [
       "price": 18000,
       "status": "For Rent",
       "type": "Studio",
+            "category":"Lease",
+
       "bedrooms": 1,
       "bathrooms": 1,
       "area": "450 sq.ft | 2BHK",
@@ -246,6 +261,8 @@ export const properties= [
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
+            "category":"Buy",
+
       "status": "For Rent",
       "type": "Apartment",
       "bedrooms": 2,
@@ -276,6 +293,8 @@ export const properties= [
       "price": 12500000,
       "status": "For Sale",
       "type": "House",
+                  "category":"Buy",
+
       "bedrooms": 3,
       "bathrooms": 3,
       "area": "2100 sq.ft | 3BHK",
@@ -304,6 +323,8 @@ export const properties= [
       "price": 18000,
       "status": "For Rent",
       "type": "Studio",
+                  "category":"Buy",
+
       "bedrooms": 1,
       "bathrooms": 1,
       "area": "450 sq.ft | 2BHK",
@@ -331,6 +352,8 @@ export const properties= [
       "status": "For Rent",
       "type": "Apartment",
       "bedrooms": 2,
+                  "category":"Buy",
+
       "bathrooms": 2,
       "area": "1150 sq.ft | 2BHK",
       "furnished": "Semi Furnished",
@@ -359,6 +382,8 @@ export const properties= [
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
       "status": "For Sale",
+                  "category":"Buy",
+
       "type": "House",
       "bedrooms": 3,
       "bathrooms": 3,
@@ -385,6 +410,8 @@ export const properties= [
       "id": 14,
       "title": "Budget Studio Flat",
       "location": "Karol Bagh, Delhi",
+                  "category":"Buy",
+
       "price": 18000,
       "status": "For Rent",
       "type": "Studio",
@@ -415,6 +442,8 @@ export const properties= [
       "status": "For Rent",
       "type": "Apartment",
       "bedrooms": 2,
+                  "category":"Buy",
+
       "bathrooms": 2,
       "area": "1150 sq.ft | 2BHK",
       "furnished": "Semi Furnished",
@@ -443,6 +472,8 @@ export const properties= [
       "status": "For Sale",
       "type": "House",
       "bedrooms": 3,
+                  "category":"Buy",
+
       "bathrooms": 3,
       "area": "2100 sq.ft | 3BHK",
       "furnished": "Unfurnished",
@@ -468,6 +499,7 @@ export const properties= [
     {
       "id": 17,
       "title": "Budget Studio Flat",
+      "category":"Sell",
       "location": "Karol Bagh, Delhi",
       "price": 18000,
       "status": "For Rent",
@@ -497,6 +529,8 @@ export const properties= [
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
       "status": "For Sale",
+            "category":"Sell",
+
       "type": "House",
       "bedrooms": 3,
       "bathrooms": 3,
@@ -528,6 +562,8 @@ export const properties= [
       "price": 18000,
       "status": "For Rent",
       "type": "Studio",
+            "category":"Sell",
+
       "bedrooms": 1,
       "bathrooms": 1,
       "area": "450 sq.ft | 2BHK",
@@ -558,6 +594,8 @@ export const properties= [
       "type": "Apartment",
       "bedrooms": 2,
       "bathrooms": 2,
+            "category":"Sell",
+
       "area": "1150 sq.ft | 2BHK",
       "furnished": "Semi Furnished",
       "parking": 1,
@@ -587,6 +625,8 @@ export const properties= [
       "status": "For Sale",
       "type": "House",
       "bedrooms": 3,
+            "category":"Sell",
+
       "bathrooms": 3,
       "area": "2100 sq.ft | 3BHK",
       "furnished": "Unfurnished",
@@ -613,6 +653,8 @@ export const properties= [
       "location": "Karol Bagh, Delhi",
       "price": 18000,
       "status": "For Rent",
+            "category":"Sell",
+
       "type": "Studio",
       "bedrooms": 1,
       "bathrooms": 1,
@@ -640,6 +682,7 @@ export const properties= [
       "title": "Modern 2BHK Apartment",
       "location": "Whitefield, Bangalore",
       "price": 4200000,
+      "category":"Rent",
       "status": "For Rent",
       "type": "Apartment",
       "bedrooms": 2,
@@ -670,6 +713,7 @@ export const properties= [
       "price": 12500000,
       "status": "For Sale",
       "type": "House",
+            "category":"Rent",
       "bedrooms": 3,
       "bathrooms": 3,
       "area": "2100 sq.ft | 3BHK",
@@ -696,6 +740,8 @@ export const properties= [
       "price": 4200000,
       "status": "For Rent",
       "type": "Apartment",
+            "category":"Rent",
+
       "bedrooms": 2,
       "bathrooms": 2,
       "area": "1150 sq.ft | 2BHK",
@@ -724,6 +770,8 @@ export const properties= [
       "price": 12500000,
       "status": "For Sale",
       "type": "House",
+            "category":"Rent",
+
       "bedrooms": 3,
       "bathrooms": 3,
       "area": "2100 sq.ft | 3BHK",
@@ -774,6 +822,8 @@ export const properties= [
     {
       "id": 28,
       "title": "Independent Duplex House",
+            "category":"Rent",
+
       "location": "Anna Nagar, Chennai",
       "price": 12500000,
       "status": "For Sale",
@@ -1020,3 +1070,16 @@ export const wishlist =[
     }
 
 ]
+
+
+export const user = {
+  id: "BSU-10245",
+  fullName: "Raja Kumar",
+  email: "rajakumar@gmail.com",
+  phone: "+91 9123456789",
+  altPhone1: "+91 9123456789",
+  altPhone2: "+91 9123456789",
+  accountStatus: "Active",
+  verificationStatus: "Mobile",
+  createdOn: "12 Dec 2025",
+};

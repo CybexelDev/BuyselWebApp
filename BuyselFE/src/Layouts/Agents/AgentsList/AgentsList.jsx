@@ -39,7 +39,7 @@ export default function AgentTabs() {
     const currentAgents = filteredAgents.slice(startIndex, endIndex);
 
     return (
-        <div className="bg-gray-100 min-h-screen p-2 sm:p-10">
+        <div className="bg-white min-h-screen p-2 sm:p-10">
 
             <div className="flex gap-1 sm:gap-4 mb-8">
                 {["All", "Agent", "Premium Agent", "Elite Agent"].map((tab) => (

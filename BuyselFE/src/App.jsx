@@ -9,6 +9,7 @@ import PropertyDetail from './Pages/PropertyDetail/PropertyDetail'
 import Profile from './Pages/Profile/Profile'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Agents from './Pages/Agents/Agents';
+import Wishlist from './Pages/Wishlist/Wishlist'
 import About from './Pages/About/About'
 
 
@@ -16,17 +17,22 @@ function App() {
 
   return (
     <>
+ {/* App page */}
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/propertyListing" element={<PropertListing />} />
-          <Route path="/Agents" element={<Agents />} />
+          <Route path="/agents" element={<Agents />} />
           <Route path="/propertyDetail" element={<PropertyDetail />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/wishlist" element={<Wishlist/>}/>
+          <Route path="/about" element={<About/>}/>
         </Routes>
       </Router>
+
+        
+      
     </>
   )
 }
