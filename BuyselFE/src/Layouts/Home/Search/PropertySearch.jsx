@@ -62,11 +62,21 @@ function PropertySearch() {
   </div>
 
   <div className="poppins flex items-center z-10 w-auto xl:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3 ">
-    <input
-      type="text"
-      placeholder="Budget"
-      className="bg-transparent w-full outline-none text-[12px] text-gray-700 placeholder-[#888888ED]"
-    />
+    <select
+    className="bg-transparent w-full outline-none text-[12px] text-gray-700 appearance-none cursor-pointer"
+    defaultValue=""
+  >
+    <option value="" disabled>
+      Budget
+    </option>
+
+    <option>Below ₹5 Lakhs</option>
+    <option>₹5 – 10 Lakhs</option>
+    <option>₹10 – 25 Lakhs</option>
+    <option>₹25 – 50 Lakhs</option>
+    <option>Above ₹50 Lakhs</option>
+  </select>
+
 
     <svg
       xmlns="http://www.w3.org/2000/svg"

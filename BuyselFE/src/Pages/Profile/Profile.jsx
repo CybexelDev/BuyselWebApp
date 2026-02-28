@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ProfileHeader from '../../Layouts/Profile/ProfileHeader/ProfileHeader'
 import ProfileDashboard from '../../Layouts/Profile/ProfileDashboard/ProfileDashboard'
 import { user } from '../../Constance/constance'
+import Footer from '../../Components/Footer/Footer'
 
 function Profile() {
   const [users,setUsers] = useState([])
@@ -11,8 +12,9 @@ function Profile() {
   },[])
   return (
     <div>
-     <ProfileHeader  setmode={setMode}/>
+     <ProfileHeader  setMode={setMode}/>
      <ProfileDashboard users={users} mode={mode} setMode={setMode} />
+     <Footer />
     </div>
   )
 }
