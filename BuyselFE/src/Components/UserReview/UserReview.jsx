@@ -10,22 +10,26 @@ const reviews = [
     city: "Coimbatore",
     rating: 5,
     comment:
-      "The agent was extremely professional and helped me find the perfect home within my budget."
-    
+      "The agent was extremely professional and helped me find the perfect home within my budget.",
+    image:"https://i.pinimg.com/736x/8a/b4/8e/8ab48ee24a4e058c56ac63aa0d163273.jpg"
   },
   {
     name: "Priya S",
     city: "Salem",
     rating: 4,
     comment:
-      "Very transparent and trustworthy. Explained everything clearly and guided me well."
+      "Very transparent and trustworthy. Explained everything clearly and guided me well.",
+          image:"https://i.pinimg.com/736x/8a/b4/8e/8ab48ee24a4e058c56ac63aa0d163273.jpg"
+
   },
   {
     name: "Ramesh V",
     city: "Tiruppur",
     rating: 5,
     comment:
-      "Excellent service! Helped me close the deal quickly and handled negotiations perfectly."
+      "Excellent service! Helped me close the deal quickly and handled negotiations perfectly.",
+          image:"https://i.pinimg.com/736x/8a/b4/8e/8ab48ee24a4e058c56ac63aa0d163273.jpg"
+
   }
 ]
 
@@ -34,14 +38,19 @@ const reviews = [
   return (
     <div>
       {/* Reviews Section */}
-<div className="my-12 px-[20px] lg:px-[77px]">
+<div className="my-25 px-[20px] md:px-[55px] xl:px-[30px] 2xl:px-[77px]">
   
 
-<div className="grid gap-6"
-     style={{
-       gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))"
-     }}
->    <div className="host-grotesk space-y-[10px]">
+<div className="
+  grid gap-6
+  grid-cols-1
+  sm:grid-cols-2
+  md:grid-cols-2
+  lg:grid-cols-3
+  xl:grid-cols-4
+
+  place-items-center sm:place-items-stretch
+"><div className="text-center host-grotesk space-y-[10px]">
       <h3 className="
                  text-[20px] lg:text-[32px] 
                  font-[600] leading-[135%] 
@@ -51,12 +60,17 @@ const reviews = [
   <p className="host-grotesk font-[500] leading-[150%] text-[16px]">
     User Feedback
   </p>
+
+  <button className="jakarta font-[450] mt-3 text-[12px] leading-[100%] bg-[#84CC16] text-white rounded-[8px] py-[12px] px-8">Write a Review</button>
     </div>
      
 
 {reviews.map((review, index) => (
-  <div key={index} className="user-review user-review-border">
-    <div className="user-review user-review-inner px-[23px] pt-[22px] pb-20">
+  <div className="relative w-[302px] min-[401px]:w-auto sm:w-[302px]  h-[300px]">
+<div key={index} className="user-review user-review-border h-[300px] ">
+      <div className="user-review user-review-inner 
+     px-[23px] pt-[22px] pb-[70px]
+     flex flex-col h-full">
       
       {/* Stars with right-side SVG */}
       <div className="flex items-center justify-between mb-[21px]">
@@ -83,12 +97,13 @@ const reviews = [
       </div>
 
       {/* Comment */}
-      <p className="host-grotesk text-[16px] leading-[150%] text-[#1A1A1A] font-[500] leading-[150%] mb-[26px]">
+      <p className="host-grotesk text-[16px] leading-[150%] text-[#1A1A1A] font-[500] leading-[150%] ">
         {review.comment}
       </p>
 
-    <div className="flex mt-4">
-  <div className="flex items-center gap-2 ml-auto">
+    <div className="flex mt-auto mb-3 justify-end">
+  <div className="flex items-center gap-2">
+
     <svg
       width="18"
       height="18"
@@ -101,27 +116,38 @@ const reviews = [
         fill="black"
       />
     </svg>
-    <span className="host-grotesk text-[12px] font-[500] leading-[150%] text-[#9B9B9B]">15 Likes</span>
+    <span className="host-grotesk text-[12px] font-[500] text-[#9B9B9B]">
+      15 Likes
+    </span>
+
   </div>
 </div>
 
     </div>
-    <div className="flex items-center gap-3">
-  <img
-    src="/avatar.jpg"   // replace with your image
-    alt="Kaviya sri"
-    className="w-10 h-10 rounded-full object-cover"
-  />
-
-  <div className="leading-tight">
-    <p className="text-[16px] font-[600] text-black">
-      Kaviya sri
-    </p>
-    <p className="text-[13px] text-[#9B9B9B]">
-      21/12/2025
-    </p>
   </div>
-</div>
+
+
+  <div
+  className="
+    absolute
+    bottom-0
+    left-14
+    min-[401px]:left-auto min-[401px]:right-45 min-[501px]:right-70
+    sm:right-auto sm:left-14
+    xl:left-24
+    2xl:left-16
+     flex items-center gap-[14px]   py-1  rounded-full overflow-visible">
+      <img
+        src={review.image}
+        alt={review.name}
+        className="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] rounded-full object-cover"
+      />
+      <div className="host-grotesk ">
+        <p className="text-[15px] sm:text-[20px] font-[500] leading-[135%] whitespace-nowrap w-auto">{review.name}</p>
+        <p className="text-[10px] sm:text-[14px] font-[500] leading-[150%] text-[#9B9B9B]">21/12/2025</p>
+      </div>
+    </div>
+
   </div>
 
 ))}        

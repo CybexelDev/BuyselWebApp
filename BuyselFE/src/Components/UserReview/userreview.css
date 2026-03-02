@@ -1,7 +1,9 @@
 .user-review {
   --r: 17px;
   --s: 30px;
-  --x: 240px;
+
+  /* default for mobile → xl */
+  --x: 225px;
   --y: 17px;
 
   border-radius: var(--r);
@@ -28,7 +30,32 @@
 
   mask-repeat: no-repeat;
 }
-/* BORDER */
+
+/* 2XL breakpoint (Tailwind 2xl = 1536px+) */
+@media (min-width: 1536px) {
+  .user-review {
+    --x: 245px;
+  }
+}/* BORDER */
+
+@media (min-width: 401px) {
+  .user-review {
+    --x: 285px;
+  }
+}/* BORDER */
+
+@media (min-width: 501px) {
+  .user-review {
+    --x: 385px;
+  }
+}
+@media (min-width: 640px) {
+  .user-review {
+    --x: 223px;
+  }
+}/* BORDER */
+
+
 .user-review-border {
   background: #75c222;
   padding: 1px;

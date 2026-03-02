@@ -24,7 +24,7 @@ function Details() {
   const agent = details[0];
 
   return (
-    <div className="w-full min-h-screen 
+    <div className="w-full 
                 px-4 sm:px-6 md:px-10 lg:px-[64px] 
                 py-6 bg-white">
 
