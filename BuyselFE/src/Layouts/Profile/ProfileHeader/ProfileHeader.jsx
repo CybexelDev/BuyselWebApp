@@ -5,13 +5,15 @@ import logo from '../../../assets/images/logo/logo.png'
 import house from '../../../assets/images/profile/house.png'
 import profile from '../../../assets/images/profile/profile.png'
 import location from '../../../assets/images/profile/location.png'
+import { Link } from "react-scroll"
+
 
 
 import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
 
 import Navbar from "../../../Components/Navbar/Navbar";
-const ProfileHeader = () => {
+const ProfileHeader = ({setMode}) => {
   return (
     <div className="relative p-5 ">
 
@@ -97,19 +99,28 @@ const ProfileHeader = () => {
     <div className="flex gap-3 sm:gap-4  mb-7 mt-2 lg:mb-0 lg:mt-4 
                     flex-nowrap justify-start lg:justify-start">
 
+
+            <Link to="personalDetails" smooth duration={500} offset={-120}>
       <button className="bg-[#2B2E28] text-white 
                          px-3 py-2 sm:px-5 sm:py-2 
                          text-sm 
-                         rounded-lg text-wrap instrument-sans text-[16px] font-[550]" >
-        Edit Profile
+                         rounded-lg text-wrap instrument-sans text-[16px] font-[550] cursor-pointer" 
+              onClick={() => setMode("edit")}>
+          Edit Profile
       </button>
+     </Link>
 
+
+     
+           <Link to="personalDetails" smooth duration={500} offset={-120} >
       <button className="bg-gray-200 
                          px-2 py-1.5 sm:px-5 sm:py-2 
                          text-sm sm:text-base
-                         rounded-lg instrument-sans text-[16px] font-[550]">
-        Change Password
+                         rounded-lg instrument-sans text-[16px] font-[550] cursor-pointer"
+                onClick={() => setMode("changepassword")}>
+          Change Password
       </button>
+      </Link>
 
     </div>
 
