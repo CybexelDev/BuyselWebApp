@@ -83,7 +83,7 @@ const MapSection = ({ address, latitude, longitude, landmarks }) => {
         </div>
 
         {/* 💻 DESKTOP FLOATING MAP */}
-        <div className="absolute top-12 left-0 max-[1279px]:w-[520px] min-[1280px]:w-[600px] min-[1281px]:w-[660px] z-10 hidden lg:block">
+        <div className="absolute top-12 left-0 max-[1279px]:w-[520px] min-[1280px]:w-[600px] min-[1281px]:w-[660px] z-10 hidden lg:block shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[40px]">
           <Map
             latitude={latitude}
             longitude={longitude}

@@ -56,7 +56,7 @@ bg-[position:center_41.3%]
 
                    w-[160px] sm:w-[189px] 
                    h-[55px] sm:h-[59px] 
-                   rounded-full">
+                   rounded-full cursor-pointer">
               <img src={GooglePlayStore} alt="Google Play" className="h-[31.14px] ml-5 w-[28px]" />
               <div className="text-white text-left flex leading-tight flex-col">
                 <p className=" text-[8px] xl:text-[12.13px] font-[350] inter">Download on the</p>
@@ -67,7 +67,7 @@ bg-[position:center_41.3%]
 <button className="flex items-center gap-2 bg-black 
                    w-[160px] sm:w-[189px] 
                    h-[55px] sm:h-[59px] 
-                   rounded-full">
+                   rounded-full cursor-pointer">
               <img src={Apple} alt="Apple" className="h-[31.14px] ml-5 w-[28px]" />
               <div className="text-white text-left flex leading-tight flex-col">
                 <p className=" text-[8px] xl:text-[12.13px] font-[350] inter">Download on the</p>

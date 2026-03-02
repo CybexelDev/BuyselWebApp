@@ -86,7 +86,7 @@ function FAQSection() {
             <div className="w-[32px] h-[32px] 
                             lg:w-[39px] lg:h-[39px] 
                             flex items-center justify-center 
-                            rounded-full bg-[#6ABD11ED]">
+                            rounded-full bg-[#6ABD11ED] cursor-pointer">
 
               <svg
                 viewBox="0 0 10 16"
@@ -111,7 +111,7 @@ function FAQSection() {
                 : "max-h-0"
             }`}
           >
-            <p className="text-gray-600 text-sm sm:text-base">
+            <p className="text-gray-600 text-sm sm:text-base host-grotesk">
               {faq.answer}
             </p>
           </div>

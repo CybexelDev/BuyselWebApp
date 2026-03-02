@@ -129,7 +129,8 @@ export const properties= [
         "https://i.pinimg.com/736x/f6/d5/ac/f6d5ac3b337f8f118960e31d66fa30d2.jpg",
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ],
-          featured: true
+          featured: true,
+       
 
     },
       {
