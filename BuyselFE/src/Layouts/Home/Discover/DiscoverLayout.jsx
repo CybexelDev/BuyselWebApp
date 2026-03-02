@@ -92,18 +92,18 @@ ${isDesktop ? item.height : "h-[160px] md:h-[250px]"}
         Discover Your Ideal <br className="hidden md:block"/> Property Type
       </h2>
 {/* mobile */}
-<div className="grid grid-cols-3 gap-2 md:hidden">
+<div className="grid grid-cols-3 gap-2 md:hidden cursor-pointer">
         {properties.map((item) => <PropertyCard key={item.id} item={item} isDesktop={false} />)}
         <div className="col-span-full"><DescriptionText /></div>
       </div>
 {/* tab */}
-<div className="hidden md:grid xl:hidden grid-cols-4 gap-4">
+<div className="hidden md:grid xl:hidden grid-cols-4 gap-4 cursor-pointer">
         {properties.map((item) => <PropertyCard key={item.id} item={item} isDesktop={false} />)}
         <div className="col-span-full"><DescriptionText /></div>
       </div>
 {/* lap */}
       <div 
-        className="hidden xl:grid justify-center gap-4 gap-y-1"
+        className="hidden xl:grid justify-center gap-4 gap-y-1 cursor-pointer"
         style={{ gridTemplateColumns: "repeat(5, 210px)" }}
       >
         {properties.map((item) => <PropertyCard key={item.id} item={item} isDesktop={true} />)}
