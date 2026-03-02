@@ -13,6 +13,7 @@ import Wishlist from './Pages/Wishlist/Wishlist'
 import About from './Pages/About/About'
 import Contact from './Pages/Contact/Contact'
 import AgentDetail from './Pages/AgentDetail/AgentDetail'
+import AddProperty from './Pages/AddProperty/AddProperty'
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/about" element={<About/>}/>
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/agent-detail" element={<AgentDetail/>}/>
+          <Route path='/addyourproperty' element={<AddProperty/>}/>
         </Routes>
       </Router>
 
