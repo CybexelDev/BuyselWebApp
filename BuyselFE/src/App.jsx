@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Agents from './Pages/Agents/Agents';
 import Wishlist from './Pages/Wishlist/Wishlist'
 import About from './Pages/About/About'
+import LoginAndSignuppage from './Pages/LoginAndSignup/LoginAndSignup'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/wishlist" element={<Wishlist/>}/>
           <Route path="/about" element={<About/>}/>
+          <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
         </Routes>
       </Router>
 
