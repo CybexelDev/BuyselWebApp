@@ -6,7 +6,7 @@ function AddProperty() {
   return (
     <div>
       <AddPropertyHeader/>
-      {/* <AddPropertySection/> */}
+       <AddPropertySection/> 
     </div>
   )
 }

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import SidebarProgress from "../../../Components/AddProperty/SideBarProgress";
 import PropertyInfo from "../../../Components/AddProperty/PropertyInfo";
+import Pricing from "../../../Components/AddProperty/Pricing";
+import MediaUpload from "../../../Components/AddProperty/MediaUpload";
+import Button from "../../../Components/AddProperty/Button";
+import ProfileDashboard from "../../Profile/ProfileDashboard/ProfileDashboard";
 
 function AddPropertySection() {
 
@@ -20,12 +24,19 @@ function AddPropertySection() {
     propertyCondition: "",
     price: "",
     images: [],
+    schedule: "",
+    monthlyRent:"",
+    maintainceCharge:"",
+    priceNegotiable:"",
+    availableDate:"",
+
     schedule: ""
   });
 
   return (
     <div className="bg-[#FFFFFF] min-h-screen p-6">
 
+      <div className=" mx-auto flex gap-2 sm:gap-4 md:gap-6 lg:gap-8">
       <div className="max-w-[1400px] mx-auto flex gap-8">
 
         <SidebarProgress step={step} />
@@ -36,13 +47,32 @@ function AddPropertySection() {
             <PropertyInfo
               formData={formData}
               setFormData={setFormData}
-              next={() => setStep(2)}
+            />
+          )}
+          {step === 2 && (
+            <Pricing
+              formData={formData}
+              setFormData={setFormData}
+            />
+          )}
+            {step === 3 && (
+            <MediaUpload
+              formData={formData}
+              setFormData={setFormData}
+              
             />
           )}
 
-
+         
+                <Button
+              step={step}
+            next={() => setStep(step + 1)}
+           back={() => setStep(step - 1)}
+           />
+              next={() => setStep(2)}
+            />
+          )}
         </div>
-
       </div>
 
     </div>

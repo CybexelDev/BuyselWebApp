@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PropertyInfo({ formData, setFormData, next }) {
+function PropertyInfo({ formData, setFormData,}) {
 
   const propertyTypes = [
     "Office",
@@ -348,16 +348,7 @@ Carpet Area (sq ft)            </label>
         </div>
 
 
-        <div className="flex justify-end mt-10">
-
-          <button
-            onClick={next}
-            className="bg-lime-500 text-white px-6 py-2 rounded-lg"
-          >
-            Continue
-          </button>
-
-        </div>
+        
 
       </div>
 
