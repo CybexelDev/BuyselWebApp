@@ -9,65 +9,67 @@ import './LoginAndSignup.css'
 import AgentForm from "../../../Components/LoginAndSignup/AgentForm/AgentForm";
 import UserForm from "../../../Components/LoginAndSignup/UserForm/UserForm";
 import SignupForm from "../../../Components/LoginAndSignup/SignupForm/SignupForm";
+import OtpForm from "../../../Components/LoginAndSignup/OtpForm/OtpForm";
 
 export default function LoginAndSignup() {
     const [activeTab, setActiveTab] = useState("agent");
 
     console.log(activeTab, "tab valueeeee");
-    
+
 
     return (
-        <div className="h-[100vh] w-full bg-white flex items-center justify-center p-8">
-            <div className="bg-gray-50 rounded-3xl shadow-xl w-full max-w-5xl flex  overflow-hidden">
+        <div className="md:h-[100vh] h-[100%] w-full bg-white flex items-center justify-center p-8">
+            <div className="bg-gray-50 rounded-3xl shadow-xl w-full max-w-5xl md:flex  flex-row  overflow-hidden">
 
                 {/* LEFT IMAGE */}
-                <div className="w-1/2 p-4 relative">
+                <div className="md:w-[50%] w-[100%] p-4 relative">
                     <img src={logo} className="absolute top-7 left-6.5 w-[100px]" />
-                    <img class="inverted-radius" src={activeTab == "signup" ? (houseImg3) : activeTab == "agent" ? (houseImg)  : (houseImg2)} alt="" />
+                    <img class="inverted-radius" src={activeTab == "signup" ? (houseImg3) : activeTab == "agent" ? (houseImg) : (houseImg2)} alt="" />
                 </div>
 
                 {/* RIGHT LOGIN */}
-                <div className="w-1/2 p-10 relative">
+                <div className="md:w-[50%] w-[100%] p-10 relative">
 
                     {/* Tabs */}
                     <div className="flex justify-end ">
-                        
-                        <div className=" flex mb-10 w-fit bg-gray-200 rounded-[11px]">
-                        <button
-                            onClick={() => setActiveTab("agent")}
-                            className={`px-4 py-2 rounded-[11px] flex gap-2  cursor-pointer text-sm font-medium transition
-                            ${activeTab === "agent"
-                                    ? "bg-[#73c020] text-white"
-                                    : "bg-gray-200 text-gray-600"
-                                }`}
-                        >
-                            <img src={loginI} className="w-4 h-4 mt-1" />
-                            Agents Login
-                        </button>
 
-                        <button
-                            onClick={() => setActiveTab("user")}
-                            className={`px-4 py-2 rounded-[11px] flex gap-2 cursor-pointer text-sm font-medium transition
+                        <div className=" flex mb-10 w-fit bg-gray-200 rounded-[11px]">
+                            <button
+                                onClick={() => setActiveTab("agent")}
+                                className={`px-4 py-2 rounded-[11px] flex gap-2  cursor-pointer text-sm font-medium transition
+                            ${activeTab === "agent"
+                                        ? "bg-[#73c020] text-white"
+                                        : "bg-gray-200 text-gray-600"
+                                    }`}
+                            >
+                                <img src={loginI} className="w-4 h-4 mt-1" />
+                                Agents Login
+                            </button>
+
+                            <button
+                                onClick={() => setActiveTab("user")}
+                                className={`px-4 py-2 rounded-[11px] flex gap-2 cursor-pointer text-sm font-medium transition
                             ${activeTab === "user" || activeTab === "signup"
-                                    ? "bg-[#73c020] text-white"
-                                    : "bg-gray-200 text-gray-600"
-                                }`}
-                        >
-                             <img src={user} className="w-4 h-4 mt-1 object-contain" />
-                            User Login
-                        </button>
+                                        ? "bg-[#73c020] text-white"
+                                        : "bg-gray-200 text-gray-600"
+                                    }`}
+                            >
+                                <img src={user} className="w-4 h-4 mt-1 object-contain" />
+                                User Login
+                            </button>
                         </div>
                     </div>
 
-                 {
-  activeTab === "agent" ? (
-    <AgentForm />
-  ) : activeTab === "signup" ? (
-    <SignupForm setSignin={setActiveTab} />
-  ) : (
-    <UserForm setSignup={setActiveTab} />
-  )
-}
+                    {
+                        activeTab === "agent" ? (
+                            <AgentForm />
+                        ) : activeTab === "signup" ? (
+                            <SignupForm setSignin={setActiveTab} />
+                            // <OtpForm />
+                        ) : (
+                            <UserForm setSignup={setActiveTab} />
+                        )
+                    }
 
                 </div>
             </div>
