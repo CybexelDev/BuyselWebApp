@@ -51,7 +51,6 @@ function AddPropertySection() {
             <Pricing
               formData={formData}
               setFormData={setFormData}
-              
             />
           )}
             {step === 3 && (
