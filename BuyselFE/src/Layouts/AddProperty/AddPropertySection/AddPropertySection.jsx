@@ -30,12 +30,14 @@ function AddPropertySection() {
     priceNegotiable:"",
     availableDate:"",
 
+    schedule: ""
   });
 
   return (
     <div className="bg-[#FFFFFF] min-h-screen p-6">
 
       <div className=" mx-auto flex gap-2 sm:gap-4 md:gap-6 lg:gap-8">
+      <div className="max-w-[1400px] mx-auto flex gap-8">
 
         <SidebarProgress step={step} />
 
@@ -67,13 +69,10 @@ function AddPropertySection() {
             next={() => setStep(step + 1)}
            back={() => setStep(step - 1)}
            />
-
-
+              next={() => setStep(2)}
+            />
+          )}
         </div>
-
-
-
-
       </div>
 
     </div>

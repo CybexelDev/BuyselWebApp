@@ -47,7 +47,7 @@ function PropertyInfo({ formData, setFormData,}) {
 
       <div className="flex-1 bg-white rounded-xl p-8">
 
-        <h2 className="text-xl font-semibold mb-6">
+        <h2 className="text-[24px] lexend font-[550] mb-6">
           Property Details
         </h2>
 
@@ -55,34 +55,63 @@ function PropertyInfo({ formData, setFormData,}) {
         <div className="grid grid-cols-2 gap-6 mb-6">
 
           <div>
-            <label className="text-sm font-medium">
-              Property Segment
+            <label className="text-[16px] font-semibold lexend">
+              Property Type
             </label>
 
-            <select
-              className="w-full mt-2 border rounded-full px-4 h-[42px]"
-              value={formData.propertySegment}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  propertySegment: e.target.value
-                })
-              }
-            >
-              <option>Commercial</option>
-              <option>Residential</option>
-            </select>
+        <div className="relative w-full">
+
+<select
+  className="w-full mt-2 h-[42px] px-5 pr-10 rounded-full
+  bg-[#F3F3F3]
+  border border-[#E4E3E3]
+  text-[14px] text-[#757575]
+  shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+  appearance-none
+  outline-none"
+  value={formData.propertySegment}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      propertySegment: e.target.value
+    })
+  }
+>
+  <option>Commercial</option>
+  <option>Residential</option>
+    <option>Land/Plot</option>
+  <option>Industrial</option>
+
+</select>
+
+<svg
+  className="absolute right-5 bottom-3 -translate-y-1/2 pointer-events-none"
+  width="12"
+  height="7"
+  viewBox="0 0 12 7"
+  fill="none"
+>
+  <path
+    d="M11 1L6 6L1 1"
+    stroke="#84CC16"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</svg>
+
+</div>
           </div>
 
           <div>
-            <label className="text-sm font-medium">
+            <label className="text-[16px] font-semibold lexend">
               Listing Type
             </label>
 
             <div className="flex gap-6 mt-3">
 
               {["Sell", "Rent", "Lease"].map((type) => (
-                <label key={type} className="flex items-center gap-2">
+                <label key={type} className="flex items-center gap-2 text-[14px] lexend font-medium">
 
                   <input
                     type="radio"
@@ -108,40 +137,22 @@ function PropertyInfo({ formData, setFormData,}) {
         </div>
 
 
-        <div className="mb-6">
-
-          <label className="text-sm font-medium">
-            Property Type
-          </label>
-
-          <div className="flex gap-4 mt-3 flex-wrap">
-
-            {propertyTypes.map((type) => (
-              <button
-                key={type}
-                onClick={() => handleTypeSelect(type)}
-                className={`w-[90px] h-[70px] border rounded-lg flex flex-col items-center justify-center text-sm
-                ${
-                  selectedType === type
-                    ? "border-lime-500 text-lime-600"
-                    : "border-gray-300"
-                }`}
-              >
-                🏢
-                {type}
-              </button>
-            ))}
-
-          </div>
-
-        </div>
 
 
         <div className="grid grid-cols-2 gap-6 mb-6">
-
+            
+            <div>
+ <label className="text-[16px] font-semibold lexend">
+Carpet Area (sq ft)            </label>
           <input
-            placeholder="Carpet Area (sq ft)"
-            className="border rounded-full px-4 h-[42px]"
+            placeholder="e.g., 1200"
+            className="w-full mt-2 h-[42px] px-5 pr-10 rounded-full
+  bg-[#F3F3F3]
+  border border-[#E4E3E3] inter italic
+  text-[14px] text-[#757575]
+  shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+  appearance-none
+  outline-none"
             value={formData.carpetArea}
             onChange={(e) =>
               setFormData({
@@ -150,37 +161,116 @@ function PropertyInfo({ formData, setFormData,}) {
               })
             }
           />
+          </div>
 
+         <div>
+ <label className="text-[16px] font-semibold lexend">
+              Build-Up Area (sq ft)
+            </label>
           <input
-            placeholder="Build-Up Area (sq ft)"
-            className="border rounded-full px-4 h-[42px]"
-            value={formData.buildUpArea}
+            placeholder="e.g., 1400"
+            className="w-full mt-2 h-[42px] px-5 pr-10 rounded-full
+  bg-[#F3F3F3]
+  border border-[#E4E3E3]
+  inter italic
+  text-[14px] text-[#757575]
+  shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+  appearance-none
+  outline-none"
+            value={formData.carpetArea}
             onChange={(e) =>
               setFormData({
                 ...formData,
-                buildUpArea: e.target.value
+                carpetArea: e.target.value
               })
             }
           />
-
+          </div>
         </div>
 
 
-        <div className="grid grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-3 gap-6 mb-8">
 
-          <select className="border rounded-full px-4 h-[42px]">
-            <option>Possession Status</option>
-          </select>
+  {/* Possession Status */}
+  <div>
+    <label className="block text-[14px] font-semibold mb-2">
+      Possession Status
+    </label>
 
-          <select className="border rounded-full px-4 h-[42px]">
-            <option>Property Age</option>
-          </select>
+<div className="relative">
+    <select className="w-full h-[42px] px-5 rounded-full
+      bg-[#F3F3F3]
+      border border-[#E4E3E3]
+      text-[14px] text-[#757575]
+      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+      appearance-none
+      outline-none">
+      
+      <option>Select age</option>
+      <option>Ready to move</option>
+      <option>Under construction</option>
 
-          <select className="border rounded-full px-4 h-[42px]">
-            <option>Ownership</option>
-          </select>
+    </select>
+    
+<svg
+  className="absolute right-5 bottom-3 -translate-y-1/2 pointer-events-none"
+  width="12"
+  height="7"
+  viewBox="0 0 12 7"
+  fill="none"
+>
+  <path
+    d="M11 1L6 6L1 1"
+    stroke="#84CC16"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</svg>
+    </div>
+  </div>
 
-        </div>
+  {/* Property Age */}
+  <div>
+    <label className="block text-[14px] font-semibold mb-2">
+      Property Age
+    </label>
+
+<div className="relative">
+    <select className="w-full h-[42px] px-5 rounded-full
+      bg-[#F3F3F3]
+      border border-[#E4E3E3]
+      text-[14px] text-[#757575]
+      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+      appearance-none
+      outline-none">
+      
+      <option>Select age</option>
+
+    </select>
+    </div>
+  </div>
+
+  <div>
+    <label className="block text-[14px] font-semibold mb-2">
+      Ownership
+    </label>
+<div className="relative">
+    <select className="w-full h-[42px] px-5 rounded-full
+      bg-[#F3F3F3]
+      border border-[#E4E3E3]
+      text-[14px] text-[#757575]
+      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+      appearance-none
+      outline-none">
+      
+      <option>Select ownership</option>
+
+    </select>
+    </div>
+  </div>
+
+</div>
 
 
         <h3 className="font-semibold mb-3">

@@ -49,7 +49,7 @@ const steps = [
   const progress = Math.round((step / steps.length) * 100);
 
   return (
-    <div className="w-fit h-fit bg-[#EBFFEA] rounded-[28px] p-6">
+    <div className="w-fit h-fit bg-[#EBFFEA] rounded-[40px] p-6">
 
       <div className="flex items-center gap-3 mb-3 relative pb-5">
 

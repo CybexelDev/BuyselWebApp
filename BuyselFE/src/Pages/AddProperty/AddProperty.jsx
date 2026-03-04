@@ -1,10 +1,12 @@
 import React from 'react'
 import AddPropertySection from '../../Layouts/AddProperty/AddPropertySection/AddPropertySection'
+import AddPropertyHeader from '../../Layouts/AddProperty/AddPropertyHeader/AddPropertyHeader'
 
 function AddProperty() {
   return (
     <div>
-      <AddPropertySection/>
+      <AddPropertyHeader/>
+       <AddPropertySection/> 
     </div>
   )
 }
