@@ -1,5 +1,5 @@
 import React from 'react'
-import AddPropertySection from '../../Layouts/AddProperty/AddPropertySection'
+import AddPropertySection from '../../Layouts/AddProperty/AddPropertySection/AddPropertySection'
 
 function AddProperty() {
   return (

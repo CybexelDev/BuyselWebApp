@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import SidebarProgress from "../../Components/AddProperty/SideBarProgress";
-import PropertyInfo from "../../Components/AddProperty/PropertyInfo";
-import Pricing from "../../Components/AddProperty/Pricing";
-import MediaUpload from "../../Components/AddProperty/MediaUpload";
-import Button from "../../Components/AddProperty/Button";
-import ProfileDashboard from "../Profile/ProfileDashboard/ProfileDashboard";
+import SidebarProgress from "../../../Components/AddProperty/SideBarProgress";
+import PropertyInfo from "../../../Components/AddProperty/PropertyInfo";
+import Pricing from "../../../Components/AddProperty/Pricing";
+import MediaUpload from "../../../Components/AddProperty/MediaUpload";
+import Button from "../../../Components/AddProperty/Button";
+import ProfileDashboard from "../../Profile/ProfileDashboard/ProfileDashboard";
 
 function AddPropertySection() {
 
