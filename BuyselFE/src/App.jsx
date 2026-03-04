@@ -11,6 +11,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Agents from './Pages/Agents/Agents';
 import Wishlist from './Pages/Wishlist/Wishlist'
 import About from './Pages/About/About'
+import Contact from './Pages/Contact/Contact'
+import AgentDetail from './Pages/AgentDetail/AgentDetail'
+import AddProperty from './Pages/AddProperty/AddProperty'
+import BlogDetail from './Layouts/BlogDetail/BlogDetailSection'
+import BlogDetailPage from './Pages/BlogDetail/BlogDetailPage'
+import AgentDashboard from './Agent/Pages/Dashboard/Dashboard'
 import LoginAndSignuppage from './Pages/LoginAndSignup/LoginAndSignup'
 
 
@@ -29,6 +35,11 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/wishlist" element={<Wishlist/>}/>
           <Route path="/about" element={<About/>}/>
+          <Route path="/contact" element={<Contact/>}/>
+          <Route path="/agent-detail" element={<AgentDetail/>}/>
+          <Route path='/addyourproperty' element={<AddProperty/>}/>
+          <Route path='/blogdetail' element={<BlogDetailPage/>}/>
+          <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
         </Routes>
       </Router>

@@ -3,22 +3,20 @@ import property from "../../../assets/images/profile/property.svg";
 import Propertycard from "../../../Components/PropertyCard/Propertycard";
 import { wishlist } from "../../../Constance/constance";
 import { ArrowRight } from "lucide-react";
-import { Check } from 'lucide-react';
+import { Check } from "lucide-react";
 import PersonalDetails from "./PersonalDetails";
 
-
-const ProfileDashboard = ({users}) => {
-  const [wish,setWish]=useState([])
-  useEffect(()=>{
-    setWish(wishlist)
-  },[])
+const ProfileDashboard = ({ users, mode, setMode }) => {
+  const [wish, setWish] = useState([]);
+  useEffect(() => {
+    setWish(wishlist);
+  }, []);
 
   const activities = [
     {
       id: 1,
       icon: () => (
         <svg
-
           viewBox="0 0 29 26"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -35,8 +33,13 @@ const ProfileDashboard = ({users}) => {
     },
     {
       id: 2,
-      icon: () => <img src={property} alt="Property" className="w-6 h-5 xl:w-[36px] xl:h-[36px]"
- />,
+      icon: () => (
+        <img
+          src={property}
+          alt="Property"
+          className="w-6 h-5 xl:w-[36px] xl:h-[36px]"
+        />
+      ),
       value: 30,
       label: "Properties Viewed",
     },
@@ -44,12 +47,10 @@ const ProfileDashboard = ({users}) => {
       id: 3,
       icon: () => (
         <svg
-          
           viewBox="0 0 26 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="w-6 h-5 xl:w-[27px] xl:h-[24px]"
-
         >
           <g clip-path="url(#clip0_1451_3540)">
             <path
@@ -83,12 +84,10 @@ const ProfileDashboard = ({users}) => {
       id: 4,
       icon: () => (
         <svg
-          
           viewBox="0 0 28 28"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="w-6 h-5 xl:w-[28px] xl:h-[28px]"
-
         >
           <g clip-path="url(#clip0_1451_3563)">
             <path
@@ -109,109 +108,105 @@ const ProfileDashboard = ({users}) => {
   ];
 
   return (
-    <div className="mb-4 mt-10 md:mb-6 md:mt-22 lg:my-6
+    <div
+      className="mb-4 mt-10 md:mb-6 md:mt-22 lg:my-6
                 px-2 sm:px-6 md:px-8 xl:pl-[42px]  xl:pr-[84px]
                 bg-white min-h-screen 
-                flex flex-col md:flex-row gap-4 md:gap-6">
-                
-
-  <div className="w-full md:w-1/2 space-y-6 md:space-y-8 xl:space-y-[49px] ">
-
-    <div className="bg-[#55623F] rounded-[16px] xl:rounded-[21px]
+                flex flex-col md:flex-row gap-4 md:gap-6"
+    >
+      <div className="w-full md:w-1/2 space-y-6 md:space-y-8 xl:space-y-[49px] ">
+        <div
+          className="bg-[#55623F] rounded-[16px] xl:rounded-[21px]
                     pt-5 md:pt-6 xl:pt-[27px]
                     pb-6 xl:pb-9
                     px-5 md:px-6 xl:px-[37px]
-                    text-white shadow-[0px_2px_6.6px_0px_rgba(109,108,108,0.25)] w-full">
-
-      <h2 className="host-grotesk 
+                    text-white shadow-[0px_2px_6.6px_0px_rgba(109,108,108,0.25)] w-full"
+        >
+          <h2
+            className="host-grotesk 
                      text-[16px] md:text-[18px] xl:text-[20px]
-                     font-[500] leading-tight mb-5 xl:mb-6">
-        Account Info
-      </h2>
+                     font-[500] leading-tight mb-5 xl:mb-6"
+          >
+            Account Info
+          </h2>
 
-      <div className="text-sm space-y-3 md:space-y-4 lg:space-y-[10px] xl:space-y-[12px]">
-
-        {/* Row 1 */}
-        <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row
+          <div className="text-sm space-y-3 md:space-y-4 lg:space-y-[10px] xl:space-y-[12px]">
+            {/* Row one */}
+            <div
+              className="flex flex-col sm:flex-row md:flex-col lg:flex-row
                         sm:justify-between sm:items-center md:items-start lg:items-center
                         gap-1
                         host-grotesk font-[400] 
-                        text-[14px] md:text-[15px]  lg:text-[13.5px] xl:text-[16px]">
-
-          <p>
-            <span>User ID:</span>{" "}
-            <span>BSU-10245</span>
-          </p>
-
-          <p className="flex items-center gap-2">
-            <span>Account Status:</span>
-            <span className="flex items-center gap-1">
-              <div className="bg-[#4bae4f] p-[2px] rounded-full">
-                <Check size={10} />
+                        text-[14px] md:text-[15px]  lg:text-[13.5px] xl:text-[16px]"
+            >
+              <div>
+                <span>User ID:</span> <span>BSU-10245</span>
               </div>
-              Active
-            </span>
-          </p>
-        </div>
 
-        {/* Row 2 */}
-        <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row
+              <div className="flex items-center gap-2">
+                <span>Account Status:</span>
+                <div className="flex items-center gap-1">
+                  <span className="bg-[#4bae4f] p-[2px] rounded-full">
+                    <Check size={10} />
+                  </span>
+                  Active
+                </div>
+              </div>
+            </div>
+
+            {/* Row 2 */}
+            <div
+              className="flex flex-col sm:flex-row md:flex-col lg:flex-row
                         sm:justify-between sm:items-center md:items-start lg:items-center
                         gap-1
                         host-grotesk font-[400] 
-                        text-[14px] md:text-[15px] lg:text-[13.5px]  xl:text-[16px]">
-
-          <p>
-            <span>Account Created On:</span>{" "}
-            <span>12 Dec 2025</span>
-          </p>
-
-          <p className="flex items-center gap-2">
-            <span>Verification Status:</span>
-            <span className="flex items-center gap-1">
-              <div className="bg-[#4bae4f] p-[2px] rounded-full">
-                <Check size={10} />
+                        text-[14px] md:text-[15px] lg:text-[13.5px]  xl:text-[16px]"
+            >
+              <div>
+                <span>Account Created On:</span> <span>12 Dec 2025</span>
               </div>
-              Mobile
-            </span>
-          </p>
+
+              <div className="flex items-center gap-2">
+                <span>Verification Status:</span>
+                <div className="flex items-center gap-1">
+                  <span className="bg-[#4bae4f] p-[2px] rounded-full">
+                    <Check size={10} />
+                  </span>
+                  Mobile
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <div>
+          <PersonalDetails users={users} mode={mode} setMode={setMode} />
+        </div>
       </div>
-    </div>
-  
 
-<PersonalDetails users={users} m/>
-
-
-
-
-
-
-</div>
-
-
-
-     <div className="flex flex-col 
+      <div
+        className="flex flex-col 
                 space-y-6 sm:space-y-8 lg:space-y-[47px] 
                 lg:-mt-1 
-                w-full md:w-1/2">
+                w-full md:w-1/2"
+      >
+        <div className="bg-white">
+          <h2 className="text-[18px] sm:text-[20px] instrument-sans font-[600] mb-2 sm:mb-4">
+            My Activity
+          </h2>
 
-  <div className="bg-white">
-    <h2 className="text-[18px] sm:text-[20px] instrument-sans font-[600] mb-2 sm:mb-4">
-      My Activity
-    </h2>
-
-    <div className="
+          <div
+            className="
       grid
       grid-cols-1 sm:grid-cols-2
       gap-y-4 sm:gap-y-[17px]
       gap-x-4 sm:gap-x-[23px]
-    ">
-      {activities.map((item) => (
-        <div
-          key={item.id}
-          className="
+    "
+          >
+            {activities.map((item) => (
+              <div
+                key={item.id}
+                className="
             bg-[#efefef]
             py-4 sm:py-[21px]
             rounded-[14px]
@@ -220,46 +215,44 @@ const ProfileDashboard = ({users}) => {
             pl-4 sm:pl-6 md:pl-3 lg:pl-[26px] xl:pl-[52px]
             shadow-[0px_4px_4px_0px_rgba(183,174,174,0.25)]
           "
-        >
-          {item.icon()}
+              >
+                {item.icon()}
 
-          <div className="flex flex-col text-start host-grotesk text-[#000000] gap-2 sm:gap-[8px]">
-            <p className="text-[14px] sm:text-[16px] md:text-[12px] lg:text-[16px] leading-tight font-[400]">
-              {item.label}
-            </p>
-            <p className="font-[500] text-[22px] sm:text-[26px] xl:text-[30px] leading-tight">
-              {item.value}
-            </p>
+                <div className="flex flex-col text-start host-grotesk text-[#000000] gap-2 sm:gap-[8px]">
+                  <p className="text-[14px] sm:text-[16px] md:text-[12px] lg:text-[16px] leading-tight font-[400]">
+                    {item.label}
+                  </p>
+                  <p className="font-[500] text-[22px] sm:text-[26px] xl:text-[30px] leading-tight">
+                    {item.value}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
 
         <div>
           <h2 className="host-grotesk text-[18px] sm:text-[20px] font-[500] leading-[14px] mb-2 sm:mb-3">
             My Wishlist
           </h2>
-            <div className="grid grid-cols-2 gap-1 sm:gap-4">
-             {wish.slice(-2).map((property) => (  
-                  <Propertycard
-                  key={property.id}
-                  property={property}
-                  color="bg-[#fbfbfb]"
-                  shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
-                  hideWhatsapp={true}
-                  hideCall={true}
-                />
-              ))}
-            </div>
-                   </div>
+          <div className="grid grid-cols-2 gap-1 sm:gap-4">
+            {wish.slice(-2).map((property) => (
+              <Propertycard
+                key={property.id}
+                property={property}
+                color="bg-[#fbfbfb]"
+                shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
+                hideWhatsapp={true}
+                hideCall={true}
+              />
+            ))}
+          </div>
+        </div>
 
-
-
-{/* View all wishlist button */}
-<div className="flex">
-  <button
-    className="cursor-pointer
+        {/* View all wishlist button */}
+        <div className="flex">
+          <button
+            className="cursor-pointer
       flex items-center gap-3
       instrument-sans
       font-[700]
@@ -268,41 +261,27 @@ const ProfileDashboard = ({users}) => {
       text-black
       group
      -mt-3 sm:-mt-8"
-  >
-    View all wishlist
-
-    <span
-      className="
+          >
+            View all wishlist
+            <span
+              className="
         flex items-center justify-center
        h-5 w-5 sm:w-[25px] sm:h-[25px]
         rounded-full
         bg-black
         transition-transform duration-200
         group-hover:translate-x-1 "
-    >
-        <ArrowRight className="w-[13px] h-[13px] sm:w-4 sm:h-4 text-white" strokeWidth={3}/> 
-    </span>
-  </button>
-</div>
-
-
-        
+            >
+              <ArrowRight
+                className="w-[13px] h-[13px] sm:w-4 sm:h-4 text-white"
+                strokeWidth={3}
+              />
+            </span>
+          </button>
+        </div>
       </div>
-
-
-
-
-      
-
     </div>
-
-    
   );
 };
 
 export default ProfileDashboard;
-
-
-
-
-

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ProfileHeader from '../../Layouts/Profile/ProfileHeader/ProfileHeader'
 import ProfileDashboard from '../../Layouts/Profile/ProfileDashboard/ProfileDashboard'
 import { user } from '../../Constance/constance'
+import Footer from '../../Components/Footer/Footer'
 import RecentEnquiries from '../../Layouts/Profile/RecentEnquiries/RecentEnquiries'
 
 function Profile() {
@@ -12,9 +13,10 @@ function Profile() {
   },[])
   return (
     <div>
-     <ProfileHeader  setmode={setMode}/>
+     <ProfileHeader  setMode={setMode}/>
      <ProfileDashboard users={users} mode={mode} setMode={setMode} />
-     <RecentEnquiries />
+            <RecentEnquiries />
+     <Footer />
     </div>
   )
 }

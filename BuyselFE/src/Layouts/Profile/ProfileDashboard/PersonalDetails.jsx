@@ -1,25 +1,43 @@
 import { Phone } from "lucide-react";
 import { FaUser } from "react-icons/fa";
 import { TbMailFilled } from "react-icons/tb";
+import { Element } from "react-scroll"
+import EditProfile from "./EditProfile";
+import ChangePassword from "./ChangePass";
 
 
 
-const PersonalDetails = ({ users }) => {
+const PersonalDetails = ({ users,mode,setMode }) => {
   return (
+      <Element name="personalDetails">
     <div className="w-full ">
-      <h2 className="host-grotesk text-[1px] sm:text-[24px] font-[500] leading-[14px] mb-3 sm:mb-6">Personal Details</h2>
-
-      <div className="bg-[#f8f8f8] rounded-[32px] px-[41px] py-[41px]">
+<h2 className="host-grotesk text-[20px] sm:text-[24px] font-[500] leading-[14px] mb-3 sm:mb-6">
+  {mode === "changepassword"
+    ? "Change Password"
+    : "Personal Details"}
+</h2>
+      {mode === "" && (
+      <div className="bg-[#f8f8f8] rounded-[32px] px-[41px] py-[20px] sm:py-[41px]">
         <Detail icon={<FaUser size={19}/>} label="Full Name" value={users.fullName} />
         <Detail icon={<TbMailFilled size={19} />} label="Email Address" value={users.email} />
         <Detail icon={<Phone
         size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Mobile Number" value={users.phone} />
         <Detail icon={<Phone
-        size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Mobile Number" value={users.altPhone1} />
-        <Detail icon={<Phone
-        size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Mobile Number" value={users.altPhone2} />
+        size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Alternate Phone" value={users.altPhone1} />
+        
       </div>
+              )}
+      {mode === "edit" && (
+          <EditProfile users={users} setMode={setMode} />
+        )}
+
+        {/* CHANGE PASSWORD MODE */}
+        {mode === "changepassword" && (
+          <ChangePassword setMode={setMode} />
+        )}
+
     </div>
+    </Element>
   );
 };
 

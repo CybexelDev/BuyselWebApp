@@ -42,7 +42,7 @@ function  Propertycard({ property,color="bg-[#FFFFFF]",shadow,hideWhatsapp=false
           className="w-full h-[182px] rounded-[22px] object-cover "
         />
 
-        <div className="absolute top-4 right-6 flex gap-1 ">
+        <div className="absolute top-4 right-4 sm:right-6 flex gap-1 ">
          <button
   onClick={() => setLiked(prev => !prev)}
   className="bg-white rounded-full h-[23px] w-[23px] flex justify-center items-center"
@@ -64,7 +64,7 @@ function  Propertycard({ property,color="bg-[#FFFFFF]",shadow,hideWhatsapp=false
         </button>
         </div>
 
-        <div className="absolute bottom-2 left-5 flex gap-1">
+        <div className="absolute bottom-2 left-4 sm:left-5 flex gap-1">
           <button onClick={prevImage} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="none" stroke="#181212" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14 7l-5 5m0 0l5 5"/></svg>       </button>
           <button onClick={nextImage} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center">
@@ -77,10 +77,8 @@ function  Propertycard({ property,color="bg-[#FFFFFF]",shadow,hideWhatsapp=false
       <div className="px-2 pt-2 ">
 
         <div className="flex flex-row space-x-3 justify-between items-center">
-  <h3 className="instrument-sans font-[600] text-[13px] leading-[100%] text-black">
-  {property.title.length > 18
-    ? property.title.slice(0, 18) + "..."
-    : property.title}
+  <h3 className="instrument-sans font-[600] text-[13px] text-black truncate">
+  {property.title}
 </h3>
 
 

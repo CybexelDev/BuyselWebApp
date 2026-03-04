@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import apartments from "../../../assets/images/icons/apartments.svg";
 import location from "../../../assets/images/icons/location(1).svg";
 import Chatbutton from "../Chatbox/Chatbutton";
+import { useNavigate } from "react-router-dom";
 
 
 function PropertySearch() {
   const [activeTab, setActiveTab] = useState("Rent");
 
-  const tabs = ["Rent", "Buy", "Sell", "Agent", "Lease"];
+  const tabs = ["Rent","Sale", "Agent", "Lease"];
+
+  const nav = useNavigate()
 
   return (
     <div className="relative w-full flex justify-center px-6 mt-16 md:mt-0 sm:px-2 md:px-4 mb-16">
@@ -25,8 +28,13 @@ function PropertySearch() {
             {tabs.map((tab) => (
               <button
                 key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`flex items-center justify-center w-[50px] sm:w-[73px] h-[30px] rounded-[9px] text-sm sm:text-[17px] ${
+                onClick={() => {
+                setActiveTab(tab);
+                if (tab === "Agent") {
+                 nav("/agents");
+                 }
+                 }}
+                className={`flex items-center justify-center w-[50px] sm:w-[73px] h-[30px] rounded-[9px] text-sm sm:text-[17px] cursor-pointer ${
                   activeTab === tab
                     ? "bg-black text-white font-[600]"
                     : "text-[#938181] font-[500]"
@@ -62,11 +70,21 @@ function PropertySearch() {
   </div>
 
   <div className="poppins flex items-center z-10 w-auto xl:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3 ">
-    <input
-      type="text"
-      placeholder="Budget"
-      className="bg-transparent w-full outline-none text-[12px] text-gray-700 placeholder-[#888888ED]"
-    />
+    <select
+    className="bg-transparent w-full outline-none text-[12px] text-gray-700 appearance-none cursor-pointer"
+    defaultValue=""
+  >
+    <option value="" disabled>
+      Budget
+    </option>
+
+    <option>Below ₹5 Lakhs</option>
+    <option>₹5 – 10 Lakhs</option>
+    <option>₹10 – 25 Lakhs</option>
+    <option>₹25 – 50 Lakhs</option>
+    <option>Above ₹50 Lakhs</option>
+  </select>
+
 
     <svg
       xmlns="http://www.w3.org/2000/svg"
