@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import blog1 from "../../../assets/images/blog/blog1.jpg"
 import blog2 from "../../../assets/images/blog/blog2.jpg"
 import blog3 from "../../../assets/images/blog/blog3.png"
@@ -143,7 +143,7 @@ const featuredBlogs = [
 const BlogsListing = () => {
   const [activeCategory, setActiveCategory] = useState(null);
 const [currentPage, setCurrentPage] = useState(1);
-
+ const blogGridRef=useRef(null)
 const filteredBlogs = activeCategory? blogs.filter(
   (blog) => blog.category === activeCategory
 ):blogs ;
@@ -164,9 +164,21 @@ const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);  re
         <button
           key={cat}
 onClick={() => {
-  setActiveCategory(cat);
+  if (activeCategory === cat) {
+    setActiveCategory(null);   
+  } else {
+    setActiveCategory(cat); 
+      blogGridRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });   
+  }
   setCurrentPage(1);
-}}          className={`px-6 sm:px-9 lg:px-11 
+  
+
+}
+
+}     className={`px-6 sm:px-9 lg:px-11 
   py-2 
   rounded-full 
   text-sm sm:text-base 
@@ -250,7 +262,7 @@ onClick={() => {
 
 
     {/* ================= BLOG GRID ================= */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" ref={blogGridRef}>
 
       {currentBlogs.map((blog) => (
         <div

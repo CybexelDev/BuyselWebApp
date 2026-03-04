@@ -6,6 +6,8 @@ import house from '../../../assets/images/profile/house.png'
 import profile from '../../../assets/images/profile/profile.png'
 import location from '../../../assets/images/profile/location.png'
 import { Link } from "react-scroll"
+import { FaEdit } from "react-icons/fa";
+import { useRef } from "react";
 
 
 
@@ -14,6 +16,20 @@ import { ArrowUpRight } from 'lucide-react';
 
 import Navbar from "../../../Components/Navbar/Navbar";
 const ProfileHeader = ({setMode}) => {
+  const fileInputRef = useRef(null);
+  const [image, setImage] = useState(profile);
+
+  const handleEditClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(URL.createObjectURL(file));
+    }
+  };
+
   return (
     <div className="relative p-5 ">
 
@@ -22,7 +38,6 @@ const ProfileHeader = ({setMode}) => {
       {/* ===== BANNER ===== */}
       <div className="profile-cta-container relative overflow-visible">
 
-        {/* Logo */}
         <div className="profile-cta-logo-container">
           <div className="flex items-center justify-center">
             <img
@@ -71,15 +86,35 @@ const ProfileHeader = ({setMode}) => {
 >
 
   {/* LEFT: Profile Image */}
-  <div className="w-30 h-30 sm:w-28 sm:h-28 md:w-[200px] l md:h-[200px] lg:w-[213px] lg:h-[213px] 
+ <div className="w-30 h-30 sm:w-28 sm:h-28 md:w-[200px] l md:h-[200px] lg:w-[213px] lg:h-[213px] 
                   rounded-full overflow-hidden 
-                  border-4 border-white shadow-lg flex-shrink-0">
-    <img
-      src={profile}
-      alt="profile"
-      className="w-full h-full object-cover"
-    />
-  </div>
+                  border-4 border-white shadow-lg flex-shrink-0 relative">
+      <img
+        src={image}
+        alt="profile"
+        className="w-full h-full object-cover"
+      />
+
+   
+
+   <div
+        onClick={handleEditClick}
+        className="absolute top-4 right-2 md:top-5 md:right-8 bg-white p-1 rounded-full shadow-md cursor-pointer hover:bg-gray-100"
+      >
+        <FaEdit className="text-gray-600 text-sm" />
+      </div>
+
+
+
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleImageChange}
+        className="hidden"
+        accept="image/*"
+      />
+
+    </div>
 
   {/* RIGHT: Content */}
   <div className="flex flex-col items-start  lg:items-start 

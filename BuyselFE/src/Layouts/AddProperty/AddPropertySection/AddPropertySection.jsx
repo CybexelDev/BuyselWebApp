@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SidebarProgress from "../../Components/AddProperty/SideBarProgress";
-import PropertyInfo from "../../Components/AddProperty/PropertyInfo";
+import SidebarProgress from "../../../Components/AddProperty/SideBarProgress";
+import PropertyInfo from "../../../Components/AddProperty/PropertyInfo";
 
 function AddPropertySection() {
 

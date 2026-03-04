@@ -119,31 +119,35 @@ const Header = () => {
           <div className="flex-1 flex items-center w-full xl:w-auto">
             
             {/* TABS LIST */}
-            <div className="w-full xl:w-auto flex justify-center xl:justify-start gap-[14px] lg:gap-[20px] text-gray-700 font-medium text-[12px] xl:text-[16px] host-grotesk whitespace-nowrap">
+            <div className="w-full xl:w-auto flex justify-center xl:justify-start gap-[14px] lg:gap-[32px] text-gray-700 font-medium text-[12px] xl:text-[16px] host-grotesk whitespace-nowrap">
               {tabs.map((tab) => (
-                <p
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`cursor-pointer transition px-1 ${
-                    activeTab === tab
-                      ? "text-black border-b-[4px] border-[#6fba19] font-bold pb-1"
-                      : "hover:text-black"
-                  }`}
-                >
-                  {tab}
-                </p>
+              <p
+  key={tab}
+  onClick={() => setActiveTab(tab)}
+  className={`cursor-pointer transition px-1  ${
+    activeTab === tab
+      ? "text-black font-bold"
+      : "hover:text-black text-[#938181]"
+  }`}
+>
+  {tab}
+
+  {activeTab === tab && (
+    <span className="block w-[29px] h-[4px] bg-[#6fba19] rounded-full mt-1"></span>
+  )}
+</p>
               ))}
             </div>
 
             <div className="hidden min-[1300px]:flex flex-1 justify-center items-center">
-                <div className="border-r-2 h-[24px] border-[#9C9393]" />
+                <div className="border-r-2 h-[34px] border-[#9C9393]" />
             </div>
             
           </div>
 
           {/* CENTER - SEARCH INPUT */}
           <div className="flex-1 flex justify-center w-full lg:w-auto px-2 xl:px-0">
-            <div className="flex items-center bg-[#CEBEBE47] rounded-[17px] px-5 h-[48px] xl:h-[53px] w-full xl:w-[677px] xl:-mr-15 border-[0.5px] border-[#EAEAEA] poppins ">
+            <div className="flex items-center bg-[#CEBEBE47] rounded-[17px] px-5 h-[48px] xl:h-[53px] w-full xl:w-[700px] xl:-mr-15 border-[0.5px] border-[#EAEAEA] poppins ">
               <input
                 type="text"
                 placeholder="What are you looking for?"

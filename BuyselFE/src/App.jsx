@@ -14,6 +14,9 @@ import About from './Pages/About/About'
 import Contact from './Pages/Contact/Contact'
 import AgentDetail from './Pages/AgentDetail/AgentDetail'
 import AddProperty from './Pages/AddProperty/AddProperty'
+import BlogDetail from './Layouts/BlogDetail/BlogDetailSection'
+import BlogDetailPage from './Pages/BlogDetail/BlogDetailPage'
+import AgentDashboard from './Agent/Pages/Dashboard/Dashboard'
 
 
 function App() {
@@ -34,6 +37,8 @@ function App() {
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/agent-detail" element={<AgentDetail/>}/>
           <Route path='/addyourproperty' element={<AddProperty/>}/>
+          <Route path='/blogdetail' element={<BlogDetailPage/>}/>
+          <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
         </Routes>
       </Router>
 
