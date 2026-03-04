@@ -11,13 +11,13 @@ const PersonalDetails = ({ users,mode,setMode }) => {
   return (
       <Element name="personalDetails">
     <div className="w-full ">
-<h2 className="host-grotesk text-[18px] sm:text-[24px] font-[500] leading-[14px] mb-3 sm:mb-6">
+<h2 className="host-grotesk text-[20px] sm:text-[24px] font-[500] leading-[14px] mb-3 sm:mb-6">
   {mode === "changepassword"
     ? "Change Password"
     : "Personal Details"}
 </h2>
       {mode === "" && (
-      <div className="bg-[#f8f8f8] rounded-[32px] px-[41px] py-[41px]">
+      <div className="bg-[#f8f8f8] rounded-[32px] px-[41px] py-[20px] sm:py-[41px]">
         <Detail icon={<FaUser size={19}/>} label="Full Name" value={users.fullName} />
         <Detail icon={<TbMailFilled size={19} />} label="Email Address" value={users.email} />
         <Detail icon={<Phone

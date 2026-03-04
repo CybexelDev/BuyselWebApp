@@ -25,7 +25,7 @@ const AgentDetailHeader = () => {
         
     <div
   className="
-     relative w-[95%] max-w-[1300px] mx-auto mt-[-120px]
+     relative w-[95%] max-w-[1300px] mx-auto mt-[-200px]
     rounded-3xl bg-gradient-to-r from-[#EFEFEF] to-[#ffffff9a]
     py-4
     lg:py-8 px-6 shadow-sm min-h-fit
