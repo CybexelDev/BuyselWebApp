@@ -13,7 +13,7 @@ function PropertySearch() {
   const nav = useNavigate()
 
   return (
-    <div className="relative w-full flex justify-center px-6 sm:px-2 md:px-4  mb-16">
+    <div className="relative w-full flex justify-center px-6 mt-16 md:mt-0 sm:px-2 md:px-4 mb-16">
 
       <div className="w-full max-w-[1043px] bg-[#f2f2f2] rounded-[39px] px-4 sm:px-6 lg:px-[28px] shadow-sm instrument-sans ">
 

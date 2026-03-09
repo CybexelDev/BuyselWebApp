@@ -8,13 +8,14 @@ const Navbar = ({
   text = "text-[14px]",
   color = "text-[#676767]",
   padding="lg:px-[49px]"
+
 }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   const menuItems = [
-    { name: "Home", path: "/" },
+    { name: "Home ", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Properties", path: "/propertyListing" },
     { name: "Agent", path: "/agents" },
@@ -56,7 +57,7 @@ const Navbar = ({
 
         {/* LOGIN BUTTON */}
         <div className="hidden lg:block">
-          <button className="bg-[#6fba19] hover:bg-[#6BB535] text-white px-6 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2">
+          <button onClick={() => navigate("/loginandsignup")} className="bg-[#6fba19] hover:bg-[#6BB535] text-white px-6 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2">
             <img src={login} alt="Login Icon" className="w-[15px]" />
             <span className="text-[14px] host-grotesk font-[400]">Login</span>
           </button>
@@ -94,7 +95,7 @@ const Navbar = ({
             </p>
           ))}
 
-          <button className="bg-[#6fba19] hover:bg-[#6BB535] text-white px-8 py-3 transition-all duration-200 shadow-md hover:shadow-lg rounded-[14px] flex items-center gap-2">
+          <button onClick={() => navigate("/loginandsignup")} className="bg-[#6fba19] hover:bg-[#6BB535] text-white px-8 py-3 transition-all duration-200 shadow-md hover:shadow-lg rounded-[14px] flex items-center gap-2">
             <img src={login} alt="Login Icon" className="w-[16px]" />
             <span className="host-grotesk font-[400]">Login</span>
           </button>

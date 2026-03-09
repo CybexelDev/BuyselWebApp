@@ -30,27 +30,28 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className='p-5 relative'>
-       <Navbar />
-      <div className="footer-cta-container">
+    <div className='md:p-5 p-2 relative'>
+      <Navbar />
+
+      <div className="footer-cta-container overflow-hidden">
         <div class="footer-cta-logo-container ">
           <div className='flex items-center justify-center'>
             <img src={logo} alt="logo" className="footer-cta-logo w-[100px] " />
           </div>
         </div>
 
-        <div className="flex flex-row gap-1 mt-[-20px]">
 
-          <div className="w-full h-[90vh] basis-37/100  pl-5" style={{
-              backgroundImage: `url(${line})`,
-              backgroundSize: "contain",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}>
-            <div className="flex flex-col justify-center h-full gap-4"  >
-              <p className="text-[35px] instrument-sans font-bold ">Start Your<br />Commission-<span className="text-[#b8b8b8]">Free</span><br />Journey Today!</p>
-              <p className="text-[16px] text-[#000000] max-w-[400px] host-grotesk">Discover lands, homes, commercial buildings, hotels, malls and investment properties — all verified and listed by genuine owners and trusted agents.</p>
+        <div className="flex flex-col lg:flex-row gap-1 md:gap-0 mt-[20px] md:mt-[-20px]">
 
+          <div className="w-full h-[50%] lg:h-[90vh] lg:w-[37%]  pl-5" style={{
+            backgroundImage: `url(${line})`,
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}>
+            <div className="flex flex-col justify-center h-full gap-4 text-center md:text-left"  >
+              <p className="md:text-[35px] text-[28px] instrument-sans font-bold ">Start Your<br />Commission-<span className="text-[#b8b8b8]">Free</span><br />Journey Today!</p>
+              <p className="md:text-[16px] text-[15px] text-[#000000] max-w-[400px] host-grotesk">Discover lands, homes, commercial buildings, hotels, malls and investment properties — all verified and listed by genuine owners and trusted agents.</p>
 
               {/* <div className="w-fit relative">
               <button className=" head-btn relative gap-3 bg-[#7AC943] hover:bg-[#6BB535] text-white px-5 py-2 w-fit rounded-[15px] transition-all duration-200 shadow-md hover:shadow-lg rounded-l-2xl"
@@ -64,12 +65,14 @@ const Hero = () => {
                   <ArrowUpRight className="w-3 h-3 text-[#fff]" strokeWidth={2.5} />
                 </div>
               </div> */}
-              <ButtonHead text="Get Started" />
+              <div className="flex justify-center md:justify-start ">
+                <ButtonHead text={"Explore Properties"} />
+              </div>
             </div>
 
           </div>
 
-          <div className="relative w-full basis-63/100 h-[90vh] overflow-hidden transition-all duration-700"
+          <div className="relative w-full lg:w-[63%] h-[50vh] lg:h-[90vh] overflow-hidden transition-all duration-700 "
             style={{
               backgroundImage: `url(${images[current]})`,
               backgroundSize: "contain",
@@ -98,20 +101,21 @@ const Hero = () => {
       </div>
 
 
-      <div className="flex gap-5 pr-5 absolute mb-5 left-8 bottom-[80px] z-10">
+      <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-70px] md:mb-5 left-8 bottom-[80px] z-10">
         <div className=''>
-          <p className=' text-[24px] font-semibold instrument-sans'>10,000+</p>
-          <p className='instrument-sans text-[16px]'>Verified Listings</p>
+          <p className=' md:text-[24px] text-[18px] font-semibold instrument-sans'>10,000+</p>
+          <p className='instrument-sans md:text-[16px] text-[13px]'>Verified Listings</p>
         </div>
         <div className='count'>
-          <p className='text-[24px] font-semibold instrument-sans'>5,000+</p>
-          <p className='instrument-sans text-[16px]'>Happy Clients</p>
+          <p className='md:text-[24px] text-[18px] font-semibold instrument-sans'>5,000+</p>
+          <p className='instrument-sans md:text-[16px] text-[13px]'>Happy Clients</p>
         </div>
         <div className='count'>
-          <p className=' font-semibold text-[24px] instrument-sans'>100%</p>
-          <p className='instrument-sans text-[16px]'>Commission Free</p>
+          <p className=' font-semibold md:text-[24px] text-[18px] instrument-sans'>100%</p>
+          <p className='instrument-sans md:text-[16px] text-[13px]'>Commission Free</p>
         </div>
       </div>
+
     </div>
   )
 }

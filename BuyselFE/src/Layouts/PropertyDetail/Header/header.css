@@ -54,7 +54,7 @@
     border-top-left-radius: 25px;
     box-shadow: 0 -25px 0 0 #ffffff;
 }
-.inverted-radius {
+.inverted-radiuss {
   --r: 18px; /* the radius */
   --s: 20px; /* size of inner curve */
   --x: 134px; /* horizontal offset (no percentane) */
