@@ -36,7 +36,7 @@ function UserReview() {
   return (
     <div>
       {/* Reviews Section */}
-      <div className="my-25 px-[20px] md:px-[55px] xl:px-[30px] 2xl:px-[77px]">
+      <div className="my-15 px-[20px] md:px-[55px] xl:px-[30px] 2xl:px-[77px]">
         <div
           className="
   grid gap-6
@@ -68,7 +68,7 @@ function UserReview() {
           </div>
 
           {reviews.map((review, index) => (
-            <div className="relative w-[302px] min-[401px]:w-auto sm:w-[302px]  h-[300px]">
+            <div className="relative w-[302px] sm:w-[302px]  h-[300px]">
               <div
                 key={index}
                 className="user-review user-review-border h-[300px] "
@@ -142,12 +142,12 @@ function UserReview() {
               <div
                 className="
     absolute
-    bottom-0
-    left-14
-    min-[401px]:left-auto min-[401px]:right-45 min-[501px]:right-70
-    sm:right-auto sm:left-14
-    xl:left-24
-    2xl:left-16
+    bottom-2 sm:bottom-0
+    left-11
+    sm:left-11
+    md:left-11
+    lg:left-11
+    2xl:left-11
      flex items-center gap-[14px]   py-1  rounded-full overflow-visible"
               >
                 <img

@@ -17,6 +17,7 @@ import AddProperty from './Pages/AddProperty/AddProperty'
 import BlogDetail from './Layouts/BlogDetail/BlogDetailSection'
 import BlogDetailPage from './Pages/BlogDetail/BlogDetailPage'
 import AgentDashboard from './Agent/Pages/Dashboard/Dashboard'
+import AgentPlans from './Agent/Pages/Plans/Plans'
 
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
           <Route path='/addyourproperty' element={<AddProperty/>}/>
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
+          <Route path='/agent/plans' element={<AgentPlans/>}/>
+
         </Routes>
       </Router>
 
