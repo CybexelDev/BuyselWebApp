@@ -18,7 +18,9 @@ import BlogDetail from './Layouts/BlogDetail/BlogDetailSection'
 import BlogDetailPage from './Pages/BlogDetail/BlogDetailPage'
 import AgentDashboard from './Agent/Pages/Dashboard/Dashboard'
 import LoginAndSignuppage from './Pages/LoginAndSignup/LoginAndSignup'
-
+import AgentProfile from './Agent/Pages/Profile/Profile'
+import Enquiry from './Agent/Pages/Enquiry/Enquiry'
+import EnquiryDetail from './Agent/Pages/EnquiryDetail/EnquiryDetail'
 
 function App() {
 
@@ -39,8 +41,14 @@ function App() {
           <Route path="/agent-detail" element={<AgentDetail/>}/>
           <Route path='/addyourproperty' element={<AddProperty/>}/>
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
-          <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
+          {/* //agent side */} 
+          <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
+          <Route path='/agent/profile' element={<AgentProfile/>}/>
+          <Route path='/agent/enquiry' element={<Enquiry/>}/>
+          <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
+            
+          
         </Routes>
       </Router>
 

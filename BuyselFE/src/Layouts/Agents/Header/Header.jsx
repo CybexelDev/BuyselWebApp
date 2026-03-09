@@ -96,7 +96,7 @@ function Header() {
           <div className="w-full h-full relative">
 
             <div className="relative z-20">
-              <Navbar gap="lg:gap-[45px]" top="top-4" text="text-[16px]" />
+              <Navbar  top="top-4" text="text-[16px]" />
             </div>
 
             {/* Main Content */}
