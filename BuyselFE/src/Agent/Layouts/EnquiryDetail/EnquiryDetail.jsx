@@ -32,7 +32,6 @@ const EnquiryDetailLayout = () => {
       <main className="flex-1 w-full transition-all duration-300">
         <div className="max-w-6xl mx-auto p-4 md:p-10">
           
-          {/* Top Navigation */}
           <header className="mb-8 flex items-center justify-between">
             <button className="group flex items-center gap-2 text-slate-500 hover:text-[#74C122] transition-colors font-bold text-sm uppercase tracking-widest instrument-sans">
               <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
@@ -45,7 +44,6 @@ const EnquiryDetailLayout = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* LEFT: User Profile & Message */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -57,7 +55,6 @@ const EnquiryDetailLayout = () => {
                 </h2>
 
                 <div className="space-y-6 relative z-10">
-                  {/* Clean Avatar Section */}
                   <div className="flex items-center gap-5">
                     <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-[#74C122] border border-slate-100 shadow-inner">
                       <User size={32} />
@@ -75,7 +72,6 @@ const EnquiryDetailLayout = () => {
                     </div>
                   </div>
 
-                  {/* Contact Methods */}
                   <div className="space-y-1">
                     <div className="flex items-center gap-4 px-4 py-2 rounded-2xl bg-white  group hover:border-[#74C122]/30 transition-all">
                       <Phone size={18} className="text-[#74C122]" />
@@ -87,7 +83,6 @@ const EnquiryDetailLayout = () => {
                     </div>
                   </div>
 
-                  {/* Message Box */}
                   <div className="pt-2 border-t border-slate-50">
                     <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
                       <MessageSquare size={14} className="text-[#74C122]" /> Inquiry Message
@@ -101,9 +96,7 @@ const EnquiryDetailLayout = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
    <div className="flex gap-4 host-grotesk">
-  {/* Call Now Button - Deep Slate / Tech Black */}
   <a 
     href={`tel:${detail.user.phone}`}
     className="flex-1 bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer border border-slate-800"
@@ -112,7 +105,6 @@ const EnquiryDetailLayout = () => {
     Call Now
   </a>
 
-  {/* WhatsApp Button - Brand Green Gradient */}
   <a 
     href={`https://wa.me/${detail.user.phone.replace(/\D/g, '')}`} 
     target="_blank" 
@@ -172,7 +164,6 @@ const EnquiryDetailLayout = () => {
                     </p>
                   </div>
                   
-                  {/* Quick Specs */}
                   
                 </div>
               </div>
