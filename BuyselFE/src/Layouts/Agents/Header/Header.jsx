@@ -24,7 +24,7 @@ function Header() {
   const cornerRadius = 40;
   const topNotchWidth = 230;
   const bottomNotchWidth = 900;
-  const notchDepth = 60;
+  const notchDepth = 70;
   const notchDepth2 = 110;
   const notchRadius = 38;
   const notchRadius2 = 58;
@@ -65,10 +65,17 @@ function Header() {
 
   return (
     <div
-      className="relative w-full px-[13px] md:px-[21px] my-[15px] sm:my-[27px] lg:my-[32px]
+      className="relative w-full p-2 sm:p-3 mg:p-4 lg:p-5
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-40 w-[7%]">
+
+
+        <div className="relative z-50">
+              <Navbar  top="top-[16px]"  padding="lg:px-[29px]" />
+            </div>
+
+            
+      <div className="absolute top-2 sm:top-3 md:top-4 lg:top-5 left-1/2 -translate-x-1/2 z-40 w-[7%]">
         <img
           src={logo}
           alt="logo"
@@ -95,9 +102,7 @@ function Header() {
         >
           <div className="w-full h-full relative">
 
-            <div className="relative z-20">
-              <Navbar  top="top-4" text="text-[16px]" />
-            </div>
+
 
             {/* Main Content */}
             <div
@@ -108,7 +113,7 @@ function Header() {
     max-[900px]:items-center
     max-[900px]:text-center
     justify-between items-start
-    px-4 sm:px-8 lg:pl-[49px]
+    px-4 sm:px-8 lg:pl-[29px]
     pt-[90px] sm:pt-[110px]   
     h-full
     md:pr-0"

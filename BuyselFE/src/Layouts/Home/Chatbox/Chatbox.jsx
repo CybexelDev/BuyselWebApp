@@ -1,13 +1,13 @@
 import React from "react";
 
-function Chatbox({ close }) {
-  return (
-    <section className="flex justify-center items-center min-h-screen px-3 sm:px-6">
+function Chatbox({ close, simple = false, msgPlaceholder="Your need or requirements" }) {
+    return (
+    <section className="flex justify-center items-center  px-3 sm:px-6">
       
       <div
         className="
           w-[95%] sm:w-[90%] md:w-[80%] lg:w-[60%] xl:w-[469px]
-          h-auto xl:h-[449px]
+          h-auto xl:h-auto            
           bg-white
           border border-[#83c938]
           rounded-[21px]
@@ -36,7 +36,8 @@ function Chatbox({ close }) {
               outline-none
             "
           />
-
+          
+            {!simple && (
           <input
             type="text"
             placeholder="Way to contact you"
@@ -51,7 +52,10 @@ function Chatbox({ close }) {
               outline-none
             "
           />
+            )}
 
+
+             {!simple && (
           <input
             type="text"
             placeholder="Your PIN Code"
@@ -66,9 +70,10 @@ function Chatbox({ close }) {
               outline-none
             "
           />
+             )}
 
           <textarea
-            placeholder="Your need or requirements"
+            placeholder={msgPlaceholder}
             className="
               w-full
               min-h-[90px] sm:min-h-[115px]

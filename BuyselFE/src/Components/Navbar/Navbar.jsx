@@ -7,7 +7,8 @@ const Navbar = ({
   top = "top-9",
   text = "text-[14px]",
   color = "text-[#676767]",
-  padding ="lg:px-[49px]"
+  padding="lg:px-[49px]"
+
 }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
