@@ -66,7 +66,7 @@ function AboutHeader() {
 
   return (
     <div
-      className="relative w-full px-[13px] md:px-[21px] mt-[15px] sm:mt-[27px] lg:mt-[32px] 
+      className="relative w-full px-[13px] md:px-[18px] mt-[15px] sm:mt-[27px] lg:mt-[20px] 
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 z-40 w-[7%]">
@@ -99,7 +99,7 @@ function AboutHeader() {
           >
 
             <div className="relative z-20">
-              <Navbar gap="lg:gap-[45px]" top="top-4" text="text-[16px]" />
+              <Navbar  top="top-[18px]" text="text-[16px]" padding="lg:px-[34px]" />
             </div>
 
           </div>

@@ -1,12 +1,12 @@
 import React from 'react'
-import Sidebar from '../../Components/Sidebar/Sidebar'
+import AgentDashboard from '../../Layouts/Dashboard/Dashboard'
 
-function AgentDashboard() {
+function Dashboard() {
   return (
     <div>
-        <Sidebar/>
+      <AgentDashboard />
     </div>
   )
 }
 
-export default AgentDashboard
+export default Dashboard

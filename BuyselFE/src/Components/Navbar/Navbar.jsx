@@ -6,7 +6,9 @@ const Navbar = ({
   gap = "lg:gap-[31px]",
   top = "top-9",
   text = "text-[14px]",
-  color = "text-[#676767]"
+  color = "text-[#676767]",
+  padding="lg:px-[49px]"
+
 }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ const Navbar = ({
   };
 
   return (
-    <header className={`absolute ${top} left-0 w-full z-40 px-6 lg:px-[49px]`}>
+    <header className={`absolute ${top} left-0 w-full z-40 px-6 ${padding}`}>
       <div className="flex items-center justify-between py-3">
 
         {/* DESKTOP MENU */}

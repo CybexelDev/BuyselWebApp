@@ -38,17 +38,7 @@
   }
 }/* BORDER */
 
-@media (min-width: 401px) {
-  .user-review {
-    --x: 285px;
-  }
-}/* BORDER */
 
-@media (min-width: 501px) {
-  .user-review {
-    --x: 385px;
-  }
-}
 @media (min-width: 640px) {
   .user-review {
     --x: 223px;
