@@ -22,7 +22,7 @@ import LoginAndSignuppage from './Pages/LoginAndSignup/LoginAndSignup'
 import AgentProfile from './Agent/Pages/Profile/Profile'
 import Enquiry from './Agent/Pages/Enquiry/Enquiry'
 import EnquiryDetail from './Agent/Pages/EnquiryDetail/EnquiryDetail'
-
+import AgentPropertyListing from './Agent/Pages/propertyListing/propertyListing'
 function App() {
 
   return (
@@ -49,6 +49,8 @@ function App() {
           <Route path='/agent/profile' element={<AgentProfile/>}/>
           <Route path='/agent/enquiry' element={<Enquiry/>}/>
           <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
+          <Route path="/agent/property" element={<AgentPropertyListing />}/>
+          
             
        
         </Routes>

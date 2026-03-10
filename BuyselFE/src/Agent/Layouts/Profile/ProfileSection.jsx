@@ -101,7 +101,7 @@ const AgentProfileLayout = () => {
                                 Agent Settings
                             </div>
 
-                            <h1 className="text-4xl font-black text-slate-900 tracking-tight instrument-sans">
+                            <h1 className="text-3xl  font-black text-slate-900 tracking-tight instrument-sans">
                                 Profile <span className="text-[#6ABD11]">Settings</span>
                             </h1>
                         </motion.div>
@@ -273,14 +273,7 @@ const AgentProfileLayout = () => {
                                 </div>
                             </section>
 
-                            <div className="bg-[#6ABD11] rounded-[32px] p-8 text-white relative overflow-hidden shadow-2xl shadow-[#6ABD11]/30">
-                                <div className="relative z-10">
-                                    <div className="flex items-center gap-2 mb-4"><CheckCircle2 size={20} /><span className="text-[10px] font-bold uppercase tracking-[0.2em]">Active Profile</span></div>
-                                    <h4 className="text-3xl font-black mb-1 uppercase tracking-tighter italic instrument-sans">Live Now</h4>
-                                    <p className="text-xs font-medium text-white/80 leading-relaxed mb-6 host-grotesk">Your profile is visible in the Buysel Platform.</p>
-                                </div>
-                                <Globe className="absolute -right-8 -bottom-8 h-40 w-40 text-white/10" />
-                            </div>
+                      
                         </aside>
                     </div>
                 </div>

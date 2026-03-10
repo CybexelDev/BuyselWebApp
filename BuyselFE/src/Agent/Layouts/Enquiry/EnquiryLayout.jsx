@@ -49,11 +49,8 @@ const EnquiryLayout = () => {
           
           <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <div className="flex items-center gap-2 text-[#74C122] font-bold text-[10px] uppercase tracking-[0.3em] mb-1">
-                <Zap size={14} fill="#74C122" />
-                Live Monitoring
-              </div>
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+             
+              <h1 className="text-3xl font-black text-slate-900 tracking-tight instrument-sans">
                 Property <span className="text-[#74C122]">Leads</span>
               </h1>
             </div>
@@ -90,7 +87,7 @@ const EnquiryLayout = () => {
           <User size={20} />
         </div>
         <div className="overflow-hidden">
-          <h4 className="font-bold text-slate-800 text-sm group-hover:text-[#74C122] transition-colors truncate instrument-sans">
+          <h4 className="font-bold text-slate-800 text-sm group-hover:text-[#74C122] transition-colors truncate host-grotesk">
             {item.username}
           </h4>
           <p className="text-[11px] text-slate-400 flex items-center gap-1 font-medium italic truncate host-grotesk">
@@ -102,7 +99,7 @@ const EnquiryLayout = () => {
       <div className="flex flex-1 items-center gap-8 min-w-0">
         <div className="flex items-center gap-2 min-w-[180px] overflow-hidden">
           <Home size={16} className="text-[#74C122] shrink-0" />
-          <span className="text-sm font-semibold text-slate-600 truncate instrument-sans">{item.propertyName}</span>
+          <span className="text-sm font-semibold text-slate-600 truncate host-grotesk">{item.propertyName}</span>
         </div>
         
         <div className="flex items-center gap-2 shrink-0">
