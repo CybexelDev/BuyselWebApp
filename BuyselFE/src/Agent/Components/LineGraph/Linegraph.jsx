@@ -20,7 +20,7 @@ function Linegraph() {
 
   return (
     <div className="mt-10 bg-white p-6 rounded-xl shadow-md host-grotesk">
-      <h3 className="text-lg font-semibold mb-6 text-gray-700">
+      <h3 className="text-lg font-bold text-[#6ABD11] instrument-sans mb-6 text-gray-700">
         Monthly Enquiries Overview
       </h3>
 

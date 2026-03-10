@@ -1,16 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 
-function Dropdown({ value, onChange }) {
+function Dropdown({ value, onChange, options}) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  const options = [
-    { value: "3m", label: "3 Months" },
-    { value: "6m", label: "6 Months" },
-    { value: "12m", label: "1 Year" }
-  ];
-
   const selected = options.find((o) => o.value === value);
 
 
