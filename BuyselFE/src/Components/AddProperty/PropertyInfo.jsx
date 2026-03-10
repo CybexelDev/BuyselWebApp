@@ -1,44 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import { Layers, List, Target } from "lucide-react";
 
-function PropertyInfo({ formData, setFormData,}) {
+function PropertyInfo({ formData, setFormData }) {
 
-  const propertyTypes = [
-    "Office",
-    "Retail Shop",
-    "Showroom",
-    "Warehouse",
-    "Plot",
-    "Others"
-  ];
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const zoneTypes = [
-    "Industrial",
-    "Commercial",
-    "Residential",
-    "Special economic zone",
-    "Agricultural zone",
-    "Open Spaces",
-    "Others"
-  ];
-
-  const locationHub = [
-    "IT Park",
-    "Business Park",
-    "Others"
-  ];
-
-  const propertyCondition = [
-    "Ready to use",
-    "Bare shell"
-  ];
-
-  const [selectedType, setSelectedType] = useState("");
-
-  const handleTypeSelect = (type) => {
-    setSelectedType(type);
     setFormData({
       ...formData,
-      propertyType: type
+      [name]: value
     });
   };
 
@@ -51,304 +21,119 @@ function PropertyInfo({ formData, setFormData,}) {
           Property Details
         </h2>
 
+        {/* CATEGORY SECTION */}
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-3 gap-6 mb-6">
 
-          <div>
-            <label className="text-[16px] font-semibold lexend">
-              Property Type
-            </label>
+          <Select
+            label="Category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            icon={<Layers size={16}/>}
+          >
+            <option>Select Category</option>
+            <option>Commercial</option>
+            <option>Residential</option>
+            <option>Land</option>
+          </Select>
 
-        <div className="relative w-full">
+          <Select
+            label="Subcategory"
+            name="subcategory"
+            value={formData.subcategory}
+            onChange={handleChange}
+            icon={<List size={16}/>}
+          >
+            <option>-- Select Subcategory --</option>
+            <option>Office</option>
+            <option>Shop</option>
+            <option>Warehouse</option>
+          </Select>
 
-<select
-  className="w-full mt-2 h-[42px] px-5 pr-10 rounded-full
-  bg-[#F3F3F3]
-  border border-[#E4E3E3]
-  text-[14px] text-[#757575]
-  shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-  appearance-none
-  outline-none"
-  value={formData.propertySegment}
-  onChange={(e) =>
-    setFormData({
-      ...formData,
-      propertySegment: e.target.value
-    })
-  }
->
-  <option>Commercial</option>
-  <option>Residential</option>
-    <option>Land/Plot</option>
-  <option>Industrial</option>
+          <Select
+            label="Purpose"
+            name="purpose"
+            value={formData.purpose}
+            onChange={handleChange}
+            icon={<Target size={16}/>}
+          >
+            <option>Select Purpose</option>
+            <option>Sell</option>
+            <option>Rent</option>
+          </Select>
 
-</select>
+        </div>
 
-<svg
-  className="absolute right-5 bottom-3 -translate-y-1/2 pointer-events-none"
-  width="12"
-  height="7"
-  viewBox="0 0 12 7"
-  fill="none"
->
-  <path
-    d="M11 1L6 6L1 1"
-    stroke="#84CC16"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  />
-</svg>
 
-</div>
-          </div>
+        {/* BASIC PROPERTY DETAILS */}
 
-          <div>
-            <label className="text-[16px] font-semibold lexend">
-              Listing Type
-            </label>
+        <div className="grid grid-cols-3 gap-6">
 
-            <div className="flex gap-6 mt-3">
+          <Input label="Label" name="label" value={formData.label} onChange={handleChange} />
 
-              {["Sell", "Rent", "Lease"].map((type) => (
-                <label key={type} className="flex items-center gap-2 text-[14px] lexend font-medium">
+          <Input label="Land Area" name="landArea" value={formData.landArea} onChange={handleChange} />
 
-                  <input
-                    type="radio"
-                    name="listingType"
-                    value={type}
-                    checked={formData.listingType === type}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        listingType: e.target.value
-                      })
-                    }
-                  />
+          <Input label="Square Feet" name="squareFeet" value={formData.squareFeet} onChange={handleChange} />
 
-                  {type}
+        </div>
 
-                </label>
-              ))}
 
-            </div>
-          </div>
+        {/* LOCATION SECTION */}
+
+        <div className="grid grid-cols-3 gap-6 mt-8">
+
+          <Input label="City" name="city" value={formData.city} onChange={handleChange} />
+          <Input label="Village" name="village" value={formData.village} onChange={handleChange} />
+          <Input label="Taluk" name="taluk" value={formData.taluk} onChange={handleChange} />
+
+          <Input label="Pincode" name="pincode" value={formData.pincode} onChange={handleChange} />
+          <Input label="District" name="district" value={formData.district} onChange={handleChange} />
+          <Input label="State" name="state" value={formData.state} onChange={handleChange} />
+
+          <Input label="Landmark" name="landmark" value={formData.landmark} onChange={handleChange} />
+          <Input label="Google Location" name="googleLocation" value={formData.googleLocation} onChange={handleChange} />
 
         </div>
 
 
 
+        <div className="grid grid-cols-2 gap-8 mt-8">
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
-            
-            <div>
- <label className="text-[16px] font-semibold lexend">
-Carpet Area (sq ft)            </label>
-          <input
-            placeholder="e.g., 1200"
-            className="w-full mt-2 h-[42px] px-5 pr-10 rounded-full
-  bg-[#F3F3F3]
-  border border-[#E4E3E3] inter italic
-  text-[14px] text-[#757575]
-  shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-  appearance-none
-  outline-none"
-            value={formData.carpetArea}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                carpetArea: e.target.value
-              })
-            }
+          <Textarea
+            label="Description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
           />
-          </div>
 
-         <div>
- <label className="text-[16px] font-semibold lexend">
-              Build-Up Area (sq ft)
-            </label>
-          <input
-            placeholder="e.g., 1400"
-            className="w-full mt-2 h-[42px] px-5 pr-10 rounded-full
-  bg-[#F3F3F3]
-  border border-[#E4E3E3]
-  inter italic
-  text-[14px] text-[#757575]
-  shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-  appearance-none
-  outline-none"
-            value={formData.carpetArea}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                carpetArea: e.target.value
-              })
-            }
+          <Textarea
+            label="Share Message (optional)"
+            name="shareMessage"
+            value={formData.shareMessage}
+            onChange={handleChange}
           />
-          </div>
-        </div>
-
-
-      <div className="grid grid-cols-3 gap-6 mb-8">
-
-  {/* Possession Status */}
-  <div>
-    <label className="block text-[14px] font-semibold mb-2">
-      Possession Status
-    </label>
-
-<div className="relative">
-    <select className="w-full h-[42px] px-5 rounded-full
-      bg-[#F3F3F3]
-      border border-[#E4E3E3]
-      text-[14px] text-[#757575]
-      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-      appearance-none
-      outline-none">
-      
-      <option>Select age</option>
-      <option>Ready to move</option>
-      <option>Under construction</option>
-
-    </select>
-    
-<svg
-  className="absolute right-5 bottom-3 -translate-y-1/2 pointer-events-none"
-  width="12"
-  height="7"
-  viewBox="0 0 12 7"
-  fill="none"
->
-  <path
-    d="M11 1L6 6L1 1"
-    stroke="#84CC16"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  />
-</svg>
-    </div>
-  </div>
-
-  {/* Property Age */}
-  <div>
-    <label className="block text-[14px] font-semibold mb-2">
-      Property Age
-    </label>
-
-<div className="relative">
-    <select className="w-full h-[42px] px-5 rounded-full
-      bg-[#F3F3F3]
-      border border-[#E4E3E3]
-      text-[14px] text-[#757575]
-      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-      appearance-none
-      outline-none">
-      
-      <option>Select age</option>
-
-    </select>
-    </div>
-  </div>
-
-  <div>
-    <label className="block text-[14px] font-semibold mb-2">
-      Ownership
-    </label>
-<div className="relative">
-    <select className="w-full h-[42px] px-5 rounded-full
-      bg-[#F3F3F3]
-      border border-[#E4E3E3]
-      text-[14px] text-[#757575]
-      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-      appearance-none
-      outline-none">
-      
-      <option>Select ownership</option>
-
-    </select>
-    </div>
-  </div>
-
-</div>
-
-
-        <h3 className="font-semibold mb-3">
-          About the property
-        </h3>
-
-
-        <div className="mb-6">
-
-          <p className="text-sm font-medium mb-3">
-            Zone Type
-          </p>
-
-          <div className="flex flex-wrap gap-3">
-
-            {zoneTypes.map((zone) => (
-              <button
-                key={zone}
-                className="px-4 py-1 border border-lime-500 text-lime-600 rounded-full text-sm"
-              >
-                {zone}
-              </button>
-            ))}
-
-          </div>
-
-        </div>
-
-        {/* LOCATION HUB */}
-
-        <div className="grid grid-cols-2 gap-8 mb-6">
-
-          <div>
-
-            <p className="text-sm font-medium mb-3">
-              Location Hub
-            </p>
-
-            <div className="flex gap-3">
-
-              {locationHub.map((hub) => (
-                <button
-                  key={hub}
-                  className="px-4 py-1 border border-lime-500 text-lime-600 rounded-full text-sm"
-                >
-                  {hub}
-                </button>
-              ))}
-
-            </div>
-
-          </div>
-
-          <div>
-
-            <p className="text-sm font-medium mb-3">
-              Property Condition
-            </p>
-
-            <div className="flex gap-3">
-
-              {propertyCondition.map((condition) => (
-                <button
-                  key={condition}
-                  className="px-4 py-1 border border-lime-500 text-lime-600 rounded-full text-sm"
-                >
-                  {condition}
-                </button>
-              ))}
-
-            </div>
-
-          </div>
 
         </div>
 
 
-        
+        {/* PRICE + OWNER */}
+
+        <div className="grid grid-cols-3 gap-6 mt-8">
+
+          <Input label="Amenities" name="amenities" value={formData.amenities} onChange={handleChange} />
+
+          <Input label="Price Per Acre" name="pricePerAcre" value={formData.pricePerAcre} onChange={handleChange} />
+
+          <Input label="Total Price" name="totalPrice" value={formData.totalPrice} onChange={handleChange} />
+
+          <Input label="Owner" name="owner" value={formData.owner} onChange={handleChange} />
+
+          <Input label="Phone" name="phone" value={formData.phone} onChange={handleChange} />
+
+          <Input label="WhatsApp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} />
+
+        </div>
 
       </div>
 
@@ -357,3 +142,81 @@ Carpet Area (sq ft)            </label>
 }
 
 export default PropertyInfo;
+
+
+
+/* INPUT */
+
+const Input = ({ label, name, value, onChange }) => (
+  <div>
+    <label className="flex items-center gap-2 text-[14px] font-semibold mb-2">
+      <Layers size={16} className="text-lime-500" />
+      {label}
+    </label>
+
+    <input
+      name={name}
+      value={value}
+      onChange={onChange}
+      className="w-full h-[42px] px-5 rounded-full
+      bg-[#F3F3F3]
+      border border-[#E4E3E3]
+      text-[14px] text-[#757575]
+      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+      outline-none"
+    />
+  </div>
+);
+
+
+
+/* SELECT */
+
+const Select = ({ label, name, value, onChange, children, icon }) => (
+  <div>
+    <label className="flex items-center gap-2 text-[14px] font-semibold mb-2">
+      {icon || <Layers size={16} className="text-lime-500" />}
+      {label}
+    </label>
+
+    <select
+      name={name}
+      value={value}
+      onChange={onChange}
+      className="w-full h-[42px] px-5 rounded-full
+      bg-[#F3F3F3]
+      border border-[#E4E3E3]
+      text-[14px] text-[#757575]
+      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+      outline-none"
+    >
+      {children}
+    </select>
+  </div>
+);
+
+
+
+/* TEXTAREA */
+
+const Textarea = ({ label, name, value, onChange }) => (
+  <div>
+    <label className="flex items-center gap-2 text-[14px] font-semibold mb-2">
+      <Layers size={16} className="text-lime-500" />
+      {label}
+    </label>
+
+    <textarea
+      rows="5"
+      name={name}
+      value={value}
+      onChange={onChange}
+      className="w-full px-5 py-4 rounded-2xl
+      bg-[#F3F3F3]
+      border border-[#E4E3E3]
+      text-[14px] text-[#757575]
+      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+      outline-none"
+    />
+  </div>
+);
