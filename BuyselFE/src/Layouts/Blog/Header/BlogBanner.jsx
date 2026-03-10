@@ -7,7 +7,7 @@ import bgImage from "../../../assets/images/blog/bgImage.png";
 
 const BlogBanner = () => {
   return (
-    <div className="p-5 relative">
+    <div className="md:p-5 p-2 relative">
       <Navbar color="text-white" />
       {/* bgImage */}
       <div

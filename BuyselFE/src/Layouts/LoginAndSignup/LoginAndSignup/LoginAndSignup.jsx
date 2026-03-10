@@ -14,23 +14,17 @@ import OtpForm from "../../../Components/LoginAndSignup/OtpForm/OtpForm";
 export default function LoginAndSignup() {
     const [activeTab, setActiveTab] = useState("agent");
 
-    console.log(activeTab, "tab valueeeee");
-
-
     return (
-        <div className="md:h-[100vh] h-[100%] w-full bg-white flex items-center justify-center p-8">
+        <div className="md:h-[100vh] h-[100%] w-full bg-white flex items-center justify-center p-3 md:p-8">
             <div className="bg-gray-50 rounded-3xl shadow-xl w-full max-w-5xl md:flex  flex-row  overflow-hidden">
 
-                {/* LEFT IMAGE */}
                 <div className="md:w-[50%] w-[100%] p-4 relative">
                     <img src={logo} className="absolute top-7 left-6.5 w-[100px]" />
                     <img class="inverted-radius" src={activeTab == "signup" ? (houseImg3) : activeTab == "agent" ? (houseImg) : (houseImg2)} alt="" />
                 </div>
 
-                {/* RIGHT LOGIN */}
-                <div className="md:w-[50%] w-[100%] p-10 relative">
+                <div className="md:w-[50%] w-[100%] p-3 md:p-10 relative">
 
-                    {/* Tabs */}
                     <div className="flex justify-end ">
 
                         <div className=" flex mb-10 w-fit bg-gray-200 rounded-[11px]">
@@ -64,8 +58,8 @@ export default function LoginAndSignup() {
                         activeTab === "agent" ? (
                             <AgentForm />
                         ) : activeTab === "signup" ? (
-                            <SignupForm setSignin={setActiveTab} />
-                            // <OtpForm />
+                            // <SignupForm setSignin={setActiveTab} />
+                            <OtpForm />
                         ) : (
                             <UserForm setSignup={setActiveTab} />
                         )

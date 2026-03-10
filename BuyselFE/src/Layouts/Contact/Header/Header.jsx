@@ -6,11 +6,11 @@ import bgimg from "../../../assets/images/contact/bgimg.png";
 
 const Header = () => {
   return (
-    <div className="p-5 relative ">
-      <Navbar  />
+    <div className="md:p-5 p-2 relative ">
+      <Navbar />
       {/* bgImage */}
-<div
-  className="
+      <div
+        className="
     relative w-full min-h-[350px] md:min-h-[420px]
     bg-[#e6e6e6] rounded-[32px] overflow-hidden
     bg-no-repeat
@@ -20,10 +20,10 @@ const Header = () => {
     sm:bg-[length:87%]
     lg:bg-[length:79%]
   "
-  style={{
-    backgroundImage: `url(${bgimg})`,
-  }}
->
+        style={{
+          backgroundImage: `url(${bgimg})`,
+        }}
+      >
         {/* Logo */}
         <div className="contact-cta-logo-container relative z-10">
           <div className="flex items-center justify-center">

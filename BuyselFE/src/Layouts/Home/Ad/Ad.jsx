@@ -15,7 +15,7 @@ export default function ad() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrent((prev) => (prev + 1) % images.length);
-        }, 3000); // change every 3 sec
+        }, 3000); 
 
         return () => clearInterval(interval);
     }, [images.length]);
@@ -29,6 +29,8 @@ export default function ad() {
             prev === 0 ? images.length - 1 : prev - 1
         );
     };
+
+    
 
     const createFolderTabPath = () => {
         const width = 1000;
@@ -103,29 +105,26 @@ export default function ad() {
                         backgroundRepeat: "no-repeat",
                     }}
                 >
-                    {/* Prev Button */}
+                    
                     <button
                         onClick={prevSlide}
-                        className="absolute bottom-6 left-6 bg-black text-white w-15 h-15 rounded-full hover:bg-black/70 transition text-center flex items-center justify-center cursor-pointer"
+                        className="absolute bottom-6 left-6 bg-black text-white md:w-15 w-9 md:h-15 h-9 rounded-full hover:bg-black/70 transition text-center flex items-center justify-center cursor-pointer"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#f4f4f4" d="M12.727 3.687a1 1 0 1 0-1.454-1.374l-8.5 9a1 1 0 0 0 0 1.374l8.5 9.001a1 1 0 1 0 1.454-1.373L4.875 12z" />
                         </svg>
                     </button>
 
-                    {/* Next Button */}
                     <button
                         onClick={nextSlide}
-                        className="absolute bottom-6 right-6 bg-black text-white w-15 h-15 rounded-full hover:bg-black/70 transition text-center flex items-center justify-center cursor-pointer"
+                        className="absolute bottom-6 right-6 bg-black text-white md:w-15 w-9 md:h-15 h-9 rounded-full hover:bg-black/70 transition text-center flex items-center justify-center cursor-pointer"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path fill="#f4f4f4" d="M11.273 3.687a1 1 0 1 1 1.454-1.374l8.5 9a1 1 0 0 1 0 1.374l-8.5 9.001a1 1 0 1 1-1.454-1.373L19.125 12z" />
                         </svg>
                     </button>
                 </FolderTab>
-
             </div>
-
         </div>
     );
 }
