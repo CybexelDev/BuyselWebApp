@@ -18,10 +18,15 @@ import BlogDetail from './Layouts/BlogDetail/BlogDetailSection'
 import BlogDetailPage from './Pages/BlogDetail/BlogDetailPage'
 import AgentDashboard from './Agent/Pages/Dashboard/Dashboard'
 import LoginAndSignuppage from './Pages/LoginAndSignup/LoginAndSignup'
+import { useSelector } from "react-redux";
 
 
 function App() {
 
+  const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
+     
+  console.log(image, agentName,agentId, accessToken, "yyyyyyyyyyyyyy");
+  
   return (
     <>
  {/* App page */}
