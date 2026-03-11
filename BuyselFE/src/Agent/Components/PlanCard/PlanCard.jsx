@@ -22,12 +22,12 @@ function PlanCard({ title, Icon, price, savings, features, buttonText,dropdown }
 
         {/* Price */}
         <div className="mb-6">
-          <span className="text-4xl font-bold text-[#6ABD11]">
+          <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#6ABD11]">
             ₹{price}
           </span>
 
           {savings && (
-            <p className="text-sm font-semibold text-[#6ABD11] mt-1">
+            <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
               {savings}
             </p>
           )}

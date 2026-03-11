@@ -119,7 +119,7 @@ function AgentPlans() {
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 host-grotesk">
       <Sidebar />
 
-      <div className="flex-1 p-6 md:p-10 lg:p-12 mb-22 sm:mb-0">
+      <div className="flex-1 py-3 px-6 md:py-5 md:px-10 lg:py-6 lg:px-12 mb-22 sm:mb-0">
         <Topbar />
 
         {/* Header Section */}
@@ -133,11 +133,11 @@ function AgentPlans() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
           >
-            <h1 className="text-4xl font-black text-slate-900 tracking-tight instrument-sans mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight instrument-sans mb-2">
               Unlock Premium <span className="text-[#6ABD11]">Features</span>
             </h1>
 
-            <p className="text-md font-medium text-slate-700 host-grotesk">
+            <p className="text-sm sm:text-md  md:font-medium text-slate-700 host-grotesk">
               Choose the perfect plan to grow your real estate business. Scale
               your listings, boost visibility, and reach more clients.
             </p>
@@ -266,7 +266,7 @@ function AgentPlans() {
                       )}
                     />
 
-                    
+
                   }
                 />
               );

@@ -57,7 +57,7 @@ function AgentDashboard() {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 p-6 md:p-10 lg:p-12 mb-22 sm:mb-0">
+      <div className="flex-1 py-3 px-6 md:py-5 md:px-10 lg:py-6 lg:px-12 mb-22 sm:mb-0">
 
           <Topbar />
 
