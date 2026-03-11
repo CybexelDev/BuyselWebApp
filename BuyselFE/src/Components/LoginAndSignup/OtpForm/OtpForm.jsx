@@ -24,7 +24,7 @@ const OtpForm = () => {
   };
 
   return (
-    <div className="h-fit flex items-center justify-center bg-[#f4f4f4]">
+    <div className="h-fit flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
 
         {/* Heading */}
@@ -46,7 +46,7 @@ const OtpForm = () => {
               ref={(el) => (inputs.current[index] = el)}
               onChange={(e) => handleChange(e.target.value, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className="w-12 h-12 sm:w-14 sm:h-14 text-center text-xl font-semibold
+              className="w-8 h-8 sm:w-14 sm:h-14 text-center text-xl font-semibold
               bg-[#C7D9A6] rounded-xl outline-none
               focus:ring-2 focus:ring-[#76BC21] transition"
             />

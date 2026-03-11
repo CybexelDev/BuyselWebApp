@@ -1,6 +1,37 @@
 import React from 'react'
+import { useState } from 'react'
+import { premiumAgentLogin } from '../../../Api/agentsApi';
+import { useDispatch } from "react-redux";
 
 const AgentForm = () => {
+    const [login, setLogin] = useState({ username: '', password: '' })
+    const dispatch = useDispatch();
+    console.log(login, "hahaaaa");
+
+    const handleLogin = async () => {
+        try {
+            const response = await premiumAgentLogin(login.username, login.password);
+
+            if (response) {
+                console.log("Login success page:", response);
+                dispatch({
+                    type:'SET_AGENT',
+                    payload:{
+                       agentName: response?.premium?.name,
+                       accessToken: response?.access,
+                       agentId: response?.premium?.id,
+                       image: response?.premium.image,
+                    }   
+                })
+            } else {
+                console.log("Invalid credentials");
+            }
+
+        } catch (error) {
+            console.error("Login error:", error);
+        }
+    };
+
     return (
         <>
             <h3 className="text-[20px] mt-2 font-[500] host-grotesk mb-6 text-center">
@@ -11,6 +42,8 @@ const AgentForm = () => {
                 <div>
                     <label className="text-[16px] text-[#525252] host-grotesk">Username</label>
                     <input
+                        value={login.username}
+                        onChange={(e) => setLogin({ ...login, username: e.target.value })}
                         type="text"
                         className="w-full border border-[#cbc8c8] rounded-[10px] p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-green-400"
                     />
@@ -19,12 +52,13 @@ const AgentForm = () => {
                 <div>
                     <label className="text-[16px] text-[#525252] host-grotesk">Password</label>
                     <input
+                        onChange={(e) => setLogin({ ...login, password: e.target.value })}
                         type="password"
                         className="w-full border border-[#cbc8c8] rounded-[10px] p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-green-400"
                     />
                 </div>
 
-                <button className="w-full bg-[#74c222] hover:bg-[#5f9d1c] instrument-sans cursor-pointer text-white py-3 rounded-lg font-medium transition">
+                <button onClick={handleLogin} className="w-full bg-[#74c222] hover:bg-[#5f9d1c] instrument-sans cursor-pointer text-white py-3 rounded-lg font-medium transition">
                     Login
                 </button>
             </div>

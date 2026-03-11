@@ -23,8 +23,15 @@ import AgentProfile from './Agent/Pages/Profile/Profile'
 import Enquiry from './Agent/Pages/Enquiry/Enquiry'
 import EnquiryDetail from './Agent/Pages/EnquiryDetail/EnquiryDetail'
 import AgentPropertyListing from './Agent/Pages/propertyListing/propertyListing'
+import { useSelector } from "react-redux";
+
+
 function App() {
 
+  const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
+     
+  console.log(image, agentName,agentId, accessToken, "yyyyyyyyyyyyyy");
+  
   return (
     <>
  {/* App page */}

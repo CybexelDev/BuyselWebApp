@@ -5,7 +5,7 @@ import Pricing from "../../../Components/AddProperty/Pricing";
 import MediaUpload from "../../../Components/AddProperty/MediaUpload";
 import Button from "../../../Components/AddProperty/Button";
 import ProfileDashboard from "../../Profile/ProfileDashboard/ProfileDashboard";
-
+import PreviewProperty from "../../../Components/AddProperty/Preview";
 function AddPropertySection() {
 
   const [step, setStep] = useState(1);
@@ -35,10 +35,10 @@ function AddPropertySection() {
   return (
     <div className="bg-[#FFFFFF] min-h-screen p-6">
 
-      <div className=" mx-auto flex gap-2 sm:gap-4 md:gap-6 lg:gap-8">
-
-        <SidebarProgress step={step} />
-
+<div className="mx-auto flex flex-col lg:flex-row gap-2 sm:gap-4 md:gap-6 lg:gap-8">
+<div className="w-full lg:w-[320px]">
+  <SidebarProgress step={step} />
+</div>
         <div className="flex-1">
 
           {step === 1 && (
@@ -58,6 +58,12 @@ function AddPropertySection() {
               formData={formData}
               setFormData={setFormData}
               
+            />
+          )}
+          {step===4 &&(
+            <PreviewProperty
+            formData={formData}
+            setFormData={setFormData}
             />
           )}
 
