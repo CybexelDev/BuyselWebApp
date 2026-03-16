@@ -1,7 +1,10 @@
 import React from "react";
 import { FaBell } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 function Topbar() {
+    const { image, agentName, agentId, } = useSelector((state) => state.agent);
+
   return (
     <div className="w-full host-grotesk bg-white shadow-md px-6 py-4 flex justify-end items-center rounded-2xl gap-3 sm:gap-6">
 
@@ -18,7 +21,7 @@ function Topbar() {
       {/* Profile Section */}
       <div className="flex items-center  cursor-pointer">
         <img
-          src="https://i.pinimg.com/736x/bd/e3/af/bde3afba0942342f02ce5a62f6b0b3c4.jpg"
+          src={image}
           alt="Profile"
           className="w-9 sm:w-11 h-9 sm:h-11 rounded-full object-cover border-2 border-[#6ABD11]"
         />

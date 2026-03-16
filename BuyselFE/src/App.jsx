@@ -28,9 +28,11 @@ import { useSelector } from "react-redux";
 
 function App() {
 
-  const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
+  // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
+
+  const { image, userName, userId, accessToken } = useSelector((state) => state.user);
      
-  console.log(image, agentName,agentId, accessToken, "yyyyyyyyyyyyyy");
+  console.log(image, userName, userId, accessToken, "yyyyyyyyyyyyyy");
   
   return (
     <>
@@ -38,6 +40,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<Home />} />
           <Route path="/propertyListing" element={<PropertListing />} />
           <Route path="/agents" element={<Agents />} />
           <Route path="/propertyDetail" element={<PropertyDetail />} />
@@ -58,13 +61,8 @@ function App() {
           <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
           <Route path="/agent/property" element={<AgentPropertyListing />}/>
           
-            
-       
         </Routes>
       </Router>
-
-        
-      
     </>
   )
 }

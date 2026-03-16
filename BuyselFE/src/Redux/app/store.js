@@ -1,32 +1,42 @@
 // src/store.js
 import { createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage'; 
 import { combineReducers } from 'redux';
 
-// User Reducer
 const initialUserState = {
-  user: null,
+  userName: null,
+  accessToken: null,
+  userId: null,
+  image: null,
+  isLoggedIn: false,
 };
 
 function userReducer(state = initialUserState, action) {
   switch (action.type) {
     case 'SET_USER':
       return {
-        ...state,
-        user: action.payload,
+         ...state,
+        userName: action.payload.userName, 
+        accessToken: action.payload.accessToken,
+        userId: action.payload.userId,
+        image: action.payload.image,
+        isLoggedIn: true,
       };
     case 'LOGOUT':
       return {
         ...state,
-        user: null,
+        userName: null,
+        accessToken: null,
+        userId: null,
+        image:null,
+        isLoggedIn: false,
       };
     default:
       return state;
   }
 }
 
-// Admin Reducer
 const initialAgentState = {
   agentName: null,
   accessToken: null,
@@ -40,7 +50,7 @@ function agentReducer(state = initialAgentState, action) {
     case 'SET_AGENT':
       return {
         ...state,
-        agentName: action.payload.agentName, // Save admin user data
+        agentName: action.payload.agentName, 
         accessToken: action.payload.accessToken,
         agentId: action.payload.agentId,
         image: action.payload.image,
@@ -49,7 +59,7 @@ function agentReducer(state = initialAgentState, action) {
     case 'AGENT_LOGOUT':
       return {
         ...state,
-        agent: null,
+        agentName: null,
         accessToken: null,
         agentId: null,
         image:null,
@@ -60,22 +70,22 @@ function agentReducer(state = initialAgentState, action) {
   }
 }
 
-// Combine reducers
+
 const rootReducer = combineReducers({
   user: userReducer,
   agent: agentReducer,
 });
 
-// Persist Config
+
 const persistConfig = {
-  key: 'root', // key for the persisted data
-  storage,     // localStorage (can also use sessionStorage or other storages)
+  key: 'root',
+  storage,     
 };
 
-// Persisted Reducer
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Create store with the persisted reducer
+
 const store = createStore(persistedReducer);
 
 // Persistor for persisting the store

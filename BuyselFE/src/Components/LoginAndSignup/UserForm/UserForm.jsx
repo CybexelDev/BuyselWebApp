@@ -1,78 +1,148 @@
 import React from 'react'
+import { useState } from 'react'
 import { Mail, Lock } from "lucide-react";
 import google from '../../../assets/images/LoginAndSignUp/google.png'
 import apple from '../../../assets/images/LoginAndSignUp/apple.png'
 import facbook from '../../../assets/images/LoginAndSignUp/facebook.png'
+import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import { handleGoogleLogin, userLogin } from '../../../Api/userApi';
 
-const UserForm = ({setSignup}) => {
+import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
+
+const UserForm = ({ setSignup }) => {
+  const [login, setLogin] = useState({ username: '', password: '' })
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  const handleLogin = async () => {
+    try {
+      const response = await userLogin(login.username, login.password);
+
+      if (response) {
+        console.log("user Login success page:", response);
+        dispatch({
+          type: 'SET_USER',
+          payload: {
+            accessToken: response?.access,
+            userName: response?.user?.name,
+            userId: response?.user?.id,
+            image: response?.user.image,
+          }
+        })
+
+        navigate('/')
+
+      } else {
+        console.log("Invalid credentials");
+      }
+
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+
+
+
+   const Glogin = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            try {
+                const response = await handleGoogleLogin({ tokenResponse });
+                dispatch({
+                    type: "SET_USER",
+                    payload: {
+                        user: response?.username || "Guest",
+                        token: response?.access || "NoToken",
+                    },
+                });
+                navigate("/");
+                console.log(response, "Login successs and data sented to login component");
+
+            } catch (error) {
+                console.error('Login failed:', error.response?.data || error.message);
+            }
+        },
+        onError: () => {
+            console.log('Google Login Failed');
+        },
+    });
+
+
+
   return (
-          <>
-                    
-          <div className="text-center mb-6">
-            <h2 className="text-[20px] font-[500] host-grotesk text-[#1e1a1a]">
-              Sign in with email
-            </h2>
-            <p className="text-[#9f8e8e] text-[14px] font-[500] host-grotesk">
-              Sign in to manage your saved properties,
-              wishlist and inquiries.
-            </p>
-          </div>
+    <>
 
-          <div className="relative mb-4">
-            <Mail className="absolute left-4 top-4 text-gray-500" size={18} />
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none"
-            />
-          </div>
+      <div className="text-center mb-6">
+        <h2 className="text-[20px] font-[500] host-grotesk text-[#1e1a1a]">
+          Sign in with email
+        </h2>
+        <p className="text-[#9f8e8e] text-[14px] font-[500] host-grotesk">
+          Sign in to manage your saved properties,
+          wishlist and inquiries.
+        </p>
+      </div>
 
-          <div className="relative mb-2">
-            <Lock className="absolute left-4 top-4 text-gray-500" size={18} />
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none"
-            />
-          </div>
+      <div className="relative mb-4">
+        <Mail className="absolute left-4 top-4 text-gray-500" size={18} />
+        <input
+          value={login.username}
+          onChange={(e) => setLogin({ ...login, username: e.target.value })}
+          type="email"
+          placeholder="Email"
+          className="w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none"
+        />
+      </div>
 
-          <div className="text-right text-sm text-gray-500 mb-5 cursor-pointer">
-            Forgot Password?
-          </div>
+      <div className="relative mb-2">
+        <Lock className="absolute left-4 top-4 text-gray-500" size={18} />
+        <input
+          value={login.password}
+          onChange={(e) => setLogin({ ...login, password: e.target.value })}
+          type="password"
+          placeholder="Password"
+          className="w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none"
+        />
+      </div>
 
-          <button className="w-full bg-[#2f332f] text-white py-3 rounded-lg font-medium hover:bg-black transition">
-            Get Started
-          </button>
+      <div className="text-right text-sm text-gray-500 mb-5 cursor-pointer">
+        Forgot Password?
+      </div>
 
-          <p className="text-center text-sm mt-4">
-            Don’t have an account?{" "}
-            <span className="text-green-600 cursor-pointer" onClick={() => setSignup("signup")}>
-              sign up
-            </span>
-          </p>
+      <button onClick={handleLogin} className="w-full bg-[#2f332f] text-white py-3 rounded-lg font-medium hover:bg-black transition">
+        Get Started
+      </button>
 
-          <div className="flex items-center gap-3 my-6">
-            <div className="flex-1 h-[1px] bg-gray-300"></div>
-            <span className="text-sm text-gray-400">
-              Or sign in with
-            </span>
-            <div className="flex-1 h-[1px] bg-gray-300"></div>
-          </div>
+      <p className="text-center text-sm mt-4">
+        Don’t have an account?{" "}
+        <span className="text-green-600 cursor-pointer" onClick={() => setSignup("signup")}>
+          sign up
+        </span>
+      </p>
 
-          <div className="flex justify-center gap-4">
-            <button className="border border-[#9d9d9d] rounded-lg px-5 py-2 bg-white shadow cursor-pointer">
-              <img src={google} className='w-6 h-6 object-contain' />
-            </button>
-              
-            <button className="border border-[#9d9d9d] rounded-lg px-6 py-2 bg-white shadow cursor-pointer">
-              <img src={apple} className='w-6 h-6 object-contain' />
-            </button>
+      <div className="flex items-center gap-3 my-6">
+        <div className="flex-1 h-[1px] bg-gray-300"></div>
+        <span className="text-sm text-gray-400">
+          Or sign in with
+        </span>
+        <div className="flex-1 h-[1px] bg-gray-300"></div>
+      </div>
 
-            <button className="border border-[#9d9d9d] rounded-lg px-6 py-2 bg-white shadow cursor-pointer">
-              <img src={facbook} className='w-6 h-6 object-contain' />
-            </button>
-          </div>
-         </>
+      <div className="flex justify-center gap-4">
+        <button onClick={() => Glogin()} className="border border-[#9d9d9d] rounded-lg px-5 py-2 bg-white shadow cursor-pointer">
+          <img src={google} className='w-6 h-6 object-contain' />
+        </button>
+
+        <button className="border border-[#9d9d9d] rounded-lg px-6 py-2 bg-white shadow cursor-pointer">
+          <img src={apple} className='w-6 h-6 object-contain' />
+        </button>
+
+        <button className="border border-[#9d9d9d] rounded-lg px-6 py-2 bg-white shadow cursor-pointer">
+          <img src={facbook} className='w-6 h-6 object-contain' />
+        </button>
+      </div>
+    </>
   )
 }
 
