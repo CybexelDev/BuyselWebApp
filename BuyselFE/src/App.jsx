@@ -27,6 +27,7 @@ import { useSelector } from "react-redux";
 import OwnerDashboard from './Pages/OwnerDashboard/OwnreDashboard'
 import PlansPage from './Pages/Plans/PlansPage'
 import UserEnquiry from './Agent/Pages/UserEnquiry/UserEnquiry'
+import EnquiryDetailLayoutUser from './Layouts/OwnerDashboard/Tabs/Enquiries/EnquiriesDetail'
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
           <Route path="/ownerdash" element={<OwnerDashboard />}/>
           <Route path='/plans'  element={<PlansPage/>}/>
+          <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
 
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>

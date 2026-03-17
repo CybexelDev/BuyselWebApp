@@ -94,13 +94,11 @@ const EnquiryLayout = () => {
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#74C122] opacity-0 group-hover:opacity-100 transition-opacity" />
 
       {/* USER */}
-      <div className="flex items-center gap-4 w-full lg:w-[280px] shrink-0">
-        <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#74C122]/10 group-hover:text-[#74C122] transition-colors border border-slate-100 shrink-0">
+<div className="flex items-center gap-4 w-full lg:w-[280px] min-w-0">        <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#74C122]/10 group-hover:text-[#74C122] transition-colors border border-slate-100 shrink-0">
           <User size={20} />
         </div>
 
-        <div className="overflow-hidden">
-          <h4 className="font-bold text-slate-800 text-sm group-hover:text-[#74C122] transition-colors truncate host-grotesk">
+<div className="overflow-hidden min-w-0">          <h4 className="font-bold text-slate-800 text-sm group-hover:text-[#74C122] transition-colors truncate host-grotesk">
             {item.username}
           </h4>
           <p className="text-[11px] text-slate-400 flex items-center gap-1 font-medium italic truncate host-grotesk">
@@ -114,15 +112,12 @@ const EnquiryLayout = () => {
 
         <div className="flex items-center gap-2 min-w-0">
           <Home size={16} className="text-[#74C122] shrink-0" />
-          <span className="text-sm font-semibold text-slate-600 truncate host-grotesk">
-            {item.propertyName}
+<span className="text-sm font-semibold text-slate-600 truncate min-w-0 host-grotesk  w-[190px]">            {item.propertyName}
           </span>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <Tag size={16} className="text-[#74C122]" />
-          <span className="text-sm font-black text-slate-900 tracking-tight host-grotesk">
-            ₹{item.price}
+<div className="flex items-center gap-2 w-[140px]">          <Tag size={16} className="text-[#74C122]" />
+<span className="text-sm font-black text-slate-900 tracking-tight host-grotesk text-left w-full">            ₹{item.price}
           </span>
         </div>
 

@@ -58,7 +58,7 @@ const UserForm = ({ setSignup }) => {
             userName: response?.user?.name,
             accessToken: response?.access,
             userId: response?.user?.id,
-            image: response?.user.image,
+            image: response?.user?.image,
           }
         })
 
