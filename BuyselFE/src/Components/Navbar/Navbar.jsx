@@ -61,9 +61,9 @@ const Navbar = ({
         <div className="hidden lg:block">
           <button onClick={() => navigate(accessToken ? "/profile" : "/loginandsignup")} className="bg-[#6fba19] hover:bg-[#6BB535] text-white px-6 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
             {accessToken ?
-              <img src={image} alt="Login Icon " className="w-[18px] rounded-full mr-2" />
+              <img src={image} alt="profile" className="w-[18px] rounded-full mr-2" />
               :
-              <img src={login} alt="Login Icon" className="w-[15px]" />
+              <img src={login} alt="profile" className="w-[15px]" />
             }
             <span className="text-[14px] host-grotesk font-[400]">{accessToken ? `${userName}` : "Login"}</span>
           </button>

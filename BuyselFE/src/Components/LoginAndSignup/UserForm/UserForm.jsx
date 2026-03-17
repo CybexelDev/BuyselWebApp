@@ -46,28 +46,33 @@ const UserForm = ({ setSignup }) => {
 
 
 
-   const Glogin = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            try {
-                const response = await handleGoogleLogin({ tokenResponse });
-                dispatch({
-                    type: "SET_USER",
-                    payload: {
-                        user: response?.username || "Guest",
-                        token: response?.access || "NoToken",
-                    },
-                });
-                navigate("/");
-                console.log(response, "Login successs and data sented to login component");
+  const Glogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const response = await handleGoogleLogin({ tokenResponse });
+        console.log(response, "wwwwwwwwww");
 
-            } catch (error) {
-                console.error('Login failed:', error.response?.data || error.message);
-            }
-        },
-        onError: () => {
-            console.log('Google Login Failed');
-        },
-    });
+        dispatch({
+          type: 'SET_USER',
+          payload: {
+            userName: response?.user?.name,
+            accessToken: response?.access,
+            userId: response?.user?.id,
+            image: response?.user.image,
+          }
+        })
+
+        navigate("/");
+        console.log(response, "Login successs and data sented to login component");
+
+      } catch (error) {
+        console.error('Login failed:', error.response?.data || error.message);
+      }
+    },
+    onError: () => {
+      console.log('Google Login Failed');
+    },
+  });
 
 
 
