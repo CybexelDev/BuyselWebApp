@@ -5,6 +5,7 @@ import logo from "../../../assets/images/logo/logo.png";
 import { FaLandmarkDome } from "react-icons/fa6";
 import { FaClipboardList } from "react-icons/fa";
 import { RiDashboardFill } from "react-icons/ri";
+import { RiAccountPinBoxFill } from "react-icons/ri";
 
 import { FaUserCog } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
@@ -17,7 +18,9 @@ const navItems = [
   {id: "property",icon: FaLandmarkDome,label: "Property Listing",path: "/agent/property",},
   { id: "plans", icon: FaClipboardList, label: "Plans", path: "/agent/plans" },
   { id: "profile", icon: FaUserCog, label: "Profile", path: "/agent/profile" },
-  {id: "enquiry",icon: SiGooglemessages,label: "Enquiry",path: "/agent/enquiry"},
+  {id: "enquiry",icon: SiGooglemessages,label: "Property Enquiry",path: "/agent/enquiry"},
+    {id: "userenquiry",icon: RiAccountPinBoxFill,label: "User Enquiry",path: "/agent/user-enquiry"},
+
 ];
 
 const Sidebar = () => {
@@ -28,7 +31,7 @@ const Sidebar = () => {
   return (
     <div className="relative  ">
       <nav className="fixed left-2 top-2 backdrop-blur-md hidden bottom-4 w-64 flex-col border-r border-white/10 bg-white rounded-[40px] md:flex z-50 shadow-2xl  mx-2 my-4">
-        <div className="flex h-28 items-center px-8">
+        <div className="flex h-28 items-center px-12">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -77,7 +80,7 @@ const Sidebar = () => {
               className="group-hover:-translate-x-1 transition-transform"
             />
             <span className="text-xs uppercase tracking-tighter">
-              Terminate Session
+              Logout
             </span>
           </button>
         </div>

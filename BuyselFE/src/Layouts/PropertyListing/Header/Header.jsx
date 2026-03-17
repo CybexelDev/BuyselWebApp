@@ -75,7 +75,7 @@ const Header = () => {
 
   return (
     <div className="md:p-5 p-2 relative ">
-      <Navbar top="top-5" />
+      <Navbar  />
 
       <div className="footerr-cta-container ">
 

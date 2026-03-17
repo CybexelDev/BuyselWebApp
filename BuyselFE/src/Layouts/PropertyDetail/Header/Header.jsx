@@ -67,7 +67,7 @@ useEffect(() => {
 }, []);
     return (
         <div className='px-2 md:px-5 py-3 relative'>
-            <Navbar top="top-[18px]" />
+            <Navbar />
             <div className="detail-cta-container">
                 <div className="detail-cta-logo-container ">
                     <div className='flex items-center justify-center'>
@@ -80,7 +80,7 @@ useEffect(() => {
                     {/* Left Image side */}
                     <div className="lg:col-span-2 grid grid-cols-2 lg:grid-cols-[1.7fr_1fr] gap-3 lg:gap-[12px]">
                         
-                        {/* main image */}
+                         {/* main image */}
                         <div className="col-span-2 lg:col-span-1 lg:row-span-2">
                             <img
                                 src={property.images[0]}
@@ -93,7 +93,7 @@ useEffect(() => {
                             <img
                                 src={property.images[1]}
                                 alt=""
-                                className="w-full h-[120px] md:h-[160px] lg:w-[320px] lg:h-[176.5px] object-cover rounded-xl lg:rounded-3xl"
+                                className="w-full h-[120px] md:h-[160px] lg:h-[176.5px] object-cover rounded-xl lg:rounded-3xl"
                             />
                         </div>
 
@@ -102,7 +102,7 @@ useEffect(() => {
                             <img
                                 src={property.images[2]}
                                 alt=""
-                                className="w-full h-[120px] md:h-[160px] lg:h-[176.5px] object-cover inverted-radiuss overflow-hidden"
+                                className="w-full h-[120px] md:h-[160px] lg:h-[176.5px]  object-cover inverted-radiuss overflow-hidden"
                             />
                               <button onClick={()=>setShowGallery(true)} className="absolute bottom-0  text-[18px] right-[0px]   bg-black text-white max-[361px]:px-[12px] max-[361px]:rounded-[7px] max-[361px]:py-[14px] max-[400px]:px-[17px]  max-[400px]:py-[14px] px-[18px] py-[13px] rounded-[19px] host-grotesk">
                                 View All Images
