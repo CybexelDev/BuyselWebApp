@@ -27,7 +27,7 @@ const tabs = [
 
   return (
     <div>
-      <div className="md:p-0 p-2 relative ">
+      <div className="md:px-5 md:pt-5 p-2 relative ">
         <Navbar />
 
         <div className="userdash-cta-container ">
@@ -44,13 +44,13 @@ const tabs = [
         </div>
 
         {/* Tab Switcher */}
-<div className="hidden md:flex justify-center -mt-5 mb-10 px-2">
+<div className="hidden md:flex justify-center -mt-5  px-2">
   <div className="flex flex-wrap sm:flex-nowrap overflow-x-auto no-scrollbar bg-white shadow-lg rounded-full p-1 border border-gray-200 instrument-sans">
     {tabs.map((tab) => (
       <button
         key={tab.id}
         onClick={() => setActiveTab(tab.id)}
-        className={`flex-1 sm:flex-none text-center px-8 py-3 rounded-full text-xs sm:text-sm md:text-[16px] font-semibold transition-all duration-300 cursor-pointer mb-2 sm:mb-0 ${
+        className={`flex-1 sm:flex-none text-center px-8 py-3 rounded-full text-xs sm:text-sm md:text-[16px] font-semibold  cursor-pointer mb-2 sm:mb-0 ${
           activeTab === tab.id
             ? "bg-gradient-to-r from-[#6ABD11] to-[#5a9d0d] text-white shadow-md"
             : "text-gray-600 hover:text-gray-900"

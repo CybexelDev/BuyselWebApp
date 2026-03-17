@@ -52,6 +52,7 @@ function App() {
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
           <Route path="/ownerdash" element={<OwnerDashboard />}/>
+          
 
 
 

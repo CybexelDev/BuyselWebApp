@@ -90,16 +90,16 @@ function Dashboard() {
   return (
     <div className="mb-22 md:mb-12 mx-4 sm:mx-6 lg:mx-10">
       {/* Dashboard Cards */}
-      <div className="mb-10 sm:max-w-7xl mx-auto">
+      <div className=" mb-10 sm:max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2 mt-6">
+          <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em]  mt-6">
             <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
             Data Overview
           </div>
-          <h1 className="text-4xl font-black text-slate-900 tracking-tight instrument-sans mb-6">
+          <h1 className="text-[31px] font-black text-slate-900 tracking-tight instrument-sans mb-6">
             Data <span className="text-[#6ABD11]">Overview</span>
           </h1>
         </motion.div>
