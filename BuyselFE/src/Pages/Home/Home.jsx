@@ -13,6 +13,7 @@ import Review from '../../Layouts/Home/Review/Review'
 import HomePremiumAppartment from '../../Layouts/Home/HomePremiumAppartment/HomePremiumAppartment'
 import Ad from '../../Layouts/Home/Ad/Ad'
 import AddPropertyAndAgent from '../../Layouts/Home/AddProperyAndAgent/AddPropertyAndAgent'
+import Plan from '../../Layouts/Home/Plan/Plan'
 
 
 const Home = () => {
@@ -28,6 +29,8 @@ const Home = () => {
     <About />
     <DiscoverLayout/>
     <Review />
+        <Plan />
+
     <FAQSection/>
     <AppPromoBanner/>
     <Footer/>

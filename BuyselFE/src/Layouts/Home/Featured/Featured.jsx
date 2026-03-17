@@ -37,8 +37,8 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
   };
 
   return (
-    <div className="pt-5 px-5 relative">
-      <div className="featured-cta-container px-6 sm:px-6 md:px-10 lg:px-14">
+    <div className="pt-5 px-3 relative">
+      <div className="featured-cta-container px-2 sm:px-6 md:px-10 lg:px-14">
 
         {/* Heading */}
         <div className="featured-cta-logo-container">

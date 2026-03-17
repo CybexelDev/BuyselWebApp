@@ -24,6 +24,7 @@ import Enquiry from './Agent/Pages/Enquiry/Enquiry'
 import EnquiryDetail from './Agent/Pages/EnquiryDetail/EnquiryDetail'
 import AgentPropertyListing from './Agent/Pages/propertyListing/propertyListing'
 import { useSelector } from "react-redux";
+import OwnerDashboard from './Pages/OwnerDashboard/OwnreDashboard'
 import PlansPage from './Pages/Plans/PlansPage'
 import UserEnquiry from './Agent/Pages/UserEnquiry/UserEnquiry'
 
@@ -52,6 +53,7 @@ function App() {
           <Route path='/addyourproperty' element={<AddProperty/>}/>
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
+          <Route path="/ownerdash" element={<OwnerDashboard />}/>
           <Route path='/plans'  element={<PlansPage/>}/>
 
           {/* //agent side */} 
