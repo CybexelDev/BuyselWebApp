@@ -33,7 +33,7 @@ const ProfileHeader = ({setMode}) => {
   return (
     <div className="relative p-5 ">
 
-            <Navbar top="top-[18px]" />
+            <Navbar  />
 
       {/* ===== BANNER ===== */}
       <div className="profile-cta-container relative overflow-visible">

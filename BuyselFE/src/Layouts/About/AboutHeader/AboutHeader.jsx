@@ -99,7 +99,7 @@ function AboutHeader() {
           >
 
             <div className="relative z-20">
-              <Navbar  top="top-[18px]" text="text-[16px]" padding="lg:px-[34px]" />
+              <Navbar  top="top-[25px]" text="text-[16px]" padding="lg:px-[34px]" gap = "lg:gap-[36px]"/>
             </div>
 
           </div>

@@ -42,103 +42,114 @@ const steps = [
 ];
 
   const progress = Math.round((step / steps.length) * 100);
+return (
+  <div className="w-full lg:w-fit h-fit bg-[#EBFFEA] rounded-[30px] lg:rounded-[40px] p-4 lg:p-6">
 
-  return (
-    <div className="w-fit h-fit bg-[#EBFFEA] rounded-[40px] p-6">
+    {/* Header */}
+    <div className="flex items-center gap-3 mb-3 relative pb-5">
 
-      <div className="flex items-center gap-3 mb-3 relative pb-5">
+      <div className="relative w-[60px] h-[60px] lg:w-[74px] lg:h-[74px]">
 
-       <div className="relative w-[74px] h-[74px]">
+        <svg
+          viewBox="0 0 60 60"
+          className="w-full h-full -rotate-90"
+        >
+          <circle
+            cx="30"
+            cy="30"
+            r="24"
+            stroke="#E5E7EB"
+            strokeWidth="6"
+            fill="none"
+          />
 
-  <svg
-    viewBox="0 0 60 60"
-    className="w-full h-full -rotate-90"
-  >
+          <circle
+            cx="30"
+            cy="30"
+            r="24"
+            stroke="#84CC16"
+            strokeWidth="6"
+            fill="none"
+            strokeDasharray="150"
+            strokeDashoffset={150 - (150 * progress) / 100}
+            strokeLinecap="round"
+          />
+        </svg>
 
-    <circle
-      cx="30"
-      cy="30"
-      r="24"
-      stroke="#E5E7EB"
-      strokeWidth="6"
-      fill="none"
-    />
+        <div className="absolute inset-[10px] bg-white rounded-full flex items-center justify-center p-2">
 
-    <circle
-      cx="30"
-      cy="30"
-      r="24"
-      stroke="#84CC16"
-      strokeWidth="6"
-      fill="none"
-      strokeDasharray="150"
-      strokeDashoffset={150 - (150 * progress) / 100}
-      strokeLinecap="round"
-    />
+          <span className="text-[16px] lg:text-[20px] font-semibold lexend">
+            {progress}%
+          </span>
 
-  </svg>
-
-  <div className="absolute inset-[10px] bg-white rounded-full flex items-center justify-center p-2 ">
-
-    <span className="text-[20px] font-semibold lexend">
-      {progress}%
-    </span>
-
-  </div>
-
-</div>
-
-        <div>
-          <p className="font-medium text-[20px] lexend">
-            Overall Progress
-          </p>
-          <p className="text-[12px] text-black inter font-normal  ">
-            Just getting started...
-          </p>
         </div>
-          <div className="absolute  bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#EBFFEA] via-[#84CC16] to-[#EBFFEA]" />
-
 
       </div>
 
-      <div className="relative flex flex-col gap-6">
-
-        <div className="absolute left-[25px] top-[10px] bottom-[10px] w-[2px] bg-[#84CC16]" />
-
-        {steps.map((item, index) => {
-
-          const active = step === index + 1;
-
-          return (
-            <div key={index} className="flex items-center gap-4 relative">
-
-              <div
-                className={`w-[50px] h-[50px] rounded-full flex items-center justify-center
-                ${
-                  active
-                    ? "bg-white text-[#84CC16]"
-                    : "bg-white text-gray-400"
-                }`}
-              >
-                {item.icon}
-              </div>
-
-              <span
-                className={`text-[16px] ${
-                  active ? "font-semibold text-black inter" : "font-medium inter"
-                }`}
-              >
-                {item.name}
-              </span>
-
-            </div>
-          );
-        })}
-
+      <div>
+        <p className="font-medium text-[16px] lg:text-[20px] lexend">
+          Overall Progress
+        </p>
+        <p className="text-[12px] text-black inter font-normal">
+          Just getting started...
+        </p>
       </div>
+
+      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#EBFFEA] via-[#84CC16] to-[#EBFFEA]" />
 
     </div>
-  );
+
+    {/* Steps */}
+    <div className="relative flex flex-row lg:flex-col justify-between lg:justify-start gap-4 lg:gap-6">
+
+      {/* Desktop vertical line */}
+      <div className="hidden lg:block absolute left-[25px] top-[10px] bottom-[10px] w-[2px] bg-[#84CC16]" />
+
+      {/* Mobile horizontal line */}
+      <div className="lg:hidden absolute top-[15px] left-[10%] right-[10%] h-[2px] bg-[#84CC16]" />
+
+      {steps.map((item, index) => {
+
+const active = step === index + 1;
+const completed = step > index + 1;
+        return (
+          <div
+            key={index}
+            className="flex flex-col lg:flex-row items-center gap-2 lg:gap-4 relative flex-1 lg:flex-none"
+          >
+<div
+  className={`w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] rounded-full flex items-center justify-center transition
+  ${
+    completed
+      ? "bg-[#84CC16] text-white"
+      : active
+      ? "bg-white text-[#84CC16] border-2 border-[#84CC16]"
+      : "bg-white text-gray-400"
+  }`}
+>
+  <div className={completed ? "text-white" : ""}>
+    {item.icon}
+  </div>
+</div>
+
+            <span
+              className={`hidden lg:block text-[16px] ${
+                active
+                  ? "font-semibold inter text-[#84CC16]"
+                  : "font-medium inter"
+              }`}
+            >
+              {item.name}
+            </span>
+
+          </div>
+        );
+      })}
+
+    </div>
+
+  </div>
+);
 }
 
 export default SidebarProgress;

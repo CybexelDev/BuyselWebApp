@@ -54,7 +54,7 @@ useEffect(() => {
   const totalPages = Math.ceil(propertiesData.length / itemsPerPage);
 
   return (
-    <div className='py-8 px-1 md:px-6 lg:px-8 mb-2'>
+    <div className='py-8 px-1 md:px-6 lg:px-8 mb-2 -mt-20'>
 
 
       {/* property Listing */}

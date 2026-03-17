@@ -5,10 +5,12 @@ import Pricing from "../../../Components/AddProperty/Pricing";
 import MediaUpload from "../../../Components/AddProperty/MediaUpload";
 import Button from "../../../Components/AddProperty/Button";
 import ProfileDashboard from "../../Profile/ProfileDashboard/ProfileDashboard";
-
+import PreviewProperty from "../../../Components/AddProperty/Preview";
+import SuccessModal from "../../../Components/AddProperty/SuccessModal";
 function AddPropertySection() {
 
   const [step, setStep] = useState(1);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
     propertySegment: "",
@@ -31,16 +33,24 @@ function AddPropertySection() {
     availableDate:"",
 
   });
+ const handleSubmit = (e) => {
+  e.preventDefault();
+
+  // only allow submit on step 4
+  if (step !== 4) return;
+
+  console.log("Form Data:", formData);
+  setShowSuccess(true);
+};
 
   return (
     <div className="bg-[#FFFFFF] min-h-screen p-6">
 
-      <div className=" mx-auto flex gap-2 sm:gap-4 md:gap-6 lg:gap-8">
-
-        <SidebarProgress step={step} />
-
-        <div className="flex-1">
-
+<div className="mx-auto flex flex-col lg:flex-row gap-2 sm:gap-4 md:gap-6 lg:gap-8">
+<div className="w-full lg:w-[320px]">
+  <SidebarProgress step={step} />
+</div>
+<form onSubmit={handleSubmit} className="flex-1" autoComplete="off">
           {step === 1 && (
             <PropertyInfo
               formData={formData}
@@ -60,6 +70,12 @@ function AddPropertySection() {
               
             />
           )}
+          {step===4 &&(
+            <PreviewProperty
+            formData={formData}
+            setFormData={setFormData}
+            />
+          )}
 
          
                 <Button
@@ -69,12 +85,15 @@ function AddPropertySection() {
            />
 
 
-        </div>
-
+</form>
 
 
 
       </div>
+      <SuccessModal
+  isOpen={showSuccess}
+  onClose={() => setShowSuccess(false)}
+/>
 
     </div>
   );

@@ -1,0 +1,195 @@
+import React, { useState } from "react";
+import Sidebar from "../../Components/Sidebar/Sidebar";
+import {
+  User,
+  Phone,
+  MessageSquare,
+  Calendar,
+  MapPin,
+  Search,
+  Filter,
+  ArrowUpRight,
+  Trash,
+} from "lucide-react";
+import { motion } from "framer-motion";
+
+const UserEnquiryLayout = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const enquiries = [
+    {
+      id: 1,
+      name: "Rahul Sharma",
+      contact: "+91 9876543210",
+      pincode: "670001",
+      requirement:
+        "Looking for a 3BHK apartment near Kannur town within a budget of 80 Lakhs.",
+      date: "10 minutes ago",
+      status: "New",
+    },
+    {
+      id: 2,
+      name: "Aisha Khan",
+      contact: "aisha@email.com",
+      pincode: "673001",
+      requirement: "Need a commercial shop space around 1200 sqft.",
+      date: "2 hours ago",
+      status: "Contacted",
+    },
+    {
+      id: 3,
+      name: "Sanjay Menon",
+      contact: "+91 9871234567",
+      pincode: "670702",
+      requirement: "Searching for a villa with parking and garden area.",
+      date: "1 day ago",
+      status: "Closed",
+    },
+  ];
+
+  const filteredEnquiries = enquiries.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] flex text-slate-900 host-grotesk">
+      <Sidebar />
+
+      <main className="flex-1 w-full">
+        <div className="max-w-7xl mx-auto p-6 md:p-10">
+
+
+       
+       <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+
+  <motion.div
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.4 }}
+  >
+
+    <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2">
+      <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
+      User Enquiries
+    </div>
+
+    <h1 className="text-4xl font-black text-slate-900 tracking-tight instrument-sans">
+      User <span className="text-[#6ABD11]">Enquiries</span>
+    </h1>
+
+    <p className="text-sm text-slate-400 mt-2">
+      Manage and respond to property leads from users
+    </p>
+
+  </motion.div>
+
+            <div className="flex items-center gap-3">
+              <div className="relative group">
+                <Search
+                  size={18}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Search enquiries..."
+                  className="bg-white border border-slate-200 rounded-xl py-2 pl-10 pr-4 text-sm focus:ring-2 ring-[#74C122]/20 focus:border-[#74C122] outline-none w-64"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+
+              <button className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition">
+                <Filter size={20} />
+              </button>
+            </div>
+          </header>
+
+<div className="flex flex-col gap-4">
+  {filteredEnquiries.map((item, index) => (
+    <motion.div
+      key={item.id}
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+      className="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 
+      flex flex-col lg:flex-row lg:items-center justify-between 
+      gap-4 md:gap-6 hover:shadow-lg hover:border-[#74C122]/40 transition-all"
+    >
+
+      {/* USER INFO */}
+      <div className="flex items-start gap-4 w-full lg:w-[260px]">
+        <div className="w-12 h-12 rounded-xl bg-[#74C122]/10 flex items-center justify-center text-[#74C122]">
+          <User size={20} />
+        </div>
+
+        <div>
+          <h4 className="font-bold text-slate-900">{item.name}</h4>
+          <p className="text-sm text-slate-400 flex items-center gap-1">
+            <Phone size={12} /> {item.contact}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex justify-between items-center lg:hidden text-xs text-slate-400">
+
+        <div className="flex items-center gap-1">
+          <MapPin size={14} className="text-[#74C122]" />
+          {item.pincode}
+        </div>
+
+        <div className="flex items-center gap-1">
+          <Calendar size={14} />
+          {item.date}
+        </div>
+
+      </div>
+
+      <div className="hidden lg:flex items-center gap-2 min-w-[120px]">
+        <MapPin size={16} className="text-[#74C122]" />
+        <span className="text-sm font-semibold text-slate-600">
+          {item.pincode}
+        </span>
+      </div>
+
+      <div className="flex-1 text-sm text-slate-600 leading-relaxed">
+        {item.requirement}
+      </div>
+
+      <div className="hidden lg:flex items-center gap-2 text-xs text-slate-400">
+        <Calendar size={14} />
+        {item.date}
+      </div>
+
+      <div className="flex gap-2 justify-end">
+        <button className="p-2 bg-slate-100 rounded-lg hover:bg-[#74C122] hover:text-white transition">
+          <Phone size={16} />
+        </button>
+
+        <button className="p-2 bg-slate-100 rounded-lg hover:bg-[#74C122] hover:text-white transition">
+          <MessageSquare size={16} />
+        </button>
+
+        <button className="p-2 text-slate-400 hover:text-red-500 transition">
+          <Trash size={18} />
+        </button>
+      </div>
+
+    </motion.div>
+  ))}
+</div>
+
+ {/* empty aanengil */}
+          {filteredEnquiries.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-24 text-slate-300 border-2 border-dashed border-slate-200 rounded-3xl mt-6">
+              <Search size={40} className="opacity-20 mb-4" />
+              <p className="text-sm font-semibold tracking-widest uppercase">
+                No Enquiries Found
+              </p>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default UserEnquiryLayout;
