@@ -11,7 +11,7 @@ import {
   Pencil
 } from "lucide-react";
 
-const PropertyListingLayout = () => {
+const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50" }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
  const properties = [
@@ -64,11 +64,11 @@ const PropertyListingLayout = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-x-hidden">
-      <Sidebar />
+    <div className={`min-h-screen ${bg} flex overflow-x-hidden`}>
+        {showSidebar && <Sidebar />}
 
-      <main className="flex-1 w-full min-h-screen transition-all duration-300">
-        <div className="w-full max-w-7xl p-4 sm:p-6 md:p-10 lg:p-12">
+      <main className="flex w-full min-h-screen transition-all duration-300">
+        <div className="w-full  p-4 sm:p-6 md:p-10 lg:py-12">
 
           {/* HEADER */}
           <header className="mb-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -191,10 +191,12 @@ const PropertyListingLayout = () => {
                     </div>
 
                     {/* Edit */}
+                            {showEdit && 
                     <button className="flex items-center gap-1 text-sm border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk">
                       <Pencil size={14} />
                       Edit
                     </button>
+                    }
 
                   </div>
 

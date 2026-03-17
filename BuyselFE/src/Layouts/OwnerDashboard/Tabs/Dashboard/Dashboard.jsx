@@ -2,10 +2,9 @@ import React from "react";
 import { TrendingUp, Check } from "lucide-react";
 import apartment from "../../../../assets/images/icons/apartment.svg";
 import property from "../../../../assets/images/profile/property.svg";
-
+import { motion } from "framer-motion";
 import DashboardCard from "../../../../Components/DashboardCrad/DashboardCard";
-import CurrentPlan from "../../../../Agent/Components/CurrentPlan/CurrentPlan";
-import EnquiryPieChart from "../../../../Components/PieChart/PieChart";
+
 import DietChart from "../../../../Components/PieChart/PieChart";
 
 function Dashboard() {
@@ -89,31 +88,45 @@ function Dashboard() {
   const showRenewButton = diffDays <= 10;
 
   return (
-    <div className="mb-12 mx-2">
+    <div className="mb-22 md:mb-12 mx-4 sm:mx-6 lg:mx-10">
       {/* Dashboard Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 sm:gap-8 mb-8 sm:max-w-7xl mx-auto">
-        {data.map((item, index) => (
-          <DashboardCard
-            key={index}
-            icon={item.icon}
-            title={item.title}
-            value={item.value}
-            badge={item.badge}
-            shadow="shadow-[0px_4px_8.2px_rgba(189,171,171,0.25),0px_0px_4px_rgba(170,149,149,0.25)]"
-            hover="none"
-          />
-        ))}
+      <div className="mb-10 sm:max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2 mt-6">
+            <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
+            Data Overview
+          </div>
+          <h1 className="text-4xl font-black text-slate-900 tracking-tight instrument-sans mb-6">
+            Data <span className="text-[#6ABD11]">Overview</span>
+          </h1>
+        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-8 ">
+          {data.map((item, index) => (
+            <DashboardCard
+              key={index}
+              icon={item.icon}
+              title={item.title}
+              value={item.value}
+              badge={item.badge}
+              shadow="shadow-[0px_4px_8.2px_rgba(189,171,171,0.25),0px_0px_4px_rgba(170,149,149,0.25)]"
+              hover="none"
+            />
+          ))}
+        </div>
       </div>
 
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-<div className="lg:col-span-2 host-grotesk">
-            <h2 className="text-xl font-bold mb-4 instrument-sans">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 host-grotesk">
+          <h2 className="text-xl font-bold mb-4 instrument-sans">
             Your Current Plan
           </h2>
 
           <div className="bg-white rounded-2xl shadow-lg border border-[#6ABD11]/20 overflow-hidden">
             <div className="bg-gradient-to-r from-[#6ABD11]/10 to-transparent p-5 sm:p-6 lg:p-8">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-8">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 sm:gap-8">
                 {/* Plan Info */}
                 <div>
                   <div className="flex items-center gap-2 mb-2">
@@ -140,8 +153,8 @@ function Dashboard() {
                 </div>
 
                 {/* Listings */}
-                <div className="flex justify-center w-full lg:w-auto">
-                  <div className="bg-white rounded-lg p-[8px] border border-gray-200">
+                <div className="flex justify-center ">
+                  <div className="bg-white rounded-lg p-[8px] w-full md:w-auto border border-gray-200">
                     <p className="text-2xl sm:text-2xl font-bold text-center text-[#6ABD11]">
                       {Currentplan.listings}
                     </p>
@@ -185,19 +198,15 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-white flex flex-col items-center px-6 py-1 overflow-hidden">
-  <h2 className="text-xl font-bold mb-4 instrument-sans w-full text-left">
-    Enquiries by Month
-  </h2>
+        <div className="bg-white flex flex-col items-center px-3 sm:px-1 py-1 overflow-hidden">
+          <h2 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 instrument-sans w-full text-left">
+            Enquiries by Month
+          </h2>
 
-  <DietChart />
-</div>
-  
-
-
-       
-
-
+          <div className="w-full">
+            <DietChart />
+          </div>
+        </div>
       </div>
     </div>
   );
