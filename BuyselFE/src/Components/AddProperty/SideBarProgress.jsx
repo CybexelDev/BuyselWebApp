@@ -106,33 +106,36 @@ return (
       <div className="hidden lg:block absolute left-[25px] top-[10px] bottom-[10px] w-[2px] bg-[#84CC16]" />
 
       {/* Mobile horizontal line */}
-      <div className="lg:hidden absolute top-[25px] left-[10%] right-[10%] h-[2px] bg-[#84CC16]" />
+      <div className="lg:hidden absolute top-[15px] left-[10%] right-[10%] h-[2px] bg-[#84CC16]" />
 
       {steps.map((item, index) => {
 
-        const active = step === index + 1;
-
+const active = step === index + 1;
+const completed = step > index + 1;
         return (
           <div
             key={index}
             className="flex flex-col lg:flex-row items-center gap-2 lg:gap-4 relative flex-1 lg:flex-none"
           >
-
-            <div
-              className={`w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] rounded-full flex items-center justify-center
-              ${
-                active
-                  ? "bg-white text-[#84CC16]"
-                  : "bg-white text-gray-400"
-              }`}
-            >
-              {item.icon}
-            </div>
+<div
+  className={`w-[40px] h-[40px] lg:w-[50px] lg:h-[50px] rounded-full flex items-center justify-center transition
+  ${
+    completed
+      ? "bg-[#84CC16] text-white"
+      : active
+      ? "bg-white text-[#84CC16] border-2 border-[#84CC16]"
+      : "bg-white text-gray-400"
+  }`}
+>
+  <div className={completed ? "text-white" : ""}>
+    {item.icon}
+  </div>
+</div>
 
             <span
               className={`hidden lg:block text-[16px] ${
                 active
-                  ? "font-semibold text-black inter"
+                  ? "font-semibold inter text-[#84CC16]"
                   : "font-medium inter"
               }`}
             >

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import {
   Search,
@@ -73,16 +74,20 @@ const PropertyListingLayout = () => {
           {/* HEADER */}
           <header className="mb-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
 
-            <div>
-              <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2">
-                <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
-                Property Management
-              </div>
+           <motion.div
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.4 }}
+>
+  <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2">
+    <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
+    Property Management
+  </div>
 
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                Property <span className="text-[#6ABD11]">Listings</span>
-              </h1>
-            </div>
+  <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+    Property <span className="text-[#6ABD11]">Listings</span>
+  </h1>
+</motion.div>
 
             <button className="flex items-center justify-center gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
               <Plus size={18} />

@@ -1,7 +1,16 @@
 import { Facebook, Twitter, Instagram } from "lucide-react";
 import logo from "../../assets/images/logo/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+    const navigate=useNavigate()
+    const handleNavigate = (path) => {
+  navigate(path);
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth", 
+  });
+};
     return (
         <div className="px-6 md:px-12 lg:px-5 mt-22">
             <footer className="bg-black text-white rounded-t-3xl py-14">
@@ -75,10 +84,10 @@ const Footer = () => {
                             Pages
                         </h3>
                         <ul className="space-y-1.5 md:space-y-2 text-[12px] md:text-[13px] lg:text-[14px] font-medium text-[#949494]">
-                            <li className="hover:text-white cursor-pointer">Home</li>
-                            <li className="hover:text-white cursor-pointer">About Us</li>
-                            <li className="hover:text-white cursor-pointer">Properties</li>
-                            <li className="hover:text-white cursor-pointer">Contact</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/")}>Home</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/about")}>About Us</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/propertyListing")}>Properties</li>
+                            <li className="hover:text-white cursor-pointer"onClick={()=>handleNavigate("/contact")}>Contact</li>
                         </ul>
                     </div>
 
@@ -88,9 +97,9 @@ const Footer = () => {
                             Services
                         </h3>
                         <ul className="space-y-1.5 md:space-y-2 text-[12px] md:text-[13px] lg:text-[14px] font-medium text-[#949494]">
-                            <li className="hover:text-white cursor-pointer">Buy Property</li>
-                            <li className="hover:text-white cursor-pointer">Sell Property</li>
-                            <li className="hover:text-white cursor-pointer">Rent/Lease</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/propertyListing")}>Buy Property</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/addyourproperty")}>Sell Property</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/propertyListing")}>Rent/Lease</li>
                         </ul>
                     </div>
 
@@ -100,9 +109,9 @@ const Footer = () => {
                             Help & Support
                         </h3>
                         <ul className="space-y-1.5 md:space-y-2 text-[12px] md:text-[13px] lg:text-[14px] font-medium text-[#949494]">
-                            <li className="hover:text-white cursor-pointer">Help Center</li>
-                            <li className="hover:text-white cursor-pointer">Contact Support</li>
-                            <li className="hover:text-white cursor-pointer">FAQs</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/contact")}>Help Center</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/contact")}>Contact Support</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/")}>FAQs</li>
                             <li className="hover:text-white cursor-pointer">Privacy Policy</li>
                             <li className="hover:text-white cursor-pointer">Terms & Conditions</li>
                         </ul>
