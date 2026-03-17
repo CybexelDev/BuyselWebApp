@@ -30,7 +30,7 @@ const Sidebar = () => {
 
   return (
     <div className="relative  ">
-      <nav className="fixed left-2 top-2 backdrop-blur-md hidden bottom-4 w-64 flex-col border-r border-white/10 bg-white rounded-[40px] md:flex z-50 shadow-2xl  mx-2 my-4">
+      <nav className="fixed left-2 top-2 backdrop-blur-md hidden bottom-4 w-64 flex-col border-r border-white/10 bg-white rounded-[40px] lg:flex z-50 shadow-2xl  mx-2 my-4">
         <div className="flex h-28 items-center px-12">
           <motion.div
             initial={{ opacity: 0 }}
@@ -86,7 +86,7 @@ const Sidebar = () => {
         </div>
       </nav>
 
-      <nav className="fixed bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl md:hidden z-50 shadow-2xl">
+      <nav className="fixed bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl">
         {navItems.map((item) => (
           <button
             key={item.id}
@@ -106,7 +106,7 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      <div className="hidden md:block w-64 h-screen shrink-0"></div>
+      <div className="hidden lg:block w-64 h-screen shrink-0"></div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { MessageCircle, Phone } from "lucide-react";
-const PlansLayout = () => {
+const PlansLayout = ({showtabs=true ,padding="py-10"}) => {
   const features = [
     "Plan Validity",
     "Top Priority",
@@ -58,17 +58,27 @@ const PlansLayout = () => {
   };
 
   return (
-    <div className="bg-white py-10 px-4 lg:px-12 xl:px-16">
-      <div className="flex justify-center mb-15">
-        <div className="flex items-center border border-[#8AD32E] rounded-full p-1 bg-white  ">
-          {roles.map((role) =>
-          (<button key={role}
-            onClick={() => setActive(role)}
-            className={`px-6 py-2 rounded-full text-[24px] lexend font-semibold transition-all duration-300 ${active === role ? "bg-[#8AD32E] text-white shadow" : "text-[#7CB305]"}`} >
-            {role}
-          </button>))}
-        </div>
-      </div>
+    <div className={` ${padding} bg-white  px-4 lg:px-12 xl:px-16`}>
+     
+     {showtabs && (
+  <div className="flex justify-center mb-15">
+    <div className="flex items-center border border-[#8AD32E] rounded-full p-1 bg-white">
+      {roles.map((role) => (
+        <button
+          key={role}
+          onClick={() => setActive(role)}
+          className={`px-6 py-2 rounded-full text-[24px] lexend font-semibold transition-all duration-300 ${
+            active === role
+              ? "bg-[#8AD32E] text-white shadow"
+              : "text-[#7CB305]"
+          }`}
+        >
+          {role}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:hidden lexend">
 
         {plans.map((plan, planIndex) => (

@@ -58,7 +58,7 @@ const Header = () => {
 
 
         {activeTab === "dashboard" && <Dashboard />}
-      {activeTab === "plans" && <div><PlansLayout/></div>}
+      {activeTab === "plans" && <div><PlansLayout showtabs={false} padding="py-0" /></div>}
       {activeTab === "properties" && <div>Properties Content</div>}
       {activeTab === "enquiries" && <div>Enquiries Content</div>}
         </div>
