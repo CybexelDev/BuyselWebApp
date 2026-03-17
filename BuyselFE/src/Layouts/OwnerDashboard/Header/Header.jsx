@@ -5,6 +5,7 @@ import logo from "../../../assets/images/logo/logo.png";
 
 import Navbar from "../../../Components/Navbar/Navbar";
 import Dashboard from "../Tabs/Dashboard/Dashboard";
+import PlansLayout from "../../Plans/PlansLayout";
 
 //start
 
@@ -57,7 +58,7 @@ const Header = () => {
 
 
         {activeTab === "dashboard" && <Dashboard />}
-      {activeTab === "plans" && <div>Plans Content</div>}
+      {activeTab === "plans" && <div><PlansLayout/></div>}
       {activeTab === "properties" && <div>Properties Content</div>}
       {activeTab === "enquiries" && <div>Enquiries Content</div>}
         </div>

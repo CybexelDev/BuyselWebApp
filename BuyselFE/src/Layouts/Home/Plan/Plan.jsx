@@ -28,7 +28,7 @@ function Plan() {
           </p>
 
           {/* Button */}
-          <ButtonHead text={"Explore All Plans"} />
+          <ButtonHead  text={"Explore All Plans"} path="/plans" />
 
         </div>
 
