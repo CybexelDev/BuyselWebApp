@@ -15,20 +15,12 @@ export const premiumAgentLogin = async (username, password) => {
         "Content-Type": "multipart/form-data",
       },
     });
-
-    console.log(result.data.access, "kkkkkkkkkkkkk");
-    
-
     if (
       result.data.access &&
       result.data.premium.name &&
       result.data.premium.id &&
       result.data.premium.city
     ) {
-      // localStorage.setItem("accessToken", result.data.access_token);
-      // localStorage.setItem("refreshToken", result.data.refresh_token);
-
-      console.log("Login successful!");
       return result.data;
     }
 

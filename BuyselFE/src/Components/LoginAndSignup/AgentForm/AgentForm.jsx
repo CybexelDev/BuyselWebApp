@@ -2,10 +2,12 @@ import React from 'react'
 import { useState } from 'react'
 import { premiumAgentLogin } from '../../../Api/agentsApi';
 import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const AgentForm = () => {
     const [login, setLogin] = useState({ username: '', password: '' })
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     console.log(login, "hahaaaa");
 
     const handleLogin = async () => {
@@ -23,6 +25,9 @@ const AgentForm = () => {
                        image: response?.premium.image,
                     }   
                 })
+
+                navigate('/agent/dashboard')
+
             } else {
                 console.log("Invalid credentials");
             }
@@ -52,6 +57,7 @@ const AgentForm = () => {
                 <div>
                     <label className="text-[16px] text-[#525252] host-grotesk">Password</label>
                     <input
+                        value={login.password}
                         onChange={(e) => setLogin({ ...login, password: e.target.value })}
                         type="password"
                         className="w-full border border-[#cbc8c8] rounded-[10px] p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-green-400"

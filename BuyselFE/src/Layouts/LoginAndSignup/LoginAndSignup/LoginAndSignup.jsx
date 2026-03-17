@@ -13,6 +13,11 @@ import OtpForm from "../../../Components/LoginAndSignup/OtpForm/OtpForm";
 
 export default function LoginAndSignup() {
     const [activeTab, setActiveTab] = useState("agent");
+    const [otpSent, setOtpSent] = useState(false)
+    const [email, setEmail] = useState('')
+
+    // console.log(email, "emailllll");
+    
 
     return (
         <div className="md:h-[100vh] h-[100%] w-full bg-white flex items-center justify-center p-3 md:p-8">
@@ -58,8 +63,9 @@ export default function LoginAndSignup() {
                         activeTab === "agent" ? (
                             <AgentForm />
                         ) : activeTab === "signup" ? (
-                            // <SignupForm setSignin={setActiveTab} />
-                            <OtpForm />
+
+                            otpSent ? ( <OtpForm email={email} />) : ( <SignupForm setSignin={setActiveTab} SetOtpSent={setOtpSent} setEmail={setEmail} />)
+
                         ) : (
                             <UserForm setSignup={setActiveTab} />
                         )
