@@ -6,6 +6,7 @@ import Dashboard from "../Tabs/Dashboard/Dashboard";
 import PlansLayout from "../../Plans/PlansLayout";
 import EnquiryLayoutUser from "../Tabs/Enquiries/Enquiries";
 import { useSearchParams } from "react-router-dom";
+import Properties from "../Tabs/Properties/Properties";
 //start
 
 const Header = () => {
@@ -58,7 +59,7 @@ const Header = () => {
 
         {activeTab === "dashboard" && <Dashboard />}
       {activeTab === "plans" && <div><PlansLayout showtabs={false} padding="py-0" /></div>}
-      {activeTab === "properties" && <div>Properties Content</div>}
+      {activeTab === "properties" && <div><Properties /></div>}
       {activeTab === "enquiries" && <div><EnquiryLayoutUser/></div>}
         </div>
 

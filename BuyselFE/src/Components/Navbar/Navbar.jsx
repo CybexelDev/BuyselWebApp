@@ -8,8 +8,8 @@ const Navbar = ({
   top = "top-9",
   text = "text-[14px]",
   color = "text-[#676767]",
-  padding = "lg:px-[49px]"
-
+  padding="lg:px-[49px]",
+  right="right-0"
 }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ const Navbar = ({
 
         {/* MOBILE MENU BUTTON */}
         <button
-          className="lg:hidden relative z-50 flex flex-col gap-1"
+          className={`lg:hidden relative z-50 flex flex-col gap-1 ${right}`}
           onClick={() => setOpen(!open)}
         >
           <span className={`w-6 h-[2px] bg-black transition-all ${open ? "rotate-45 translate-y-[6px]" : ""}`} />
