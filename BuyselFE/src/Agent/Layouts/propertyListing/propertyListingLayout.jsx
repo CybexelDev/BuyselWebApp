@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import {
   Search,
@@ -13,6 +13,7 @@ import {
 
 const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50",}) => {
   const [searchTerm, setSearchTerm] = useState("");
+ 
 
  const properties = [
   {
