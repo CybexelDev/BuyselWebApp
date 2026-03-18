@@ -25,13 +25,18 @@ import EnquiryDetail from './Agent/Pages/EnquiryDetail/EnquiryDetail'
 import AgentPropertyListing from './Agent/Pages/propertyListing/propertyListing'
 import { useSelector } from "react-redux";
 import OwnerDashboard from './Pages/OwnerDashboard/OwnreDashboard'
+import PlansPage from './Pages/Plans/PlansPage'
+import UserEnquiry from './Agent/Pages/UserEnquiry/UserEnquiry'
+import EnquiryDetailLayoutUser from './Layouts/OwnerDashboard/Tabs/Enquiries/EnquiriesDetail'
 
 
 function App() {
 
-  const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
+  // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
+
+  const { image, userName, userId, accessToken } = useSelector((state) => state.user);
      
-  console.log(image, agentName,agentId, accessToken, "yyyyyyyyyyyyyy");
+  console.log(image, userName, userId, accessToken, "yyyyyyyyyyyyyy");
   
   return (
     <>
@@ -39,6 +44,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<Home />} />
           <Route path="/propertyListing" element={<PropertListing />} />
           <Route path="/agents" element={<Agents />} />
           <Route path="/propertyDetail" element={<PropertyDetail />} />
@@ -51,26 +57,23 @@ function App() {
           <Route path='/addyourproperty' element={<AddProperty/>}/>
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
-          <Route path="/ownerdash" element={<OwnerDashboard />}/>
-          
-
-
+          <Route path="/ownerdash" element={<OwnerDashboard />}/>          
+          <Route path='/plans'  element={<PlansPage/>}/>
+          <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
 
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
           <Route path='/agent/plans' element={<AgentPlans/>}/>
           <Route path='/agent/profile' element={<AgentProfile/>}/>
           <Route path='/agent/enquiry' element={<Enquiry/>}/>
+          <Route path='/agent/user-enquiry' element={<UserEnquiry/>}/>
           <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
           <Route path="/agent/property" element={<AgentPropertyListing />}/>
-          
             
        
+     
         </Routes>
       </Router>
-
-        
-      
     </>
   )
 }

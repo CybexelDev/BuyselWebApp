@@ -15,7 +15,7 @@ function Profile() {
     <div>
      <ProfileHeader  setMode={setMode}/>
      <ProfileDashboard users={users} mode={mode} setMode={setMode} />
-            <RecentEnquiries />
+      <RecentEnquiries />
      <Footer />
     </div>
   )

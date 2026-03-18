@@ -168,7 +168,7 @@ function PropertyInfo({ formData, setFormData }) {
 
         {/* CATEGORY SECTION */}
 
-        <div className="grid grid-cols-3 gap-6 mb-6">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
 
           <SelectField
             label="Category"
@@ -320,7 +320,7 @@ ${selected
         )}
         {/* BASIC PROPERTY DETAILS */}
 
-        <div className="grid grid-cols-3 gap-6">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
 
           <Input label="Title" name="title" value={formData.title} onChange={handleChange} />
 
@@ -332,86 +332,122 @@ ${selected
 
 
         {/* LOCATION SECTION */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
 
-        <div className="grid grid-cols-3 gap-6 mt-8">
+  <Input label="City" name="city" value={formData.city} onChange={handleChange} />
+  <Input label="Village" name="village" value={formData.village} onChange={handleChange} />
+  <Input label="Taluk" name="taluk" value={formData.taluk} onChange={handleChange} />
 
-          <Input label="City" name="city" value={formData.city} onChange={handleChange} />
-          <Input label="Village" name="village" value={formData.village} onChange={handleChange} />
-          <Input label="Taluk" name="taluk" value={formData.taluk} onChange={handleChange} />
+  <Input label="Pincode" name="pincode" value={formData.pincode} onChange={handleChange} />
+  <Input label="District" name="district" value={formData.district} onChange={handleChange} />
+  <Input label="State" name="state" value={formData.state} onChange={handleChange} />
 
-          <Input label="Pincode" name="pincode" value={formData.pincode} onChange={handleChange} />
-          <Input label="District" name="district" value={formData.district} onChange={handleChange} />
-          <Input label="State" name="state" value={formData.state} onChange={handleChange} />
+  <Input label="Google Location" name="googleLocation" value={formData.googleLocation} onChange={handleChange} />
 
-          <Input label="Google Location" name="googleLocation" value={formData.googleLocation} onChange={handleChange} />
-          <div className="col-span-2">
+  {/* Nearby Landmarks */}
+  <div className="sm:col-span-2 lg:col-span-2">
 
-            <label className="flex items-center gap-2 font-semibold mb-3 lexend text-[16px]">
-              <Layers size={16} className="text-lime-500" />
-              Nearby Landmarks
-            </label>
+    <label className="flex items-center gap-2 font-semibold mb-3 lexend text-[15px] sm:text-[16px]">
+      <Layers size={16} className="text-lime-500" />
+      Nearby Landmarks
+    </label>
 
-            <div className="space-y-3">
+    <div className="space-y-3">
 
-              {(formData.nearbyLandmarks || []).map((item, index) => (
+      {(formData.nearbyLandmarks || []).map((item, index) => (
 
-                <div key={index} className="flex gap-3 items-center">
+        <div
+          key={index}
+          className="flex flex-col sm:flex-row gap-3 sm:items-center"
+        >
 
-                  <input
-                    type="text"
-                    placeholder="Landmark name"
-                    value={item.name}
-                    onChange={(e) => updateLandmark(index, "name", e.target.value)}
-                    className="flex-1 h-[42px] px-5 rounded-full
-bg-[#F3F3F3]
-border border-[#E4E3E3]
-text-[14px]
-shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-outline-none"
-                  />
+          {/* Landmark Name */}
+          <input
+            type="text"
+            placeholder="Landmark name"
+            value={item.name}
+            onChange={(e) =>
+              updateLandmark(index, "name", e.target.value)
+            }
+            className="
+            w-full
+            sm:flex-1
+            h-[40px] sm:h-[42px]
+            px-4 sm:px-5
+            rounded-full
+            bg-[#F3F3F3]
+            border border-[#E4E3E3]
+            text-[13px] sm:text-[14px]
+            shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+            outline-none
+            "
+          />
 
-                  <input
-                    type="text"
-                    placeholder="Distance (km)"
-                    value={item.distance}
-                    onChange={(e) => updateLandmark(index, "distance", e.target.value.replace(/[^0-9.]/g, ""))}
-                    className="w-[120px] h-[42px] px-5 rounded-full
-bg-[#F3F3F3]
-border border-[#E4E3E3]
-text-[14px]
-shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-outline-none"
-                  />
+          {/* Distance */}
+          <input
+            type="text"
+            placeholder="Distance (km)"
+            value={item.distance}
+            onChange={(e) =>
+              updateLandmark(
+                index,
+                "distance",
+                e.target.value.replace(/[^0-9.]/g, "")
+              )
+            }
+            className="
+            w-full sm:w-[140px]
+            h-[40px] sm:h-[42px]
+            px-4
+            rounded-full
+            bg-[#F3F3F3]
+            border border-[#E4E3E3]
+            text-[13px] sm:text-[14px]
+            shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+            outline-none
+            "
+          />
 
-                  {formData.nearbyLandmarks.length > 1 && (
-
-                    <button
-                      type="button"
-                      onClick={() => removeLandmark(index)}
-                      className="text-red-500 text-sm"
-                    >
-                      Remove
-                    </button>
-
-                  )}
-
-                </div>
-
-              ))}
-
-            </div>
-
+          {/* Remove */}
+          {formData.nearbyLandmarks.length > 1 && (
             <button
               type="button"
-              onClick={addLandmark}
-              className="mt-3 text-lime-600 text-sm font-medium hover:underline"
+              onClick={() => removeLandmark(index)}
+              className="
+              text-red-500
+              text-xs sm:text-sm
+              font-medium
+              self-start sm:self-auto
+              hover:underline
+              "
             >
-              + Add Landmark
+              Remove
             </button>
+          )}
 
-          </div>
         </div>
 
+      ))}
+
+    </div>
+
+    <button
+      type="button"
+      onClick={addLandmark}
+      className="
+      mt-3
+      text-lime-600
+      text-sm
+      font-medium
+      hover:underline
+      "
+    >
+      + Add Landmark
+    </button>
+
+  </div>
+
+</div>
 
 
         <div className="grid grid-cols-1 gap-8 mt-8">
@@ -432,31 +468,47 @@ outline-none"
             Key Selling Points
           </label>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
 
             {keyPoints.map((point, index) => (
 
-              <div key={index} className="flex items-center gap-3">
+              <div
+                key={index}
+                className="flex flex-col sm:flex-row sm:items-center gap-3"
+              >
 
                 <input
                   type="text"
                   placeholder="Enter key selling point"
                   value={point}
                   onChange={(e) => handlePointChange(index, e.target.value)}
-                  className="flex-1 h-[42px] px-5 rounded-full
-          bg-[#F3F3F3]
-          border border-[#E4E3E3]
-          text-[14px] text-[#757575]
-          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-          outline-none
-          lexend"
+                  className="
+        w-full
+        sm:flex-1
+        h-[40px] sm:h-[42px]
+        px-4 sm:px-5
+        rounded-full
+        bg-[#F3F3F3]
+        border border-[#E4E3E3]
+        text-[13px] sm:text-[14px]
+        text-[#757575]
+        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+        outline-none
+        lexend
+        "
                 />
 
                 {keyPoints.length > 1 && (
                   <button
                     type="button"
                     onClick={() => removePoint(index)}
-                    className="text-red-500 text-sm"
+                    className="
+          text-red-500
+          text-xs sm:text-sm
+          font-medium
+          self-start sm:self-auto
+          hover:underline
+          "
                   >
                     Remove
                   </button>
@@ -466,15 +518,25 @@ outline-none"
 
             ))}
 
+            {/* Add Button */}
+
+            <button
+              type="button"
+              onClick={addPoint}
+              className="
+    text-lime-600
+    text-sm
+    font-medium
+    hover:underline
+    host-grotesk
+    "
+            >
+              + Add Point
+            </button>
+
           </div>
 
-          <button
-            type="button"
-            onClick={addPoint}
-            className="mt-3 text-lime-600 text-sm font-medium hover:underline host-grotesk"
-          >
-            + Add Point
-          </button>
+       
 
         </div>
 
@@ -638,7 +700,7 @@ const Input = ({ label, name, value, onChange }) => {
     }
 
     // Only text
-    if (["title","city", "village", "taluk", "district", "state"].includes(name)) {
+    if (["title", "city", "village", "taluk", "district", "state"].includes(name)) {
       val = val.replace(/[^a-zA-Z\s]/g, "");
     }
 
@@ -651,29 +713,48 @@ const Input = ({ label, name, value, onChange }) => {
   };
 
   return (
-    <div>
-      <label className="flex items-center gap-2 font-semibold mb-2 lexend text-[16px]">
-        <Layers size={16} className="text-lime-500" />
+    <div className="w-full">
+
+      {/* Label */}
+      <label className="flex items-center gap-2 font-semibold mb-2 lexend 
+      text-[14px] md:text-[15px] lg:text-[16px]">
+        <Layers size={16} className="text-lime-500 shrink-0" />
         {label}
       </label>
 
+      {/* Input */}
       <input
         name={name}
         value={value || ""}
         onChange={handleInputChange}
         inputMode={
-          ["phone", "","whatsapp", "pincode", "pricePerAcre", "totalPrice", "landArea", "squareFeet"].includes(name)
+          ["phone", "whatsapp", "pincode", "pricePerAcre", "totalPrice", "landArea", "squareFeet"].includes(name)
             ? "numeric"
             : "text"
         }
-        maxLength={name === "pincode" ? 6 : name === "phone" || name === "whatsapp" ? 10 : undefined}
-        className="w-full h-[42px] px-5 rounded-full
+        maxLength={
+          name === "pincode"
+            ? 6
+            : name === "phone" || name === "whatsapp"
+              ? 10
+              : undefined
+        }
+        className="
+        w-full
+        h-[40px] md:h-[42px] lg:h-[44px]
+        px-4 md:px-5
+        rounded-full
         bg-[#F3F3F3]
         border border-[#E4E3E3]
-        text-[14px] text-black lexend
+        text-[13px] md:text-[14px]
+        text-black lexend
         shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-        outline-none"
+        outline-none
+        focus:border-lime-500
+        transition
+        "
       />
+
     </div>
   );
 };

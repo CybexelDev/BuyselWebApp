@@ -8,7 +8,8 @@ function SelectField({ label, icon, options, value, onChange }) {
     <div className="relative w-full">
 
       {/* LABEL */}
-      <label className="flex items-center gap-2 lexend text-[16px]  font-semibold mb-2">
+      <label className="flex items-center gap-2 font-semibold mb-2
+      text-sm md:text-base lexend">
         {icon}
         {label}
       </label>
@@ -16,25 +17,47 @@ function SelectField({ label, icon, options, value, onChange }) {
       {/* INPUT */}
       <div
         onClick={() => setOpen(!open)}
-        className="h-[44px] px-5 rounded-full
+        className="
+        w-full
+        h-[42px] md:h-[46px]
+        px-4 md:px-5
+        rounded-full
         bg-[#F3F3F3]
         border border-[#E4E3E3]
-                shadow-[inset_0px_1px_4px_rgba(0,0,0,0.15)]
+        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.15)]
         flex items-center justify-between
-        lexend text-[16px] 
-        cursor-pointer"
+        text-sm md:text-[16px]
+        cursor-pointer
+      "
       >
-        <span className="text-[#555]lexend text-[16px] ">
+        <span className="text-[#555] truncate">
           {value || `Select ${label}`}
         </span>
 
-        <ChevronDown size={18} className="text-gray-500" />
+        <ChevronDown
+          size={18}
+          className={`text-gray-500 transition-transform ${
+            open ? "rotate-180" : ""
+          }`}
+        />
       </div>
 
       {/* DROPDOWN */}
       {open && (
-        <div className="absolute mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg z-50">
-
+        <div
+          className="
+          absolute left-0 top-full
+          mt-2
+          w-full
+          max-h-[220px]
+          overflow-y-auto
+          bg-white
+          border border-gray-200
+          rounded-xl
+          shadow-lg
+          z-50
+        "
+        >
           {options.map((option) => (
             <div
               key={option}
@@ -42,15 +65,19 @@ function SelectField({ label, icon, options, value, onChange }) {
                 onChange(option);
                 setOpen(false);
               }}
-              className="px-4 py-2 text-sm cursor-pointer hover:bg-lime-50"
+              className="
+              px-4 py-2.5
+              text-sm md:text-[15px]
+              cursor-pointer
+              hover:bg-lime-50
+              transition
+            "
             >
               {option}
             </div>
           ))}
-
         </div>
       )}
-
     </div>
   );
 }

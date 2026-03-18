@@ -1,10 +1,38 @@
-import React from 'react'
+import { useState } from 'react';
 import { Mail, Lock, User, Phone } from "lucide-react";
 import google from '../../../assets/images/LoginAndSignUp/google.png'
 import apple from '../../../assets/images/LoginAndSignUp/apple.png'
 import facbook from '../../../assets/images/LoginAndSignUp/facebook.png'
+import { userRegister } from '../../../Api/userApi';
 
-const SignupForm = ({ setSignin }) => {
+
+const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
+
+    const [register, setRegister] = useState({ name: '', email: '', mobail: '', password: '', confirm_password: '' })
+
+
+    const handleRegister = async () => {
+        try {
+            const response = await userRegister(
+                register.name,
+                register.email,
+                register.mobail,
+                register.password,
+                register.confirm_password,
+            )
+
+            if (response) {
+                console.log("Otp sent success page:", response);
+                setEmail(response.email)
+               SetOtpSent(true)
+            } else {
+                console.log("Invalid credentials");
+            }
+        } catch (error) {
+           console.log(error);
+        }
+    }
+
     return (
         <>
 
@@ -22,6 +50,8 @@ const SignupForm = ({ setSignin }) => {
                 <User className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="text"
+                    value={register.name}
+                    onChange={(e) => setRegister({ ...register, name: e.target.value })}
                     placeholder="Name"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
@@ -31,6 +61,8 @@ const SignupForm = ({ setSignin }) => {
                 <Mail className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="email"
+                    value={register.email}
+                    onChange={(e) => setRegister({ ...register, email: e.target.value })}
                     placeholder="email"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
@@ -39,6 +71,8 @@ const SignupForm = ({ setSignin }) => {
                 <Phone className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="number"
+                    value={register.mobail}
+                    onChange={(e) => setRegister({ ...register, mobail: e.target.value })}
                     placeholder="Phone"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
@@ -47,6 +81,8 @@ const SignupForm = ({ setSignin }) => {
                 <Lock className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="password"
+                    value={register.password}
+                    onChange={(e) => setRegister({ ...register, password: e.target.value })}
                     placeholder="Create Password"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
@@ -55,6 +91,8 @@ const SignupForm = ({ setSignin }) => {
                 <Phone className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="password"
+                    value={register.confirm_password}
+                    onChange={(e) => setRegister({ ...register, confirm_password: e.target.value })}
                     placeholder="Re-enter Password"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
@@ -69,7 +107,7 @@ const SignupForm = ({ setSignin }) => {
                 </p>
             </div>
 
-            <button className="w-full bg-[#2f332f] text-white py-3 rounded-lg font-medium hover:bg-black transition">
+            <button onClick={handleRegister} className="w-full bg-[#2f332f] text-white py-3 rounded-lg font-medium hover:bg-black transition">
                 Create Account
             </button>
 

@@ -1,6 +1,7 @@
 import { LogOut } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { FaBell } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 
 function Topbar() {
@@ -23,6 +24,8 @@ const profileRef = useRef(null)
   
     document.addEventListener("mousedown", closeDropdown);
   }, []);
+    const { image, agentName, agentId, } = useSelector((state) => state.agent);
+
   return (
     <div className="w-full host-grotesk bg-white shadow-md px-6 py-2.5 flex justify-end items-center rounded-2xl gap-3 sm:gap-6">
 
@@ -41,7 +44,7 @@ const profileRef = useRef(null)
       onClick={()=>setProfile(!profile)}
       ref={profileRef}>
         <img
-          src="https://i.pinimg.com/736x/bd/e3/af/bde3afba0942342f02ce5a62f6b0b3c4.jpg"
+          src={image}
           alt="Profile"
           className="w-9 sm:w-11 h-9 sm:h-11 rounded-full object-cover border-2 border-[#6ABD11] cursor-pointer"
         />
