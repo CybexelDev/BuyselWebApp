@@ -4,7 +4,7 @@ import PropertyListingLayout from '../../../../Agent/Layouts/propertyListing/pro
 function Properties() {
   return (
     <div>
-        <PropertyListingLayout showSidebar={false} showEdit={false} bg=""/>
+        <PropertyListingLayout showSidebar={false} showEdit={false} bg="" lg='lg:py-0'/>
 
     </div>
   )

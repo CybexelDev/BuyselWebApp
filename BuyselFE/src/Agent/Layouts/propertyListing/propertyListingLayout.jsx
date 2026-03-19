@@ -11,7 +11,7 @@ import {
   Pencil
 } from "lucide-react";
 
-const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50",}) => {
+const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50", lg="lg:py-12"}) => {
   const [searchTerm, setSearchTerm] = useState("");
  
 
@@ -69,7 +69,7 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
         {showSidebar && <Sidebar />}
 
       <main className="flex w-full min-h-screen transition-all duration-300">
-        <div className="w-full  p-4 sm:p-6 md:p-10 lg:p-12 ">
+        <div className={`w-full  p-4 sm:p-6 md:p-10 ${lg} lg:px-12 `}>
 
           {/* HEADER */}
           <header className="mb-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">

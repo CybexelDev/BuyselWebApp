@@ -28,6 +28,7 @@ import OwnerDashboard from './Pages/OwnerDashboard/OwnreDashboard'
 import PlansPage from './Pages/Plans/PlansPage'
 import UserEnquiry from './Agent/Pages/UserEnquiry/UserEnquiry'
 import EnquiryDetailLayoutUser from './Layouts/OwnerDashboard/Tabs/Enquiries/EnquiriesDetail'
+import DashboardPropertyDetail from './Pages/DashboardPropertyDetail/DashboardPropertyDetail'
 
 
 function App() {
@@ -57,7 +58,8 @@ function App() {
           <Route path='/addyourproperty' element={<AddProperty/>}/>
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
-          <Route path="/ownerdash" element={<OwnerDashboard />}/>          
+          <Route path="/ownerdash" element={<OwnerDashboard />}/>   
+          <Route path="/dashboardpropertydeatil" element={<DashboardPropertyDetail/> }/>                 
           <Route path='/plans'  element={<PlansPage/>}/>
           <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
 
