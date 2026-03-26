@@ -4,7 +4,7 @@ import React from "react";
 function Button({ next, back, step }) {
 
   const handleClick = (e) => {
-    if (step === 4) {
+    if (step === 5) {
       const form = e.currentTarget.closest("form");
       form?.requestSubmit();
     } else {
@@ -35,7 +35,7 @@ function Button({ next, back, step }) {
           className="w-full sm:w-auto px-16 sm:px-28 py-[13px] rounded-[100px] bg-[#84CC16] cursor-pointer
            text-white inter font-[500] text-[16px] leading-[150%]"
         >
-          {step === 4 ? "Submit" : "Continue"}
+          {step === 5 ? "Submit" : "Continue"}
         </button>
 
       </div>

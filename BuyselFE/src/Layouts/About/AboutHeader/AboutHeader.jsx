@@ -69,6 +69,9 @@ function AboutHeader() {
       className="relative w-full px-[13px] md:px-[18px] mt-[15px] sm:mt-[27px] lg:mt-[20px] 
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
+          <div className="relative z-50">
+      <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
+            </div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 z-40 w-[7%]">
         <img
           src={logo}
@@ -98,9 +101,6 @@ function AboutHeader() {
            style={{backgroundImage:`url(${house})`}}
           >
 
-            <div className="relative z-20">
-              <Navbar  top="top-[25px]" text="text-[16px]" padding="lg:px-[34px]" gap = "lg:gap-[36px]"/>
-            </div>
 
           </div>
         </foreignObject>

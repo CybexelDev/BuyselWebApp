@@ -7,6 +7,7 @@ import Button from "../../../Components/AddProperty/Button";
 import ProfileDashboard from "../../Profile/ProfileDashboard/ProfileDashboard";
 import PreviewProperty from "../../../Components/AddProperty/Preview";
 import SuccessModal from "../../../Components/AddProperty/SuccessModal";
+import Payment from "../../../Components/AddProperty/Payment";
 function AddPropertySection() {
 
   const [step, setStep] = useState(1);
@@ -31,13 +32,12 @@ function AddPropertySection() {
     maintainceCharge:"",
     priceNegotiable:"",
     availableDate:"",
-
   });
  const handleSubmit = (e) => {
   e.preventDefault();
 
   // only allow submit on step 4
-  if (step !== 4) return;
+  if (step !== 5) return;
 
   console.log("Form Data:", formData);
   setShowSuccess(true);
@@ -76,6 +76,15 @@ function AddPropertySection() {
             setFormData={setFormData}
             />
           )}
+          {
+            step===5 &&(
+              <Payment
+                formData={formData}
+            setFormData={setFormData}
+              />
+            )
+          }
+          
 
          
                 <Button
