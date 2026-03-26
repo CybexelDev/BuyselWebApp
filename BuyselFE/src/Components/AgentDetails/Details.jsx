@@ -1,6 +1,6 @@
 import React from "react";
 
-function Details() {
+function Details({agentData}){
   const details = [
     {
       stats: {
@@ -15,13 +15,19 @@ function Details() {
         "Luxury Villas",
         "Investment Properties",
       ],
-      operatingCities: ["Coimbatore", "Salem", "Tiruppur"],
+      operatingCities:["Coimbatore", "Salem", "Tiruppur"],
       about:
         "Experienced real estate professional specializing in premium residential and commercial properties across Mumbai and Navi Mumbai. I help clients find their dream homes and make smart property investments with complete transparency and trust.",
     },
   ];
 
   const agent = details[0];
+
+  const roleStyles = {
+  premiumAgent: "bg-gradient-to-b from-[#F3FFE2] to-[#FFFFFFC7]",
+  eliteAgent: "bg-gradient-to-b from-[#FFFCDC] to-[#FFFFFF]",
+};
+
 
   return (
     <div className="w-full 
@@ -128,11 +134,11 @@ function Details() {
 
         {/* Right Side - Contact Form */}
         <div
-  className="bg-white 
+  className={`${roleStyles[agentData.role] || "bg-white"}
              py-4 sm:py-[18px] 
              px-4 sm:px-6 lg:px-[37px] 
              rounded-[20px] lg:rounded-[24px]
-             shadow-[0_4px_8.1px_0_rgba(106,101,101,0.25)]"
+             shadow-[0_4px_8.1px_0_rgba(106,101,101,0.25)]`}
 >
   <form className="space-y-4 sm:space-y-[20px]">
 
