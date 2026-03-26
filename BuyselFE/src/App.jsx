@@ -29,6 +29,7 @@ import PlansPage from './Pages/Plans/PlansPage'
 import UserEnquiry from './Agent/Pages/UserEnquiry/UserEnquiry'
 import EnquiryDetailLayoutUser from './Layouts/OwnerDashboard/Tabs/Enquiries/EnquiriesDetail'
 import DashboardPropertyDetail from './Layouts/OwnerDashboard/Tabs/Properties/DashboardPropertyDetail'
+import HelpCenter from './Pages/HelpCenter/HelpCenter'
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
           <Route path="/dashboardpropertydeatil" element={<DashboardPropertyDetail/> }/>                 
           <Route path='/plans'  element={<PlansPage/>}/>
           <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
+          <Route path="/helpCenter" element={<HelpCenter/>}/>
 
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
