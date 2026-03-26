@@ -2,6 +2,7 @@ import React from 'react'
 
 function AddPropertyBanner() {
   return (
+    <>
     <div className='w-full bg-black 
                     min-h-[350px] lg:h-[479px] 
                     px-4 sm:px-6 md:px-8 mt-15'>
@@ -56,6 +57,7 @@ function AddPropertyBanner() {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

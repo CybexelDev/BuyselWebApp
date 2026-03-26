@@ -1,24 +1,34 @@
 import React from 'react'
-import HeaderProperty from '../../Layouts/PropertyDetail/Header/Header'
-import { properties } from '../../Constance/constance'
-import img1 from "../../assets/images/propertDetail/img1.png"
-import img2 from "../../assets/images/propertDetail/img2.jpg"
-import img3 from "../../assets/images/propertDetail/img3.jpg"
-import seller from "../../assets/images/propertDetail/seller.jpg"
-import MapSection from '../../Layouts/PropertyDetail/MapSection/MapSection'
-import Featured from '../../Layouts/Home/Featured/Featured'
-import AppPromoBanner from '../../Components/AppPromoBanner/AppPromoBanner'
-import Footer from '../../Components/Footer/Footer'
-import i1 from "../../assets/images/propertDetail/i1.png"
-import i2 from "../../assets/images/propertDetail/i2.png"
-import i3 from "../../assets/images/propertDetail/i3.png"
-import i4 from "../../assets/images/propertDetail/i4.png"
-import i5 from "../../assets/images/propertDetail/i5.png"
-import i6 from "../../assets/images/propertDetail/i6.png"
-import i7 from "../../assets/images/propertDetail/i7.png"
-import { DescriptionAndAminities } from '../../Layouts/PropertyDetail/DescriptionAndAminities/DescriptionAndAminities'
-import HeaderDashboardProperty from '../../Components/DashboardLPropertyDetail/Header/Header'
-import DescAndAminities from '../../Components/DashboardLPropertyDetail/Description&Aminities/DescAndAminities'
+
+// Components
+import HeaderProperty from '../../../PropertyDetail/Header/Header'
+import MapSection from '../../../PropertyDetail/MapSection/MapSection'
+import Featured from '../../../Home/Featured/Featured'
+import { DescriptionAndAminities } from '../../../PropertyDetail/DescriptionAndAminities/DescriptionAndAminities'
+
+import HeaderDashboardProperty from '../../../../Components/DashboardLPropertyDetail/Header/Header'
+import DescAndAminities from '../../../../Components/DashboardLPropertyDetail/Description&Aminities/DescAndAminities'
+import AppPromoBanner from '../../../../Components/AppPromoBanner/AppPromoBanner'
+import Footer from '../../../../Components/Footer/Footer'
+
+// Data
+import { properties } from '../../../../Constance/constance'
+
+// Images (✅ ALL PATHS FIXED)
+import img1 from "../../../../assets/images/propertDetail/img1.png";
+import img2 from "../../../../assets/images/propertDetail/img2.jpg";
+import img3 from "../../../../assets/images/propertDetail/img3.jpg";
+import seller from "../../../../assets/images/propertDetail/seller.jpg";
+
+import i1 from "../../../../assets/images/propertDetail/i1.png";
+import i2 from "../../../../assets/images/propertDetail/i2.png";
+import i3 from "../../../../assets/images/propertDetail/i3.png";
+import i4 from "../../../../assets/images/propertDetail/i4.png";
+import i5 from "../../../../assets/images/propertDetail/i5.png";
+import i6 from "../../../../assets/images/propertDetail/i6.png";
+import i7 from "../../../../assets/images/propertDetail/i7.png";
+
+
 
 function DashboardPropertyDetail() {
     const productDetail = {

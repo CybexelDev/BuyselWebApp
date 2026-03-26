@@ -12,7 +12,7 @@ function DescAndAminities({ data }) {
 
   return (
     <>
-      <div className="md:px-7 px-3 py-1  md:py-5">
+      <div className="md:px-7 px-3 py-1  md:py-5 sm:mb-25">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div class="md:col-span-8 ">
             {/* description ivden da */}

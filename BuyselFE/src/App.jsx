@@ -28,7 +28,7 @@ import OwnerDashboard from './Pages/OwnerDashboard/OwnreDashboard'
 import PlansPage from './Pages/Plans/PlansPage'
 import UserEnquiry from './Agent/Pages/UserEnquiry/UserEnquiry'
 import EnquiryDetailLayoutUser from './Layouts/OwnerDashboard/Tabs/Enquiries/EnquiriesDetail'
-import DashboardPropertyDetail from './Pages/DashboardPropertyDetail/DashboardPropertyDetail'
+import DashboardPropertyDetail from './Layouts/OwnerDashboard/Tabs/Properties/DashboardPropertyDetail'
 
 
 function App() {

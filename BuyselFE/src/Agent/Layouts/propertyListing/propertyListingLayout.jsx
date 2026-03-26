@@ -11,7 +11,7 @@ import {
   Pencil
 } from "lucide-react";
 
-const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50", lg="lg:py-12"}) => {
+const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50", lg="lg:py-12",onClick}) => {
   const [searchTerm, setSearchTerm] = useState("");
  
 
@@ -116,7 +116,7 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
           </div>
 
           {/* PROPERTY LIST */}
-          <div className="space-y-4">
+          <div className="space-y-4 cursor-pointer" onClick={onClick}>
 
             {filteredProperties.map((property) => (
 
