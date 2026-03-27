@@ -244,59 +244,7 @@ const PreviewProperty = () => {
         </div>
 
       </div>
-<div className="max-w-3xl mx-auto p-4">
-  <div className="border-3 border-[#82CD28] rounded-[20px] p-5 sm:p-8 font-sans relative overflow-hidden bg-white shadow-sm">
 
-    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-6">
-      <div>
-        <h2 className="text-xl sm:text-2xl font-semibold text-black lexend mb-1 text-center  lg:text-left">
-          Property Listing Package
-        </h2>
-        <p className="text-[13px] sm:text-[14px] inter text-gray-500 font-[400] text-center  lg:text-left">
-          Premium listing with maximum visibility
-        </p>
-      </div>
-
-      <div className="text-xl sm:text-2xl text-center  lg:text-left font-semibold text-[#82CD28] lexend">
-        ₹5000
-      </div>
-    </div>
-
-    <div className="bg-[#84CC16] rounded-[20px] sm:rounded-[30px] p-5 sm:p-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
-
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="flex items-center  space-x-3 text-white"
-          >
-            <div className="bg-white rounded-full p-0.5 flex-shrink-0">
-              <svg
-                className="w-4 h-4 text-[#82CD28]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="4"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
-
-            <span className="text-[13px] sm:text-[14px] font-medium inter">
-              {feature}
-            </span>
-          </div>
-        ))}
-
-      </div>
-    </div>
-
-  </div>
-</div>
 {selectedImage && (
   <div
     className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"

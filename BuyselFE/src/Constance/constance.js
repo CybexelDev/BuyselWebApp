@@ -1082,6 +1082,5 @@ export const user = {
   accountStatus: "Active",
   verificationStatus: "Mobile",
   createdOn: "12 Dec 2025",
+  city:"Chennai, Tamil nadu"
 };
-
-
