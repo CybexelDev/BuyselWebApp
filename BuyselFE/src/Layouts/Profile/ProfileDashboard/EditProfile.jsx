@@ -105,6 +105,18 @@ const EditProfile = () => {
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
           />
         </div>
+         <div>
+          <label className="block host-grotesk text-[16px] leading-[14px] mb-1.5 text-black">
+            Location
+          </label>
+          <input
+            type="text"
+            name="Location"
+            placeholder="City ,State"
+            onChange={handleChange}
+            className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
+          />
+        </div>
 
                <button
           type="submit"

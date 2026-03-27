@@ -84,7 +84,7 @@ function AddPropertySection() {
               />
             )
           }
-          
+
 
          
                 <Button
@@ -92,7 +92,6 @@ function AddPropertySection() {
             next={() => setStep(step + 1)}
            back={() => setStep(step - 1)}
            />
-
 
 </form>
 
