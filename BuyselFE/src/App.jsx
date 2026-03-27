@@ -63,7 +63,7 @@ function App() {
           <Route path="/dashboardpropertydeatil" element={<DashboardPropertyDetail/> }/>                 
           <Route path='/plans'  element={<PlansPage/>}/>
           <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
-          <Route path="/helpCenter" element={<HelpCenter/>}/>
+          <Route path="/helpcenter" element={<HelpCenter/>}/>
 
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>

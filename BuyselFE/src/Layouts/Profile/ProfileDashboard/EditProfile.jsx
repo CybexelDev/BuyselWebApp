@@ -58,17 +58,19 @@ const EditProfile = () => {
     placeholder="Phone"
     maxLength={10}
 
+
+    /* block letters & symbols while typing */
     onBeforeInput={(e) => {
       if (!/^\d$/.test(e.data)) {
         e.preventDefault();
       }
     }}
 
-    onPaste={(e) => {
-      if (!/^\d+$/.test(e.clipboardData.getData("text"))) {
-        e.preventDefault();
-      }
-    }}
+    // onPaste={(e) => {
+    //   if (!/^\d+$/.test(e.clipboardData.getData("text"))) {
+    //     e.preventDefault();
+    //   }
+    // }}
             onChange={handleChange}
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
           />
@@ -94,11 +96,11 @@ const EditProfile = () => {
     }}
 
     /* 🚫 block invalid paste */
-    onPaste={(e) => {
-      if (!/^\d+$/.test(e.clipboardData.getData("text"))) {
-        e.preventDefault();
-      }
-    }}
+    // onPaste={(e) => {
+    //   if (!/^\d+$/.test(e.clipboardData.getData("text"))) {
+    //     e.preventDefault();
+    //   }
+    // }}
 
     onChange={handleChange}
 
