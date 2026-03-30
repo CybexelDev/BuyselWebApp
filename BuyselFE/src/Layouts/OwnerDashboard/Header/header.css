@@ -68,8 +68,8 @@
 
 @media(max-width:1024px) {
     .userdash-cta-container {
-  --r: 30px; /* the radius */
-  --s: 5px; /* size of inner curve */
+  --r: 20px; /* the radius */
+  --s: 15px; /* size of inner curve */
   --x: 100px; /* horizontal offset (no percentage) */
   --y: 8px; /* vertical offset (no percentage) */
   aspect-ratio: 1;

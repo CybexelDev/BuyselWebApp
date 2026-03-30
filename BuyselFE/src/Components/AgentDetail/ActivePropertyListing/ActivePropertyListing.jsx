@@ -4,10 +4,15 @@ import { properties } from "../../../Constance/constance";
 import { ArrowRight, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import "./activePropertylisting.css";
 
-function ActivePropertyListing() {
+function ActivePropertyListing({agentData}) {
   const pp = properties.slice(0, 8);
   const [activeCategory, setActiveCategory] = useState("Residential");
   const scrollRef = useRef(null);
+
+  const propertyBg = {
+  premiumAgent: "bg-gradient-to-b from-[#F3FFE2] to-[#FFFFFFC7]",
+  eliteAgent: "bg-gradient-to-b from-[#FFFCDC] to-[#FFFFFF]",
+  }
 
  
   const categories = [
@@ -132,7 +137,7 @@ const scrollPrev = () => {
           </button>
         </div>
 
-        <div className="activeproperty-cta-container pt-4 lg:pt-0">
+        <div className={`activeproperty-cta-container pt-4 lg:pt-0  ${propertyBg[agentData.role]}`}>
           <div className='relative h-auto lg:h-25'>
             <div className="flex justify-center lg:justify-end lg:absolute lg:right-6 lg:top-10 px-4 mt-5 lg:mt-10  xl:pb-0 xl:mt-0">
               <div className="bg-[#6fba19] w-full max-w-[500px] justify-between rounded-full flex p-1 gap-1 px-[5px] overflow-x-auto no-scrollbar">
@@ -155,11 +160,11 @@ const scrollPrev = () => {
           </div>
 
           <div 
-            className="flex lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8 px-4 lg:px-15 overflow-x-auto lg:overflow-visible no-scrollbar lg:mt-12 xl:mt-8 pb-6" 
+            className="flex  lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8 px-4 lg:px-15 overflow-x-auto lg:overflow-visible no-scrollbar lg:mt-12 xl:mt-8 pb-6" 
             ref={scrollRef}
           >
 {currentProperties.map((property, index) => (
-                <div key={index} className="min-w-[280px] lg:min-w-0">
+                <div key={index} className="min-w-[280px] lg:min-w-0 ">
                 <Propertycard
                   property={property}
                   shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"

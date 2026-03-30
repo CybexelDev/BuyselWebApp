@@ -71,7 +71,7 @@ function Header() {
 
 
         <div className="relative z-50">
-              <Navbar  top="top-[16px]"  padding="lg:px-[29px]" />
+      <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
             </div>
 
             

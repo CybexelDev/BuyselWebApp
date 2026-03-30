@@ -27,7 +27,12 @@ import { useSelector } from "react-redux";
 import OwnerDashboard from './Pages/OwnerDashboard/OwnreDashboard'
 import PlansPage from './Pages/Plans/PlansPage'
 import UserEnquiry from './Agent/Pages/UserEnquiry/UserEnquiry'
-
+import EnquiryDetailLayoutUser from './Layouts/OwnerDashboard/Tabs/Enquiries/EnquiriesDetail'
+import DashboardPropertyDetail from './Layouts/OwnerDashboard/Tabs/Properties/DashboardPropertyDetail'
+import HelpCenter from './Pages/HelpCenter/HelpCenter'
+import TermsPage from "./Pages/Terms/TermsPage"
+import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy'
+import RegisterAgent from './Pages/RegisterAgent/RegisterAgent'
 
 function App() {
 
@@ -56,8 +61,14 @@ function App() {
           <Route path='/addyourproperty' element={<AddProperty/>}/>
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
-          <Route path="/ownerdash" element={<OwnerDashboard />}/>
+          <Route path="/ownerdash" element={<OwnerDashboard />}/>   
+          <Route path="/dashboardpropertydeatil" element={<DashboardPropertyDetail/> }/>                 
           <Route path='/plans'  element={<PlansPage/>}/>
+          <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
+          <Route path="/helpcenter" element={<HelpCenter/>}/>
+          <Route path='/termsandcondition' element={<TermsPage/>}/>
+          <Route path='/privacy' element={<PrivacyPolicy/>}/>
+          <Route path='/agent-register' element={<RegisterAgent/>}/>
 
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
@@ -67,7 +78,7 @@ function App() {
           <Route path='/agent/user-enquiry' element={<UserEnquiry/>}/>
           <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
           <Route path="/agent/property" element={<AgentPropertyListing />}/>
-            
+          
        
      
         </Routes>

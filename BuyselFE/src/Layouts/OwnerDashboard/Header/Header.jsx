@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import "./header.css";
 import logo from "../../../assets/images/logo/logo.png";
-
-
 import Navbar from "../../../Components/Navbar/Navbar";
 import Dashboard from "../Tabs/Dashboard/Dashboard";
 import PlansLayout from "../../Plans/PlansLayout";
-
+import EnquiryLayoutUser from "../Tabs/Enquiries/Enquiries";
+import { useSearchParams } from "react-router-dom";
+import Properties from "../Tabs/Properties/Properties";
 //start
 
 const Header = () => {
-      const [activeTab, setActiveTab] = useState("dashboard");
-
+      const [searchParams,setSearchParams]=useSearchParams()
   const tabs = [
     { id: "dashboard", label: "Dashboard" },
     { id: "plans", label: "Plans" },
@@ -19,6 +18,7 @@ const Header = () => {
     { id: "enquiries", label: "Enquiries" },
 
   ];
+  const activeTab=searchParams.get("tab") || "dashboard"
 
   return (
       <div className="md:p-5 p-2 relative ">
@@ -43,7 +43,7 @@ const Header = () => {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => setSearchParams({tab:tab.id})}
                 className={`px-8 py-2.5 rounded-full text-md font-semibold transition-all duration-300 cursor-pointer ${
                   activeTab === tab.id
                     ? 'bg-gradient-to-r from-[#6ABD11] to-[#5a9d0d] text-white shadow-md'
@@ -59,8 +59,8 @@ const Header = () => {
 
         {activeTab === "dashboard" && <Dashboard />}
       {activeTab === "plans" && <div><PlansLayout showtabs={false} padding="py-0" /></div>}
-      {activeTab === "properties" && <div>Properties Content</div>}
-      {activeTab === "enquiries" && <div>Enquiries Content</div>}
+      {activeTab === "properties" && <div><Properties /></div>}
+      {activeTab === "enquiries" && <div><EnquiryLayoutUser/></div>}
         </div>
 
 

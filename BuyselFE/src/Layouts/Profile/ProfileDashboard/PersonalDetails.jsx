@@ -1,9 +1,10 @@
-import { Phone } from "lucide-react";
+import { LocationEdit, Phone } from "lucide-react";
 import { FaUser } from "react-icons/fa";
 import { TbMailFilled } from "react-icons/tb";
 import { Element } from "react-scroll"
 import EditProfile from "./EditProfile";
 import ChangePassword from "./ChangePass";
+import { MapPin } from "lucide-react";
 
 
 
@@ -23,8 +24,9 @@ const PersonalDetails = ({ users,mode,setMode }) => {
         <Detail icon={<Phone
         size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Mobile Number" value={users?.mobile} />
         <Detail icon={<Phone
-        size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Alternate Phone" value={users?.alternate_mobile || "Not provided"} />
-        
+        size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Alternate Phone" value={users.altPhone1} />
+                <Detail icon={<MapPin color="#000000" 
+        size={19} fill="currentColor"  className="text-black"/>} label="Location" value={users.city} />
       </div>
               )}
       {mode === "edit" && (

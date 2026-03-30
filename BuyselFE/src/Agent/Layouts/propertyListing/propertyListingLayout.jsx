@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import {
   Search,
@@ -12,8 +11,9 @@ import {
   Pencil
 } from "lucide-react";
 
-const PropertyListingLayout = () => {
+const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50", lg="lg:py-12",onClick}) => {
   const [searchTerm, setSearchTerm] = useState("");
+ 
 
  const properties = [
   {
@@ -65,29 +65,25 @@ const PropertyListingLayout = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-x-hidden">
-      <Sidebar />
+    <div className={`min-h-screen ${bg} flex overflow-x-hidden`}>
+        {showSidebar && <Sidebar />}
 
-      <main className="flex-1 w-full min-h-screen transition-all duration-300">
-        <div className="w-full max-w-7xl p-4 sm:p-6 md:p-10 lg:p-12">
+      <main className="flex w-full min-h-screen transition-all duration-300">
+        <div className={`w-full  p-4 sm:p-6 md:p-10 ${lg} lg:px-12 `}>
 
           {/* HEADER */}
           <header className="mb-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
 
-           <motion.div
-  initial={{ opacity: 0, x: -20 }}
-  animate={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.4 }}
->
-  <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2">
-    <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
-    Property Management
-  </div>
+            <div>
+              <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2">
+                <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
+                Property Management
+              </div>
 
-  <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-    Property <span className="text-[#6ABD11]">Listings</span>
-  </h1>
-</motion.div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight instrument-sans">
+                Property <span className="text-[#6ABD11]">Listings</span>
+              </h1>
+            </div>
 
             <button className="flex items-center justify-center gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
               <Plus size={18} />
@@ -120,7 +116,7 @@ const PropertyListingLayout = () => {
           </div>
 
           {/* PROPERTY LIST */}
-          <div className="space-y-4">
+          <div className="space-y-4 cursor-pointer" onClick={onClick}>
 
             {filteredProperties.map((property) => (
 
@@ -196,10 +192,12 @@ const PropertyListingLayout = () => {
                     </div>
 
                     {/* Edit */}
+                            {showEdit && 
                     <button className="flex items-center gap-1 text-sm border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk">
                       <Pencil size={14} />
                       Edit
                     </button>
+                    }
 
                   </div>
 
