@@ -8,13 +8,16 @@ import RecentEnquiries from '../../Layouts/Profile/RecentEnquiries/RecentEnquiri
 function Profile() {
   const [users,setUsers] = useState([])
   const[mode,setMode]=useState("")
+  const[profileData,setProfileData]=useState({})
+  console.log(profileData,"88888888888888888888");
+  
   useEffect(()=>{
      setUsers(user)
   },[])
   return (
     <div>
-     <ProfileHeader  setMode={setMode}/>
-     <ProfileDashboard users={users} mode={mode} setMode={setMode} />
+     <ProfileHeader  setMode={setMode} setParentProfileData={setProfileData} />
+     <ProfileDashboard data={profileData} users={users} mode={mode} setMode={setMode} />
       <RecentEnquiries />
      <Footer />
     </div>

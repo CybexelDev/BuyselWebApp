@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { Check } from "lucide-react";
 import PersonalDetails from "./PersonalDetails";
 
-const ProfileDashboard = ({ users, mode, setMode }) => {
+const ProfileDashboard = ({ data, users, mode, setMode }) => {
   const [wish, setWish] = useState([]);
   useEffect(() => {
     setWish(wishlist);
@@ -140,7 +140,7 @@ const ProfileDashboard = ({ users, mode, setMode }) => {
                         text-[14px] md:text-[15px]  lg:text-[13.5px] xl:text-[16px]"
             >
               <div>
-                <span>User ID:</span> <span>BSU-10245</span>
+                <span>User ID:</span> <span>{data?.custom_user_id}</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -163,7 +163,7 @@ const ProfileDashboard = ({ users, mode, setMode }) => {
                         text-[14px] md:text-[15px] lg:text-[13.5px]  xl:text-[16px]"
             >
               <div>
-                <span>Account Created On:</span> <span>12 Dec 2025</span>
+                <span>Account Created On:</span> <span>{data?.created_at}</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -180,7 +180,7 @@ const ProfileDashboard = ({ users, mode, setMode }) => {
         </div>
 
         <div>
-          <PersonalDetails users={users} mode={mode} setMode={setMode} />
+          <PersonalDetails users={data} mode={mode} setMode={setMode} />
         </div>
       </div>
 

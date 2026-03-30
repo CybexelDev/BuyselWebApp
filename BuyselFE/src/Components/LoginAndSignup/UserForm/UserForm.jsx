@@ -30,8 +30,12 @@ const UserForm = ({ setSignup }) => {
             userName: response?.user?.name,
             userId: response?.user?.id,
             image: response?.user.image,
+            verificationStatus: response?.user?.auth_provider,
           }
         })
+
+         localStorage.setItem('accessToken', response?.access);
+          localStorage.setItem('refreshToken', response?.refresh);
 
         navigate('/')
 
@@ -58,9 +62,13 @@ const UserForm = ({ setSignup }) => {
             userName: response?.user?.name,
             accessToken: response?.access,
             userId: response?.user?.id,
-            image: response?.user.image,
+            image: response?.user?.image,
+            verificationStatus: response?.user?.auth_provider,
           }
         })
+
+        localStorage.setItem('accessToken', response?.access);
+         localStorage.setItem('refreshToken', response?.refresh);
 
         navigate("/");
         console.log(response, "Login successs and data sented to login component");
@@ -73,8 +81,6 @@ const UserForm = ({ setSignup }) => {
       console.log('Google Login Failed');
     },
   });
-
-
 
   return (
     <>
