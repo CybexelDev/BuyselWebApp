@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom';
 export default function RecentEnquiries() {
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const logout = ()=>{
 
+    const logout = ()=>{
       dispatch({ type: "LOGOUT" });
       navigate('/')
     }

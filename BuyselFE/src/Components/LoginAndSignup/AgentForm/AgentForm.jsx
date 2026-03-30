@@ -4,27 +4,34 @@ import { premiumAgentLogin } from '../../../Api/agentsApi';
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
+
 const AgentForm = () => {
     const [login, setLogin] = useState({ username: '', password: '' })
+    const [loading, setLoading] = useState(false);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     console.log(login, "hahaaaa");
 
     const handleLogin = async () => {
+        setLoading(true);
         try {
             const response = await premiumAgentLogin(login.username, login.password);
 
             if (response) {
                 console.log("Login success page:", response);
                 dispatch({
-                    type:'SET_AGENT',
-                    payload:{
-                       agentName: response?.premium?.name,
-                       accessToken: response?.access,
-                       agentId: response?.premium?.id,
-                       image: response?.premium.image,
-                    }   
+                    type: 'SET_AGENT',
+                    payload: {
+                        agentName: response?.agent_details?.username,
+                        accessToken: response?.access,
+                        agentId: response?.agent_details?.agent_id,
+                        image: response?.agent_details?.profile_image,
+                        agent_type: response?.agent_details?.agent_type,
+                    }
                 })
+
+                setLoading(false);
 
                 navigate('/agent/dashboard')
 
@@ -34,6 +41,7 @@ const AgentForm = () => {
 
         } catch (error) {
             console.error("Login error:", error);
+            setLoading(false);
         }
     };
 
@@ -64,8 +72,17 @@ const AgentForm = () => {
                     />
                 </div>
 
-                <button onClick={handleLogin} className="w-full bg-[#74c222] hover:bg-[#5f9d1c] instrument-sans cursor-pointer text-white py-3 rounded-lg font-medium transition">
-                    Login
+                <button onClick={handleLogin} className="w-full bg-[#74c222] hover:bg-[#5f9d1c] instrument-sans cursor-pointer text-white py-3 rounded-lg font-medium transition flex items-center justify-center">
+                    <div>Login </div>  {loading && <div class="dot-spinner">
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                        <div class="dot-spinner__dot"></div>
+                    </div>}
                 </button>
             </div>
 

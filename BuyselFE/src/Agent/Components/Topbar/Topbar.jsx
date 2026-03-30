@@ -2,7 +2,8 @@ import { LogOut } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { FaBell } from "react-icons/fa";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
 function Topbar() {
   const details={
@@ -10,10 +11,12 @@ function Topbar() {
     agentId:"AI029",
     plan:"Premium Agent"
   }
-const profileRef = useRef(null)
-
+  const profileRef = useRef(null)
   const[profile,setProfile]=useState(false)
-
+  const { image, agentName, agentId, agent_type } = useSelector((state) => state.agent);
+   
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
 
    useEffect(() => {
     const closeDropdown = (e) => {
@@ -24,7 +27,12 @@ const profileRef = useRef(null)
   
     document.addEventListener("mousedown", closeDropdown);
   }, []);
-    const { image, agentName, agentId, } = useSelector((state) => state.agent);
+
+      const logout = ()=>{
+      dispatch({ type: "AGENT_LOGOUT" });
+      navigate('/loginandsignup')
+    }
+    
 
   return (
     <div className="w-full host-grotesk bg-white shadow-md px-6 py-2.5 flex justify-end items-center rounded-2xl gap-3 sm:gap-6">
@@ -63,11 +71,11 @@ const profileRef = useRef(null)
         {/* Profile Info */}
         <div className="p-5 border-gray-100">
           <p className="text-sm font-semibold text-gray-900">
-            Hi, {details?.name || "User Name"}
+            Hi, {agentName || "User Name"}
           </p>
 
           <p className="text-xs text-gray-500 mt-1">
-            Agent ID: {details?.agentId || "N/A"}
+            Agent ID: {agentId || "N/A"}
           </p>
 
           <div className="mt-1 space-y-1 text-xs text-gray-500">
@@ -81,7 +89,7 @@ const profileRef = useRef(null)
             <p>
               Plan:
               <span className="ml-1 font-semibold text-gray-800">
-                {details?.plan}
+                {agent_type || "N/A"}
               </span>
             </p>
           </div>
@@ -91,7 +99,7 @@ const profileRef = useRef(null)
 
         {/* Logout */}
         <div className="p-3">
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white
+          <button onClick={logout} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white
           bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700
           transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer">
             <LogOut size={18} />
@@ -100,8 +108,6 @@ const profileRef = useRef(null)
         </div>
       </div>
 
-
-       
       </div>
 
     </div>

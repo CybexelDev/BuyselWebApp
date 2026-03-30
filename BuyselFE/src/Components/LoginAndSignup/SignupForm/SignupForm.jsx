@@ -9,9 +9,17 @@ import { userRegister } from '../../../Api/userApi';
 const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
     const [register, setRegister] = useState({ name: '', email: '', mobail: '', password: '', confirm_password: '' })
+    const [checked, setChecked] = useState(false);
 
+    console.log(checked, "chechyyyyyyyyyyyyyyy");
 
     const handleRegister = async () => {
+
+        if (!checked) {
+            alert("Please accept Terms and Conditions");
+            return;
+        }
+
         try {
             const response = await userRegister(
                 register.name,
@@ -24,12 +32,13 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
             if (response) {
                 console.log("Otp sent success page:", response);
                 setEmail(response.email)
-               SetOtpSent(true)
+                SetOtpSent(true)
             } else {
                 console.log("Invalid credentials");
             }
         } catch (error) {
-           console.log(error);
+
+            console.log(error);
         }
     }
 
@@ -99,7 +108,7 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
             </div>
 
             <div className="flex items-start gap-2 mt-4 text-sm mb-2" >
-                <input className='mt-1' type="checkbox" />
+                <input className='mt-1' type="checkbox" onChange={(e) => setChecked(e.target.checked)} />
                 <p>
                     I agree to BuySel’s{" "}
                     <span className="text-blue-500">Terms & Conditions</span> and{" "}

@@ -46,8 +46,12 @@ const OtpForm = ({ email }) => {
             accessToken: data?.access,
             userId: data?.user?.id,
             image: data?.user.image,
+            verificationStatus: data?.user?.auth_provider,
           }
         })
+
+        localStorage.setItem('accessToken', data?.access);
+        localStorage.setItem('refreshToken', data?.refresh);
 
         navigate('/')
       }
