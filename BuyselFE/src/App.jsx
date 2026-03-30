@@ -30,7 +30,9 @@ import UserEnquiry from './Agent/Pages/UserEnquiry/UserEnquiry'
 import EnquiryDetailLayoutUser from './Layouts/OwnerDashboard/Tabs/Enquiries/EnquiriesDetail'
 import DashboardPropertyDetail from './Layouts/OwnerDashboard/Tabs/Properties/DashboardPropertyDetail'
 import HelpCenter from './Pages/HelpCenter/HelpCenter'
-
+import TermsPage from "./Pages/Terms/TermsPage"
+import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy'
+import RegisterAgent from './Pages/RegisterAgent/RegisterAgent'
 
 function App() {
 
@@ -64,6 +66,9 @@ function App() {
           <Route path='/plans'  element={<PlansPage/>}/>
           <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
           <Route path="/helpcenter" element={<HelpCenter/>}/>
+          <Route path='/termsandcondition' element={<TermsPage/>}/>
+          <Route path='/privacy' element={<PrivacyPolicy/>}/>
+          <Route path='/agent-register' element={<RegisterAgent/>}/>
 
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
@@ -73,7 +78,7 @@ function App() {
           <Route path='/agent/user-enquiry' element={<UserEnquiry/>}/>
           <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
           <Route path="/agent/property" element={<AgentPropertyListing />}/>
-            
+          
        
      
         </Routes>

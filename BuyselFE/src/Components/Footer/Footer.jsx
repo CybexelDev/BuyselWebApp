@@ -2,7 +2,7 @@ import { Facebook, Twitter, Instagram } from "lucide-react";
 import logo from "../../assets/images/logo/logo.png";
 import { useNavigate } from "react-router-dom";
 
-const Footer = () => {
+const Footer = ({bg="bg-white",margin="mt-22"}) => {
     const navigate=useNavigate()
     const handleNavigate = (path) => {
   navigate(path);
@@ -12,7 +12,7 @@ const Footer = () => {
   });
 };
     return (
-        <div className="px-6 md:px-12 lg:px-5 mt-22">
+        <div className={`px-6 md:px-12 lg:px-5 ${margin} ${bg}`}>
             <footer className="bg-black text-white rounded-t-3xl py-14">
                 <div
                     className="max-w-7xl mx-auto
