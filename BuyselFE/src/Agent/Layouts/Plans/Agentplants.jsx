@@ -16,100 +16,99 @@ function AgentPlans() {
     2: "silver",
   });
 
-  const upgradePlans = [
-    {
-      id: 1,
-      name: "Premium Agent",
-      icon: Zap,
-      plans: [
-        {
-          id: "starter",
-          label: "Starter Plan",
-          duration: "3 Months",
-          price: 3999,
-          savings: "Starter Plan",
-          features: [
-            "25 Property Listings",
-            "Featured Listing Access",
-            "Priority Email Support",
-            "3 Months Validity",
-          ],
-        },
-        {
-          id: "growth",
-          label: "Growth Plan",
-          duration: "6 Months",
-          price: 7999,
-          savings: "Save ₹1000",
-          features: [
-            "50 Property Listings",
-            "Advanced Analytics",
-            "Marketing Tools",
-            "6 Months Validity",
-          ],
-        },
-        {
-          id: "pro",
-          label: "Pro Plan",
-          duration: "12 Months",
-          price: 13999,
-          savings: "Save ₹3000",
-          features: [
-            "100 Property Listings",
-            "Premium Featured Access",
-            "24/7 Priority Support",
-            "Marketing Tools",
-            "12 Months Validity",
-          ],
-        },
-      ],
-    },
+  
 
+const premiumPlans = {
+  id: 1,
+  name: "Premium Agent",
+  icon: Zap,
+  plans: [
     {
-      id: 2,
-      name: "Elite Agent",
-      icon: Crown,
-      plans: [
-        {
-          id: "silver",
-          label: "Silver Plan",
-          duration: "3 Months",
-          price: 6999,
-          savings: "Starter Elite",
-          features: [
-            "75 Property Listings",
-            "Premium Spotlight Listings",
-            "3 Months Validity",
-          ],
-        },
-        {
-          id: "gold",
-          label: "Gold Plan",
-          duration: "6 Months",
-          price: 14999,
-          savings: "Save ₹2000",
-          features: [
-            "150 Property Listings",
-            "Dedicated Account Manager",
-            "6 Months Validity",
-          ],
-        },
-        {
-          id: "platinum",
-          label: "Platinum Plan",
-          duration: "12 Months",
-          price: 24999,
-          savings: "Save ₹5000",
-          features: [
-            "300 Property Listings",
-            "Dedicated Manager",
-            "24/7 Support",
-            "12 Months Validity",
-          ],
-        },
+      id: "starter",
+      label: "Starter Plan",
+      duration: "3 Months",
+      price: 3999,
+      savings: "Starter Plan",
+      features: [
+        "25 Property Listings",
+        "Featured Listing Access",
+        "Priority Email Support",
+        "3 Months Validity",
       ],
     },
-  ];
+    {
+      id: "growth",
+      label: "Growth Plan",
+      duration: "6 Months",
+      price: 7999,
+      savings: "Save ₹1000",
+      features: [
+        "50 Property Listings",
+        "Advanced Analytics",
+        "Marketing Tools",
+        "6 Months Validity",
+      ],
+    },
+    {
+      id: "pro",
+      label: "Pro Plan",
+      duration: "12 Months",
+      price: 13999,
+      savings: "Save ₹3000",
+      features: [
+        "100 Property Listings",
+        "Premium Featured Access",
+        "24/7 Priority Support",
+        "Marketing Tools",
+        "12 Months Validity",
+      ],
+    },
+  ],
+};
+const elitePlans = {
+  id: 2,
+  name: "Elite Agent",
+  icon: Crown,
+  plans: [
+    {
+      id: "silver",
+      label: "Silver Plan",
+      duration: "3 Months",
+      price: 6999,
+      savings: "Starter Elite",
+      features: [
+        "75 Property Listings",
+        "Premium Spotlight Listings",
+        "3 Months Validity",
+      ],
+    },
+    {
+      id: "gold",
+      label: "Gold Plan",
+      duration: "6 Months",
+      price: 14999,
+      savings: "Save ₹2000",
+      features: [
+        "150 Property Listings",
+        "Dedicated Account Manager",
+        "6 Months Validity",
+      ],
+    },
+    {
+      id: "platinum",
+      label: "Platinum Plan",
+      duration: "12 Months",
+      price: 24999,
+      savings: "Save ₹5000",
+      features: [
+        "300 Property Listings",
+        "Dedicated Manager",
+        "24/7 Support",
+        "12 Months Validity",
+      ],
+    },
+  ],
+};
 
   const planData = {
     name: "Premium Agent",
@@ -128,7 +127,7 @@ function AgentPlans() {
 
 
  
-
+  const upgradePlans = [premiumPlans, elitePlans];
   const today = new Date();
   const expiry = new Date(planData.expiresOn);
   const diffTime = expiry - today;

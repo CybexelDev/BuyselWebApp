@@ -59,7 +59,7 @@ function App() {
           <Route path='/addyourproperty' element={<AddProperty/>}/>
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
-          <Route path="/ownerdash" element={<OwnerDashboard />}/>   
+          <Route path="/ownerdashboard" element={<OwnerDashboard />}/>   
           <Route path="/dashboardpropertydeatil" element={<DashboardPropertyDetail/> }/>                 
           <Route path='/plans'  element={<PlansPage/>}/>
           <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
