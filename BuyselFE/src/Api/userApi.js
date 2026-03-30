@@ -112,14 +112,13 @@ export const userLogin = async (username, password) => {
 
 
 export const handleGoogleLogin = async ({tokenResponse}) =>{
-    try {      
-        const res = await api.post(`${BASE_URL}auth/google/login/`,  {
+
+    try {
+        const res = await axios.post(`${BASE_URL}auth/google/login/`,  {
             access_token: tokenResponse.access_token,
         });
 
         if(res.data.message && res.data.access){
-        // localStorage.setItem('accessToken', res.data.access);
-        // localStorage.setItem('refreshToken', res.data.refresh);
         return res.data;
 
         }else{
@@ -129,5 +128,17 @@ export const handleGoogleLogin = async ({tokenResponse}) =>{
     } catch (error) {
         console.log(error, "Login filed");
         
+    }
+}
+
+
+export const getProfile = async () => { 
+    try {
+        const result = await api.get(`${BASE_URL}profile/`);
+       
+            return result.data;
+
+    } catch (error) {
+        console.log(error);
     }
 }

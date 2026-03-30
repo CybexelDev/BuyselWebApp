@@ -10,9 +10,11 @@ import {
   Square,
   Pencil
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50", lg="lg:py-12",onClick}) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate=useNavigate()
  
 
  const properties = [
@@ -123,6 +125,7 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
               <div
                 key={property.id}
                 className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition"
+                onClick={()=>navigate("/dashboardpropertydeatil")}
               >
 
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">

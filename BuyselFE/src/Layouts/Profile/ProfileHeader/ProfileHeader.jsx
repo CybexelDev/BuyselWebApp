@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import './profileHeader.css'
 import logo from '../../../assets/images/logo/logo.png'
 import house from '../../../assets/images/profile/house.png'
@@ -9,15 +9,17 @@ import { Link } from "react-scroll"
 import { FaEdit } from "react-icons/fa";
 import { useRef } from "react";
 
-
-
 import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
-
 import Navbar from "../../../Components/Navbar/Navbar";
-const ProfileHeader = ({setMode}) => {
+import { getProfile } from "../../../Api/userApi";
+
+const ProfileHeader = ({setMode, setParentProfileData}) => {
   const fileInputRef = useRef(null);
   const [image, setImage] = useState(profile);
+  const [profileData, setProfileData] = useState({});
+
+   
 
   const handleEditClick = () => {
     fileInputRef.current.click();
@@ -30,12 +32,31 @@ const ProfileHeader = ({setMode}) => {
     }
   };
 
+
+useEffect(() => {
+  const fetchProfile = async () => {
+    try {
+      const data = await getProfile();  
+
+      if (data) {
+        console.log(data, "Profile data fetched successfully"); // ✅ fixed
+        setProfileData(data);
+        setParentProfileData(data);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchProfile();
+}, []);
+
   return (
     <div className="relative p-5 ">
 
             <Navbar  />
 
-      {/* ===== BANNER ===== */}
       <div className="profile-cta-container relative overflow-visible">
 
         <div className="profile-cta-logo-container">
@@ -57,8 +78,7 @@ const ProfileHeader = ({setMode}) => {
           />
         </div>
 
-    
-
+  
       </div>
 <div
   className="
@@ -90,7 +110,7 @@ const ProfileHeader = ({setMode}) => {
                   rounded-full overflow-hidden 
                   border-4 border-white shadow-lg flex-shrink-0 relative">
       <img
-        src={image}
+        src={profileData?.image || image}
         alt="profile"
         className="w-full h-full object-cover"
       />
@@ -103,7 +123,6 @@ const ProfileHeader = ({setMode}) => {
       >
         <FaEdit className="text-gray-600 text-sm" />
       </div>
-
 
 
       <input
@@ -123,12 +142,12 @@ const ProfileHeader = ({setMode}) => {
 
     <h2 className="text-[16px] sm:text-[20px] md:text-2xl 
                    text-[#393939] font-medium">
-      Raja Kumar
+      {profileData?.full_name}
     </h2>
   {/* for pushing */}
     <p className="text-[#393939] mt-1 text-[13px] sm:text-base flex font-medium ml-[-7px]">
       <img src={location} className="w-[26px] h-[24px]"/>
-      Chennai Tamil Nadu
+      {profileData?.city || "Location not available"}
     </p>
 
     <div className="flex gap-3 sm:gap-4  mb-7 mt-2 lg:mb-0 lg:mt-4 
@@ -146,7 +165,6 @@ const ProfileHeader = ({setMode}) => {
      </Link>
 
 
-     
            <Link to="personalDetails" smooth duration={500} offset={-120} >
       <button className="bg-gray-200 
                          px-2 py-1.5 sm:px-5 sm:py-2 

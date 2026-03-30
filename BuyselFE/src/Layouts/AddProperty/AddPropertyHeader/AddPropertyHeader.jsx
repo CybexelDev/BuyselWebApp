@@ -11,7 +11,7 @@ import img3 from "../../../assets/images/carousel/he.png"
 import Navbar from "../../../Components/Navbar/Navbar";
 import ButtonHead from "../../../Components/ButtonHead/ButtonHead";
 
-const AddPropertyHeader = () => {
+const AddPropertyHeader = ({title="Post Your Property",subtitle="List your property in a few easy steps"}) => {
   
 //sss
   return (
@@ -28,8 +28,8 @@ const AddPropertyHeader = () => {
 
       <div className="flex gap-5 pr-5 absolute mb-5 left-11 sm:left-12 bottom-[40px] z-10">
         <div className=''>
-          <p className='max-[400px]:text-[19px]  text-[25px] sm:text-[32px] font-semibold lexend '>Post Your Property</p>
-          <p className='inter max-[400px]:text-[11px]  text-[14px] sm:text-[16px] '>List your property in a few easy steps</p>
+          <p className='max-[400px]:text-[19px]  text-[25px] sm:text-[32px] font-semibold lexend '>{title}</p>
+          <p className='inter max-[400px]:text-[11px]  text-[14px] sm:text-[16px] '>{subtitle}</p>
         </div>
         
       </div>

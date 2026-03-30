@@ -10,16 +10,16 @@ export const premiumAgentLogin = async (username, password) => {
   formData.append("password", password);
 
   try {
-    const result = await axios.post(`${BASE_URL}premium/login/`, formData, {
+    const result = await axios.post(`${BASE_URL}agent/login/`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
     if (
       result.data.access &&
-      result.data.premium.name &&
-      result.data.premium.id &&
-      result.data.premium.city
+      result.data.agent_details.username &&
+      result.data.agent_details.agent_id &&
+      result.data.agent_details.city
     ) {
       return result.data;
     }
@@ -27,7 +27,7 @@ export const premiumAgentLogin = async (username, password) => {
     return false;
 
   } catch (error) {
-    console.error("API error:", error);
+    console.error("agent API error:", error);
     return false;
   }
 };
