@@ -33,11 +33,95 @@ export const premiumAgentLogin = async (username, password) => {
 };
 
 
+export const getAgentProfile = async () => {
+  try {
+
+    const result = await api.get("/agent/profile/");
+    console.log(result)
+    if (result.data?.data?.agent_id) {
+      return result.data.data;
+    }
+
+    return false;
+  } catch (error) {
+    console.error("get profile API error:", error);
+    return false;
+  }
+};
+
+export const updateAgentProfile = async (formData) => {
+  try {
+    const data = new FormData();
+
+    data.append("username", formData.name);
+    data.append("phone_number", formData.number);
+    data.append("city", formData.location);
+    data.append("address", formData.address);
+    data.append("pin_code", formData.pincode);
+    data.append("email", formData.email);
+
+    data.append("professional_title", formData.title);
+    data.append("professional_bio", formData.description);
+
+    data.append("instagram", formData.instagram);
+    data.append("facebook", formData.facebook);
+    data.append("linkedin", formData.linkedin);
+    data.append("whatsapp_number", formData.whatsapp);
+
+    data.append("years_of_experience", formData.experience);
+    data.append("properties_listed", formData.propertiesListed);
+    data.append("deals_closed", formData.dealsClosed);
+
+data.append(
+  "operating_cities",
+  JSON.stringify(formData.operatingCities.split(",").map(c => c.trim()))
+);
+    formData.specializations.forEach((item, index) => {
+      data.append(`specializations[${index}]`, item);
+    });
+
+    if (formData.profileImageFile) {
+      data.append("profile_image", formData.profileImageFile);
+    }
+
+    const result = await api.put("/agent/profile/", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return result.data;
+
+  } catch (error) {
+    console.error("update profile error:", error);
+    return false;
+  }
+};
 
 
 
+export const getAgentInboxMessages = async () => {
+  try {
+    const result = await api.get("/agent/inbox-messages/");
 
+    if (result.data?.data) {
+      return result.data.data;
+    }
 
-
+    return result.data;
+  } catch (error) {
+    console.error("inbox messages error:", error);
+    return [];
+  }
+};
+export const deleteInboxMessage = async (id) => {
+  try {
+    const res = await api.delete(`/agent/inbox-message-delete/${id}/`);
+    return res.data;
+  } catch (error) {
+    console.error("delete message error:", error);
+    return false;
+  }
+};
 
 
