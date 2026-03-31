@@ -142,20 +142,3 @@ export const getProfile = async () => {
         console.log(error);
     }
 }
-export const changeAgentPassword = async (currentPassword, newPassword, confirmPassword) => {
-  try {
-    const data = {
-      current_password: currentPassword,
-      new_password: newPassword,
-      confirm_password: confirmPassword,
-    };
-
-    const result = await api.post("/agent/change-password/", data);
-
-    return result.data;
-
-  } catch (error) {
-    console.error("change password error:", error);
-    return false;
-  }
-};

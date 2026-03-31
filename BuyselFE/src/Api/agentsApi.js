@@ -32,12 +32,11 @@ export const premiumAgentLogin = async (username, password) => {
   }
 };
 
-
 export const getAgentProfile = async () => {
   try {
 
     const result = await api.get("/agent/profile/");
-    console.log(result)
+    console.log("get Agent Profile",result)
     if (result.data?.data?.agent_id) {
       return result.data.data;
     }
@@ -89,7 +88,7 @@ data.append(
         "Content-Type": "multipart/form-data",
       },
     });
-
+console.log("UPDATED:", result);
     return result.data;
 
   } catch (error) {
@@ -124,4 +123,20 @@ export const deleteInboxMessage = async (id) => {
   }
 };
 
+export const changeAgentPassword = async (currentPassword, newPassword, confirmPassword) => {
+  try {
+    const data = {
+      current_password: currentPassword,
+      new_password: newPassword,
+      confirm_password: confirmPassword,
+    };
 
+    const result = await api.post("/agent/change-password/", data);
+
+    return result.data;
+
+  } catch (error) {
+    console.error("change password error:", error);
+    return false;
+  }
+};

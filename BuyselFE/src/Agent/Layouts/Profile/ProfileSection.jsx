@@ -10,7 +10,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import { getAgentProfile } from '../../../Api/agentsApi';
 import { motion } from 'framer-motion';
-import { changeAgentPassword } from '../../../Api/userApi';
+import { changeAgentPassword } from '../../../Api/agentsApi';
 const AgentProfileLayout = () => {
     const fileInputRef = useRef(null);
 const [profileImageFile, setProfileImageFile] = useState(null);   
