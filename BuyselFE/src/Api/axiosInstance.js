@@ -40,7 +40,7 @@ api.interceptors.response.use(
 
       if (!refreshToken) {
         console.log("No refresh token available. Redirect to login.");
-        window.location.href = "/admin"; 
+        // window.location.href = "/admin"; 
         return Promise.reject(error);
       }
 
@@ -68,7 +68,7 @@ api.interceptors.response.use(
         // In case refresh fails, clear tokens and redirect to login
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        window.location.href = "/login";
+        // window.location.href = "/login";
       }
     }
 
