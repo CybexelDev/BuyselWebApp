@@ -3,7 +3,7 @@ import "./BlogBanner.css";
 import logo from "../../../assets/images/logo/logo.png";
 import Navbar from "../../../Components/Navbar/Navbar";
 
-import bgImage from "../../../assets/images/blog/bgImage.png";
+import bgImage from "../../../assets/images/blog/BgImage.png";
 
 const BlogBanner = ({
   h1 = "Welcome to Buysel Blogs",
