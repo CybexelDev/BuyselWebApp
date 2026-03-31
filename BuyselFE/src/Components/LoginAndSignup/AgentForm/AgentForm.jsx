@@ -30,6 +30,8 @@ const AgentForm = () => {
                         agent_type: response?.agent_details?.agent_type,
                     }
                 })
+                      localStorage.setItem('accessToken', response?.access);
+          localStorage.setItem('refreshToken', response?.refresh);
 
                 setLoading(false);
 
