@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../../assets/images/logo/logo.png";
 import line from "../../../assets/images/header/line.png";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import './header.css'
+import './Header.css'
 
 
 import img from "../../../assets/images/carousel/he.png";
