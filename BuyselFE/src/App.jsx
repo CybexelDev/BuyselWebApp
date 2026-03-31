@@ -69,7 +69,7 @@ function App() {
           <Route path='/termsandcondition' element={<TermsPage/>}/>
           <Route path='/privacy' element={<PrivacyPolicy/>}/>
           <Route path='/agent-register' element={<RegisterAgent/>}/>
-
+{/* yyy */}
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
           <Route path='/agent/plans' element={<AgentPlans/>}/>
