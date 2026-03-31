@@ -1,5 +1,5 @@
 import React from 'react'
-import UserEnquiryLayout from '../../Layouts/UserEnquiry/UserEnquiryLayout'
+import UserEnquiryLayout from '../../Layouts/UserEnquiryLayout'
 
 function UserEnquiry() {
   return (

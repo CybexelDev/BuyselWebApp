@@ -33,6 +33,7 @@ import HelpCenter from './Pages/HelpCenter/HelpCenter'
 import TermsPage from "./Pages/Terms/TermsPage"
 import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy'
 import RegisterAgent from './Pages/RegisterAgent/RegisterAgent'
+import Inbox from './Agent/Pages/Inbox/Inbox'
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
           <Route path='/agent/plans' element={<AgentPlans/>}/>
           <Route path='/agent/profile' element={<AgentProfile/>}/>
+          <Route path='/agent/inbox' element={<Inbox/>}/>
           <Route path='/agent/enquiry' element={<Enquiry/>}/>
           <Route path='/agent/user-enquiry' element={<UserEnquiry/>}/>
           <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
