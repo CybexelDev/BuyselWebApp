@@ -6,7 +6,6 @@ import {
   Home,
   Tag,
   Calendar,
-  ArrowUpRight,
   Search,
   Filter,
   Mail,

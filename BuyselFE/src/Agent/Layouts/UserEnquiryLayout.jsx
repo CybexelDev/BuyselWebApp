@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import Sidebar from "../Components/Sidebar/Sidebar";
+import React, { useState,useEffect } from "react";
+import Sidebar from "../../Components/Sidebar/Sidebar";
+import { getAgentInboxMessages } from "../../../Api/agentsApi";
 import {
   User,
   Phone,
@@ -12,41 +13,51 @@ import {
   Trash,
 } from "lucide-react";
 import { motion } from "framer-motion";
-
+import { deleteInboxMessage } from "../../../Api/agentsApi";
 const UserEnquiryLayout = () => {
   const [searchTerm, setSearchTerm] = useState("");
+const [enquiries, setEnquiries] = useState([]);
+useEffect(() => {
+  const fetchMessages = async () => {
+    try {
+      const data = await getAgentInboxMessages();
+      console.log("MESSAGES:", data);
 
-  const enquiries = [
-    {
-      id: 1,
-      name: "Rahul Sharma",
-      contact: "+91 9876543210",
-      pincode: "670001",
-      requirement:
-        "Looking for a 3BHK apartment near Kannur town within a budget of 80 Lakhs.",
-      date: "10 minutes ago",
-      status: "New",
-    },
-    {
-      id: 2,
-      name: "Aisha Khan",
-      contact: "aisha@email.com",
-      pincode: "673001",
-      requirement: "Need a commercial shop space around 1200 sqft.",
-      date: "2 hours ago",
-      status: "Contacted",
-    },
-    {
-      id: 3,
-      name: "Sanjay Menon",
-      contact: "+91 9871234567",
-      pincode: "670702",
-      requirement: "Searching for a villa with parking and garden area.",
-      date: "1 day ago",
-      status: "Closed",
-    },
-  ];
+      if (Array.isArray(data)) {
+        const mappedData = data.map((item) => ({
+          id: item.id,
+          name: item.name || item.full_name || "Unknown",
+          contact: item.phone || item.contact || item.email || "N/A",
+          pincode: item.pincode || item.pin_code || "N/A",
+          requirement: item.messages_text || item.enquiry || "No message",
+          date: item.created_at
+            ? new Date(item.created_at).toLocaleString()
+            : "N/A",
+          status: item.status || "New",
+        }));
 
+        setEnquiries(mappedData);
+      }
+    } catch (err) {
+      console.error("Inbox fetch error:", err);
+    }
+  };
+
+  fetchMessages();
+}, []);
+const handleDelete = async (id) => {
+  const confirmDelete = window.confirm("Are you sure to delete?");
+
+  if (!confirmDelete) return;
+
+  const res = await deleteInboxMessage(id);
+
+  if (res) {
+    setEnquiries((prev) => prev.filter((item) => item.id !== id));
+  } else {
+    alert("Delete failed");
+  }
+};
   const filteredEnquiries = enquiries.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -167,10 +178,12 @@ const UserEnquiryLayout = () => {
         <button className="p-2 bg-slate-100 rounded-lg hover:bg-[#74C122] hover:text-white transition">
           <MessageSquare size={16} />
         </button>
-
-        <button className="p-2 text-slate-400 hover:text-red-500 transition">
-          <Trash size={18} />
-        </button>
+<button
+  onClick={() => handleDelete(item.id)}
+  className="p-2 text-slate-400 hover:text-red-500 transition"
+>
+  <Trash size={18} />
+</button>
       </div>
 
     </motion.div>
