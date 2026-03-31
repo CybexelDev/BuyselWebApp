@@ -14,6 +14,7 @@ function Profile() {
   useEffect(()=>{
      setUsers(user)
   },[])
+  
   return (
     <div>
      <ProfileHeader  setMode={setMode} setParentProfileData={setProfileData} />

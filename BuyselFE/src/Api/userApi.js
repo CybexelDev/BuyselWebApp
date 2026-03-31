@@ -142,3 +142,15 @@ export const getProfile = async () => {
         console.log(error);
     }
 }
+
+
+export const getProperty = async (filters) => { 
+    try {
+        const result = await api.get(`${BASE_URL}properties/`, {filters});
+       
+            return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
