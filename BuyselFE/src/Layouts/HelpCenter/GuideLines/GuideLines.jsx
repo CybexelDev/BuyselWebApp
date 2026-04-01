@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import GuideModal from "./GuideModal";
-
+  
 function GuideLines() {
+
+
   const guidelines = [
     {
       id: 1,

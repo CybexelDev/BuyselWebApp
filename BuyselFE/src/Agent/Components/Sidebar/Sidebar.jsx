@@ -6,7 +6,7 @@ import { FaLandmarkDome } from "react-icons/fa6";
 import { FaClipboardList } from "react-icons/fa";
 import { RiDashboardFill } from "react-icons/ri";
 import { RiAccountPinBoxFill } from "react-icons/ri";
-
+import { FaEnvelope } from "react-icons/fa";
 import { FaUserCog } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ const navItems = [
   {id: "property",icon: FaLandmarkDome,label: "Property Listing",path: "/agent/property",},
   { id: "plans", icon: FaClipboardList, label: "Plans", path: "/agent/plans" },
   { id: "profile", icon: FaUserCog, label: "Profile", path: "/agent/profile" },
+    { id: "inbox",   icon: FaEnvelope,label: "inbox", path: "/agent/inbox" },
   {id: "enquiry",icon: SiGooglemessages,label: "Property Enquiry",path: "/agent/enquiry"},
     {id: "userenquiry",icon: RiAccountPinBoxFill,label: "User Enquiry",path: "/agent/user-enquiry"},
 
@@ -86,16 +87,16 @@ const Sidebar = () => {
         </div>
       </nav>
 
-      <nav className="fixed bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl">
+      <nav className="fixed bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl">
         {navItems.map((item) => (
           <button
             key={item.id}
             onClick={() => setActive(item.id)}
-            className={`relative rounded-2xl p-4 transition-all ${
+            className={`relative rounded-2xl p-3 transition-all ${
               active === item.id ? "text-white" : "text-white/50"
             }`}
           >
-            <item.icon size={22} />
+            <item.icon size={18} />
             {active === item.id && (
               <motion.div
                 layoutId="active-glow-mobile"
