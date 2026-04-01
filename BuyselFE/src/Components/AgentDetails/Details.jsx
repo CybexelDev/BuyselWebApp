@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Details({agentData}){
+  
+  const[formData,setFormData]=useState({
+  first_name: "",
+  last_name: "",
+  email: "",
+  phone: "",
+  message: "",
+
+  })
   const details = [
     {
       stats: {
