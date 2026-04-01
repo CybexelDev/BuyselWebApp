@@ -144,6 +144,7 @@ export const getProfile = async () => {
 }
 
 
+
 export const getProperty = async (filters) => { 
     try {
         const result = await api.get(`${BASE_URL}properties/`, {filters});
@@ -181,3 +182,10 @@ export const sendEnquiry = async (formData) => {
     return false;
   }
 };
+
+
+export const Agent contactForm = async()=>{
+    try{
+        
+    }
+}
