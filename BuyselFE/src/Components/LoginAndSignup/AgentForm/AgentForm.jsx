@@ -35,6 +35,9 @@ const AgentForm = () => {
 
                 setLoading(false);
 
+                 localStorage.setItem('accessToken', response?.access);
+                 localStorage.setItem('refreshToken', response?.refresh);
+
                 navigate('/agent/dashboard')
 
             } else {

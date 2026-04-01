@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./header.css";
 import logo from "../../../assets/images/logo/logo.png";
 import filterIcon from "../../../assets/images/header/Filter.png";
@@ -8,12 +8,20 @@ import Navbar from "../../../Components/Navbar/Navbar";
 
 //start
 
-const Header = () => {
+const Header = ({ setParentFilters }) => {
   const [activeTab, setActiveTab] = useState("Rent");
   const [activeCategory, setActiveCategory] = useState("Residential");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const tabs = ["Rent", "Buy", "Sell", "Agent", "Lease"];
+
+
+  useEffect(() => {
+    setParentFilters({
+      purpose: activeTab,
+      category: activeCategory,
+    });
+  }, [activeTab, activeCategory]);
 
   const categories = [
     {
@@ -75,7 +83,7 @@ const Header = () => {
 
   return (
     <div className="md:p-5 p-2 relative ">
-      <Navbar  />
+      <Navbar />
 
       <div className="footerr-cta-container ">
 
@@ -98,8 +106,8 @@ const Header = () => {
                 key={item.name}
                 onClick={() => setActiveCategory(item.name)}
                 className={`flex shrink-0 poppins text-[400] cursor-pointer items-center gap-1 px-4 py-2 rounded-full text-[11.5px] transition-all duration-200 ${activeCategory === item.name
-                    ? "bg-white text-[#6fba19] font-medium"
-                    : "text-white"
+                  ? "bg-white text-[#6fba19] font-medium"
+                  : "text-white"
                   }`}
               >
                 <span className={activeCategory === item.name ? "text-[#6fba19]" : "text-white"}>
@@ -124,8 +132,8 @@ const Header = () => {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`cursor-pointer transition px-1  ${activeTab === tab
-                      ? "text-black font-bold"
-                      : "hover:text-black text-[#938181]"
+                    ? "text-black font-bold"
+                    : "hover:text-black text-[#938181]"
                     }`}
                 >
                   {tab}

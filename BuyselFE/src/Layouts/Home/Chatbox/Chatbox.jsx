@@ -1,6 +1,38 @@
 import React from "react";
-
+import { useState } from "react";
+import { sendEnquiry } from "../../../Api/userApi";
 function Chatbox({ close, simple = false, msgPlaceholder="Your need or requirements" }) {
+  const [formData, setFormData] = useState({
+  name: "",
+  contact: "",
+  pincode: "",
+  message: "",
+});
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!formData.name || !formData.message) {
+    alert("Please fill required fields");
+    return;
+  }
+
+  const res = await sendEnquiry(formData);
+
+  if (res) {
+    alert("Enquiry sent ✅");
+
+    setFormData({
+      name: "",
+      contact: "",
+      pincode: "",
+      message: "",
+    });
+
+    close(); // optional
+  } else {
+    alert("Failed ❌");
+  }
+};
     return (
     <section className="flex justify-center items-center  px-3 sm:px-6">
       
@@ -20,7 +52,7 @@ function Chatbox({ close, simple = false, msgPlaceholder="Your need or requireme
           Submit this form...
         </h4>
 
-        <form className="space-y-[16px] sm:space-y-[19px] relative">
+        <form className="space-y-[16px] sm:space-y-[19px] relative" onSubmit={handleSubmit}>
 
           <input
             type="text"
@@ -35,6 +67,10 @@ function Chatbox({ close, simple = false, msgPlaceholder="Your need or requireme
               text-[#393838]
               outline-none
             "
+            value={formData.name}
+            onChange={(e)=>{
+              setFormData({...formData,name:e.target.value})
+            }}
           />
           
             {!simple && (
@@ -51,6 +87,10 @@ function Chatbox({ close, simple = false, msgPlaceholder="Your need or requireme
               text-[#393838]
               outline-none
             "
+            value={formData.contact}
+            onChange={(e)=>{
+              setFormData({...formData,contact:e.target.value})
+            }}
           />
             )}
 
@@ -69,6 +109,11 @@ function Chatbox({ close, simple = false, msgPlaceholder="Your need or requireme
               text-[#393838]
               outline-none
             "
+                      value={formData.pincode}
+                      onChange={(e)=>{
+                        setFormData({...formData,pincode:e.target.value})
+                      }}
+
           />
              )}
 
@@ -87,6 +132,10 @@ function Chatbox({ close, simple = false, msgPlaceholder="Your need or requireme
               outline-none
               resize-none
             "
+            value={formData.message}
+            onChange={(e)=>{
+              setFormData({...formData,message:e.target.value})
+            }}
           ></textarea>
 
            <div className="flex justify-end gap-2 -mt-[10px]">

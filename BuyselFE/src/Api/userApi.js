@@ -143,20 +143,42 @@ export const getProfile = async () => {
     }
 }
 
-export const changeAgentPassword = async (currentPassword, newPassword, confirmPassword) => {
+
+
+export const getProperty = async (filters) => { 
+    try {
+        const result = await api.get(`${BASE_URL}properties/`, {filters});
+       
+            return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const sendEnquiry = async (formData) => {
   try {
-    const data = {
-      current_password: currentPassword,
-      new_password: newPassword,
-      confirm_password: confirmPassword,
-    };
+    const data = new FormData();
 
-    const result = await api.post("/agent/change-password/", data);
+    data.append("name", formData.name);
+    data.append("contact", formData.contact);        // ✅ FIX
+    data.append("pin_code", formData.pincode);       // ✅ FIX
+    data.append("messages_text", formData.message);  // ✅ FIX
 
-    return result.data;
+    const res = await axios.post(
+      `${BASE_URL}agent/inbox-message/`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return res.data;
 
   } catch (error) {
-    console.error("change password error:", error);
+    console.error("enquiry error:", error);
     return false;
   }
 };

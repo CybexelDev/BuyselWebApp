@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../../assets/images/logo/logo.png";
-import { ArrowLeft} from "lucide-react";
-import './header.css'
+
+import line from "../../../assets/images/header/line.png";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import './Header.css'
+
+
+import img from "../../../assets/images/carousel/he.png";
+import img2 from "../../../assets/images/carousel/he.png";
+import img3 from "../../../assets/images/carousel/he.png";
+import Navbar from "../../Navbar/Navbar";
+import flat from "../../../assets/images/propertDetail/flat.png";
+import phone from "../../../assets/images/propertDetail/phone.png";
+import seller from "../../../assets/images/propertDetail/seller.jpg";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
