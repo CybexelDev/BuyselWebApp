@@ -58,6 +58,7 @@ const handleDelete = async (id) => {
     alert("Delete failed");
   }
 };
+
   const filteredEnquiries = enquiries.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );

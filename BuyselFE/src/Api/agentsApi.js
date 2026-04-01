@@ -132,11 +132,28 @@ export const changeAgentPassword = async (currentPassword, newPassword, confirmP
     };
 
     const result = await api.post("/agent/change-password/", data);
-
-    return result.data;
+       return result.data;
 
   } catch (error) {
     console.error("change password error:", error);
     return false;
   }
 };
+
+
+export const getContactMessage = async()=>{
+  try{
+    const result = await api.get("/agent/contacts");
+
+    if(result.data?.data) {
+      return result.data.data
+    }
+     return result.data;
+  } catch (error) {
+    console.error("inbox messages error:", error);
+    return [];
+  }
+}
+
+
+

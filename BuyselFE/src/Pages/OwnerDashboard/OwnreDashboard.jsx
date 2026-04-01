@@ -5,7 +5,6 @@ function OwnerDashboard() {
   return (
     <div>
       <Header />
-      
     </div>
   )
 }
