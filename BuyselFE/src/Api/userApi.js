@@ -142,6 +142,7 @@ export const getProfile = async () => {
         console.log(error);
     }
 }
+
 export const changeAgentPassword = async (currentPassword, newPassword, confirmPassword) => {
   try {
     const data = {
@@ -159,3 +160,10 @@ export const changeAgentPassword = async (currentPassword, newPassword, confirmP
     return false;
   }
 };
+
+
+export const Agent contactForm = async()=>{
+    try{
+        
+    }
+}

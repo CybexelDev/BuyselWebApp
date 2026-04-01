@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import {
   MessageSquare,
@@ -14,44 +14,77 @@ import {
   Trash,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { getContactMessage } from "../../../Api/agentsApi";
 
 const InboxLayout = () => {
   const [expandedId, setExpandedId] = useState(null);
+  const[enquiry, setEnquiry]=useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const enquiries = [
-    {
-      id: 1,
-      username: "Suresh Raina",
-      email: "suresh.r@example.com",
-      number: "9876578909",
-      message:
-        "I am interested in this property. Please contact me with more details.I am interested in this property. Please contact me with more details",
-      date: "2 hours ago",
-    },
-    {
-      id: 2,
-      username: "Meera Nair",
-      email: "meera.n@example.com",
-      number: "7656789087",
-      message:
-        "Is this property still available? I would like to schedule a visit.",
-      date: "5 hours ago",
-    },
-    {
-      id: 3,
-      username: "Vijay Sethupathi",
-      email: "v.sethu@example.com",
-      number: "9043215678",
-      message:
-        "Can you share more details about location, amenities, and pricing?",
-      date: "1 day ago",
-    },
-  ];
 
-  const filteredEnquiries = enquiries.filter((item) =>
+  useEffect(()=>{
+    const fetchMessages = async()=>{
+      try{
+        const data = await getContactMessage();
+        console.log("Messages:",data);
+
+        if (Array.isArray(data)) {
+        const mappedData = data.map((item) => ({
+          id: item.id,
+          username: `${item.first_name || ""} ${item.last_name || ""}`.trim() || "Unknown",
+          contact: item.contact_number || "N/A",
+          email:item.email || "N/A",
+          message: item.message || "No message",
+          date: item.created_at
+            ? new Date(item.created_at).toLocaleString()
+            : "N/A",
+        }));
+
+        setEnquiry(mappedData);
+      }
+      }
+      catch(err){
+        console.error("Contact message fetch error:",err);
+        
+      }
+    }
+    fetchMessages()
+  },[])
+
+  // const enquiries = [
+  //   {
+  //     id: 1,
+  //     username: "Suresh Raina",
+  //     email: "suresh.r@example.com",
+  //     number: "9876578909",
+  //     message:
+  //       "I am interested in this property. Please contact me with more details.I am interested in this property. Please contact me with more details",
+  //     date: "2 hours ago",
+  //   },
+  //   {
+  //     id: 2,
+  //     username: "Meera Nair",
+  //     email: "meera.n@example.com",
+  //     number: "7656789087",
+  //     message:
+  //       "Is this property still available? I would like to schedule a visit.",
+  //     date: "5 hours ago",
+  //   },
+  //   {
+  //     id: 3,
+  //     username: "Vijay Sethupathi",
+  //     email: "v.sethu@example.com",
+  //     number: "9043215678",
+  //     message:
+  //       "Can you share more details about location, amenities, and pricing?",
+  //     date: "1 day ago",
+  //   },
+  // ];
+
+  const filteredEnquiries = enquiry.filter((item) =>
     item.username.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
 
   return (
     <div className="min-h-screen  bg-[#F8FAFC] text-slate-900 font-sans flex overflow-x-hidden">
@@ -129,7 +162,7 @@ const InboxLayout = () => {
                   <div className="flex items-center gap-2 min-w-0">
                     <Phone size={16} className="text-[#74C122] shrink-0" />
                     <span className="text-sm font-bold text-black-600 truncate min-w-0 host-grotesk  w-[190px]">
-                      {item.number}
+                      {item.contact}
                     </span>
                   </div>
 

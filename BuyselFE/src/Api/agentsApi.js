@@ -125,3 +125,19 @@ export const deleteInboxMessage = async (id) => {
 };
 
 
+
+export const getContactMessage = async()=>{
+  try{
+    const result = await api.get("/agent/contacts");
+
+    if(result.data?.data) {
+      return result.data.data
+    }
+     return result.data;
+  } catch (error) {
+    console.error("inbox messages error:", error);
+    return [];
+  }
+}
+
+
