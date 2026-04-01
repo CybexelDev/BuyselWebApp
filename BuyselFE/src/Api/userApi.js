@@ -177,3 +177,13 @@ export const sendEnquiry = async (formData) => {
 
 
 
+export const getProfile = async () => { 
+    try {
+        const result = await api.get(`${BASE_URL}profile/`);
+       
+            return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
