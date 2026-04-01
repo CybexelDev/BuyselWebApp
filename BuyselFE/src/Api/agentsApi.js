@@ -8,7 +8,7 @@ export const premiumAgentLogin = async (username, password) => {
   const formData = new FormData();
   formData.append("username", username);
   formData.append("password", password);
-
+// aa
   try {
     const result = await axios.post(`${BASE_URL}agent/login/`, formData, {
       headers: {
@@ -32,12 +32,11 @@ export const premiumAgentLogin = async (username, password) => {
   }
 };
 
-
 export const getAgentProfile = async () => {
   try {
 
     const result = await api.get("/agent/profile/");
-    console.log(result)
+    console.log("get Agent Profile",result)
     if (result.data?.data?.agent_id) {
       return result.data.data;
     }
@@ -107,7 +106,7 @@ data.append(
         "Content-Type": "multipart/form-data",
       },
     });
-
+console.log("UPDATED:", result);
     return result.data;
 
   } catch (error) {
@@ -144,6 +143,7 @@ export const deleteInboxMessage = async (id) => {
 
 
 
+
 export const getContactMessage = async()=>{
   try{
     const result = await api.get("/agent/contacts");
@@ -157,5 +157,6 @@ export const getContactMessage = async()=>{
     return [];
   }
 }
+
 
 

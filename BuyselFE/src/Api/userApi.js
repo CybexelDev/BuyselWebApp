@@ -133,3 +133,47 @@ export const handleGoogleLogin = async ({tokenResponse}) =>{
 
 
 
+
+
+
+
+export const getProperty = async (filters) => { 
+    try {
+        const result = await api.get(`${BASE_URL}properties/`, {filters});
+       
+            return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const sendEnquiry = async (formData) => {
+  try {
+    const data = new FormData();
+
+    data.append("name", formData.name);
+    data.append("contact", formData.contact);        // ✅ FIX
+    data.append("pin_code", formData.pincode);       // ✅ FIX
+    data.append("messages_text", formData.message);  // ✅ FIX
+
+    const res = await axios.post(
+      `${BASE_URL}agent/inbox-message/`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return res.data;
+
+  } catch (error) {
+    console.error("enquiry error:", error);
+    return false;
+  }
+};
+
+
+
