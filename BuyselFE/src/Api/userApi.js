@@ -133,10 +133,6 @@ export const handleGoogleLogin = async ({tokenResponse}) =>{
 
 
 
-
-
-
-
 export const getProperty = async (filters) => { 
     try {
         const result = await api.get(`${BASE_URL}properties/`, {filters});
@@ -185,5 +181,33 @@ export const getProfile = async () => {
 
     } catch (error) {
         console.log(error);
+    }
+}
+
+
+export const agentContactForm = async(contactData)=>{
+    try{
+    const data = new FormData();
+
+    data.append("first_name", contactData.first_name);   
+    data.append("last_name", contactData.last_name);     
+    data.append("contact_number", contactData.phone);   
+    data.append("email", contactData.email);           
+    data.append("message", contactData.message);        
+
+    const res = await api.post(
+        `agent/buyselanu6309/contact/`,
+        data,
+        {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    return res.data
+
+    }catch(err){
+        console.log("error:", err);
+        return false
     }
 }

@@ -131,6 +131,8 @@ export const getAgentInboxMessages = async () => {
     return [];
   }
 };
+
+
 export const deleteInboxMessage = async (id) => {
   try {
     const res = await api.delete(`/agent/inbox-message-delete/${id}/`);
@@ -140,7 +142,6 @@ export const deleteInboxMessage = async (id) => {
     return false;
   }
 };
-
 
 
 
@@ -157,6 +158,16 @@ export const getContactMessage = async()=>{
     return [];
   }
 }
+export const deleteAgentContactEnquiry = async(id)=>{
+  try{
+    const res = await api.delete(`/agent/contact-delete/${id}/`)
+    return res.data
+  }catch(err){
+    console.error("delete message error:",err)
+    return false
+  }
+}
+
 
 
 

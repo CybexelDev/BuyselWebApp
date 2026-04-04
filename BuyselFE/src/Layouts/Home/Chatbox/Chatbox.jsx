@@ -11,7 +11,7 @@ function Chatbox({ close, simple = false, msgPlaceholder="Your need or requireme
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (!formData.name || !formData.message) {
+  if (!formData.name || !formData.message ) {
     alert("Please fill required fields");
     return;
   }

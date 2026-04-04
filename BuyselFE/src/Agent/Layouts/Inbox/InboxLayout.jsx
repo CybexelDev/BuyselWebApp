@@ -1,20 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
-import {
-  MessageSquare,
-  User,
-  Home,
-  Tag,
-  Calendar,
-  Search,
-  Filter,
-  Mail,
-  Phone,
-  Zap,
-  Trash,
-} from "lucide-react";
+import {MessageSquare,User,Home,Tag,Calendar,Search,Filter,Mail,Phone,Zap,Trash} from "lucide-react";
 import { motion } from "framer-motion";
-import { getContactMessage } from "../../../Api/agentsApi";
+import { deleteAgentContactEnquiry, getContactMessage } from "../../../Api/agentsApi";
 
 const InboxLayout = () => {
   const [expandedId, setExpandedId] = useState(null);
@@ -39,47 +27,31 @@ const InboxLayout = () => {
             ? new Date(item.created_at).toLocaleString()
             : "N/A",
         }));
-
         setEnquiry(mappedData);
       }
       }
       catch(err){
         console.error("Contact message fetch error:",err);
-        
       }
     }
     fetchMessages()
   },[])
 
-  // const enquiries = [
-  //   {
-  //     id: 1,
-  //     username: "Suresh Raina",
-  //     email: "suresh.r@example.com",
-  //     number: "9876578909",
-  //     message:
-  //       "I am interested in this property. Please contact me with more details.I am interested in this property. Please contact me with more details",
-  //     date: "2 hours ago",
-  //   },
-  //   {
-  //     id: 2,
-  //     username: "Meera Nair",
-  //     email: "meera.n@example.com",
-  //     number: "7656789087",
-  //     message:
-  //       "Is this property still available? I would like to schedule a visit.",
-  //     date: "5 hours ago",
-  //   },
-  //   {
-  //     id: 3,
-  //     username: "Vijay Sethupathi",
-  //     email: "v.sethu@example.com",
-  //     number: "9043215678",
-  //     message:
-  //       "Can you share more details about location, amenities, and pricing?",
-  //     date: "1 day ago",
-  //   },
-  // ];
+
+   const handleDelete = async(id)=>{
+    const confirmDelete = window.confirm("Are you sure delete?")
+
+    if(!confirmDelete) return;
+
+    const res = await deleteAgentContactEnquiry(id);
+
+    if(res){
+      setEnquiry((prev)=>prev.filter((item)=>item.id !== id))
+    }else{
+      alert("Delete failed")
+      console.log("Failed");
+    }
+   }
 
   const filteredEnquiries = enquiry.filter((item) =>
     item.username.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -204,7 +176,7 @@ const InboxLayout = () => {
                 </div>
 
                 {/* DESKTOP GRID */}
-                <div className="hidden lg:grid grid-cols-[100px_100px_auto] items-center gap-6 shrink-0">
+                <div className="flex justify-between items-center lg:grid lg:grid-cols-[100px_100px_auto] gap-6 shrink-0">
                   <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-tighter justify-end">
                     <Calendar size={12} className="text-[#74C122]" />
                     <span className="whitespace-nowrap host-grotesk">
@@ -221,7 +193,8 @@ const InboxLayout = () => {
                       <MessageSquare size={14} />
                     </button>
 
-                    <button className="p-2 text-slate-400 hover:text-red-500 transition">
+                    <button onClick={()=>handleDelete(item.id)}
+                    className="p-2 text-slate-400 hover:text-red-500 transition">
                       <Trash size={18} />
                     </button>
                   </div>

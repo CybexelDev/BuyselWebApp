@@ -11,7 +11,7 @@ function AgentDetail() {
 
     const agentData = {
   name: "Arun Kumar",
-  role: "agent",
+  role: "eliteAgent",
   designation: "Senior Real Estate Agent",
   location: "Coimbatore",
   email: "arunkumar@gmail.com",
