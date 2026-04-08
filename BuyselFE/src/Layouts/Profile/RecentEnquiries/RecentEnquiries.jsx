@@ -13,6 +13,8 @@ export default function RecentEnquiries() {
 
     const logout = ()=>{
       dispatch({ type: "LOGOUT" });
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       navigate('/')
     }
 
