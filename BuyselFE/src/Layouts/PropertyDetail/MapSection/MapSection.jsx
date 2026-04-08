@@ -73,7 +73,7 @@ const MapSection = ({ address, latitude, longitude, landmarks }) => {
                   </div>
 
                   <span className="text-[12px] sm:text-[13px] lg:text-[16px] font-extrabold flex-shrink-0 whitespace-nowrap">
-                    {item.distance} KM
+                    {item.distance} 
                   </span>
                 </div>
               ))}
@@ -83,7 +83,7 @@ const MapSection = ({ address, latitude, longitude, landmarks }) => {
         </div>
 
         {/* 💻 DESKTOP FLOATING MAP */}
-        <div className="absolute top-12 left-0 max-[1279px]:w-[520px] min-[1280px]:w-[600px] min-[1281px]:w-[660px] z-10 hidden lg:block shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[40px]">
+        <div className="absolute top-12 left-0 max-[1279px]:w-[520px] min-[1280px]:w-[600px] min-[1281px]:w-[660px] min-[1500px]:w-[700px] min-[1891px]:w-[800px] min-[2100px]:w-[900px] min-[2440px]:w-[1000px] z-10 hidden lg:block shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[40px]">
           <Map
             latitude={latitude}
             longitude={longitude}

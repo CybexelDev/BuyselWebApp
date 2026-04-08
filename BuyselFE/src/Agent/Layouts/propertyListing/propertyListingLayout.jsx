@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
+import FilterModal from "../../Components/FilterModal/FilterModalAgent";
 import {
   Search,
   Filter,
@@ -8,13 +9,31 @@ import {
   BedDouble,
   Bath,
   Square,
-  Pencil
+  Pencil,
 } from "lucide-react";
+import { Trash } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50", lg="lg:py-12",onClick}) => {
   const [searchTerm, setSearchTerm] = useState("");
- 
+  const [showFilter, setShowFilter] = useState(false);
 
+const [filters, setFilters] = useState({
+  status: "",
+  type: "",
+  date: "",
+  minPrice: "",
+  maxPrice: "",
+});
+  const navigate=useNavigate()
+ 
+const handleDelete = (id, e) => {
+  e.stopPropagation();
+
+  console.log("Delete property:", id);
+
+  
+};
  const properties = [
   {
     id: 1,
@@ -59,10 +78,43 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
      "https://images.unsplash.com/photo-1568605114967-8130f3a36994"
   }
 ];
+const filteredProperties = properties.filter((p) => {
 
-  const filteredProperties = properties.filter((property) =>
-    property.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // 🔍 Search
+  if (
+    searchTerm &&
+    !p.title.toLowerCase().includes(searchTerm.toLowerCase())
+  ) {
+    return false;
+  }
+
+  // 📌 Status
+  if (
+    filters.status &&
+    filters.status !== "All" &&
+    p.status !== filters.status
+  ) {
+    return false;
+  }
+
+  // 🏠 Type (if you add type in data later)
+  if (
+    filters.type &&
+    filters.type !== "All" &&
+    p.type !== filters.type
+  ) {
+    return false;
+  }
+
+  // 💰 Price (convert string to number)
+  const price = parseInt(p.price.replace(/[^0-9]/g, ""));
+
+  if (filters.minPrice && price < filters.minPrice) return false;
+  if (filters.maxPrice && price > filters.maxPrice) return false;
+
+  return true;
+});
+  
 
   return (
     <div className={`min-h-screen ${bg} flex overflow-x-hidden`}>
@@ -108,13 +160,21 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
             </div>
 
             {/* Filter */}
-            <button className="flex items-center justify-center gap-2 border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto">
+            <button className="flex items-center justify-center gap-2 border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto"
+              onClick={() => setShowFilter(true)}
+
+            >
               <Filter size={16} />
               Filter
             </button>
 
           </div>
-
+{showFilter && (
+  <FilterModal
+    onClose={() => setShowFilter(false)}
+    onApply={(data) => setFilters(data)}
+  />
+)}
           {/* PROPERTY LIST */}
           <div className="space-y-4 cursor-pointer" onClick={onClick}>
 
@@ -123,6 +183,7 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
               <div
                 key={property.id}
                 className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition"
+                onClick={()=>navigate("/dashboardpropertydeatil")}
               >
 
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -192,12 +253,27 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
                     </div>
 
                     {/* Edit */}
-                            {showEdit && 
-                    <button className="flex items-center gap-1 text-sm border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk">
-                      <Pencil size={14} />
-                      Edit
-                    </button>
-                    }
+                         {showEdit && 
+  <button
+    onClick={(e) => {
+      e.stopPropagation(); // 🔥 prevents parent card click
+      console.log("Edit clicked");
+      // your edit logic here (navigate or open modal)
+    }}
+    className="flex items-center gap-1 text-sm border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
+  >
+    <Pencil size={14} />
+    Edit
+  </button>
+}
+                    {/* Delete */}
+<button
+  onClick={(e) => handleDelete(property.id, e)}
+  className="flex items-center gap-1 text-sm border border-red-200 text-red-600 px-3 py-2 rounded-lg hover:bg-red-50 transition host-grotesk"
+>
+  <Trash size={14} />
+  Delete
+</button>
 
                   </div>
 

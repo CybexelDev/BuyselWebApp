@@ -5,15 +5,19 @@ import Featuredcard from "../../../Components/PropertyCard/Propertycard";
 
 import { properties } from "../../../Constance/constance";
 
-const Featured = ({title="Featured Listings",subTitle="Handpicked properties from trusted owners and agents."}) => {
+const Featured = ({title="Featured Listings",subTitle="Handpicked properties from trusted owners and agents." ,data=null}) => {
   const [featured, setFeatured] = useState([]);
 
   const sliderRef = useRef(null);
 
 
   useEffect(() => {
-      const featuredProperties = properties.filter(prop => prop.featured);
-     setFeatured(featuredProperties)
+     if (data) {
+    setFeatured(data);   // ✅ from API
+  } else {
+    const featuredProperties = properties.filter(prop => prop.featured);
+    setFeatured(featuredProperties);  // fallback
+  }
   }, []);
 
 

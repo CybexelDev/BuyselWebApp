@@ -66,7 +66,7 @@ export const reSentOtp = async (email) => {
                 "Content-Type": "multipart/form-data",
             },
         });
-
+        
         if (result.data.message == "OTP resent successfully") {
             return result.data;
         } else {
@@ -148,13 +148,13 @@ export const sendFacebookToken = async (accessToken) => {
 export const getProfile = async () => { 
     try {
         const result = await api.get(`${BASE_URL}profile/`);
-       
-            return result.data;
+        return result.data;
 
     } catch (error) {
         console.log(error);
     }
 }
+
 
 
 export const getProperty = async (filters) => { 
@@ -173,7 +173,6 @@ export const getProperty = async (filters) => {
 export const getWishlist = async () => { 
     try {
         const result = await api.get(`wishlist/`);
-       
             return result.data;
 
     } catch (error) {
@@ -181,6 +180,128 @@ export const getWishlist = async () => {
     }
 }
 
+ export const sendEnquiry = async (formData) => {
+  try {
+    const data = new FormData();
+
+    data.append("name", formData.name);
+    data.append("contact", formData.contact);        
+    data.append("pin_code", formData.pincode);       
+    data.append("messages_text", formData.message);   
+
+    const res = await axios.post(
+      `${BASE_URL}agent/inbox-message/`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return res.data;
+
+  } catch (error) {
+    console.error("enquiry error:", error);
+    return false;
+  }
+};
+
+export const getPropertyDetail = async (id) => { 
+    try {
+        const result = await api.get(`${BASE_URL}property/${id}/`);
+        return result.data;
+    } catch (error) {
+        console.log("Property detail error:", error);
+        return false;
+    }
+}
+
+export const sendPropertyEnquiry = async (formData) => {
+  try {
+    const res = await api.post(
+      `${BASE_URL}enquiries/`,
+      formData
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Enquiry error:", error);
+    return false;
+  }
+};
+
+
+export const sendContact = async (formData) => {
+  try {
+    const res = await axios.post(`${BASE_URL}contact/`, formData);
+    return res.data;
+  } catch (error) {
+    console.error("Contact error:", error);
+    return false;
+  }
+};
+
+export const getAgentPlanDetails = async () => {
+  try {
+    const res = await api.get(`${BASE_URL}agent/combined-data/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getRelatedProperties = async (id) => {
+  try {
+    const res = await api.get(`${BASE_URL}property/${id}/related/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const getBlogs = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+
+export const searchBlogs = async (query) => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/search/?name=${query}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+export const getBlogsByCategory = async (category) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}blogs/by-category/?category=${category.toLowerCase()}`
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const getBlogById = async (id) => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/${id}/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 
 export const addToWishlist = async ({ id }) => {
     try {

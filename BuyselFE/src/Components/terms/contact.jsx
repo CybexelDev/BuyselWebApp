@@ -6,7 +6,6 @@ function ContactCard() {
       
       <div className="bg-[#FFFFFF] rounded-[24px] md:rounded-[28px] p-5 sm:p-6 md:p-8">
 
-        {/* Title Row */}
         <div className="flex items-center gap-3 mb-3">
 
           <div className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-[#D6FF98]">
@@ -19,12 +18,10 @@ function ContactCard() {
 
         </div>
 
-        {/* Subtitle */}
         <p className="text-[#475569] text-[14px] sm:text-[15px] md:text-[16px] host-grotesk mb-4">
           For any questions or concerns:
         </p>
 
-        {/* List */}
         <ul className="space-y-2 text-[#475569] text-[14px] sm:text-[15px] md:text-[16px] host-grotesk font-semibold ml-2 break-words">
 
           <li>

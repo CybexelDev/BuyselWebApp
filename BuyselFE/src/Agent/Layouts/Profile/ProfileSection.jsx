@@ -1,30 +1,95 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef ,useEffect} from 'react';
 import Sidebar from '../../Components/Sidebar/Sidebar';
+import { updateAgentProfile } from '../../../Api/agentsApi';
 import {
     User, Lock, Save, Globe, MapPin, Phone,
     Mail, Share2, Briefcase, Building2,
     CheckCircle2, ShieldCheck, Camera, FileText, Check, Type
 } from 'lucide-react';
+import { FaFacebook } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
+import { getAgentProfile } from '../../../Api/agentsApi';
 import { motion } from 'framer-motion';
-
+import { changeAgentPassword } from '../../../Api/agentsApi';
 const AgentProfileLayout = () => {
     const fileInputRef = useRef(null);
-    const [profileImage, setProfileImage] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
+const [profileImageFile, setProfileImageFile] = useState(null);   
+const [passwordData, setPasswordData] = useState({
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+});
+ const [isEditing, setIsEditing] = useState(false);
+ const [profileImage, setProfileImage] = useState(null); // ✅ ADD THIS
     const [isDirty, setIsDirty] = useState(false);
-    const [formData, setFormData] = useState({
-        name: 'Arun Kumar',
-        title: 'Senior Real Estate Agent', // Professional Title
-        number: '+91 98765 43210', // Mobile Number
-        location: 'Coimbatore, TN',
-        buySelId: 'BUYSEL-99201',
-        email: 'arun.k@buysel.in',
-        socialMedia: '@arun_realty',
-        description: 'Specializing in high-end residential and strategic industrial properties across Tamil Nadu.',
-        specializations: ['Residential', 'Industrial'],
-        operatingCities: 'Coimbatore, Chennai, Thalassery',
-    });
+   const [formData, setFormData] = useState({
+  name: '',
+  title: '',
+  number: '',
+  location: '',
+  address: '',          // ✅ ADD
+  pincode: '',          // ✅ ADD
+  buySelId: '',
+  email: '',
+  website: '',
+  instagram: '',        // ✅ ADD
+  facebook: '',
+  whatsapp: '',
+  linkedin: '',         // ✅ ADD
+  description: '',
+  experience: 0,        // ✅ ADD
+  propertiesListed: 0,  // ✅ ADD
+  dealsClosed: 0,       // ✅ ADD
+  specializations: [],
+  operatingCities: '',
+});
+useEffect(() => {
+    const fetchProfile = async () => {
+        const token = localStorage.getItem("access"); 
 
+        const data = await getAgentProfile(token);
+
+        if (data) {
+           const mappedData = {
+  name: data.username,
+  title: data.professional_title || "",
+  number: data.phone_number,
+  location: data.city,
+  address: data.address || "",
+  pincode: data.pin_code || "",
+  email: data.email,
+
+  description: data.professional_bio || "",
+
+  // ✅ SOCIAL
+  website: "", // backend doesn't have
+  instagram: data.instagram || "",
+  facebook: data.facebook || "",
+  whatsapp: data.whatsapp_number || "",
+  linkedin: data.linkedin || "",
+
+  // ✅ STATS
+  experience: data.years_of_experience || 0,
+  propertiesListed: data.properties_listed || 0,
+  dealsClosed: data.deals_closed || 0,
+
+  // ✅ OTHERS
+  specializations: data.specializations || [],
+  operatingCities: data.operating_cities?.join(", ") || "",
+  buySelId: data.agent_id,
+};
+
+setFormData(mappedData);
+setOriginalData(mappedData);
+
+// ✅ IMAGE FIX
+setProfileImage(data.profile_image);
+
+        }
+    };
+
+    fetchProfile();
+}, []);
     const specializationOptions = [
         { id: 1, label: 'Residential' },
         { id: 2, label: 'Plot/Land' },
@@ -69,24 +134,61 @@ const AgentProfileLayout = () => {
         return updated;
     });
 };
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => setProfileImage(reader.result);
-            reader.readAsDataURL(file);
-        }
-    };
+  if (file) {
+    setProfileImageFile(file); // ✅ for API
 
-    const handleSave = () => {
+    const reader = new FileReader();
+    reader.onloadend = () => setProfileImage(reader.result); // ✅ preview
+    reader.readAsDataURL(file);
+  }
+};
+const handleSave = async () => {
+  const res = await updateAgentProfile({
+    ...formData,
+    profileImageFile,
+  });
 
-        // API CALL HERE
+  if (res) {
+    setOriginalData(formData);
+    setIsEditing(false);
+    setIsDirty(false);
+  }
+};
+const handleChangePassword = async () => {
+  const { currentPassword, newPassword, confirmPassword } = passwordData;
 
-        setOriginalData(formData);
-        setIsEditing(false);
-        setIsDirty(false);
-    };
+  // ✅ validation
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    alert("All fields required");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  const res = await changeAgentPassword(
+    currentPassword,
+    newPassword,
+    confirmPassword
+  );
+
+  if (res) {
+    alert("Password updated successfully");
+
+    setPasswordData({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
+  } else {
+    alert("Failed to update password");
+  }
+};
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex overflow-x-hidden">
             <Sidebar />
@@ -169,20 +271,31 @@ const AgentProfileLayout = () => {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <InputField label="Full Name" name="name" value={formData.name} onChange={handleChange} icon={<User size={18}
-                                    />} disabled={!isEditing} />
-                                    <InputField label="Professional Title" disabled={!isEditing}
-                                        name="title" value={formData.title} onChange={handleChange} icon={<Type size={18} />} />
-                                    <InputField label="Mobile Number" name="number" disabled={!isEditing}
-                                        value={formData.number} onChange={handleChange} icon={<Phone size={18} />} />
-                                    <InputField label="Email Address" name="email" disabled={!isEditing}
-                                        value={formData.email} onChange={handleChange} icon={<Mail size={18} />} />
-                                    <InputField label="Location" name="location" disabled={!isEditing}
-                                        value={formData.location} onChange={handleChange} icon={<MapPin size={18} />} />
-                                    <InputField label="Social Media" name="socialMedia" disabled={!isEditing}
-                                        value={formData.socialMedia} onChange={handleChange} icon={<Share2 size={18} />} />
-                                </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+  <InputField label="Full Name" name="name" value={formData.name} onChange={handleChange} icon={<User size={18} />} disabled={!isEditing} />
+
+  <InputField label="Professional Title" name="title" value={formData.title} onChange={handleChange} icon={<Type size={18} />} disabled={!isEditing} />
+
+  <InputField label="Mobile Number" name="number" value={formData.number} onChange={handleChange} icon={<Phone size={18} />} disabled={!isEditing} />
+
+  <InputField label="Email Address" name="email" value={formData.email} onChange={handleChange} icon={<Mail size={18} />} disabled={!isEditing} />
+
+  <InputField label="Location" name="location" value={formData.location} onChange={handleChange} icon={<MapPin size={18} />} disabled={!isEditing} />
+
+  {/* ✅ NEW ADDRESS FIELD */}
+  <InputField label="Address" name="address" value={formData.address} onChange={handleChange} icon={<MapPin size={18} />} disabled={!isEditing} />
+
+  <InputField label="Website" name="website" value={formData.website} onChange={handleChange} icon={<Share2 size={18} />} disabled={!isEditing} />
+
+  {/* ✅ NEW INSTAGRAM FIELD */}
+  <InputField label="Instagram" name="instagram" value={formData.instagram} onChange={handleChange} icon={<Share2 size={18} />} disabled={!isEditing} />
+
+  <InputField label="Facebook" name="facebook" value={formData.facebook} onChange={handleChange} icon={<FaFacebook size={18} />} disabled={!isEditing} />
+
+  <InputField label="Whatsapp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} icon={<FaWhatsapp size={18} />} disabled={!isEditing} />
+
+</div>
                             </section>
 
                             {/* Professional Profile Section */}
@@ -249,9 +362,14 @@ const AgentProfileLayout = () => {
                             {isEditing && isDirty && (
 
                                 <div className="flex justify-end pt-4">
-                                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="bg-[#6ABD11] text-white px-12 py-5 rounded-2xl font-bold flex items-center gap-3 shadow-xl shadow-[#6ABD11]/20 hover:bg-[#5aa30e] transition-all">
-                                        <Save size={20} /> Save Changes
-                                    </motion.button>
+                                   <motion.button
+  onClick={handleSave}
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+  className="bg-[#6ABD11] text-white px-12 py-5 rounded-2xl font-bold flex items-center gap-3 shadow-xl shadow-[#6ABD11]/20 hover:bg-[#5aa30e] transition-all"
+>
+  <Save size={20} /> Save Changes
+</motion.button>
                                 </div>
                             )}
 
@@ -264,12 +382,38 @@ const AgentProfileLayout = () => {
                                     <h3 className="text-lg font-bold text-slate-800 instrument-sans">Security</h3>
                                 </div>
                                 <div className="space-y-4">
-                                    <PasswordField label="Current Password" />
-                                    <PasswordField label="New Password" />
-                                    <PasswordField label="Confirm Password" />
-                                    <button className="w-full py-4 mt-2 text-[#6ABD11] font-bold text-xs uppercase tracking-widest border-2 border-[#6ABD11]/20 rounded-2xl hover:bg-[#6ABD11] hover:text-white transition-all">
-                                        Update Password
-                                    </button>
+                             <PasswordField
+  label="Current Password"
+  name="currentPassword"
+  value={passwordData.currentPassword}
+  onChange={(e) =>
+    setPasswordData({ ...passwordData, currentPassword: e.target.value })
+  }
+/>
+
+<PasswordField
+  label="New Password"
+  name="newPassword"
+  value={passwordData.newPassword}
+  onChange={(e) =>
+    setPasswordData({ ...passwordData, newPassword: e.target.value })
+  }
+/>
+
+<PasswordField
+  label="Confirm Password"
+  name="confirmPassword"
+  value={passwordData.confirmPassword}
+  onChange={(e) =>
+    setPasswordData({ ...passwordData, confirmPassword: e.target.value })
+  }
+/>
+                                 <button
+  onClick={handleChangePassword}
+  className="w-full py-4 mt-2 text-[#6ABD11] font-bold text-xs uppercase tracking-widest border-2 border-[#6ABD11]/20 rounded-2xl hover:bg-[#6ABD11] hover:text-white transition-all"
+>
+  Update Password
+</button>
                                 </div>
                             </section>
 
@@ -293,11 +437,20 @@ const InputField = ({ label, name, value, onChange, icon, type = "text", disable
     </div>
 );
 
-const PasswordField = ({ label }) => (
-    <div className="space-y-1">
-        <label className="text-[10px] font-bold text-[#6ABD11] ml-1 uppercase host-grotesk">{label}</label>
-        <input type="password" placeholder="••••••••" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:border-[#6ABD11] outline-none transition-all" />
-    </div>
+const PasswordField = ({ label, name, value, onChange }) => (
+  <div className="space-y-1">
+    <label className="text-[10px] font-bold text-[#6ABD11] ml-1 uppercase host-grotesk">
+      {label}
+    </label>
+    <input
+      type="password"
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder="••••••••"
+      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:border-[#6ABD11] outline-none transition-all"
+    />
+  </div>
 );
 
 export default AgentProfileLayout;

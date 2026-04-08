@@ -6,7 +6,7 @@ import { FaLandmarkDome } from "react-icons/fa6";
 import { FaClipboardList } from "react-icons/fa";
 import { RiDashboardFill } from "react-icons/ri";
 import { RiAccountPinBoxFill } from "react-icons/ri";
-
+import { FaEnvelope } from "react-icons/fa";
 import { FaUserCog } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ const navItems = [
   {id: "property",icon: FaLandmarkDome,label: "Property Listing",path: "/agent/property",},
   { id: "plans", icon: FaClipboardList, label: "Plans", path: "/agent/plans" },
   { id: "profile", icon: FaUserCog, label: "Profile", path: "/agent/profile" },
+    { id: "inbox",   icon: FaEnvelope,label: "inbox", path: "/agent/inbox" },
   {id: "enquiry",icon: SiGooglemessages,label: "Property Enquiry",path: "/agent/enquiry"},
     {id: "userenquiry",icon: RiAccountPinBoxFill,label: "User Enquiry",path: "/agent/user-enquiry"},
 
@@ -86,26 +87,41 @@ const Sidebar = () => {
         </div>
       </nav>
 
-      <nav className="fixed bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setActive(item.id)}
-            className={`relative rounded-2xl p-4 transition-all ${
-              active === item.id ? "text-white" : "text-white/50"
-            }`}
-          >
-            <item.icon size={22} />
-            {active === item.id && (
-              <motion.div
-                layoutId="active-glow-mobile"
-                className="absolute inset-0 -z-10 rounded-2xl bg-black/20"
-              />
-            )}
-          </button>
-        ))}
-      </nav>
 
+<nav className="fixed bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl">
+
+  {navItems.map((item) => {
+    const isActive = location.pathname === item.path;
+
+    return (
+      <button
+        key={item.id}
+        onClick={() => navigate(item.path)}
+        className="relative flex items-center justify-center w-10 h-10 md:w-20 md:h-20"
+      >
+        {/* ICON */}
+        <item.icon
+  className={`z-10 transition-all duration-300 ${
+    isActive ? "text-white scale-110" : "text-white/50"
+  } w-4 h-4 md:w-7 md:h-7`}
+/>
+
+        {/* FLOATING ACTIVE PILL */}
+        {isActive && (
+          <motion.div
+            layoutId="nav-pill"
+            className="absolute inset-0 rounded-2xl bg-white/20 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.25)]"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
+            }}
+          />
+        )}
+      </button>
+    );
+  })}
+</nav>
       <div className="hidden lg:block w-64 h-screen shrink-0"></div>
     </div>
   );

@@ -8,7 +8,7 @@ const Footer = ({bg="bg-white",margin="mt-22"}) => {
   navigate(path);
   window.scrollTo({
     top: 0,
-    behavior: "smooth", 
+    behavior: "instant", 
   });
 };
     return (
@@ -109,11 +109,11 @@ const Footer = ({bg="bg-white",margin="mt-22"}) => {
                             Help & Support
                         </h3>
                         <ul className="space-y-1.5 md:space-y-2 text-[12px] md:text-[13px] lg:text-[14px] font-medium text-[#949494]">
-                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/contact")}>Help Center</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/helpcenter")}>Help Center</li>
                             <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/contact")}>Contact Support</li>
-                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/")}>FAQs</li>
-                            <li className="hover:text-white cursor-pointer">Privacy Policy</li>
-                            <li className="hover:text-white cursor-pointer">Terms & Conditions</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/faqs")}>FAQs</li>
+                            <li className="hover:text-white cursor-pointer"  onClick={()=>handleNavigate("/privacy")}>Privacy Policy</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/termsandcondition")}>Terms & Conditions</li>
                         </ul>
                     </div>
 
