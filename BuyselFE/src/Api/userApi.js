@@ -93,7 +93,7 @@ export const userLogin = async (username, password) => {
             },
         });
         console.log(result, "00000000000000000000000");
-        
+
         if (
             result.data.access &&
             result.data.user.name &&
@@ -111,45 +111,45 @@ export const userLogin = async (username, password) => {
 };
 
 
-export const handleGoogleLogin = async ({tokenResponse}) =>{
+export const handleGoogleLogin = async ({ tokenResponse }) => {
 
     try {
-        const res = await axios.post(`${BASE_URL}auth/google/login/`,  {
+        const res = await axios.post(`${BASE_URL}auth/google/login/`, {
             access_token: tokenResponse.access_token,
         });
 
-        if(res.data.message && res.data.access){
-        return res.data;
+        if (res.data.message && res.data.access) {
+            return res.data;
 
-        }else{
+        } else {
             return false
         }
-        
+
     } catch (error) {
         console.log(error, "Login filed");
-        
+
     }
 }
 
 
 export const sendFacebookToken = async (accessToken) => {
-  try {
-    const res = await api.post("/auth/facebook/", {
-      access_token: accessToken,
-    });
+    try {
+        const res = await api.post("/auth/facebook/", {
+            access_token: accessToken,
+        });
 
-    console.log(res.data, "Facebook login success");
+        console.log(res.data, "Facebook login success");
 
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-export const getProfile = async () => { 
+export const getProfile = async () => {
     try {
         const result = await api.get(`${BASE_URL}profile/`);
-       
-            return result.data;
+
+        return result.data;
 
     } catch (error) {
         console.log(error);
@@ -157,24 +157,24 @@ export const getProfile = async () => {
 }
 
 
-export const getProperty = async (filters) => { 
+export const getProperty = async (filters) => {
     try {
         const result = await api.get(`${BASE_URL}properties/`, {
-      params: filters,
-    });
+            params: filters,
+        });
         console.log(result, "Filtered properties 777777777777");
-            return result.data;
+        return result.data;
 
     } catch (error) {
         console.log(error);
     }
 }
 
-export const getWishlist = async () => { 
+export const getWishlist = async () => {
     try {
         const result = await api.get(`wishlist/`);
-       
-            return result.data;
+
+        return result.data;
 
     } catch (error) {
         console.log(error);
@@ -203,15 +203,14 @@ export const addToWishlist = async ({ id }) => {
 
 export const removeToWishlist = async ({ id }) => {
     try {
-        const formData = new FormData();
-        formData.append('product_id', id);
-        const result = await api.delete(`${BASE_URL}wishlist/`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
+        // const formData = new FormData();
+        // formData.append('product_id', id);
+        const result = await api.delete(`${BASE_URL}wishlist/`, {
+            data: {
+                property_id: id, // ✅ your key
             },
         });
         // setFetchedData(result); // optional — if you're storing it in state
-
         return result.data;
     } catch (error) {
         console.log("Error in postLoginNumber:", error);
