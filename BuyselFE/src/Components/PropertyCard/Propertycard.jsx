@@ -10,9 +10,10 @@ import { useNavigate } from "react-router-dom";
 
 
 
-function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false ,}) {
 
 
+function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false }) {
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [liked, setLiked] = useState(false);
 
@@ -33,6 +34,8 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
   };
 
 
+
+
   return (
     <div
      onClick={()=>navigate(`/propertyDetail/${property.id}`)}
@@ -47,21 +50,11 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
 
         <div className="absolute top-4 right-4 sm:right-6 flex gap-1 ">
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setLiked(prev => !prev);
-            }}
-            className="bg-white rounded-full h-[23px] w-[23px] flex justify-center items-center"
+            onClick={click}
+            className="bg-white rounded-full h-[23px] w-[23px] flex justify-center items-center cursor-pointer"
           >
-            <Heart
-              size={13}
-              stroke={liked ? "none" : "black"}
-              fill={liked ? "#e11d48" : "none"}
-              className={`
-      transition-all duration-200 ease-out
-      ${liked ? "scale-115" : "scale-100"}
-    `}
-            />
+            {wishlistIcon}
+      
           </button>
 
 
@@ -96,10 +89,9 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
 
           <button className="bg-[#b8e08d] p-2 rounded-full " onClick={(e)=>e.stopPropagation()}>
             <a href={property.location} >
-            <img src={icon} alt="icon" className="h-[12px] w-[12px]" />
+              <img src={icon} alt="icon" className="h-[12px] w-[12px]" />
             </a>
           </button>
-
         </div>
 
 

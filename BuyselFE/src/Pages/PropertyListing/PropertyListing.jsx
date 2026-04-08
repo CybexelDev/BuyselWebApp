@@ -11,16 +11,10 @@ import { filter } from 'framer-motion/m'
 function PropertListing() {
   const [data, setData] = useState([])
    const [filters, setFilters] = useState({ purpose: "Rent",category: "Residential",});
-
-   console.log(filters, "000000000000");
    
    const handleFilters = (data) => {
-    setFilters(data); // ✅ update state
-    console.log(data, "Received from Header");
+    setFilters(data);
   };
-
-  // console.log(data, "poprtyyyyyyyyyyyyyyyyyyy");
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +28,7 @@ function PropertListing() {
       }
     };
     fetchData();
-  }, []);
+  }, [filters]);
 
 
 

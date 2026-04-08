@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Propertycard from '../../../Components/PropertyCard/Propertycard'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
+import {  Heart } from "lucide-react";
 
 function PropertiesSection({ propertiesData }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [page, setPage] = useState(1);
+  const [properties, setProperties] = useState([]);
+  console.log(properties, "properties in sectionnnnnnnnnnnnnnnn");
+
+  useEffect(() => {
+    setProperties(propertiesData);
+  }, [propertiesData]);
 
   useEffect(() => {
     function handleResize() {
@@ -50,8 +58,32 @@ function PropertiesSection({ propertiesData }) {
   // Pagination logic
   const lastIndex = page * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
-  const currentProperties = propertiesData.slice(firstIndex, lastIndex);
-  const totalPages = Math.ceil(propertiesData.length / itemsPerPage);
+  const currentProperties = properties?.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(properties?.length / itemsPerPage);
+
+const addWishlist = (id) => {
+  addToWishlist({ id });
+
+  setProperties((prev) =>
+    prev.map((item) =>
+      item.id === id
+        ? { ...item, is_wishlisted: true }
+        : item
+    )
+  );
+};
+
+ const removeWishlist = (id) => {
+  removeToWishlist({ id });
+
+  setProperties((prev) =>
+    prev.map((item) =>
+      item.id === id
+        ? { ...item, is_wishlisted: false }
+        : item
+    )
+  );
+};
 
   return (
     <div className='py-8 px-1 md:px-6 lg:px-8 mb-2 -mt-20'>
@@ -62,6 +94,18 @@ function PropertiesSection({ propertiesData }) {
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-4">
         {currentProperties.map((property) => (
           <Propertycard
+            click={() =>
+              property.is_wishlisted
+                ? removeWishlist(property.id)
+                : addWishlist(property.id)
+            }
+            wishlistIcon={property.is_wishlisted ? (
+                             <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
+                            <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
+                          </svg>
+                        ) : (
+                           <Heart size={13} fill="none" stroke="black" className="scale-100" />
+                        )}
             key={property.id}
             property={property}
             color="bg-[#fbfbfb]"

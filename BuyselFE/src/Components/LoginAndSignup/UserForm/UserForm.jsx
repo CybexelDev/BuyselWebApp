@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Mail, Lock } from "lucide-react";
 import google from '../../../assets/images/LoginAndSignUp/google.png'
@@ -6,7 +6,7 @@ import apple from '../../../assets/images/LoginAndSignUp/apple.png'
 import facbook from '../../../assets/images/LoginAndSignUp/facebook.png'
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { handleGoogleLogin, userLogin } from '../../../Api/userApi';
+import { handleGoogleLogin, sendFacebookToken, userLogin } from '../../../Api/userApi';
 
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -82,6 +82,40 @@ const UserForm = ({ setSignup }) => {
     },
   });
 
+  useEffect(() => {
+  window.fbAsyncInit = function () {
+    window.FB.init({
+      appId: import.meta.env.VITE_FACEBOOK_APP_ID, 
+      cookie: true,
+      xfbml: false,
+      version: "v19.0",
+    });
+  };
+
+  const script = document.createElement("script");
+  script.src = "https://connect.facebook.net/en_US/sdk.js";
+  script.async = true;
+  document.body.appendChild(script);
+}, []);
+
+  const handleFacebookLogin = () => {
+  window.FB.login(
+    function (response) {
+      if (response.authResponse) {
+        const accessToken = response.authResponse.accessToken;
+
+        console.log("Facebook login success:", accessToken);
+
+        // 👉 send to backend
+        sendFacebookToken(accessToken);
+      } else {
+        console.log("User cancelled login");
+      }
+    },
+    { scope: "email,public_profile" }
+  );
+};
+
   return (
     <>
 
@@ -149,7 +183,7 @@ const UserForm = ({ setSignup }) => {
           <img src={apple} className='w-6 h-6 object-contain' />
         </button>
 
-        <button className="border border-[#9d9d9d] rounded-lg px-6 py-2 bg-white shadow cursor-pointer">
+        <button onClick={handleFacebookLogin} className="border border-[#9d9d9d] rounded-lg px-6 py-2 bg-white shadow cursor-pointer">
           <img src={facbook} className='w-6 h-6 object-contain' />
         </button>
       </div>

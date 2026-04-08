@@ -132,6 +132,19 @@ export const handleGoogleLogin = async ({tokenResponse}) =>{
 }
 
 
+export const sendFacebookToken = async (accessToken) => {
+  try {
+    const res = await api.post("/auth/facebook/", {
+      access_token: accessToken,
+    });
+
+    console.log(res.data, "Facebook login success");
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getProfile = async () => { 
     try {
         const result = await api.get(`${BASE_URL}profile/`);
@@ -146,8 +159,20 @@ export const getProfile = async () => {
 
 export const getProperty = async (filters) => { 
     try {
-        const result = await axios.get(`${BASE_URL}properties/`, {filters});
-       
+        const result = await api.get(`${BASE_URL}properties/`, {
+      params: filters,
+    });
+        console.log(result, "Filtered properties 777777777777");
+            return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getWishlist = async () => { 
+    try {
+        const result = await api.get(`wishlist/`);
             return result.data;
 
     } catch (error) {
@@ -277,4 +302,40 @@ export const getBlogById = async (id) => {
     console.log(err);
     return null;
   }
+
+export const addToWishlist = async ({ id }) => {
+    try {
+        const formData = new FormData();
+        formData.append('id', id);
+        const result = await api.post(`wishlist/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        // setFetchedData(result); // optional — if you're storing it in state
+
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+export const removeToWishlist = async ({ id }) => {
+    try {
+        const formData = new FormData();
+        formData.append('product_id', id);
+        const result = await api.delete(`${BASE_URL}wishlist/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        // setFetchedData(result); // optional — if you're storing it in state
+
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
 };
