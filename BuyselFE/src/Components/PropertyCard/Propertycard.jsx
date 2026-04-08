@@ -5,17 +5,18 @@ import map from '../../assets/images/icons/map.svg'
 import measure from '../../assets/images/icons/measure.svg'
 import apartment from '../../assets/images/icons/apartment.svg'
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 
-
-function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false }) {
+function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false ,}) {
 
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [liked, setLiked] = useState(false);
 
+  const navigate=useNavigate()
 
   const images = property.images || [];
 
@@ -33,7 +34,9 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
 
 
   return (
-    <div className={`${color} rounded-2xl overflow-hidden  w-full h-[375px] ${shadow}`}>
+    <div
+     onClick={()=>navigate(`/propertyDetail/${property.id}`)}
+     className={`${color} rounded-2xl overflow-hidden  w-full h-[375px] ${shadow} cursor-pointer`}>
 
       <div className="relative flex justify-center pt-2 px-[4px] sm:px-2">
         <img
@@ -44,7 +47,10 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
 
         <div className="absolute top-4 right-4 sm:right-6 flex gap-1 ">
           <button
-            onClick={() => setLiked(prev => !prev)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setLiked(prev => !prev);
+            }}
             className="bg-white rounded-full h-[23px] w-[23px] flex justify-center items-center"
           >
             <Heart
@@ -59,15 +65,21 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
           </button>
 
 
-          <button className="bg-white  rounded-full h-[23px] w-[23px] flex justify-center items-center ">
+          <button className="bg-white  rounded-full h-[23px] w-[23px] flex justify-center items-center " onClick={(e)=>e.stopPropagation()}>
             <img src={telegram} alt="telegram" className="w-[12px] h-[12px]" />
           </button>
         </div>
 
         <div className="absolute bottom-2 left-4 sm:left-5 flex gap-1">
-          <button onClick={prevImage} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center">
+          <button onClick={(e)=>{
+            e.stopPropagation()
+            prevImage()
+          }} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="none" stroke="#181212" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14 7l-5 5m0 0l5 5" /></svg>       </button>
-          <button onClick={nextImage} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center">
+          <button onClick={(e)=>{
+            e.stopPropagation()
+            nextImage()
+          }} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="none" stroke="#181212" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5m0 0l-5-5" /></svg>        </button>
         </div>
       </div>
@@ -82,7 +94,7 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
           </h3>
 
 
-          <button className="bg-[#b8e08d] p-2 rounded-full ">
+          <button className="bg-[#b8e08d] p-2 rounded-full " onClick={(e)=>e.stopPropagation()}>
             <a href={property.location} >
             <img src={icon} alt="icon" className="h-[12px] w-[12px]" />
             </a>
@@ -119,6 +131,7 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
         <div className="flex mt-2 gap-1 w-full h-[39px] instrument-sans">
           <a
             href={`https://wa.me/${property.whatsapp}`}
+            onClick={(e)=>e.stopPropagation()}
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center gap-2 flex-1 bg-[#6ABD11ED] text-white py-2 rounded-xl "
@@ -145,6 +158,7 @@ function Propertycard({ property, color = "bg-[#FFFFFF]", shadow, hideWhatsapp =
 
           <a
             href={`tel:${property.phone}`}
+            onClick={(e)=>e.stopPropagation()}
             className="flex items-center justify-center gap-2 flex-1 rounded-xl shadow-md shadow-gray-300/100"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 24 24"><path fill="#000" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.98.98 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02c-.37-1.11-.56-2.3-.56-3.53c0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99" /></svg>

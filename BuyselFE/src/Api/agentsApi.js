@@ -140,6 +140,18 @@ export const changeAgentPassword = async (currentPassword, newPassword, confirmP
   }
 };
 
+export const registerAgent = async (data) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}agent/register-request/`,
+      data
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
 
 export const getContactMessage = async()=>{
   try{

@@ -1,6 +1,45 @@
 import React from "react";
+import { useState } from "react";
+import { sendContact } from "../../../Api/userApi";
 
 function ContactForm() {
+    const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: ""
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const res = await sendContact(formData);
+
+    if (res) {
+      alert("Message sent ✅");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: ""
+      });
+    } else {
+      alert("Failed ❌");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div
       className="w-full flex justify-center bg-white py-10 sm:py-12 lg:py-14 xl:py-15 
@@ -20,7 +59,7 @@ function ContactForm() {
             support.
           </p>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}> 
             {/* Name */}
             <div>
               <label className="block host-grotesk text-[16px] font-[500] leading-[135%] mb-2 sm:mb-1 md:mb-2">
@@ -28,6 +67,8 @@ function ContactForm() {
               </label>
               <input
                 type="text"
+                value={formData.name}
+                onChange={handleChange}
                 name="name"
                 placeholder="Your Name"
                 className="w-full inter bg-white text-black rounded-[16px] px-4 py-3 lg:py-3.5 text-[14px] leading-[150%] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#757575] placeholder:italic"
@@ -44,6 +85,8 @@ function ContactForm() {
                 <input
                   type="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="Your Email"
                   className="w-full inter bg-white text-black rounded-[16px] px-4 py-3 lg:py-3.5 text-[14px] leading-[150%] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#757575] placeholder:italic"
                 />
@@ -58,11 +101,15 @@ function ContactForm() {
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
+                  value={formData.phone}
+              
                   maxLength={10}
                   placeholder="Your Phone number"
-                  onChange={(e) =>
-                    (e.target.value = e.target.value.replace(/\D/g, ""))
-                  }
+                   onChange={(e) => {
+    const value = e.target.value.replace(/\D/g, "");
+    setFormData({ ...formData, phone: value });
+  }}
+
                   className="w-full inter bg-white text-black rounded-[16px] px-4 py-3 lg:py-3.5 text-[14px] leading-[150%] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#757575] placeholder:italic truncate"
                 />
               </div>
@@ -75,7 +122,10 @@ function ContactForm() {
               </label>
               <textarea
                 rows="6"
+                name="message"
                 placeholder="Your Message"
+                  value={formData.message}
+  onChange={handleChange}
                 className="w-full inter bg-white text-black rounded-[16px] px-4 py-4 lg:py-5 text-[14px] leading-[150%] font-[400] outline-none focus:ring-2 focus:ring-gray-300 resize-none placeholder:text-[#757575] placeholder:italic"
               />
             </div>
@@ -92,8 +142,10 @@ function ContactForm() {
     font-[500]
     hover:bg-black transition
   "
+    type="submit"
+  disabled={loading}
             >
-              Submit
+  {loading ? "Sending..." : "Submit"}
             </button>
           </form>
         </div>

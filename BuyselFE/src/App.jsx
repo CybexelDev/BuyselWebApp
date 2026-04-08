@@ -34,6 +34,7 @@ import TermsPage from "./Pages/Terms/TermsPage"
 import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy'
 import RegisterAgent from './Pages/RegisterAgent/RegisterAgent'
 import Inbox from './Agent/Pages/Inbox/Inbox'
+import Faqs from './Pages/Faqs/Faqs'
 
 function App() {
 
@@ -52,7 +53,7 @@ function App() {
           <Route path="*" element={<Home />} />
           <Route path="/propertyListing" element={<PropertListing />} />
           <Route path="/agents" element={<Agents />} />
-          <Route path="/propertyDetail" element={<PropertyDetail />} />
+          <Route path="/propertyDetail/:id" element={<PropertyDetail />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/wishlist" element={<Wishlist/>}/>
@@ -60,7 +61,7 @@ function App() {
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/agent-detail" element={<AgentDetail/>}/>
           <Route path='/addyourproperty' element={<AddProperty/>}/>
-          <Route path='/blogdetail' element={<BlogDetailPage/>}/>
+          <Route path='/blog/:id' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
           <Route path="/ownerdashboard" element={<OwnerDashboard />}/>   
           <Route path="/dashboardpropertydeatil" element={<DashboardPropertyDetail/> }/>                 
@@ -70,6 +71,8 @@ function App() {
           <Route path='/termsandcondition' element={<TermsPage/>}/>
           <Route path='/privacy' element={<PrivacyPolicy/>}/>
           <Route path='/agent-register' element={<RegisterAgent/>}/>
+                    <Route path='/faqs' element={<Faqs/>}/>
+
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
           <Route path='/agent/plans' element={<AgentPlans/>}/>
