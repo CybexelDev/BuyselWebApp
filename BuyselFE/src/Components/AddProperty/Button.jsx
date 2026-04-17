@@ -1,16 +1,14 @@
 
 import React from "react";
 
-function Button({ next, back, step }) {
-
-  const handleClick = (e) => {
-    if (step === 5) {
-      const form = e.currentTarget.closest("form");
-      form?.requestSubmit();
-    } else {
-      next();
-    }
-  };
+function Button({ next, back, step, handleSubmit }){
+const handleClick = (e) => {
+  if (step === 5) {
+    handleSubmit(e);  
+  } else {
+    next();
+  }
+};
 
   return (
     <div className="px-4 sm:px-8 mt-6">

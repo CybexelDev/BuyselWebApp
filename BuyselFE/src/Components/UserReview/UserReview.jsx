@@ -1,8 +1,13 @@
 import React from "react";
 import "./userreview.css";
 import { FaStar } from "react-icons/fa";
-
+import { useState } from "react";
+import { postComment } from "../../Api/userApi";
 function UserReview() {
+
+  const [showModal, setShowModal] = useState(false);
+const [rating, setRating] = useState(0);
+const [reviewText, setReviewText] = useState("");
   const reviews = [
     {
       name: "Arun Kumar",
@@ -32,6 +37,19 @@ function UserReview() {
         "https://i.pinimg.com/736x/8a/b4/8e/8ab48ee24a4e058c56ac63aa0d163273.jpg",
     },
   ];
+  const handleSubmit = async () => {
+  const data = {
+    rating,
+    review: reviewText
+  };
+
+  const res = await postComment("buyselage2896", data);
+
+  if (res) {
+    console.log("Review submitted");
+    setShowModal(false);
+  }
+};
 
   return (
     <div>
@@ -62,7 +80,10 @@ function UserReview() {
               User Feedback
             </p>
 
-            <button className="jakarta font-[450] mt-3 text-[12px] leading-[100%] bg-[#84CC16] text-white rounded-[8px] py-[12px] px-8">
+            <button className="jakarta font-[450] mt-3 text-[12px] leading-[100%] bg-[#84CC16] text-white rounded-[8px] py-[12px] px-8"
+              onClick={() => setShowModal(true)}
+
+            >
               Write a Review
             </button>
           </div>
@@ -168,6 +189,51 @@ function UserReview() {
           ))}
         </div>
       </div>
+      {showModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    
+    <div className="bg-white w-[90%] max-w-md rounded-xl p-6 shadow-lg relative">
+
+      {/* Close button */}
+      <button
+        onClick={() => setShowModal(false)}
+        className="absolute top-3 right-3 text-gray-500 text-xl"
+      >
+        ✕
+      </button>
+
+      <h2 className="text-lg font-semibold mb-4 host-grotesk">Write a Review</h2>
+
+      <div className="flex gap-2 mb-4">
+        {[1,2,3,4,5].map((star) => (
+          <FaStar
+            key={star}
+            onClick={() => setRating(star)}
+            className={`cursor-pointer text-2xl ${
+              star <= rating ? "text-[#84CC16]" : "text-gray-300"
+            }`}
+          />
+        ))}
+      </div>
+
+      <textarea
+        value={reviewText}
+        onChange={(e) => setReviewText(e.target.value)}
+        placeholder="Write your review..."
+        className="w-full border rounded-lg p-3 text-sm mb-4 outline-none focus:ring-2 focus:ring-[#84CC16] host-grotesk"
+        rows={4}
+      />
+
+      <button
+        onClick={handleSubmit}
+        className="w-full bg-[#84CC16] text-white py-2 rounded-lg font-medium jakarta"
+      >
+        Submit Review
+      </button>
+
+    </div>
+  </div>
+)}
     </div>
   );
 }

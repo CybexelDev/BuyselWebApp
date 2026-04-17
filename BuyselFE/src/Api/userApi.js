@@ -180,6 +180,34 @@ export const getWishlist = async () => {
     }
 }
 
+
+export const filterWishlist = async (purpose) => {
+  try {
+    const res = await api.get(`wishlist/filter/?purpose=${purpose}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const sortWishlist = async (sort) => {
+  try {
+    const res = await api.get(`wishlist/sort/?sort=${sort}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const clearWishlist = async () => {
+  try {
+    const res = await api.delete(`wishlist/clear/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
  export const sendEnquiry = async (formData) => {
   try {
     const data = new FormData();
@@ -222,7 +250,7 @@ export const sendPropertyEnquiry = async (formData) => {
     const res = await api.post(
       `${BASE_URL}enquiries/`,
       formData
-    );
+    ); 
 
     return res.data;
   } catch (error) {
@@ -302,6 +330,7 @@ export const getBlogById = async (id) => {
     console.log(err);
     return null;
   }
+}
 
 export const addToWishlist = async ({ id }) => {
     try {
@@ -324,18 +353,84 @@ export const addToWishlist = async ({ id }) => {
 
 export const removeToWishlist = async ({ id }) => {
     try {
-        const formData = new FormData();
-        formData.append('product_id', id);
-        const result = await api.delete(`${BASE_URL}wishlist/`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
+        const result = await api.delete(`${BASE_URL}wishlist/`, {
+            data: {
+                property_id: id, 
             },
         });
-        // setFetchedData(result); // optional — if you're storing it in state
-
         return result.data;
     } catch (error) {
         console.log("Error in postLoginNumber:", error);
         throw error;
     }
+};
+
+export const updateProfile = async (formData) => {
+  try {
+    const res = await api.put(`profile/update/`, formData); // or PUT
+    return res.data;
+  } catch (error) {
+    console.error("Update profile error:", error);
+    throw error;
+  }
+};
+
+export const updateProfileImage = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append("image", file); 
+
+    const res = await api.put("profile/image/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const getMyActivity = async () => {
+  try {
+    const res = await api.get("my-activity/");
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const changePassword = async (data) => {
+  try {
+    const res = await api.post("profile/change-password/", data);
+    return res.data;
+  } catch (error) {
+    console.log("Change password error:", error.response?.data || error);
+    throw error;
+  }
+};
+
+export const getAllPlans = async () => {
+  try {
+    const res = await api.get("plans/all/");
+    return res.data;
+  } catch (error) {
+    console.log("Plans error:", error);
+    throw error;
+  }
+};
+
+export const postComment = async (agentId, data) => {
+  try {
+    const res = await api.post(
+      `agents/${agentId}/reviews/submit/`,
+      data
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Review error:", error);
+    return false;
+  }
 };

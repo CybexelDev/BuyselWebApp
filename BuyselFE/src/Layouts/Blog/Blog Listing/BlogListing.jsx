@@ -144,7 +144,7 @@ onClick={() => {
 {isSearching && currentBlogs.length === 0 && (
   <div className="text-center py-20">
     <h2 className="text-xl font-semibold text-gray-700">
-      No results found 😕
+      No results found 
     </h2>
     <p className="text-gray-500 mt-2">
       Try searching something else
@@ -156,8 +156,9 @@ onClick={() => {
 
       {/* LEFT */}
       <div>
-        <div className="mb-6">
-          <div className="flex items-center gap-4 lg:mb-[14px]">
+        <div className="mb-6 cursor-pointer" onClick={()=>navigate(`/blog/${featuredBlogs[0].id}`)}>
+          <div className="flex items-center gap-4 lg:mb-[14px]"  
+>
             <span className="bg-[#6fba19] text-white text-xs px-3 py-1 rounded-full">
               {featuredBlogs[0].tag}
             </span>
@@ -184,7 +185,8 @@ onClick={() => {
 
 
       {/* RIGHT */}
-      <div>
+      <div      className="cursor-pointer"               onClick={()=>navigate(`/blog/${featuredBlogs[1].id}`)}
+>
         <img
           src={featuredBlogs[1].image}
           alt=""
@@ -192,7 +194,8 @@ onClick={() => {
         />
 
         <div>
-          <div className="flex items-center gap-4 mb-3">
+          <div className="flex items-center gap-4 mb-3"
+>
             <span className="bg-[#6fba19] text-white text-xs px-3 py-1 rounded-full">
               {featuredBlogs[1].tag}
             </span>
