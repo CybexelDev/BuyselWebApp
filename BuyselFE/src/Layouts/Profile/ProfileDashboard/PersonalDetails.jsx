@@ -8,7 +8,7 @@ import { MapPin } from "lucide-react";
 
 
 
-const PersonalDetails = ({ users,mode,setMode }) => {
+const PersonalDetails = ({ users,mode,setMode ,setParentProfileData}) => {
   return (
       <Element name="personalDetails">
     <div className="w-full ">
@@ -19,18 +19,19 @@ const PersonalDetails = ({ users,mode,setMode }) => {
 </h2>
       {mode === "" && (
       <div className="bg-[#f8f8f8] rounded-[32px] px-[41px] py-[20px] sm:py-[41px]">
-        <Detail icon={<FaUser size={19}/>} label="Full Name" value={users?.username} />
+        <Detail icon={<FaUser size={19}/>} label="Full Name" value={users?.full_name}
+ />
         <Detail icon={<TbMailFilled size={19} />} label="Email Address" value={users?.email} />
         <Detail icon={<Phone
         size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Mobile Number" value={users?.mobile} />
         <Detail icon={<Phone
-        size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Alternate Phone" value={users.altPhone1} />
+        size={19} fill="currentColor" stroke="none" className="text-black"/>} label="Alternate Phone" value={users?.alternate_mobile}/>
                 <Detail icon={<MapPin color="#000000" 
         size={19} fill="currentColor"  className="text-black"/>} label="Location" value={users.city} />
       </div>
               )}
       {mode === "edit" && (
-          <EditProfile users={users} setMode={setMode} />
+          <EditProfile users={users} setMode={setMode}  setParentProfileData={setParentProfileData}  />
         )}
 
         {/* CHANGE PASSWORD MODE */}

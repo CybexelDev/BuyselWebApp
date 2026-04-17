@@ -1,8 +1,28 @@
 import React, { useState } from "react";
+import { updateProfile } from "../../../Api/userApi";
+   import { useEffect } from "react";
 
-const EditProfile = () => {
- 
+const EditProfile = ({ users, setMode, setParentProfileData }) => {
 
+const [formData, setFormData] = useState({
+  full_name: "",
+  email: "",
+  mobile: "",
+  alternate_mobile: "",
+  city: "",
+});
+
+useEffect(() => {
+  if (users) {
+    setFormData({
+      full_name: users.full_name || "",
+      email: users.email || "",
+      mobile: users.mobile || "",
+      alternate_mobile: users.alternate_mobile || "",
+      city: users.city || "",
+    });
+  }
+}, [users]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -11,9 +31,17 @@ const EditProfile = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Saved Data:", formData);
+
+    try {
+      const updatedUser = await updateProfile(formData);
+
+setParentProfileData(formData); 
+      setMode("");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -26,9 +54,10 @@ const EditProfile = () => {
           </label>
           <input
             type="text"
-            name="fullName"
+            name="full_name"
             placeholder="Fullname"
             onChange={handleChange}
+            value={formData.full_name}
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
           />
         </div>
@@ -41,6 +70,7 @@ const EditProfile = () => {
             type="email"
             name="email"
             placeholder="Email"
+            value={formData.email}
             onChange={handleChange}
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
           />
@@ -54,9 +84,10 @@ const EditProfile = () => {
     type="tel"
     inputMode="numeric"
     pattern="[0-9]*"
-    name="phone"
+    name="mobile"
     placeholder="Phone"
     maxLength={10}
+    value={formData.mobile}
 
 
     /* block letters & symbols while typing */
@@ -84,7 +115,7 @@ const EditProfile = () => {
     type="text"
     inputMode="numeric"
     pattern="[0-9]*"
-    name="phone"
+    name="alternate_mobile"
     placeholder="Phone"
     maxLength={10}
 
@@ -94,6 +125,7 @@ const EditProfile = () => {
         e.preventDefault();
       }
     }}
+    value={formData.alternate_mobile}
 
     /* 🚫 block invalid paste */
     // onPaste={(e) => {
@@ -113,7 +145,8 @@ const EditProfile = () => {
           </label>
           <input
             type="text"
-            name="Location"
+            name="city"
+            value={formData.city}
             placeholder="City ,State"
             onChange={handleChange}
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"

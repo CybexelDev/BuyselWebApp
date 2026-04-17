@@ -78,8 +78,10 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
         <div className="absolute top-4 right-4 sm:right-6 flex gap-1 ">
           <button
-            onClick={click}
-            className="bg-white rounded-full h-[23px] w-[23px] flex justify-center items-center cursor-pointer"
+  onClick={(e) => {
+    e.stopPropagation();
+    click && click(e);
+  }}            className="bg-white rounded-full h-[23px] w-[23px] flex justify-center items-center cursor-pointer"
           >
             {wishlistIcon}
           </button>

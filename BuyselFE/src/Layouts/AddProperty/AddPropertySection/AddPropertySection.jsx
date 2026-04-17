@@ -33,25 +33,24 @@ function AddPropertySection() {
     priceNegotiable:"",
     availableDate:"",
   });
- const handleSubmit = (e) => {
+const handleSubmit = (e) => {
   e.preventDefault();
-
-  // only allow submit on step 4
-  if (step !== 5) return;
 
   console.log("Form Data:", formData);
   setShowSuccess(true);
 };
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen p-6">
+    <div className="bg-[#FFFFFF]  min-h-screen p-6">
 
 <div className="mx-auto flex flex-col lg:flex-row gap-2 sm:gap-4 md:gap-6 lg:gap-8">
 <div className="w-full lg:w-[320px]">
   <SidebarProgress step={step} />
 </div>
-<form onSubmit={handleSubmit} className="flex-1" autoComplete="off">
-          {step === 1 && (
+<form
+  onSubmit={(e) => e.preventDefault()}   // 🔥 BLOCK browser submit
+  className="flex-1"
+>          {step === 1 && (
             <PropertyInfo
               formData={formData}
               setFormData={setFormData}
@@ -91,6 +90,7 @@ function AddPropertySection() {
               step={step}
             next={() => setStep(step + 1)}
            back={() => setStep(step - 1)}
+  handleSubmit={handleSubmit}
            />
 
 </form>
