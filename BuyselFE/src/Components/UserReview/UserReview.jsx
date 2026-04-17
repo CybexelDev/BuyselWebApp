@@ -3,7 +3,7 @@ import "./userreview.css";
 import { FaStar } from "react-icons/fa";
 import Modal from "../Modal/Modal";
 import { Star } from "lucide-react";
-import { addReviewToServer } from "../../Api/userApi";
+import { addReviewToServer, deletReview } from "../../Api/userApi";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 function UserReview({ review, id, triggerRefresh }) {
@@ -13,6 +13,9 @@ function UserReview({ review, id, triggerRefresh }) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [reviewss, setReviewss] = useState("");
+  const [openMenuId, setOpenMenuId] = useState(null);
+
+  
 
   // const { image, userName, userId, accessToken } = useSelector((state) => state.user);
 
@@ -25,18 +28,32 @@ function UserReview({ review, id, triggerRefresh }) {
 
   const addReview = () => {
     try {
-      addReviewToServer({ rating, review: reviewss, id }).then((response) => {  
-    
+      addReviewToServer({ rating, review: reviewss, id }).then((response) => {
+
         // alert(response?.message);
         if (response) {
-          triggerRefresh(); 
-          
+          triggerRefresh();
+
         }
       })
-      
+
     } catch (error) {
       console.log(error);
-      
+
+    }
+  }
+
+  useEffect(() => {
+  const handleClickOutside = () => setOpenMenuId(null);
+  window.addEventListener("click", handleClickOutside);
+
+  return () => window.removeEventListener("click", handleClickOutside);
+}, []);
+
+ const handleDelete = async (id)  => {
+   const data = await deletReview({id});
+    if(data){
+      triggerRefresh();
     }
   }
 
@@ -86,40 +103,77 @@ function UserReview({ review, id, triggerRefresh }) {
                   flex flex-col h-full"
                 >
                   <div className="flex items-center justify-between mb-[21px]">
-                    {/* Stars on the left */}
                     <div className="flex gap-1">
-                     {[...Array(5)].map((_, i) => {
-  const starNumber = i + 1;
+                      {[...Array(5)].map((_, i) => {
+                        const starNumber = i + 1;
 
-  return (
-    <span key={i} className="text-[18px] text-[#84cc16]">
-      {review?.rating >= starNumber ? (
-        <FaStar /> // full
-      ) : review?.rating >= starNumber - 0.5 ? (
-        <FaStarHalfAlt /> // half
-      ) : (
-        <FaRegStar /> // empty
-      )}
-    </span>
-  );
-})}
+                        return (
+                          <span key={i} className="text-[18px] text-[#84cc16]">
+                            {review?.rating >= starNumber ? (
+                              <FaStar />
+                            ) : review?.rating >= starNumber - 0.5 ? (
+                              <FaStarHalfAlt /> 
+                            ) : (
+                              <FaRegStar /> 
+                            )}
+                          </span>
+                        );
+                      })}
                     </div>
 
                     {/* SVG on the right */}
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M7 12C7 12.5304 6.78929 13.0391 6.41421 13.4142C6.03914 13.7893 5.53043 14 5 14C4.46957 14 3.96086 13.7893 3.58579 13.4142C3.21071 13.0391 3 12.5304 3 12C3 11.4696 3.21071 10.9609 3.58579 10.5858C3.96086 10.2107 4.46957 10 5 10C5.53043 10 6.03914 10.2107 6.41421 10.5858C6.78929 10.9609 7 11.4696 7 12ZM12 10C12.5304 10 13.0391 10.2107 13.4142 10.5858C13.7893 10.9609 14 11.4696 14 12C14 12.5304 13.7893 13.0391 13.4142 13.4142C13.0391 13.7893 12.5304 14 12 14C11.4696 14 10.9609 13.7893 10.5858 13.4142C10.2107 13.0391 10 12.5304 10 12C10 11.4696 10.2107 10.9609 10.5858 10.5858C10.9609 10.2107 11.4696 10 12 10ZM19 10C19.5304 10 20.0391 10.2107 20.4142 10.5858C20.7893 10.9609 21 11.4696 21 12C21 12.5304 20.7893 13.0391 20.4142 13.4142C20.0391 13.7893 19.5304 14 19 14C18.4696 14 17.9609 13.7893 17.5858 13.4142C17.2107 13.0391 17 12.5304 17 12C17 11.4696 17.2107 10.9609 17.5858 10.5858C17.9609 10.2107 18.4696 10 19 10Z"
-                        fill="black"
-                      />
-                    </svg>
+                    <div className="relative">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenMenuId(openMenuId === review.id ? null : review.id);
+                        }}
+                        className="p-1 cursor-pointer"
+                      >
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M7 12C7 12.5304 6.78929 13.0391 6.41421 13.4142C6.03914 13.7893 5.53043 14 5 14C4.46957 14 3.96086 13.7893 3.58579 13.4142C3.21071 13.0391 3 12.5304 3 12C3 11.4696 3.21071 10.9609 3.58579 10.5858C3.96086 10.2107 4.46957 10 5 10C5.53043 10 6.03914 10.2107 6.41421 10.5858C6.78929 10.9609 7 11.4696 7 12ZM12 10C12.5304 10 13.0391 10.2107 13.4142 10.5858C13.7893 10.9609 14 11.4696 14 12C14 12.5304 13.7893 13.0391 13.4142 13.4142C13.0391 13.7893 12.5304 14 12 14C11.4696 14 10.9609 13.7893 10.5858 13.4142C10.2107 13.0391 10 12.5304 10 12C10 11.4696 10.2107 10.9609 10.5858 10.5858C10.9609 10.2107 11.4696 10 12 10ZM19 10C19.5304 10 20.0391 10.2107 20.4142 10.5858C20.7893 10.9609 21 11.4696 21 12C21 12.5304 20.7893 13.0391 20.4142 13.4142C20.0391 13.7893 19.5304 14 19 14C18.4696 14 17.9609 13.7893 17.5858 13.4142C17.2107 13.0391 17 12.5304 17 12C17 11.4696 17.2107 10.9609 17.5858 10.5858C17.9609 10.2107 18.4696 10 19 10Z"
+                            fill="black"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {openMenuId === review.id && (
+                      <div className="absolute right-2 mt-5 w-30 bg-white shadow-lg rounded-xl z-50 p-2">
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setOpenMenuId(null);
+                            handleEdit(review);
+                          }}
+                          className="w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-100 cursor-pointer"
+                        >
+                          Update
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(review?.id);
+                            setOpenMenuId(null);
+                          }}
+                          className="w-full text-left px-4 py-2 text-sm rounded-xl text-red-500 hover:bg-gray-100 cursor-pointer"
+                        >
+                           Delete
+                        </button>
+                      </div>
+                    )}
+
+
                   </div>
 
                   {/* Comment */}
@@ -210,10 +264,10 @@ function UserReview({ review, id, triggerRefresh }) {
               <Star
                 size={30}
                 className={`transition ${(hover || rating) >= star
-                    ? "fill-yellow-400 text-yellow-400"
-                    : (hover || rating) >= star - 0.5
-                      ? "fill-yellow-400/10 text-yellow-400"
-                      : "text-gray-300"
+                  ? "fill-yellow-400 text-yellow-400"
+                  : (hover || rating) >= star - 0.5
+                    ? "fill-yellow-400/10 text-yellow-400"
+                    : "text-gray-300"
                   }`}
               />
             </div>
@@ -236,7 +290,7 @@ function UserReview({ review, id, triggerRefresh }) {
               alert("Please add rating and review");
               return;
             }
-              addReview()
+            addReview()
             console.log({ rating, reviewss });
             setOpen(false);
           }}

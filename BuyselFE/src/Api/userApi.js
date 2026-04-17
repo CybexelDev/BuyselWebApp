@@ -436,4 +436,15 @@ export const addReviewToServer = async ({ rating, review, id }) => {
         console.log("ERROR:", error.response?.data || error.message);
         return null;
     }
+}; 
+
+
+export const deletReview = async ({ id }) => {
+    try {
+        const result = await api.delete(`${BASE_URL}reviews/delete/${id}/`,);
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
 };
