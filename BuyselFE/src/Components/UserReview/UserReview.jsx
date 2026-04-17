@@ -300,7 +300,6 @@ function UserReview({ review, id, triggerRefresh }) {
         </button>
 
       </Modal>
-
     </div>
   );
 }

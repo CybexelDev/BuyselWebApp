@@ -35,7 +35,7 @@ const handleSubmit = async (e) => {
     property_hash_id:data.id
   };
 
-  console.log(payload); // 👈 check in console
+  console.log(payload); 
 
   const res = await sendPropertyEnquiry(payload);
 
