@@ -15,7 +15,7 @@ function UserReview({ review, id, triggerRefresh }) {
   const [reviewss, setReviewss] = useState("");
   const [openMenuId, setOpenMenuId] = useState(null);
 
-  
+
 
   // const { image, userName, userId, accessToken } = useSelector((state) => state.user);
 
@@ -44,15 +44,15 @@ function UserReview({ review, id, triggerRefresh }) {
   }
 
   useEffect(() => {
-  const handleClickOutside = () => setOpenMenuId(null);
-  window.addEventListener("click", handleClickOutside);
+    const handleClickOutside = () => setOpenMenuId(null);
+    window.addEventListener("click", handleClickOutside);
 
-  return () => window.removeEventListener("click", handleClickOutside);
-}, []);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
 
- const handleDelete = async (id)  => {
-   const data = await deletReview({id});
-    if(data){
+  const handleDelete = async (id) => {
+    const data = await deletReview({ id });
+    if (data) {
       triggerRefresh();
     }
   }
@@ -112,9 +112,9 @@ function UserReview({ review, id, triggerRefresh }) {
                             {review?.rating >= starNumber ? (
                               <FaStar />
                             ) : review?.rating >= starNumber - 0.5 ? (
-                              <FaStarHalfAlt /> 
+                              <FaStarHalfAlt />
                             ) : (
-                              <FaRegStar /> 
+                              <FaRegStar />
                             )}
                           </span>
                         );
@@ -168,7 +168,7 @@ function UserReview({ review, id, triggerRefresh }) {
                           }}
                           className="w-full text-left px-4 py-2 text-sm rounded-xl text-red-500 hover:bg-gray-100 cursor-pointer"
                         >
-                           Delete
+                          Delete
                         </button>
                       </div>
                     )}
