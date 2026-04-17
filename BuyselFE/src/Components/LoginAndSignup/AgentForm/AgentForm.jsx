@@ -31,12 +31,14 @@ const AgentForm = () => {
                     }
                 })
                       localStorage.setItem('accessToken', response?.access);
-          localStorage.setItem('refreshToken', response?.refresh);
+                      localStorage.setItem('refreshToken', response?.refresh);
+                      localStorage.setItem('agentId', response?.agent_details?.agent_id);
 
                 setLoading(false);
 
                  localStorage.setItem('accessToken', response?.access);
                  localStorage.setItem('refreshToken', response?.refresh);
+                 localStorage.setItem('agentId', response?.agent_details?.agent_id);
 
                 navigate('/agent/dashboard')
 

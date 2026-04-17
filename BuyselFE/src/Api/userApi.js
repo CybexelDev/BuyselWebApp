@@ -1,7 +1,10 @@
 import axios from "axios";
 import api from "./axiosInstance";
 
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+// const userId = localStorage.getItem("id");
 
 export const userRegister = async (name, email, mobail, password, confirm_password) => {
     const formData = new FormData();
@@ -93,7 +96,7 @@ export const userLogin = async (username, password) => {
             },
         });
         console.log(result, "00000000000000000000000");
-        
+
         if (
             result.data.access &&
             result.data.user.name &&
@@ -101,9 +104,7 @@ export const userLogin = async (username, password) => {
         ) {
             return result.data;
         }
-
         return false;
-
     } catch (error) {
         console.error("API error:", error);
         return false;
@@ -111,43 +112,52 @@ export const userLogin = async (username, password) => {
 };
 
 
-export const handleGoogleLogin = async ({tokenResponse}) =>{
+export const handleGoogleLogin = async ({ tokenResponse }) => {
 
     try {
-        const res = await axios.post(`${BASE_URL}auth/google/login/`,  {
+        const res = await axios.post(`${BASE_URL}auth/google/login/`, {
             access_token: tokenResponse.access_token,
         });
 
-        if(res.data.message && res.data.access){
-        return res.data;
+        if (res.data.message && res.data.access) {
+            return res.data;
 
-        }else{
+        } else {
             return false
         }
-        
+
     } catch (error) {
         console.log(error, "Login filed");
-        
+
     }
 }
 
 
 export const sendFacebookToken = async (accessToken) => {
-  try {
-    const res = await api.post("/auth/facebook/", {
-      access_token: accessToken,
-    });
+    try {
+        const res = await api.post("/auth/facebook/", {
+            access_token: accessToken,
+        });
 
-    console.log(res.data, "Facebook login success");
+        console.log(res.data, "Facebook login success");
 
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-export const getProfile = async () => { 
+export const getProfile = async () => {
     try {
-        const result = await api.get(`${BASE_URL}profile/`);
+
+         const userId = localStorage.getItem("id");
+        
+        const result = await api.get(`${BASE_URL}profile/`, {
+            params: {
+                id: userId,
+            },
+        });
+        console.log(result, "profile data 77777777777777777777");
+     
         return result.data;
 
     } catch (error) {
@@ -156,25 +166,34 @@ export const getProfile = async () => {
 }
 
 
+export const getProperty = async (filters) => {
 
-export const getProperty = async (filters) => { 
     try {
+         const userId = localStorage.getItem("id");
+
         const result = await api.get(`${BASE_URL}properties/`, {
-      params: filters,
-    });
+            params: {
+                ...filters,
+                id: userId,
+            },
+        });
         console.log(result, "Filtered properties 777777777777");
-            return result.data;
+        return result.data;
 
     } catch (error) {
         console.log(error);
     }
 }
 
-export const getWishlist = async () => { 
+export const getWishlist = async () => {
     try {
-        const result = await api.get(`wishlist/`);
-            return result.data;
-
+        const userId = localStorage.getItem("id");
+        const result = await api.get(`wishlist/`, {
+            params: {
+                id: userId,
+            },
+        });
+        return result.data;
     } catch (error) {
         console.log(error);
     }
@@ -237,7 +256,11 @@ export const clearWishlist = async () => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await api.get(`${BASE_URL}property/${id}/`);
+        const result = await api.get(`${BASE_URL}property/${id}/`, {
+            params: {
+                id: userId,
+            },
+        });
         return result.data;
     } catch (error) {
         console.log("Property detail error:", error);
@@ -282,7 +305,12 @@ export const getAgentPlanDetails = async () => {
 
 export const getRelatedProperties = async (id) => {
   try {
-    const res = await api.get(`${BASE_URL}property/${id}/related/`);
+    const userId = localStorage.getItem("id");
+    const res = await api.get(`${BASE_URL}property/${id}/related/`, {
+      params: {
+        id: userId,
+      },
+    });
     return res.data;
   } catch (err) {
     console.log(err);
@@ -330,7 +358,8 @@ export const getBlogById = async (id) => {
     console.log(err);
     return null;
   }
-}
+
+};
 
 export const addToWishlist = async ({ id }) => {
     try {
@@ -341,8 +370,6 @@ export const addToWishlist = async ({ id }) => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-
-        // setFetchedData(result); // optional — if you're storing it in state
 
         return result.data;
     } catch (error) {
@@ -358,6 +385,92 @@ export const removeToWishlist = async ({ id }) => {
                 property_id: id, 
             },
         });
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+
+export const getFeatured = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}featured/`);
+    console.log(res.data, "featured data from api 77777777777777777777");
+    return res.data;
+    
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export const getAgents = async (category) => {
+
+    try {
+        const result = await api.get(`${BASE_URL}agents/listing/`, {
+            params: category,
+        });
+        console.log(result, "agents list 777  777777777");
+        return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getReviews = async (agentId) => {
+  try {
+    const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);
+    console.log(res.data, "featured data from api 77777777777777777777");
+    return res.data;
+    
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export const getAgentsDetails = async (id) => {
+    try {
+        const result = await api.get(`${BASE_URL}agent/detail/${id}/`, );
+        
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const addReviewToServer = async ({ rating, review, id }) => {
+    try {
+        const formData = new FormData();
+        formData.append("rating", rating);
+        formData.append("review", review);
+
+        const res = await api.post(
+            `${BASE_URL}agents/reviews/submit/${id}/`,
+            formData
+        );
+
+        console.log(res, "SUCCESS RESPONSE");
+        return res.data;
+
+    } catch (error) {
+        if (error.response?.status === 400) {
+    alert("You already reviewed this agent");
+  }
+        console.log("ERROR:", error.response?.data || error.message);
+        return null;
+    }
+}; 
+
+
+export const deletReview = async ({ id }) => {
+    try {
+        const result = await api.delete(`${BASE_URL}reviews/delete/${id}/`,);
         return result.data;
     } catch (error) {
         console.log("Error in postLoginNumber:", error);

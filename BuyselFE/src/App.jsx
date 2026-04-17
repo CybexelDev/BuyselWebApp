@@ -59,7 +59,7 @@ function App() {
           <Route path="/wishlist" element={<Wishlist/>}/>
           <Route path="/about" element={<About/>}/>
           <Route path="/contact" element={<Contact/>}/>
-          <Route path="/agent-detail" element={<AgentDetail/>}/>
+          <Route path="/agent-detail/:id" element={<AgentDetail/>}/>
           <Route path='/addyourproperty' element={<AddProperty/>}/>
           <Route path='/blog/:id' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
@@ -71,7 +71,7 @@ function App() {
           <Route path='/termsandcondition' element={<TermsPage/>}/>
           <Route path='/privacy' element={<PrivacyPolicy/>}/>
           <Route path='/agent-register' element={<RegisterAgent/>}/>
-                    <Route path='/faqs' element={<Faqs/>}/>
+          <Route path='/faqs' element={<Faqs/>}/>
 
           {/* //agent side */} 
           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
@@ -83,8 +83,6 @@ function App() {
           <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
           <Route path="/agent/property" element={<AgentPropertyListing />}/>
           
-       
-     
         </Routes>
       </Router>
     </>

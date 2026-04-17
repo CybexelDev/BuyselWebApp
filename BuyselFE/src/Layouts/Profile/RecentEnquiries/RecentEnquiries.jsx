@@ -15,6 +15,7 @@ export default function RecentEnquiries() {
       dispatch({ type: "LOGOUT" });
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("id");
       navigate('/')
     }
 

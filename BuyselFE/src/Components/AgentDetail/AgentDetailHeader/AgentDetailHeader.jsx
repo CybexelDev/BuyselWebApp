@@ -8,13 +8,13 @@ import crown from "../../../assets/images/agentDetail/crown.png";
 
 const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
   const roleStyles = {
-    agent: "bg-white",
-    premiumAgent: "bg-gradient-to-r from-[#D6FF98] to-[#FFFFFFC7]",
-    eliteAgent: "bg-gradient-to-r from-[#FEF7A4] to-[#FFFFFFC7]",
+    basic: "bg-white",
+    premium: "bg-gradient-to-r from-[#D6FF98] to-[#FFFFFFC7]",
+    elite: "bg-gradient-to-r from-[#FEF7A4] to-[#FFFFFFC7]",
   };
 
   const bgStyle =
-    agentData?.role === "eliteAgent"
+    agentData?.agent_type === "elite"
       ? "linear-gradient(to right, #FEFCDC,  #83cc1687 100%)"
       : "linear-gradient(to right, #D9D9D9 10%, #83cc1687 100%)";
 
@@ -40,30 +40,29 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
         className={`
      relative w-[95%] max-w-[1300px] mx-auto mt-[-200px]
     rounded-3xl 
-    ${roleStyles[agentData?.role]}
+    ${roleStyles[agentData?.agent_type]}
     py-4
     lg:py-8 px-6  min-h-fit
     /* Desktop Styles (Preserving your original layout) */
     lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-y-1/2 lg:-translate-x-1/2 
     lg:max-w-[1300px] lg:max-h-[274px] lg:mt-17 lg:pl-10
 
-    ${
-      isPremiumOrElite
-        ? "shadow-[0px_11px_15.2px_0px_rgba(189,183,183,0.25)]"
-        : "shadow-[0px_4px_14px_3px_rgba(214,255,152,0.4)]"
-    } `}
+    ${isPremiumOrElite
+            ? "shadow-[0px_11px_15.2px_0px_rgba(189,183,183,0.25)]"
+            : "shadow-[0px_4px_14px_3px_rgba(214,255,152,0.4)]"
+          } `}
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between lg:justify-start lg:gap-45 md:gap-10">
           <div className="flex flex-col sm:flex-row items-center md:items-center gap-9 ">
             <div className="relative">
               <img
-                src={seller}
+                src={agentData?.profile_image}
                 alt="Agent"
                 className="w-24 h-24 md:w-[183px] md:h-[183px] rounded-full object-cover shadow-md"
               />
 
               {/* Role Badge */}
-              {agentData?.role !== "agent" && (
+              {agentData?.agent_type !== "basic" && (
                 <div
                   className={`
     absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2
@@ -74,8 +73,8 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
                 >
                   <img src={crown} alt="crown" />
                   <span className="font-[400] host-grotesk ">
-                    {agentData.role === "premiumAgent" && "Premium Agent"}
-                    {agentData.role === "eliteAgent" && "Elite Agent"}
+                    {agentData?.agent_type === "premium" && "Premium Agent"}
+                    {agentData?.agent_type === "elite" && "Elite Agent"}
                   </span>
                 </div>
               )}
@@ -83,11 +82,11 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
 
             <div className="text-center sm:text-left">
               <h2 className="text-[24px] host-grotesk font-[550] text-[#312F2F]">
-                {agentData.name}
+                {agentData?.username}
               </h2>
 
               <p className=" text-[12px]  lg:text-[16px] text-[#312F2F] host-grotesk font-medium flex items-center justify-center sm:justify-start gap-2">
-                <span>{agentData.designation}</span>
+                <span>{agentData?.designation}</span>
                 <svg
                   width="100"
                   height="2"
@@ -105,11 +104,11 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
                   />
                 </svg>
 
-                <span>{agentData.location}</span>
+                <span>{agentData?.city}</span>
               </p>
 
               <div className="flex mt-2 gap-2 items-center justify-center sm:justify-start">
-                {agentData.verified && (
+                {agentData?.verified && (
                   <button className="bg-[#5E8D00] text-[8px] px-2 rounded-[30px] py-1 text-white host-grotesk">
                     Buysel Verified
                   </button>
@@ -117,13 +116,13 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
                 <p className="text-medium text-[10px] md:text-[14px] host-grotesk">
                   Agent ID:
                   <span className="text-[#84CC16] font-medium ml-1">
-                    {agentData.agentId}
+                    {agentData?.agent_code}
                   </span>
                 </p>
               </div>
 
               <div className="flex flex-wrap justify-center sm:justify-start gap-3 mt-5">
-                <button className="bg-[#6ABD11ED] text-white px-6 md:px-13 py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-black hover:text-white transition flex items-center gap-2 cursor-pointer">
+                <a className="bg-[#6ABD11ED] text-white px-6 md:px-13 py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-black hover:text-white transition flex items-center gap-2 cursor-pointer">
                   <svg
                     width="15"
                     height="15"
@@ -143,9 +142,9 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
                     />
                   </svg>
                   WhatsApp
-                </button>
+                </a>
 
-                <button className="bg-[#312F2F] text-white px-8 md:px-17 shadow-md py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-gray-800 hover:text-white border border-transparent hover:border-[#312F2F] transition flex items-center gap-2 cursor-pointer">
+                <a href={`tel:${agentData?.phone_number}`} className="bg-[#312F2F] text-white px-8 md:px-17 shadow-md py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-gray-800 hover:text-white border border-transparent hover:border-[#312F2F] transition flex items-center gap-2 cursor-pointer">
                   <svg
                     width="13"
                     height="13"
@@ -159,7 +158,7 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
                     />
                   </svg>
                   Call
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -184,7 +183,7 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
                 </svg>
               </div>
               <span className="text-black font-medium host-grotesk cursor-pointer">
-                {agentData.email}
+                {agentData?.email}
               </span>
             </div>
 
@@ -192,14 +191,14 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
               <div
                 className={`bg-[#6ABD11ED] p-2 rounded-full text-white cursor-pointer shrink-0 `}
               >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6.68027 14.3954C7.08024 14.7254 7.49735 15.027 7.92438 15.3214C8.35232 15.0309 8.76741 14.722 9.16848 14.3954C9.83706 13.8464 10.4663 13.2512 11.0515 12.6141C12.4005 11.139 13.8644 9.00058 13.8644 6.60016C13.8644 5.8201 13.7107 5.04769 13.4122 4.32702C13.1137 3.60634 12.6762 2.95152 12.1246 2.39994C11.573 1.84836 10.9182 1.41082 10.1975 1.11231C9.47684 0.813799 8.70443 0.660156 7.92438 0.660156C7.14432 0.660156 6.37191 0.813799 5.65124 1.11231C4.93056 1.41082 4.27574 1.84836 3.72416 2.39994C3.17258 2.95152 2.73504 3.60634 2.43653 4.32702C2.13802 5.04769 1.98437 5.8201 1.98438 6.60016C1.98438 9.00058 3.44826 11.1383 4.7973 12.6141C5.38246 13.2514 6.01167 13.8462 6.68027 14.3954ZM7.92438 8.74516C7.35549 8.74516 6.8099 8.51917 6.40763 8.1169C6.00537 7.71463 5.77938 7.16905 5.77938 6.60016C5.77938 6.03127 6.00537 5.48568 6.40763 5.08341C6.8099 4.68115 7.35549 4.45516 7.92438 4.45516C8.49326 4.45516 9.03885 4.68115 9.44112 5.08341C9.84338 5.48568 10.0694 6.03127 10.0694 6.60016C10.0694 7.16905 9.84338 7.71463 9.44112 8.1169C9.03885 8.51917 8.49326 8.74516 7.92438 8.74516Z" fill="white"/>
-</svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.68027 14.3954C7.08024 14.7254 7.49735 15.027 7.92438 15.3214C8.35232 15.0309 8.76741 14.722 9.16848 14.3954C9.83706 13.8464 10.4663 13.2512 11.0515 12.6141C12.4005 11.139 13.8644 9.00058 13.8644 6.60016C13.8644 5.8201 13.7107 5.04769 13.4122 4.32702C13.1137 3.60634 12.6762 2.95152 12.1246 2.39994C11.573 1.84836 10.9182 1.41082 10.1975 1.11231C9.47684 0.813799 8.70443 0.660156 7.92438 0.660156C7.14432 0.660156 6.37191 0.813799 5.65124 1.11231C4.93056 1.41082 4.27574 1.84836 3.72416 2.39994C3.17258 2.95152 2.73504 3.60634 2.43653 4.32702C2.13802 5.04769 1.98437 5.8201 1.98438 6.60016C1.98438 9.00058 3.44826 11.1383 4.7973 12.6141C5.38246 13.2514 6.01167 13.8462 6.68027 14.3954ZM7.92438 8.74516C7.35549 8.74516 6.8099 8.51917 6.40763 8.1169C6.00537 7.71463 5.77938 7.16905 5.77938 6.60016C5.77938 6.03127 6.00537 5.48568 6.40763 5.08341C6.8099 4.68115 7.35549 4.45516 7.92438 4.45516C8.49326 4.45516 9.03885 4.68115 9.44112 5.08341C9.84338 5.48568 10.0694 6.03127 10.0694 6.60016C10.0694 7.16905 9.84338 7.71463 9.44112 8.1169C9.03885 8.51917 8.49326 8.74516 7.92438 8.74516Z" fill="white" />
+                </svg>
 
 
               </div>
               <span className="text-black font-medium host-grotesk cursor-pointer">
-                {agentData.address}
+                {agentData?.address}, {agentData?.city}
               </span>
             </div>
 
