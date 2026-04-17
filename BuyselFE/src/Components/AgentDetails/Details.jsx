@@ -1,13 +1,13 @@
 import React from "react";
 
-function Details({agentData}){
+function Details({ agentData }) {
   const details = [
     {
       stats: {
-        "Properties Listed": 125,
-        "Deals Closed": 75,
-        "Years Experience": 8,
-        "Areas Served": 95,
+        "Properties Listed": agentData?.properties_listed || 0,
+        "Deals Closed": agentData?.deals_closed || 0,
+        "Years Experience": agentData?.years_of_experience || 0,
+        "Areas Served": agentData?.served_area || 0,
       },
       specializations: [
         "Residential",
@@ -15,7 +15,6 @@ function Details({agentData}){
         "Luxury Villas",
         "Investment Properties",
       ],
-      operatingCities:["Coimbatore", "Salem", "Tiruppur"],
       about:
         "Experienced real estate professional specializing in premium residential and commercial properties across Mumbai and Navi Mumbai. I help clients find their dream homes and make smart property investments with complete transparency and trust.",
     },
@@ -24,9 +23,9 @@ function Details({agentData}){
   const agent = details[0];
 
   const roleStyles = {
-  premiumAgent: "bg-gradient-to-b from-[#F3FFE2] to-[#FFFFFFC7]",
-  eliteAgent: "bg-gradient-to-b from-[#FFFCDC] to-[#FFFFFF]",
-};
+    premiumAgent: "bg-gradient-to-b from-[#F3FFE2] to-[#FFFFFFC7]",
+    eliteAgent: "bg-gradient-to-b from-[#FFFCDC] to-[#FFFFFF]",
+  };
 
 
   return (
@@ -42,139 +41,151 @@ function Details({agentData}){
         {/* Left Side */}
         <div>
 
-      {/* Stats */}
-      <div className="flex flex-wrap justify-between 
+          {/* Stats */}
+          <div className="flex flex-wrap justify-between 
                       gap-1 sm:gap-4
                       host-grotesk text-center 
                       mb-6 lg:mb-[34px]">
 
-        {Object.entries(agent.stats).map(([key, value], idx) => (
-          <div key={idx} className="flex-1 lg:min-w-[120px]">
-            <h2 className="text-[20px] sm:text-[24px] lg:text-[30px] font-[500] leading-[135%]">
-              {value}
-            </h2>
-            <p className="text-[10px] sm:text-[14px] lg:text-[16px] font-[500] leading-[135%] text-[#8C8F88]">
-              {key}
-            </p>
+            {Object.entries(agent.stats).map(([key, value], idx) => (
+              <div key={idx} className="flex-1 lg:min-w-[120px]">
+                <h2 className="text-[20px] sm:text-[24px] lg:text-[30px] font-[500] leading-[135%]">
+                  {value}
+                </h2>
+                <p className="text-[10px] sm:text-[14px] lg:text-[16px] font-[500] leading-[135%] text-[#8C8F88]">
+                  {key}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* About */}
-      <div className="mb-6 host-grotesk">
-        <h3 className="font-[700] 
+          {/* About */}
+          <div className="mb-6 host-grotesk">
+            <h3 className="font-[700] 
                        text-[18px] lg:text-[20px] 
                        leading-[135%] mb-2">
-          About the Agent
-        </h3>
+              About the Agent
+            </h3>
 
-        <p className="text-[#564C4C] 
+            <p className="text-[#564C4C] 
                       text-[14px] lg:text-[16px] 
                       leading-[150%] font-[500]">
-          {agent.about}
-        </p>
-      </div>
+              {agentData?.professional_bio || "No about available."}
+            </p>
+          </div>
 
-      {/* Specialization + Cities */}
-      <div className="space-y-8 lg:space-y-[46px] host-grotesk">
+          {/* Specialization + Cities */}
+          <div className="space-y-8 lg:space-y-[46px] host-grotesk">
 
-        {/* Specialization */}
-        <div>
-          <h3 className="text-[18px] lg:text-[20px] 
+            {/* Specialization */}
+            <div>
+              <h3 className="text-[18px] lg:text-[20px] 
                          leading-[135%] font-[700] 
                          mb-3 lg:mb-[14px]">
-            Specialization
-          </h3>
+                Specialization
+              </h3>
 
-          <div className="flex flex-wrap gap-[12px] lg:gap-[20px]">
-            {agent.specializations.map((item, idx) => (
-              <span
-                key={idx}
-                className="bg-[#75c222] text-white 
-                           px-5 lg:px-[40px] 
-                           py-2.5 lg:py-[15px] 
-                           rounded-[10px] 
-                           text-[14px] lg:text-[16px] 
-                           leading-[135%] font-[400]"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
+              <div className="flex flex-wrap gap-[12px] lg:gap-[20px]">
+                {agentData?.specializations?.length > 0 ? (
+                  agentData?.specializations.map((item, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-[#75c222] text-white 
+                      px-5 lg:px-[40px] 
+                      py-2.5 lg:py-[15px] 
+                      rounded-[10px] 
+                      text-[14px] lg:text-[16px] 
+                      leading-[135%] font-[400]"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-gray-400 text-[14px] lg:text-[16px]">
+                    Specializations not available
+                  </span>
+                )}
+              </div>
+            </div>
 
-        {/* Operating Cities */}
-        <div>
-          <h3 className="text-[18px] lg:text-[20px] 
+            {/* Operating Cities */}
+            <div>
+              <h3 className="text-[18px] lg:text-[20px] 
                          leading-[135%] font-[700] 
                          mb-3 lg:mb-[14px]">
-            Operating Cities
-          </h3>
+                Operating Cities
+              </h3>
 
-          <div className="flex flex-wrap gap-[12px] lg:gap-[20px]">
-            {agent.operatingCities.map((city, idx) => (
-              <span
-                key={idx}
-                className="bg-[#75c222] text-white 
-                           px-5 lg:px-[40px] 
-                           py-2.5 lg:py-[15px] 
-                           rounded-[10px] 
-                           text-[14px] lg:text-[16px] 
-                           leading-[135%] font-[400]"
-              >
-                {city}
-              </span>
-            ))}
+              <div className="flex flex-wrap gap-[12px] lg:gap-[20px]">
+                {agentData?.operating_cities?.length > 0 ? (
+                  agentData.operating_cities.map((city, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-[#75c222] text-white 
+                       px-5 lg:px-[40px] 
+                       py-2.5 lg:py-[15px] 
+                       rounded-[10px] 
+                       text-[14px] lg:text-[16px] 
+                       leading-[135%] font-[400]"
+                    >
+                      {city}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-gray-400 text-[14px] lg:text-[16px]">
+                    Operating cities not available
+                  </span>
+                )}
+              </div>
+            </div>
+
           </div>
         </div>
-
-      </div>
-    </div>
 
 
         {/* Right Side - Contact Form */}
         <div
-  className={`${roleStyles[agentData.role] || "bg-white"}
+          className={`${roleStyles[agentData?.agent_type] || "bg-white"}
              py-4 sm:py-[18px] 
              px-4 sm:px-6 lg:px-[37px] 
              rounded-[20px] lg:rounded-[24px]
              shadow-[0_4px_8.1px_0_rgba(106,101,101,0.25)]`}
->
-  <form className="space-y-4 sm:space-y-[20px]">
+        >
+          <form className="space-y-4 sm:space-y-[20px]">
 
-    {/* Heading */}
-    <div>
-      <h3 className="host-grotesk 
+            {/* Heading */}
+            <div>
+              <h3 className="host-grotesk 
                      text-[18px] lg:text-[20px] 
                      font-[700] leading-[135%] 
                      mb-1">
-        Contact Agent
-      </h3>
-      <p className="host-grotesk 
+                Contact Agent
+              </h3>
+              <p className="host-grotesk 
                     font-[500] 
                     text-[14px] lg:text-[16px] 
                     leading-[150%] 
                     text-[#AAA3A3]">
-        Get instant response • No brokerage
-      </p>
-    </div>
+                Get instant response • No brokerage
+              </p>
+            </div>
 
-    {/* Names */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
-      <label className="lexend 
+            {/* Names */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
+              <label className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
                         text-black 
                         sm:col-span-2">
-        Name
-      </label>
+                Name
+              </label>
 
-      <input
-        type="text"
-        name="firstName"
-        placeholder="First name"
-        required
-        className="w-full inter 
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First name"
+                required
+                className="w-full inter 
                    text-[14px] 
                    leading-[150%] font-[400]
                    bg-[#84cc16] text-black 
@@ -184,14 +195,14 @@ function Details({agentData}){
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-      />
+              />
 
-      <input
-        type="text"
-        name="lastName"
-        placeholder="Last name"
-        required
-        className="w-full inter 
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last name"
+                required
+                className="w-full inter 
                    text-[14px] 
                    leading-[150%] font-[400]
                    bg-[#84cc16] text-black 
@@ -201,26 +212,26 @@ function Details({agentData}){
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-      />
-    </div>
+              />
+            </div>
 
-    {/* Phone */}
-    <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-      <label className="lexend 
+            {/* Phone */}
+            <div className="flex flex-col space-y-2 sm:space-y-[10px]">
+              <label className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
                         text-black">
-        Mobile Number
-      </label>
+                Mobile Number
+              </label>
 
-      <input
-        type="tel"
-        name="phone"
-        placeholder="Your mobile number"
-        required
-        pattern="[0-9]{10}"
-        title="Enter 10 digit mobile number"
-        className="w-full inter 
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Your mobile number"
+                required
+                pattern="[0-9]{10}"
+                title="Enter 10 digit mobile number"
+                className="w-full inter 
                    text-[14px] leading-[150%] font-[400]
                    bg-[#84cc16] text-black 
                    px-4 sm:px-[30px] 
@@ -229,24 +240,24 @@ function Details({agentData}){
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-      />
-    </div>
+              />
+            </div>
 
-    {/* Email */}
-    <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-      <label className="lexend 
+            {/* Email */}
+            <div className="flex flex-col space-y-2 sm:space-y-[10px]">
+              <label className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
                         text-black">
-        Email
-      </label>
+                Email
+              </label>
 
-      <input
-        type="email"
-        name="email"
-        placeholder="Your email"
-        required
-        className="w-full inter 
+              <input
+                type="email"
+                name="email"
+                placeholder="Your email"
+                required
+                className="w-full inter 
                    text-[14px] leading-[150%] font-[400]
                    bg-[#84cc16] text-black 
                    px-4 sm:px-[30px] 
@@ -255,24 +266,24 @@ function Details({agentData}){
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-      />
-    </div>
+              />
+            </div>
 
-    {/* Message */}
-    <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-      <label className="lexend 
+            {/* Message */}
+            <div className="flex flex-col space-y-2 sm:space-y-[10px]">
+              <label className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
                         text-black">
-        Message
-      </label>
+                Message
+              </label>
 
-      <textarea
-        name="message"
-        placeholder="Your message"
-        required
-        minLength={5}
-        className="w-full inter 
+              <textarea
+                name="message"
+                placeholder="Your message"
+                required
+                minLength={5}
+                className="w-full inter 
                    text-[14px] leading-[150%] font-[400]
                    bg-[#84cc16] text-black 
                    px-4 sm:px-[30px] 
@@ -283,13 +294,13 @@ function Details({agentData}){
                    resize-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-      />
-    </div>
+              />
+            </div>
 
-    {/* Button */}
-    <button
-      type="submit"
-      className="w-full host-grotesk 
+            {/* Button */}
+            <button
+              type="submit"
+              className="w-full host-grotesk 
                  bg-black text-[#6ABD11ED] 
                  text-[16px] lg:text-[18px]
                  leading-[135%]
@@ -297,12 +308,12 @@ function Details({agentData}){
                  rounded-[12px] sm:rounded-[15px]
                  font-semibold
                  shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
-    >
-      Send Enquiry
-    </button>
+            >
+              Send Enquiry
+            </button>
 
-  </form>
-</div>
+          </form>
+        </div>
       </div>
     </div>
   );

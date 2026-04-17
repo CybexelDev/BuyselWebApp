@@ -1,42 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StarRating from "../../../Components/StarRating/StarRating";
 import location from '../../../assets/images/icons/location.png'
+import { getAgents } from "../../../Api/userApi";
+import { useNavigate } from "react-router-dom";
 
-const agents = [
-    { id: 1, name: "Raja Real Estates", type: "Agent", location: "Ernakulam", rating: 4.5 },
-    { id: 2, name: "Menon Real Estates", type: "Premium Agent", location: "Trissur", rating: 3.5 },
-    { id: 3, name: "Arun Real Estates", type: "Elite Agent", image: "https://randomuser.me/api/portraits/men/32.jpg", location: "Palakkad", rating: 5 },
-    { id: 4, name: "Menon Real Estates", type: "Agent", location: "Ernakulam", rating: 4 },
-    { id: 5, name: "Raja Real Estates", type: "Agent", location: "Ernakulam", rating: 4.5 },
-    { id: 6, name: "Menon Real Estates", type: "Premium Agent", location: "Trissur", rating: 3.5 },
-    { id: 7, name: "Arun Real Estates", type: "Elite Agent", location: "Palakkad", rating: 5 },
-    { id: 8, name: "Menon Real Estates", type: "Agent", location: "Ernakulam", rating: 4 },
-     { id: 9, name: "Raja Real Estates", type: "Agent", location: "Ernakulam", rating: 4.5 },
-    { id: 10, name: "Menon Real Estates", type: "Premium Agent", location: "Trissur", rating: 3.5 },
-    { id: 11, name: "Arun Real Estates", type: "Elite Agent", image: "https://randomuser.me/api/portraits/men/32.jpg", location: "Palakkad", rating: 5 },
-    { id: 12, name: "Menon Real Estates", type: "Agent", location: "Ernakulam", rating: 4 },
-    { id: 13, name: "Raja Real Estates", type: "Agent", image: "https://randomuser.me/api/portraits/men/32.jpg", location: "Ernakulam", rating: 4.5 },
-    { id: 14, name: "Menon Real Estates", type: "Premium Agent", location: "Trissur", rating: 3.5 },
-    { id: 15, name: "Arun Real Estates", type: "Elite Agent", location: "Palakkad", rating: 5 },
-    { id: 16, name: "Menon Real Estates", type: "Agent", location: "Ernakulam", rating: 4 },
-];
+
 
 export default function AgentTabs() {
     const [activeTab, setActiveTab] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
+    const [agents, setAgents] = useState([]);
+    const navigate = useNavigate();
 
+    console.log(activeTab, "hahahahah bbbbbb bbbbbb");
+    
     const itemsPerPage = 12;
 
     const filteredAgents =
         activeTab === "All"
             ? agents
-            : agents.filter((agent) => agent.type === activeTab);
+            : agents.filter((agent) => agent.agent_type === activeTab);
 
     // Pagination Logic
     const totalPages = Math.max(1, Math.ceil(filteredAgents.length / itemsPerPage));
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentAgents = filteredAgents.slice(startIndex, endIndex);
+
+    useEffect(() => {
+        const getAgent = async () => {
+            const data = await getAgents({category: activeTab});
+            if (data) {
+                setAgents(data);
+            }
+        };
+        getAgent();
+    }, [activeTab]);
+
 
     return (
         <div className="bg-white min-h-screen p-2 sm:p-10">
@@ -63,27 +63,28 @@ export default function AgentTabs() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                 {currentAgents.map((agent) => (
                     <div
-                        key={agent.id}
+                        key={agent?.id}
+                        onClick={() => navigate(`/agent-detail/${agent.id}`)}
                         className="bg-white rounded-[23px] shadow-lg p-5 flex items-center gap-4 hover:shadow-2xl transition cursor-pointer"
                     >
 
                         <div className="w-[100px] h-[100px] rounded-full inter overflow-hidden flex items-center justify-center bg-black text-[#75c222] text-[36px]">
-                            {agent.image ? (
+                            {agent?.profile_image ? (
                                 <img
-                                    src={agent.image}
-                                    alt={agent.name}
+                                    src={agent?.profile_image}
+                                    alt={agent?.username}
                                     className="w-full h-full object-cover"
                                 />
                             ) : (
-                                agent.name.charAt(0)
+                                agent?.username?.charAt(0)
                             )}
                         </div>
 
                         <div>
-                            <h3 className="instrument-sans text-[18px] font-[500]">{agent.name}</h3>
-                            <StarRating rating={agent.rating} />
+                            <h3 className="instrument-sans text-[18px] font-[500]">{agent?.username}</h3>
+                            <StarRating rating={agent?.avg_rating} />
                             <p className="text-[#4B4040] text-sm flex items-center gap-1 mt-1 text-[15px] host-grotesk font-[500]">
-                                <img src={location} className="w-3.5" /> {agent.location}
+                                <img src={location} className="w-3.5" /> {agent?.city}
                             </p>
                         </div>
                     </div>

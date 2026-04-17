@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../../assets/images/logo/logo.png";
+
 import line from "../../../assets/images/header/line.png";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import './header.css'
+import './Header.css'
 
 
 import img from "../../../assets/images/carousel/he.png";
@@ -13,6 +14,7 @@ import flat from "../../../assets/images/propertDetail/flat.png";
 import phone from "../../../assets/images/propertDetail/phone.png";
 import seller from "../../../assets/images/propertDetail/seller.jpg";
 import { X } from "lucide-react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const HeaderDashboardProperty = ({ property }) => {
@@ -20,9 +22,21 @@ const HeaderDashboardProperty = ({ property }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const user = useSelector((state) => state.user);
+const agent = useSelector((state) => state.agent);
 
   const navigate = useNavigate()
+const handleBack = () => {
+  if (agent?.accessToken) {
+    return navigate("/agent/property");
+  }
 
+  if (user?.accessToken) {
+    return navigate("/ownerdashboard?tab=properties");
+  }
+
+  navigate("/");
+};
   const nextImage = () => {
     setCurrentIndex((prev) =>
       prev === property.images.length - 1 ? 0 : prev + 1,
@@ -70,7 +84,8 @@ const HeaderDashboardProperty = ({ property }) => {
   return (
     <div className="px-2 md:px-5 py-3 relative">
       <header className="mb-6 mt-4 flex items-start">
-            <button className="group flex items-center gap-2 text-gray-700 hover:text-[#74C122] transition-colors font-bold text-sm uppercase tracking-widest instrument-sans cursor-pointer" onClick={()=>navigate("/ownerdash?tab=properties")}>
+            <button className="group flex items-center gap-2 text-gray-700 hover:text-[#74C122] transition-colors font-bold text-sm uppercase tracking-widest instrument-sans cursor-pointer" 
+                onClick={handleBack}>
               <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform"  />
               Back to Properties
             </button>

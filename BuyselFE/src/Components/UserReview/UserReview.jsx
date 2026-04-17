@@ -1,37 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./userreview.css";
 import { FaStar } from "react-icons/fa";
+import Modal from "../Modal/Modal";
+import { Star } from "lucide-react";
+import { addReviewToServer } from "../../Api/userApi";
+import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
-function UserReview() {
-  const reviews = [
-    {
-      name: "Arun Kumar",
-      city: "Coimbatore",
-      rating: 5,
-      comment:
-        "The agent was extremely professional and helped me find the perfect home within my budget.",
-      image:
-        "https://i.pinimg.com/736x/8a/b4/8e/8ab48ee24a4e058c56ac63aa0d163273.jpg",
-    },
-    {
-      name: "Priya S",
-      city: "Salem",
-      rating: 4,
-      comment:
-        "Very transparent and trustworthy. Explained everything clearly and guided me well.",
-      image:
-        "https://i.pinimg.com/736x/8a/b4/8e/8ab48ee24a4e058c56ac63aa0d163273.jpg",
-    },
-    {
-      name: "Ramesh V",
-      city: "Tiruppur",
-      rating: 5,
-      comment:
-        "Excellent service! Helped me close the deal quickly and handled negotiations perfectly.",
-      image:
-        "https://i.pinimg.com/736x/8a/b4/8e/8ab48ee24a4e058c56ac63aa0d163273.jpg",
-    },
-  ];
+function UserReview({ review, id, triggerRefresh }) {
+
+  const [reviews, setReviews] = useState([])
+  const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  const [reviewss, setReviewss] = useState("");
+
+  // const { image, userName, userId, accessToken } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (review) {
+      setReviews(review);
+    }
+  }, [review])
+
+
+  const addReview = () => {
+    try {
+      addReviewToServer({ rating, review: reviewss, id }).then((response) => {  
+    
+        // alert(response?.message);
+        if (response) {
+          triggerRefresh(); 
+          
+        }
+      })
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+
 
   return (
     <div>
@@ -39,15 +48,13 @@ function UserReview() {
       <div className="my-15 px-[20px] md:px-[55px] xl:px-[30px] 2xl:px-[77px]">
         <div
           className="
-  grid gap-6
-  grid-cols-1
-  sm:grid-cols-2
-  md:grid-cols-2
-  lg:grid-cols-3
-  xl:grid-cols-4
-
-  place-items-center sm:place-items-stretch
-"
+            grid gap-6
+            grid-cols-1
+            sm:grid-cols-2
+            md:grid-cols-2
+            lg:grid-cols-3
+            xl:grid-cols-4
+            place-items-center sm:place-items-stretch"
         >
           <div className="text-center host-grotesk space-y-[10px]">
             <h3
@@ -62,7 +69,7 @@ function UserReview() {
               User Feedback
             </p>
 
-            <button className="jakarta font-[450] mt-3 text-[12px] leading-[100%] bg-[#84CC16] text-white rounded-[8px] py-[12px] px-8">
+            <button onClick={() => setOpen(true)} className="jakarta cursor-pointer font-[450] mt-3 text-[12px] leading-[100%] bg-[#84CC16] text-white rounded-[8px] py-[12px] px-8">
               Write a Review
             </button>
           </div>
@@ -75,24 +82,27 @@ function UserReview() {
               >
                 <div
                   className="user-review user-review-inner 
-     px-[23px] pt-[22px] pb-[70px]
-     flex flex-col h-full"
+                  px-[23px] pt-[22px] pb-[70px]
+                  flex flex-col h-full"
                 >
                   <div className="flex items-center justify-between mb-[21px]">
                     {/* Stars on the left */}
                     <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <span
-                          key={i}
-                          className={`text-[18px] ${
-                            i < review.rating
-                              ? "text-[#84cc16]"
-                              : "text-[#d1d1d1]"
-                          }`}
-                        >
-                          <FaStar />
-                        </span>
-                      ))}
+                     {[...Array(5)].map((_, i) => {
+  const starNumber = i + 1;
+
+  return (
+    <span key={i} className="text-[18px] text-[#84cc16]">
+      {review?.rating >= starNumber ? (
+        <FaStar /> // full
+      ) : review?.rating >= starNumber - 0.5 ? (
+        <FaStarHalfAlt /> // half
+      ) : (
+        <FaRegStar /> // empty
+      )}
+    </span>
+  );
+})}
                     </div>
 
                     {/* SVG on the right */}
@@ -114,7 +124,7 @@ function UserReview() {
 
                   {/* Comment */}
                   <p className="host-grotesk text-[16px] leading-[150%] text-[#1A1A1A] font-[500] leading-[150%] ">
-                    {review.comment}
+                    {review?.review}
                   </p>
 
                   <div className="flex mt-auto mb-3 justify-end">
@@ -132,7 +142,7 @@ function UserReview() {
                         />
                       </svg>
                       <span className="host-grotesk text-[12px] font-[500] text-[#9B9B9B]">
-                        15 Likes
+                        {review?.total_likes} Likes
                       </span>
                     </div>
                   </div>
@@ -141,26 +151,26 @@ function UserReview() {
 
               <div
                 className="
-    absolute
-    bottom-2 sm:bottom-0
-    left-11
-    sm:left-11
-    md:left-11
-    lg:left-11
-    2xl:left-11
-     flex items-center gap-[14px]   py-1  rounded-full overflow-visible"
+                  absolute
+                  bottom-2 sm:bottom-0
+                  left-11
+                  sm:left-11
+                  md:left-11
+                  lg:left-11
+                  2xl:left-11
+                  flex items-center gap-[14px]   py-1  rounded-full overflow-visible"
               >
                 <img
-                  src={review.image}
-                  alt={review.name}
+                  src={review?.user_image}
+                  alt={review?.user_name}
                   className="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] rounded-full object-cover"
                 />
                 <div className="host-grotesk ">
                   <p className="text-[15px] sm:text-[20px] font-[500] leading-[135%] whitespace-nowrap w-auto">
-                    {review.name}
+                    {review?.user_name}
                   </p>
                   <p className="text-[10px] sm:text-[14px] font-[500] leading-[150%] text-[#9B9B9B]">
-                    21/12/2025
+                    {review?.created_at}
                   </p>
                 </div>
               </div>
@@ -168,6 +178,75 @@ function UserReview() {
           ))}
         </div>
       </div>
+
+
+      <Modal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        title="Write your review"
+      >
+        <div className="flex justify-center gap-1 mb-4">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <div
+              key={star}
+              className="relative cursor-pointer"
+              onMouseLeave={() => setHover(0)}
+            >
+              {/* LEFT HALF */}
+              <div
+                className="absolute left-0 top-0 w-1/2 h-full z-10"
+                onMouseEnter={() => setHover(star - 0.5)}
+                onClick={() => setRating(star - 0.5)}
+              />
+
+              {/* RIGHT HALF */}
+              <div
+                className="absolute right-0 top-0 w-1/2 h-full z-10"
+                onMouseEnter={() => setHover(star)}
+                onClick={() => setRating(star)}
+              />
+
+              {/* STAR UI */}
+              <Star
+                size={30}
+                className={`transition ${(hover || rating) >= star
+                    ? "fill-yellow-400 text-yellow-400"
+                    : (hover || rating) >= star - 0.5
+                      ? "fill-yellow-400/10 text-yellow-400"
+                      : "text-gray-300"
+                  }`}
+              />
+            </div>
+          ))}
+
+          <p className="ml-2 mt-1">{rating}</p>
+        </div>
+
+        <textarea
+          placeholder="Write your review..."
+          value={reviewss}
+          onChange={(e) => setReviewss(e.target.value)}
+          className="w-full h-28 p-3 border rounded-lg outline-none focus:ring-2 focus:ring-[#6ABD11] resize-none"
+        />
+
+        {/* BUTTON */}
+        <button
+          onClick={() => {
+            if (!rating || !reviewss.trim()) {
+              alert("Please add rating and review");
+              return;
+            }
+              addReview()
+            console.log({ rating, reviewss });
+            setOpen(false);
+          }}
+          className="bg-[#6ABD11] text-white px-4 py-2 rounded-lg mt-4 w-full"
+        >
+          Submit
+        </button>
+
+      </Modal>
+
     </div>
   );
 }

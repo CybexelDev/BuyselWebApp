@@ -29,8 +29,7 @@ const Home = () => {
     <About />
     <DiscoverLayout/>
     <Review />
-        <Plan />
-
+    <Plan />
     <FAQSection/>
     <AppPromoBanner/>
     <Footer/>

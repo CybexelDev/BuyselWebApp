@@ -8,7 +8,10 @@ import blog6 from "../../../assets/images/blog/blog6.png"
 import blog7 from "../../../assets/images/blog/blog7.png"
 import blog8 from "../../../assets/images/blog/blog8.png"
 
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
+import { getBlogs,searchBlogs, getBlogsByCategory} from "../../../Api/userApi";
 const categories = [
   "Residential",
   "Commercial",
@@ -16,142 +19,82 @@ const categories = [
   "Rental",
   "Industrial",
 ];
-const blogs = [
-  {
-    id: 1,
-    title: "Why do many sellers hesitate to list their properties online?",
-    tag: "Property Tips",
-    category: "Residential",
-    date: "Dec 1, 2023",
-    image: blog3
-  },
-  {
-    id: 2,
-    title: "Why does property renting usually take weeks or months?",
-    tag: "Property Tips",
-    category: "Rental",
-    date: "Dec 3, 2023",
-    image: blog4
-  },
-  {
-    id: 3,
-    title: "What challenges do brokers face in the real estate market?",
-    tag: "Property Tips",
-    category: "Commercial",
-    date: "Dec 4, 2023",
-    image: blog5
-  },
-  {
-    id: 4,
-    title: "Why do sellers struggle to find genuine buyers?",
-    tag: "Property Tips",
-    category: "Residential",
-    date: "Dec 5, 2023",
-    image: blog6
-  },
-  {
-    id: 5,
-    title: "Rising Brokerage Fees Affect Both Buyers and Sellers",
-    tag: "Property Tips",
-    category: "Commercial",
-    date: "Dec 6, 2023",
-    image: blog7
-  },
-  {
-    id: 6,
-    title: "What are the limitations of relying only on local brokers?",
-    tag: "Property Tips",
-    category: "Industrial",
-    date: "Dec 8, 2023",
-    image: blog8
-  },
 
-  // Repeat pattern
-  {
-    id: 7,
-    title: "Why do many sellers hesitate to list their properties online?",
-    tag: "Property Tips",
-    category: "Plots & Land",
-    date: "Dec 1, 2023",
-    image: blog3
-  },
-  {
-    id: 8,
-    title: "Why does property renting usually take weeks or months?",
-    tag: "Property Tips",
-    category: "Rental",
-    date: "Dec 3, 2023",
-    image: blog4
-  },
-  {
-    id: 9,
-    title: "What challenges do brokers face in the real estate market?",
-    tag: "Property Tips",
-    category: "Commercial",
-    date: "Dec 4, 2023",
-    image: blog5
-  },
-  {
-    id: 10,
-    title: "Why do sellers struggle to find genuine buyers?",
-    tag: "Property Tips",
-    category: "Residential",
-    date: "Dec 5, 2023",
-    image: blog6
-  },
-  {
-    id: 11,
-    title: "Rising Brokerage Fees Affect Both Buyers and Sellers",
-    tag: "Property Tips",
-    category: "Industrial",
-    date: "Dec 6, 2023",
-    image: blog7
-  },
-  {
-    id: 12,
-    title: "What are the limitations of relying only on local brokers?",
-    tag: "Property Tips",
-    category: "Plots & Land",
-    date: "Dec 8, 2023",
-    image: blog8
-  },
-];
 
-const featuredBlogs = [
-  {
-    id: 1,
-    title: "Why do many sellers hesitate to list their properties online?",
-    description:
-"Some sellers believe that listing properties online is difficult or necessitates marketing expertise. Some are concerned...",
-     tag: "Property Tips",
-    date: "Dec 3, 2025",
-    image:
-      blog1,
-  },
-  {
-    id: 2,
-    title: "Why does property renting usually take weeks or months?",
-    description:
-      "A lot of sellers rely on brokers, who might not always put their interests first. Newspaper or internet classified ads...",
-    tag: "Property Tips",
-    date: "Dec 3, 2025",
-    image:
-      blog2,
-  },
-];
 
-const BlogsListing = () => {
+const BlogsListing = ({ searchQuery }) => {
   const [activeCategory, setActiveCategory] = useState(null);
 const [currentPage, setCurrentPage] = useState(1);
  const blogGridRef=useRef(null)
-const filteredBlogs = activeCategory? blogs.filter(
-  (blog) => blog.category === activeCategory
-):blogs ;
+ const isSearching = searchQuery?.trim();
+ const navigate=useNavigate()
+ const [blogs, setBlogs] = useState([]);
+useEffect(() => {
+  const fetchBlogs = async () => {
+    let res;
+
+    if (isSearching) {
+      res = await searchBlogs(searchQuery);
+    } else if (activeCategory) {
+      res = await getBlogsByCategory(activeCategory);
+    } else {
+      res = await getBlogs();
+    }
+
+    if (!res || res.length === 0) {
+      setBlogs([]);
+      return;
+    }
+
+    const formatted = res.map((item, index) => ({
+      id: index + 1,
+      title: item.blog_head,
+      description: item.card_paragraph,
+      date: item.date,
+      image: item.image,
+      tag: "Property Tips",
+      category: activeCategory || "All" // optional
+    }));
+
+    setBlogs(formatted);
+  };
+
+  fetchBlogs();
+}, [searchQuery, activeCategory]);
+
+useEffect(() => {
+  setCurrentPage(1);
+}, [searchQuery, activeCategory]);
+
+const filteredBlogs = blogs;
+// 🔥 featured from filtered (not from all blogs)
+let featuredBlogs = [];
+let remainingBlogs = [];
+
+if (!isSearching) {
+  if (filteredBlogs.length > 2) {
+    featuredBlogs = filteredBlogs.slice(0, 2);
+    remainingBlogs = filteredBlogs.slice(2);
+  } else {
+    // 🔥 if less than 2 → show everything in grid
+    featuredBlogs = [];
+    remainingBlogs = filteredBlogs;
+  }
+} else {
+  remainingBlogs = filteredBlogs;
+}
+// 🔥 pagination on remaining blogs
 const blogsPerPage = 6;
-const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
+const totalPages = Math.ceil(remainingBlogs.length / blogsPerPage);
+
 const indexOfLastBlog = currentPage * blogsPerPage;
 const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);  return (
+
+const currentBlogs = remainingBlogs.slice(
+  indexOfFirstBlog,
+  indexOfLastBlog
+);
+return (
   <div className="bg-white min-h-screen px-4 sm:px-6 md:px-9 py-2">
 
     {/* ================= CATEGORIES ================= */}
@@ -198,8 +141,17 @@ onClick={() => {
       ))}
     </div>
 
-
-    {/* ================= FEATURED ================= */}
+{isSearching && currentBlogs.length === 0 && (
+  <div className="text-center py-20">
+    <h2 className="text-xl font-semibold text-gray-700">
+      No results found 😕
+    </h2>
+    <p className="text-gray-500 mt-2">
+      Try searching something else
+    </p>
+  </div>
+)}
+{!isSearching && featuredBlogs.length >= 2 && (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
 
       {/* LEFT */}
@@ -219,7 +171,7 @@ onClick={() => {
           </h2>
 
           <p className="text-[#787272] font-normal text-[15px] sm:text-[16px] host-grotesk">
-            {featuredBlogs[0].description}
+{featuredBlogs[0]?.description?.slice(0, 100) + "..."}       
           </p>
         </div>
 
@@ -254,11 +206,12 @@ onClick={() => {
           </h2>
 
           <p className="text-[#787272] font-normal text-[15px] sm:text-[16px] host-grotesk">
-            {featuredBlogs[1].description}
-          </p>
+{featuredBlogs[1]?.description?.slice(0, 100) + "..."}          </p>
         </div>
       </div>
     </div>
+
+)}
 
 
     {/* ================= BLOG GRID ================= */}
@@ -268,6 +221,7 @@ onClick={() => {
         <div
           key={blog.id}
           className="rounded-[30px] lg:rounded-[40px] overflow-hidden cursor-pointer"
+          onClick={()=>navigate(`/blog/${blog.id}`)}
         >
           <img
             src={blog.image}

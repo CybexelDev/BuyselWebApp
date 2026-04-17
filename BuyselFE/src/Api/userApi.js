@@ -1,7 +1,10 @@
 import axios from "axios";
 import api from "./axiosInstance";
 
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+// const userId = localStorage.getItem("id");
 
 export const userRegister = async (name, email, mobail, password, confirm_password) => {
     const formData = new FormData();
@@ -66,7 +69,7 @@ export const reSentOtp = async (email) => {
                 "Content-Type": "multipart/form-data",
             },
         });
-
+        
         if (result.data.message == "OTP resent successfully") {
             return result.data;
         } else {
@@ -101,9 +104,7 @@ export const userLogin = async (username, password) => {
         ) {
             return result.data;
         }
-
         return false;
-
     } catch (error) {
         console.error("API error:", error);
         return false;
@@ -147,8 +148,16 @@ export const sendFacebookToken = async (accessToken) => {
 
 export const getProfile = async () => {
     try {
-        const result = await api.get(`${BASE_URL}profile/`);
 
+         const userId = localStorage.getItem("id");
+        
+        const result = await api.get(`${BASE_URL}profile/`, {
+            params: {
+                id: userId,
+            },
+        });
+        console.log(result, "profile data 77777777777777777777");
+     
         return result.data;
 
     } catch (error) {
@@ -158,9 +167,15 @@ export const getProfile = async () => {
 
 
 export const getProperty = async (filters) => {
+
     try {
+         const userId = localStorage.getItem("id");
+
         const result = await api.get(`${BASE_URL}properties/`, {
-            params: filters,
+            params: {
+                ...filters,
+                id: userId,
+            },
         });
         console.log(result, "Filtered properties 777777777777");
         return result.data;
@@ -172,15 +187,150 @@ export const getProperty = async (filters) => {
 
 export const getWishlist = async () => {
     try {
-        const result = await api.get(`wishlist/`);
-
+        const userId = localStorage.getItem("id");
+        const result = await api.get(`wishlist/`, {
+            params: {
+                id: userId,
+            },
+        });
         return result.data;
-
     } catch (error) {
         console.log(error);
     }
 }
 
+ export const sendEnquiry = async (formData) => {
+  try {
+    const data = new FormData();
+
+    data.append("name", formData.name);
+    data.append("contact", formData.contact);        
+    data.append("pin_code", formData.pincode);       
+    data.append("messages_text", formData.message);   
+
+    const res = await axios.post(
+      `${BASE_URL}agent/inbox-message/`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return res.data;
+
+  } catch (error) {
+    console.error("enquiry error:", error);
+    return false;
+  }
+};
+
+export const getPropertyDetail = async (id) => { 
+    try {
+        const result = await api.get(`${BASE_URL}property/${id}/`, {
+            params: {
+                id: userId,
+            },
+        });
+        return result.data;
+    } catch (error) {
+        console.log("Property detail error:", error);
+        return false;
+    }
+}
+
+export const sendPropertyEnquiry = async (formData) => {
+  try {
+    const res = await api.post(
+      `${BASE_URL}enquiries/`,
+      formData
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Enquiry error:", error);
+    return false;
+  }
+};
+
+
+export const sendContact = async (formData) => {
+  try {
+    const res = await axios.post(`${BASE_URL}contact/`, formData);
+    return res.data;
+  } catch (error) {
+    console.error("Contact error:", error);
+    return false;
+  }
+};
+
+export const getAgentPlanDetails = async () => {
+  try {
+    const res = await api.get(`${BASE_URL}agent/combined-data/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getRelatedProperties = async (id) => {
+  try {
+    const userId = localStorage.getItem("id");
+    const res = await api.get(`${BASE_URL}property/${id}/related/`, {
+      params: {
+        id: userId,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const getBlogs = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+
+export const searchBlogs = async (query) => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/search/?name=${query}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+export const getBlogsByCategory = async (category) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}blogs/by-category/?category=${category.toLowerCase()}`
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const getBlogById = async (id) => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/${id}/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 export const addToWishlist = async ({ id }) => {
     try {
@@ -192,8 +342,6 @@ export const addToWishlist = async ({ id }) => {
             },
         });
 
-        // setFetchedData(result); // optional — if you're storing it in state
-
         return result.data;
     } catch (error) {
         console.log("Error in postLoginNumber:", error);
@@ -203,17 +351,89 @@ export const addToWishlist = async ({ id }) => {
 
 export const removeToWishlist = async ({ id }) => {
     try {
-        // const formData = new FormData();
-        // formData.append('product_id', id);
         const result = await api.delete(`${BASE_URL}wishlist/`, {
             data: {
-                property_id: id, // ✅ your key
+                property_id: id, 
             },
         });
-        // setFetchedData(result); // optional — if you're storing it in state
         return result.data;
     } catch (error) {
         console.log("Error in postLoginNumber:", error);
         throw error;
+    }
+};
+
+
+export const getFeatured = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}featured/`);
+    console.log(res.data, "featured data from api 77777777777777777777");
+    return res.data;
+    
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export const getAgents = async (category) => {
+
+    try {
+        const result = await api.get(`${BASE_URL}agents/listing/`, {
+            params: category,
+        });
+        console.log(result, "agents list 777  777777777");
+        return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getReviews = async (agentId) => {
+  try {
+    const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);
+    console.log(res.data, "featured data from api 77777777777777777777");
+    return res.data;
+    
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export const getAgentsDetails = async (id) => {
+    try {
+        const result = await api.get(`${BASE_URL}agent/detail/${id}/`, );
+        
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const addReviewToServer = async ({ rating, review, id }) => {
+    try {
+        const formData = new FormData();
+        formData.append("rating", rating);
+        formData.append("review", review);
+
+        const res = await api.post(
+            `${BASE_URL}agents/reviews/submit/${id}/`,
+            formData
+        );
+
+        console.log(res, "SUCCESS RESPONSE");
+        return res.data;
+
+    } catch (error) {
+        if (error.response?.status === 400) {
+    alert("You already reviewed this agent");
+  }
+        console.log("ERROR:", error.response?.data || error.message);
+        return null;
     }
 };

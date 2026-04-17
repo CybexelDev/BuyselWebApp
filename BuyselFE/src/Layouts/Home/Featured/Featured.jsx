@@ -2,18 +2,28 @@ import React, { useEffect, useState, useRef } from "react";
 import "./featured.css";
 import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
 import Featuredcard from "../../../Components/PropertyCard/Propertycard";
-
 import { properties } from "../../../Constance/constance";
+import { addToWishlist, getFeatured, removeToWishlist } from "../../../Api/userApi";
+import { Heart } from "lucide-react";
 
-const Featured = ({title="Featured Listings",subTitle="Handpicked properties from trusted owners and agents."}) => {
+const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properties from trusted owners and agents.", data = null }) => {
   const [featured, setFeatured] = useState([]);
+
+  console.log(featured, "featured dataaaaammmm");
+
 
   const sliderRef = useRef(null);
 
-
   useEffect(() => {
-      const featuredProperties = properties.filter(prop => prop.featured);
-     setFeatured(featuredProperties)
+    const fetchData = async () => {
+      const data = await getFeatured();
+
+      if (data) {
+        setFeatured(data);
+      }
+    };
+
+    fetchData();
   }, []);
 
 
@@ -36,6 +46,34 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
     }
   };
 
+
+  const addWishlist = (id, e) => {
+    e.stopPropagation();
+
+    addToWishlist({ id });
+
+    setFeatured((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, is_wishlisted: true }
+          : item
+      )
+    );
+  };
+
+  const removeWishlist = (id, e) => {
+    e.stopPropagation();
+    removeToWishlist({ id });
+
+    setFeatured((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, is_wishlisted: false }
+          : item
+      )
+    );
+  };
+
   return (
     <div className="pt-5 px-3 relative">
       <div className="featured-cta-container px-2 sm:px-6 md:px-10 lg:px-14">
@@ -44,7 +82,7 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
         <div className="featured-cta-logo-container">
           <div className="flex flex-col items-center justify-center instrument-sans pb-0 sm:pb-1">
             <h2 className="font-[600] text-[16px] sm:text-[24px] text-center">
-            {title}
+              {title}
             </h2>
             <p className="font-[500] text-[8px] sm:text-[16px] text-[#a79a9a] text-center">
               {subTitle}
@@ -63,7 +101,21 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
                 key={property.id}
                 className="flex-shrink-0 w-[311px] snap-start"
               >
-                <Featuredcard property={property} />
+                <Featuredcard
+                  click={(e) =>
+                    property.is_wishlisted
+                      ? removeWishlist(property.id, e)
+                      : addWishlist(property.id, e)
+                  }
+                  wishlistIcon={property.is_wishlisted ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
+                      <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
+                    </svg>
+                  ) : (
+                    <Heart size={13} fill="none" stroke="black" className="scale-100" />
+                  )}
+                  property={property}
+                />
               </div>
             ))}
           </div>
@@ -71,7 +123,6 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
 
 
         <div className="flex items-center justify-between w-full px-4 sm:px-0 sm:pl-4 pt-4 sm:pt-6">
-
 
           <button className="instrument-sans flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black pl-1">
             Explore More
@@ -85,7 +136,7 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
 
             <button
               onClick={scrollPrev}
-            className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px]
+              className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px]
               flex items-center justify-center rounded-full bg-black text-white
               shadow-[0_3px_5px_rgba(0,0,0,0.45)]"
             >
@@ -94,7 +145,7 @@ const Featured = ({title="Featured Listings",subTitle="Handpicked properties fro
 
             <button
               onClick={scrollNext}
-            className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px]
+              className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px]
               flex items-center justify-center rounded-full bg-black text-white
               shadow-[0_3px_5px_rgba(0,0,0,0.45)]"
             >

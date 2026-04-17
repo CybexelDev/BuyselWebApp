@@ -34,8 +34,9 @@ const UserForm = ({ setSignup }) => {
           }
         })
 
-         localStorage.setItem('accessToken', response?.access);
+          localStorage.setItem('accessToken', response?.access);
           localStorage.setItem('refreshToken', response?.refresh);
+          localStorage.setItem('id', response?.user?.id);
 
         navigate('/')
 
@@ -67,8 +68,9 @@ const UserForm = ({ setSignup }) => {
           }
         })
 
-        localStorage.setItem('accessToken', response?.access);
+         localStorage.setItem('accessToken', response?.access);
          localStorage.setItem('refreshToken', response?.refresh);
+         localStorage.setItem('id', response?.user?.id);
 
         navigate("/");
         console.log(response, "Login successs and data sented to login component");

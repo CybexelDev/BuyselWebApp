@@ -80,7 +80,17 @@ const Header = ({ setParentFilters }) => {
       )
     }
   ];
-
+<style>
+{`
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+`}
+</style>
   return (
     <div className="md:p-5 p-2 relative ">
       <Navbar />
@@ -99,9 +109,14 @@ const Header = ({ setParentFilters }) => {
         </div>
 
         {/* CATEGORY TABS - Now properly scrollable inside the box on mobile */}
-        <div className="flex justify-center mt-4 lg:mt-6 mb-2 lg:mb-4 px-2">
-          <div className="bg-[#6fba19] w-fit lg:w-[495px] justify-between rounded-full flex p-1 gap-1 px-1 overflow-x-auto whitespace-nowrap">
-            {categories.map((item) => (
+        <div className="flex justify-center mt-4 lg:mt-6 mb-5 lg:mb-4 px-2">
+<div
+  className="bg-[#6fba19] w-fit lg:w-[495px] justify-between rounded-full flex p-1 gap-1 px-1 overflow-x-auto whitespace-nowrap"
+  style={{
+    scrollbarWidth: "none",
+    msOverflowStyle: "none"
+  }}
+>            {categories.map((item) => (
               <button
                 key={item.name}
                 onClick={() => setActiveCategory(item.name)}

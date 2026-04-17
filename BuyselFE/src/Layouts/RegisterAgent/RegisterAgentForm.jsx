@@ -1,8 +1,62 @@
 import React from "react";
-import SelectField from "../../Components/Select/CustomSelect";
+import { useState,useEffect } from "react";
+import SelectField from "../../Components/Select/SelectField2";
 import { Layers } from "lucide-react";
+import { getAgentPlanDetails } from "../../Api/userApi";
+import { registerAgent } from "../../Api/agentsApi";
 
 const AgentRegistration = ({ formData, handleChange, setFormData }) => {
+  const [agentTypes, setAgentTypes] = useState([]);
+const [plans, setPlans] = useState([]);
+const [filteredPlans, setFilteredPlans] = useState([]);
+
+useEffect(() => {
+  const fetchMeta = async () => {
+    const res = await getAgentPlanDetails();
+
+    if (res) {
+      setAgentTypes(res.agent_types);
+      setPlans(res.plans);
+    }
+  };
+
+  fetchMeta();
+}, []);
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const payload = {
+    full_name: formData.username,
+    email: formData.email,
+    phone_number: formData.phone,
+    password: formData.password,
+    city: formData.city,
+    pin_code: formData.pincode,
+    agent_type: formData.agent_type,
+    plan_id: formData.plan_id,
+    address: formData.address
+  };
+
+  const res = await registerAgent(payload);
+
+  if (res) {
+    alert("Registered ✅");
+  } else {
+    alert("Failed ❌");
+  }
+};
+
+const handleAgentTypeChange = (val) => {
+  setFormData({ ...formData, agent_type: val, plan_id: "" });
+
+  const filtered = plans.filter(
+    (p) => p.agent_type === val
+  );
+
+  setFilteredPlans(filtered);
+};
   return (
     <div className="flex-1 bg-white rounded-xl p-8 sm:p-12 lg:px-[150px] lg:py-10 mt-[-50px]">
 
@@ -11,6 +65,8 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
       </h2>
 
       {/* Inputs */}
+      <form onSubmit={handleSubmit}>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-6 sm:mt-8">
 
         <Input
@@ -60,24 +116,26 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
       {/* Select Fields */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
 
-        <SelectField
-          label="Agent Type"
-          options={["Individual Agent", "Broker", "Agency"]}
-          value={formData.agentType}
-          onChange={(val) =>
-            setFormData({ ...formData, agentType: val })
-          }
-        />
-
-        <SelectField
-          label="Plan"
-          options={["Basic Plan", "Pro Plan", "Premium Plan"]}
-          value={formData.plan}
-          onChange={(val) =>
-            setFormData({ ...formData, plan: val })
-          }
-        />
-
+      <SelectField
+  label="Agent Type"
+  options={agentTypes.map((item) => ({
+    label: item.name,
+    value: item.id
+  }))}
+  value={formData.agent_type}
+  onChange={handleAgentTypeChange}
+/>
+       <SelectField
+  label="Plan"
+  options={filteredPlans.map((item) => ({
+    label: item.name,
+    value: item.id
+  }))}
+  value={formData.plan_id}
+  onChange={(val) =>
+    setFormData({ ...formData, plan_id: val })
+  }
+/>
       </div>
 
       {/* Address */}
@@ -110,7 +168,7 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
           Submit Registration
         </button>
       </div>
-
+</form>
     </div>
   );
 };

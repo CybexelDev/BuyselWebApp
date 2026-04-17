@@ -52,6 +52,7 @@ const OtpForm = ({ email }) => {
 
         localStorage.setItem('accessToken', data?.access);
         localStorage.setItem('refreshToken', data?.refresh);
+        localStorage.setItem('id', data?.user?.id);
 
         navigate('/')
       }
