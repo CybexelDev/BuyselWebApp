@@ -163,24 +163,6 @@ export const sendFacebookToken = async (accessToken) => {
     }
 };
 
-export const getProfile = async () => {
-    try {
-
-         const userId = localStorage.getItem("id");
-        
-        const result = await api.get(`${BASE_URL}profile/`, {
-            params: {
-                id: userId,
-            },
-        });
-        console.log(result, "profile data 77777777777777777777");
-     
-        return result.data;
-
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 
 export const getProperty = async (filters) => {
