@@ -171,7 +171,7 @@ const addWishlist = (id) => {
                   key={p}
                   onClick={() => setPage(p)}
                   className={`px-3 py-1 rounded-md text-[10px] sm:text-[14px] font-medium cursor-pointer
-        ${page === p
+                     ${page === p
                       ? "bg-[#6ABD11ED] text-white shadow"
                       : "text-gray-900 hover:bg-gray-100"
                     }`}
@@ -181,7 +181,6 @@ const addWishlist = (id) => {
               );
             });
           })()}
-
 
 
           <button

@@ -8,7 +8,7 @@ import Navbar from "../../../Components/Navbar/Navbar";
 
 //start
 
-const Header = ({ setParentFilters }) => {
+const Header = ({ setParentFilters, onchange }) => {
   const [activeTab, setActiveTab] = useState("Rent");
   const [activeCategory, setActiveCategory] = useState("Residential");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -110,13 +110,12 @@ const Header = ({ setParentFilters }) => {
 
         {/* CATEGORY TABS - Now properly scrollable inside the box on mobile */}
         <div className="flex justify-center mt-4 lg:mt-6 mb-5 lg:mb-4 px-2">
-<div
-  className="bg-[#6fba19] w-fit lg:w-[495px] justify-between rounded-full flex p-1 gap-1 px-1 overflow-x-auto whitespace-nowrap"
-  style={{
-    scrollbarWidth: "none",
-    msOverflowStyle: "none"
-  }}
->            {categories.map((item) => (
+        <div className="bg-[#6fba19] w-fit lg:w-[495px] justify-between rounded-full flex p-1 gap-1 px-1 overflow-x-auto whitespace-nowrap"
+                  style={{
+                    scrollbarWidth: "none",
+                    msOverflowStyle: "none"
+                  }}
+                >   {categories.map((item) => (
               <button
                 key={item.name}
                 onClick={() => setActiveCategory(item.name)}
@@ -170,6 +169,7 @@ const Header = ({ setParentFilters }) => {
           <div className="flex-1 flex justify-center w-full lg:w-auto px-2 xl:px-0">
             <div className="flex items-center bg-[#CEBEBE47] rounded-[17px] px-5 h-[48px] xl:h-[53px] w-full xl:w-[700px] xl:-mr-15 border-[0.5px] border-[#EAEAEA] poppins ">
               <input
+               onChange={onchange}
                 type="text"
                 placeholder="What are you looking for?"
                 className="flex-1 bg-transparent outline-none text-[12px] font-[400%]"

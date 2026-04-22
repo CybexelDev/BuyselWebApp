@@ -256,11 +256,7 @@ export const clearWishlist = async () => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await api.get(`${BASE_URL}property/${id}/`, {
-            params: {
-                id: userId,
-            },
-        });
+        const result = await api.get(`${BASE_URL}property/${id}/`);
         return result.data;
     } catch (error) {
         console.log("Property detail error:", error);
@@ -305,12 +301,7 @@ export const getAgentPlanDetails = async () => {
 
 export const getRelatedProperties = async (id) => {
   try {
-    const userId = localStorage.getItem("id");
-    const res = await api.get(`${BASE_URL}property/${id}/related/`, {
-      params: {
-        id: userId,
-      },
-    });
+    const res = await api.get(`${BASE_URL}property/related/${id}/`);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -547,3 +538,20 @@ export const postComment = async (agentId, data) => {
     return false;
   }
 };
+
+
+export const searchProperties = async (query) => {
+  try {
+    const res = await api.get(`properties/search/?label=${query}`);
+    if (res) {
+      return res.data.data;
+      console.log(res.data, "Search result from API 77777777777777777777");
+      
+    }   
+    
+  } catch (error) {
+     console.log("Search error:", error);
+     return [];
+  }
+
+  }
