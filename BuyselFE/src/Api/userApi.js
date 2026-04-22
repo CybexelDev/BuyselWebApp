@@ -211,3 +211,18 @@ export const agentContactForm = async(contactData)=>{
         return false
     }
 }
+
+
+export const getTestimonial= async () => {
+  try {
+const result = await axios.get(`${BASE_URL}testimonial/list/`);
+    if (result.data?.data) {
+      return result.data.data;
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("testimonial not found:", error);
+    return [];
+  }
+};

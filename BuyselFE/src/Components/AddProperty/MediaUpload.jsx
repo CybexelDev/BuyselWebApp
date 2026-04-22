@@ -1,37 +1,45 @@
 import React, { useRef } from "react";
 
-function MediaUpload({ formData, setFormData }) {
+function MediaUpload({ formData, setFormData, errors }) {
   const fileInputRef = useRef(null);
 
-  const updateFiles = (key, files) => {
-    const newFiles = Array.from(files);
+const updateFiles = (files) => {
+  const newFiles = Array.from(files).map((file) => ({
+    file,
+    preview: URL.createObjectURL(file),
+  }));
 
-    setFormData((prev) => {
-      const totalFiles = [...prev.images, ...newFiles];
+  const totalCount = formData.images.length + newFiles.length;
 
-      if (totalFiles.length > 10) {
-        alert("Maximum 10 images allowed");
-        return prev;
-      }
+  if (totalCount > 10) {
+    alert("Maximum 10 images allowed");
+    return;
+  }
 
-      return {
-        ...prev,
-        images: totalFiles,
-      };
-    });
-  };
+  setFormData((prev) => ({
+    ...prev,
+    images: [...prev.images, ...newFiles],
+  }));
+};
 
-  const handleDrop = (e, key) => {
+  const handleDrop = (e) => {
     e.preventDefault();
-    updateFiles(key, e.dataTransfer.files);
+    updateFiles(e.dataTransfer.files);
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
+  const getImageSrc = (item) => {
+  if (typeof item === "string") return item; // ✅ API image
+  if (item.preview) return item.preview;     // ✅ uploaded image
+  if (item.file) return URL.createObjectURL(item.file);
+  return "";
+};
+
   return (
-    <div className="bg-white   rounded-2xl w-full">
+    <div className="bg-white p-9 rounded-2xl w-full">
       <h2 className="text-[24px] font-[600] leading-[145%] lexend mb-[22px]">
         Media Upload
       </h2>
@@ -44,24 +52,27 @@ function MediaUpload({ formData, setFormData }) {
 
         <div
           onClick={() => fileInputRef.current.click()}
-          onDrop={(e) => handleDrop(e, "images")}
+          onDrop={handleDrop}
           onDragOver={handleDragOver}
-          className="
-    border-4 sm:border-[5px]
-    border-[#D4D4D4]
-    bg-[#F3F3F3]
-    rounded-2xl sm:rounded-[40px]
-    py-10 px-6
-    sm:py-14 sm:px-16
-    lg:px-32
-    flex flex-col items-center justify-center
-    text-center
-    gap-3
-    text-gray-500
-    cursor-pointer
-    transition hover:bg-[#eaeaea]
-  "
-        >
+          className={`
+  ${errors?.images ? "border-2 sm:border-2 border-red-500" : "border-4 sm:border-[5px] border-[#D4D4D4]"}
+  bg-[#F3F3F3]
+  rounded-2xl sm:rounded-[40px]
+  py-10 px-6
+  sm:py-14 sm:px-16
+  lg:px-32
+  flex flex-col items-center justify-center
+  text-center
+  gap-3
+  text-gray-500
+  cursor-pointer
+  transition hover:bg-[#eaeaea]
+`}>
+    {errors?.images && (
+  <p className="text-red-500 text-xs mt-2 ml-2">
+    {errors.images}
+  </p>
+)}
           <svg
             width="54"
             height="52"
@@ -90,50 +101,34 @@ function MediaUpload({ formData, setFormData }) {
           multiple
           accept="image/png, image/jpeg"
           ref={fileInputRef}
-          onChange={(e) => updateFiles("images", e.target.files)}
+          onChange={(e) => updateFiles(e.target.files)}
           className="hidden"
         />
 
         {formData.images?.length > 0 && (
           <div className="flex flex-wrap justify-center gap-3 mt-4">
-            {formData.images.map((file, index) => {
-              const previewUrl = URL.createObjectURL(file);
+            {formData.images.map((item, index) => (
+  <div key={index} className="relative">
+    <img
+  src={getImageSrc(item)}
+  alt={`preview-${index}`}
+  className="w-20 h-16 object-cover rounded-lg border-2 border-[#F3F3F3]"
+/>
 
-              return (
-                <div key={index} className="relative">
-                  <img
-                    src={previewUrl}
-                    alt={`preview-${index}`}
-                    className="
-               w-20 h-16
-              object-cover
-              rounded-lg
-              border-2 border-[#F3F3F3]
-            "
-                  />
+    <button
+      type="button"
+      onClick={() => {
+        URL.revokeObjectURL(item.preview); // ✅ cleanup
 
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const updated = formData.images.filter(
-                        (_, i) => i !== index,
-                      );
-                      setFormData({ ...formData, images: updated });
-                    }}
-                    className="
-              absolute top-1 right-1
-              bg-red-500 text-white
-              text-[9px]
-              px-1.5 py-0.5
-              rounded-full
-              cursor-pointer
-            "
-                  >
-                    ✕
-                  </button>
-                </div>
-              );
-            })}
+        const updated = formData.images.filter((_, i) => i !== index);
+        setFormData((prev) => ({...prev,images: updated,}));
+      }}
+      className="absolute top-1 right-1 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-full cursor-pointer"
+    >
+      ✕
+    </button>
+  </div>
+))}
           </div>
         )}
       </div>

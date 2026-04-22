@@ -83,18 +83,51 @@ const rootReducer = combineReducers({
 });
 
 
-const persistConfig = {
-  key: 'root',
-  storage,     
-};
+
+//when user logintime agent logout and this work also reverse
+// const appReducer = combineReducers({
+//   user: userReducer,
+//   agent: agentReducer,
+// });
+
+// const rootReducer = (state, action) => {
+
+//   if (action.type === "SET_USER") {
+//     return appReducer(
+//       {
+//         ...state,
+//         agent: initialAgentState, // ✅ clear agent
+//       },
+//       action
+//     );
+//   }
+
+//   if (action.type === "SET_AGENT") {
+//     return appReducer(
+//       {
+//         ...state,
+//         user: initialUserState, // ✅ clear user
+//       },
+//       action
+//     );
+//   }
+
+//   return appReducer(state, action);
+// };
 
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistConfig = {
+//   key: 'root',
+//   storage,     
+// };
 
 
-const store = createStore(persistedReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Persistor for persisting the store
-const persistor = persistStore(store);
 
-export { store, persistor };
+// const store = createStore(persistedReducer);
+
+// // Persistor for persisting the store
+// const persistor = persistStore(store);
+
+// export { store, persistor };

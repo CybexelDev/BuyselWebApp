@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -7,16 +7,34 @@ import {
   ResponsiveContainer,
   YAxis,
 } from "recharts";
+import { getDashboard } from "../../../Api/agentsApi";
 
 function Linegraph() {
-  const chartData = [
-    { month: "Jan", enquiries: 10 },
-    { month: "Feb", enquiries: 20 },
-    { month: "Mar", enquiries: 15 },
-    { month: "Apr", enquiries: 30 },
-    { month: "May", enquiries: 25 },
-    { month: "Jun", enquiries: 40 },
-  ];
+   const [chartData, setChartData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getDashboard();
+              
+        const apiData = res?.data?.data?.monthly_enquiries || [];
+
+        // 🔥 transform API → chart format
+        const formatted = apiData.map((item) => ({
+          month: item.month,
+          enquiries: item.count,
+        }));
+
+        setChartData(formatted);
+      } catch (error) {
+        console.error("Graph API error:", error);
+        setChartData([]);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <div className="mt-10 bg-white p-6 rounded-xl shadow-md host-grotesk w-full min-w-0">

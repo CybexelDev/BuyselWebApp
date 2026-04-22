@@ -60,10 +60,11 @@ function App() {
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/agent-detail" element={<AgentDetail/>}/>
           <Route path='/addyourproperty' element={<AddProperty/>}/>
+          <Route path="/editproperty/:id" element={<AddProperty/>} />
           <Route path='/blogdetail' element={<BlogDetailPage/>}/>
           <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
           <Route path="/ownerdashboard" element={<OwnerDashboard />}/>   
-          <Route path="/dashboardpropertydeatil" element={<DashboardPropertyDetail/> }/>                 
+          <Route path="/dashboardpropertydetail/:id" element={<DashboardPropertyDetail/> }/>                 
           <Route path='/plans'  element={<PlansPage/>}/>
           <Route path="/enquiry-detail" element={<EnquiryDetailLayoutUser/>}/>
           <Route path="/helpcenter" element={<HelpCenter/>}/>

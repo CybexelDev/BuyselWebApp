@@ -8,59 +8,73 @@ import {
   BedDouble,
   Bath,
   Square,
-  Pencil
+  Pencil,
+  Trash,
 } from "lucide-react";
+import { TfiRulerAlt2 } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
+import { deletePropertyListing, getPropertyListing } from "../../../Api/agentsApi";
 
-const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-50", lg="lg:py-12",onClick}) => {
+const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-slate-50", lg = "lg:py-12", onClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate=useNavigate()
- 
+  const [properties, setProperties] = useState([]);
 
- const properties = [
-  {
-    id: 1,
-    title: "Luxury Beach Villa",
-    location: "Dubai Marina",
-    price: "$2,400,000",
-    beds: 4,
-    baths: 3,
-    area: "3200 sqft",
-    status: "Active",
-    description:
-      "Beautiful luxury villa with ocean views, modern interiors, and private pool.",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
-  },
-  {
-    id: 2,
-    title: "Modern Apartment",
-    location: "New York",
-    price: "$890,000",
-    beds: 2,
-    baths: 2,
-    area: "1400 sqft",
-    status: "Pending",
-    description:
-      "Stylish city apartment located in the heart of Manhattan with skyline views.",
-    image:
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994"
-  },
-  {
-    id: 3,
-    title: "Luxury Penthouse",
-    location: "London",
-    price: "$3,200,000",
-    beds: 5,
-    baths: 4,
-    area: "5000 sqft",
-    status: "Sold",
-    description:
-      "Exclusive penthouse with rooftop terrace and panoramic city views.",
-    image:
-     "https://images.unsplash.com/photo-1568605114967-8130f3a36994"
-  }
-];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const data = await getPropertyListing();
+        console.log("API Properties:", data);
+
+        if (Array.isArray(data)) {
+const mapped = data.map((item) => ({
+  id: item.id,
+  title: item.label,
+  location: item.city || item.location,
+  price: item.price ? `₹ ${item.price}` : "N/A",
+  features: Array.isArray(item.features)
+  ? item.features
+  : [],
+  keyPoints: item.selling_points || [], // ✅ moved here
+  area:item.sq_ft
+    ? `${item.sq_ft} sq.ft`
+    : item.land_area
+    ? `${item.land_area} ${item.unit || "Cent"}`
+    : "N/A",
+  status: item.paid ? "Active" : "Pending",
+  image:
+    item.images?.length > 0
+      ? item.images[0]
+      : item.image || "https://via.placeholder.com/150",
+}));
+
+          setProperties(mapped);
+        }
+      } catch (err) {
+        console.error("Property fetch error:", err);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  
+     const handleDelete = async(id)=>{
+      const confirmDelete = window.confirm("Are you sure delete?")
+  
+      if(!confirmDelete) return;
+  
+      const res = await deletePropertyListing(id);
+  
+      if(res){
+        setProperties((prev)=>prev.filter((item)=>item.id !== id))
+      }else{
+        alert("Delete failed")
+        console.log("Failed");
+      }
+     }
+
 
   const filteredProperties = properties.filter((property) =>
     property.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -87,7 +101,9 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
               </h1>
             </div>
 
-            <button className="flex items-center justify-center gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
+            <button
+            onClick={()=>navigate("/addyourproperty")}
+             className="flex items-center justify-center gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
               <Plus size={18} />
               Add Property
             </button>
@@ -125,7 +141,7 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
               <div
                 key={property.id}
                 className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition"
-                onClick={()=>navigate("/dashboardpropertydeatil")}
+                onClick={()=>navigate(`/dashboardpropertydetail/${property.id}`)}
               >
 
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -151,22 +167,26 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
 
                       <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-slate-500 host-grotesk">
 
-                        <div className="flex items-center gap-1">
-                          <BedDouble size={14} />
-                          {property.beds} Beds
-                        </div>
+  {property.features.length > 0 ? (
+   property.features.slice(0, 3).map((f, i) => (
+        <div key={i} className="flex items-center gap-1">
+        <Square size={14} />
+        {f.name}: {f.value}
+      </div>
+    ))
+  ) : (
+    <div className="flex items-center gap-1">
+      <Square size={14} />
+      No features
+    </div>
+  )}
 
-                        <div className="flex items-center gap-1">
-                          <Bath size={14} />
-                          {property.baths} Baths
-                        </div>
+  <div className="flex items-center gap-1">
+  <TfiRulerAlt2  size={14} />
+    {property.area}
+  </div>
 
-                        <div className="flex items-center gap-1">
-                          <Square size={14} />
-                          {property.area}
-                        </div>
-
-                      </div>
+</div>
 
                     </div>
 
@@ -194,13 +214,29 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
                       {property.status}
                     </div>
 
-                    {/* Edit */}
-                            {showEdit && 
-                    <button className="flex items-center gap-1 text-sm border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk">
-                      <Pencil size={14} />
-                      Edit
-                    </button>
-                    }
+                    {/* Edit */}  
+                          {showEdit && (
+  <div className="flex items-center gap-2">
+    <button
+  onClick={(e) => {
+    e.stopPropagation();
+    navigate(`/editproperty/${property.id}`);
+  }}
+  className="flex items-center gap-1 text-sm border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
+>
+  <Pencil size={14} />
+</button>
+
+    <button
+      onClick={(e) =>{
+          e.stopPropagation();
+         handleDelete(property.id)}}
+      className="p-2 text-slate-400 hover:text-red-500 transition"
+    >
+      <Trash size={20} />
+    </button>
+  </div>
+)}
 
                   </div>
 
@@ -218,4 +254,4 @@ const PropertyListingLayout = ({ showSidebar = true,showEdit=true,bg="bg-slate-5
   );
 };
 
-export default PropertyListingLayout;
+export default PropertyListingLayout; 

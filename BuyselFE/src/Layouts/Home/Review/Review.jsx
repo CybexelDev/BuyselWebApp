@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReviewCard from "./ReviewCard";
 import { userReviews } from "../../../Constance/constance";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { getTestimonial } from "../../../Api/userApi";
 
 
 const Review = () => {
@@ -11,9 +12,24 @@ const Review = () => {
 
 
 
-  useEffect(() => {
-    setReview(userReviews);
-  }, []);
+useEffect(() => {
+  const fetchReviews = async () => {
+    const res = await getTestimonial();
+
+    const formatted = res.map((item) => ({
+      name: item.name,
+      review: item.description,      // main review text
+      title: item.opinion,           // optional heading
+      rating: item.rating,
+      image: item.image || "",
+      role: item.designation,
+    }));
+
+    setReview(formatted);
+  };
+
+  fetchReviews();
+}, []);
 
 
 
