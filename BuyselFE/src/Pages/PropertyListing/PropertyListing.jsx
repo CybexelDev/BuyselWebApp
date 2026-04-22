@@ -6,38 +6,44 @@ import MapSection from '../../Layouts/PropertyDetail/MapSection/MapSection'
 import Footer from '../../Components/Footer/Footer'
 import { getProperty } from '../../Api/userApi'
 import { filter } from 'framer-motion/m'
+import { getNearbyProperties,filterProperties } from '../../Api/userApi'
 
 
 function PropertListing() {
   const [data, setData] = useState([])
    const [filters, setFilters] = useState({ purpose: "Rent",category: "Residential",});
-
-   console.log(filters, "000000000000");
    
    const handleFilters = (data) => {
-    setFilters(data); // ✅ update state
-    console.log(data, "Received from Header");
+    setFilters(data);
   };
 
-  // console.log(data, "poprtyyyyyyyyyyyyyyyyyyy");
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      let res;
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getProperty(filters);
-        if (res) {
-          setData(res);
-        }
-      } catch (error) {
-        console.log(error);
+      if (filters.nearby) {
+        res = await getNearbyProperties(filters.lat, filters.lng);
+        setData(res?.data || []);
+      } 
+      
+      else if (filters.isFilterApplied) {
+        res = await filterProperties(filters);
+        setData(res?.data || []);
+      } 
+      
+      else {
+        res = await getProperty(filters);
+        setData(res || []);
       }
-    };
-    fetchData();
-  }, []);
 
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
+  fetchData();
+}, [filters]);
   return (
     <>
       <Header setParentFilters={handleFilters}  />

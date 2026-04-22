@@ -13,6 +13,7 @@ import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
 import Navbar from "../../../Components/Navbar/Navbar";
 import { getProfile } from "../../../Api/userApi";
+import { updateProfileImage } from "../../../Api/userApi";
 
 const ProfileHeader = ({setMode, setParentProfileData}) => {
   const fileInputRef = useRef(null);
@@ -25,12 +26,32 @@ const ProfileHeader = ({setMode, setParentProfileData}) => {
     fileInputRef.current.click();
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
+ const handleImageChange = async (e) => {
+  const file = e.target.files[0];
+
+  if (file) {
+    setImage(URL.createObjectURL(file));
+
+    try {
+      const res = await updateProfileImage(file);
+
+      // ✅ update parent
+      setParentProfileData((prev) => ({
+        ...prev,
+        image: res.image_url,
+      }));
+
+      // ✅ ALSO update local state (THIS WAS MISSING)
+      setProfileData((prev) => ({
+        ...prev,
+        image: res.image_url,
+      }));
+
+    } catch (err) {
+      console.log(err);
     }
-  };
+  }
+};
 
 
 useEffect(() => {

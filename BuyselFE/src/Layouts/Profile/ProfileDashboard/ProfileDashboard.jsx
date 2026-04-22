@@ -1,16 +1,87 @@
 import React, { useEffect, useState } from "react";
 import property from "../../../assets/images/profile/property.svg";
 import Propertycard from "../../../Components/PropertyCard/Propertycard";
-import { wishlist } from "../../../Constance/constance";
 import { ArrowRight } from "lucide-react";
+import { getWishlist } from "../../../Api/userApi";
 import { Check } from "lucide-react";
+import { Heart } from "lucide-react";
 import PersonalDetails from "./PersonalDetails";
+import { useNavigate } from "react-router-dom";
+import { getMyActivity } from "../../../Api/userApi";
+import { addToWishlist } from "../../../Api/userApi";
+import { removeToWishlist } from "../../../Api/userApi";
 
-const ProfileDashboard = ({ data, users, mode, setMode }) => {
+const ProfileDashboard = ({ data, users, mode, setMode, setParentProfileData }) => {
   const [wish, setWish] = useState([]);
+  const [activityData, setActivityData] = useState({});
+
+  const navigate = useNavigate()
   useEffect(() => {
-    setWish(wishlist);
+    const fetchWishlist = async () => {
+      try {
+        const data = await getWishlist();
+
+        setWish(data || []);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchWishlist();
   }, []);
+
+  useEffect(() => {
+    const fetchActivity = async () => {
+      try {
+        const data = await getMyActivity();
+        setActivityData(data || {});
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
+    fetchActivity();
+  }, []);
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  };
+  const addWishlist = async (id) => {
+    try {
+      await addToWishlist({ id });
+
+      setWish((prev) =>
+        prev.map((item) =>
+          item.id === id
+            ? { ...item, is_wishlisted: true }
+            : item
+        )
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removeWishlist = async (id) => {
+    try {
+      await removeToWishlist({ id });
+
+      setWish((prev) =>
+        prev.map((item) =>
+          item.id === id
+            ? { ...item, is_wishlisted: false }
+            : item
+        )
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const activities = [
     {
@@ -28,7 +99,7 @@ const ProfileDashboard = ({ data, users, mode, setMode }) => {
           />
         </svg>
       ),
-      value: 24,
+      value: activityData?.wishlist_count || 0,
       label: "Wishlist properties",
     },
     {
@@ -40,7 +111,7 @@ const ProfileDashboard = ({ data, users, mode, setMode }) => {
           className="w-6 h-5 xl:w-[36px] xl:h-[36px]"
         />
       ),
-      value: 30,
+      value: activityData?.viewed_properties_count || 0,
       label: "Properties Viewed",
     },
     {
@@ -77,7 +148,7 @@ const ProfileDashboard = ({ data, users, mode, setMode }) => {
           </defs>
         </svg>
       ),
-      value: 45,
+      value: activityData?.enquiries_count,
       label: "Enquiries Sent",
     },
     {
@@ -102,8 +173,8 @@ const ProfileDashboard = ({ data, users, mode, setMode }) => {
           </defs>
         </svg>
       ),
-      value: 6,
-      label: "Agent Contacts",
+      value: activityData?.properties_listed_count,
+      label: "Properties Listed",
     },
   ];
 
@@ -180,7 +251,7 @@ const ProfileDashboard = ({ data, users, mode, setMode }) => {
         </div>
 
         <div>
-          <PersonalDetails users={data} mode={mode} setMode={setMode} />
+          <PersonalDetails users={data} mode={mode} setMode={setMode} setParentProfileData={setParentProfileData} />
         </div>
       </div>
 
@@ -236,14 +307,23 @@ const ProfileDashboard = ({ data, users, mode, setMode }) => {
             My Wishlist
           </h2>
           <div className="grid grid-cols-2 gap-1 sm:gap-4">
-            {wish.slice(-2).map((property) => (
+            {wish.slice(-2).map((property, index) => (
               <Propertycard
-                key={property.id}
+                key={index}
                 property={property}
-                color="bg-[#fbfbfb]"
                 shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
-                hideWhatsapp={true}
-                hideCall={true}
+                wishlistIcon={property.is_wishlisted ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
+                    <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
+                  </svg>
+                ) : (
+                  <Heart size={13} fill="none" stroke="black" className="scale-100" />
+                )}
+                click={() =>
+                  property.is_wishlisted
+                    ? removeWishlist(property.id)
+                    : addWishlist(property.id)
+                }
               />
             ))}
           </div>
@@ -261,6 +341,7 @@ const ProfileDashboard = ({ data, users, mode, setMode }) => {
       text-black
       group
      -mt-3 sm:-mt-8"
+            onClick={() => handleNavigate("/wishlist")}
           >
             View all wishlist
             <span

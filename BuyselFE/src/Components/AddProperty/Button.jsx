@@ -1,10 +1,12 @@
 
 import React from "react";
 
+
 function Button({ next, back, step, maxStep, handleSubmit }) {
 
  const handleClick = (e) => {
   if (step === maxStep) {
+
     handleSubmit(e);  
   } else {
     next();

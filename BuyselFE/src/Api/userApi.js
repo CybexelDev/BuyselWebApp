@@ -1,7 +1,10 @@
 import axios from "axios";
 import api from "./axiosInstance";
 
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+// const userId = localStorage.getItem("id");
 
 export const userRegister = async (name, email, mobail, password, confirm_password) => {
     const formData = new FormData();
@@ -30,6 +33,23 @@ export const userRegister = async (name, email, mobail, password, confirm_passwo
     }
 };
 
+export const getNearbyProperties = async (lat, lng) => {
+  try {
+    const res = await axios.get(`${BASE_URL}nearby-properties/`, {
+      params: {
+        lat,
+        lng,
+      },
+    });
+
+   return res.data.data.map((item) => ({
+      ...item,
+      images: item.image, 
+    }));  } catch (error) {
+    console.log("Nearby properties error:", error);
+    return [];
+  }
+};
 
 export const otpSent = async (otpValue, email) => {
     const formData = new FormData();
@@ -66,7 +86,7 @@ export const reSentOtp = async (email) => {
                 "Content-Type": "multipart/form-data",
             },
         });
-
+        
         if (result.data.message == "OTP resent successfully") {
             return result.data;
         } else {
@@ -93,7 +113,7 @@ export const userLogin = async (username, password) => {
             },
         });
         console.log(result, "00000000000000000000000");
-        
+
         if (
             result.data.access &&
             result.data.user.name &&
@@ -101,9 +121,7 @@ export const userLogin = async (username, password) => {
         ) {
             return result.data;
         }
-
         return false;
-
     } catch (error) {
         console.error("API error:", error);
         return false;
@@ -111,47 +129,129 @@ export const userLogin = async (username, password) => {
 };
 
 
-export const handleGoogleLogin = async ({tokenResponse}) =>{
+export const handleGoogleLogin = async ({ tokenResponse }) => {
 
     try {
-        const res = await axios.post(`${BASE_URL}auth/google/login/`,  {
+        const res = await axios.post(`${BASE_URL}auth/google/login/`, {
             access_token: tokenResponse.access_token,
         });
 
-        if(res.data.message && res.data.access){
-        return res.data;
+        if (res.data.message && res.data.access) {
+            return res.data;
 
-        }else{
+        } else {
             return false
         }
-        
+
     } catch (error) {
         console.log(error, "Login filed");
-        
+
     }
 }
 
 
-
-export const getProperty = async (filters) => { 
+export const sendFacebookToken = async (accessToken) => {
     try {
-        const result = await api.get(`${BASE_URL}properties/`, {filters});
-       
-            return result.data;
+        const res = await api.post("/auth/facebook/", {
+            access_token: accessToken,
+        });
+
+        console.log(res.data, "Facebook login success");
+
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getProfile = async () => {
+    try {
+
+         const userId = localStorage.getItem("id");
+        
+        const result = await api.get(`${BASE_URL}profile/`, {
+            params: {
+                id: userId,
+            },
+        });
+        console.log(result, "profile data 77777777777777777777");
+     
+        return result.data;
 
     } catch (error) {
         console.log(error);
     }
 }
 
-export const sendEnquiry = async (formData) => {
+
+export const getProperty = async (filters) => {
+
+    try {
+         const userId = localStorage.getItem("id");
+
+        const result = await api.get(`${BASE_URL}properties/`, {
+            params: {
+                ...filters,
+                id: userId,
+            },
+        });
+        console.log(result, "Filtered properties 777777777777");
+        return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getWishlist = async () => {
+    try {
+        const userId = localStorage.getItem("id");
+        const result = await api.get(`wishlist/`, {
+            params: {
+                id: userId,
+            },
+        });
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const filterWishlist = async (purpose) => {
+  try {
+    const res = await api.get(`wishlist/filter/?purpose=${purpose}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const sortWishlist = async (sort) => {
+  try {
+    const res = await api.get(`wishlist/sort/?sort=${sort}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const clearWishlist = async () => {
+  try {
+    const res = await api.delete(`wishlist/clear/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+ export const sendEnquiry = async (formData) => {
   try {
     const data = new FormData();
 
     data.append("name", formData.name);
-    data.append("contact", formData.contact);        // ✅ FIX
-    data.append("pin_code", formData.pincode);       // ✅ FIX
-    data.append("messages_text", formData.message);  // ✅ FIX
+    data.append("contact", formData.contact);        
+    data.append("pin_code", formData.pincode);       
+    data.append("messages_text", formData.message);   
 
     const res = await axios.post(
       `${BASE_URL}agent/inbox-message/`,
@@ -171,7 +271,164 @@ export const sendEnquiry = async (formData) => {
   }
 };
 
+export const getPropertyDetail = async (id) => { 
+    try {
+        const result = await api.get(`${BASE_URL}property/${id}/`,          
+      );
+        return result.data;
+    } catch (error) {
+        console.log("Property detail error:", error);
+        return false;
+    }
+}
 
+export const sendPropertyEnquiry = async (formData) => {
+  try {
+    const res = await api.post(
+      `${BASE_URL}enquiries/`,
+      formData
+    ); 
+
+    return res.data;
+  } catch (error) {
+    console.error("Enquiry error:", error);
+    return false;
+  }
+};
+
+
+export const sendContact = async (formData) => {
+  try {
+    const res = await axios.post(`${BASE_URL}contact/`, formData);
+    return res.data;
+  } catch (error) {
+    console.error("Contact error:", error);
+    return false;
+  }
+};
+
+export const getAgentPlanDetails = async () => {
+  try {
+    const res = await api.get(`${BASE_URL}agent/combined-data/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getRelatedProperties = async (id) => {
+  try {
+    const res = await api.get(`${BASE_URL}property/related/${id}/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const getBlogs = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+
+export const searchBlogs = async (query) => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/search/?name=${query}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+export const getBlogsByCategory = async (category) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}blogs/by-category/?category=${category.toLowerCase()}`
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const getBlogById = async (id) => {
+  try {
+    const res = await axios.get(`${BASE_URL}blogs/${id}/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+
+};
+
+export const addToWishlist = async ({ id }) => {
+    try {
+        const formData = new FormData();
+        formData.append('id', id);
+        const result = await api.post(`wishlist/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+export const removeToWishlist = async ({ id }) => {
+    try {
+        const result = await api.delete(`${BASE_URL}wishlist/`, {
+            data: {
+                property_id: id, 
+            },
+        });
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+
+export const getFeatured = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}featured/`);
+    console.log(res.data, "featured data from api 77777777777777777777");
+    return res.data;
+    
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+
+export const getAgents = async (category) => {
+
+    try {
+        const result = await api.get(`${BASE_URL}agents/listing/`, {
+            params: category,
+        });
+        console.log(result, "agents list 777  777777777");
+        return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export const getProfile = async () => { 
     try {
@@ -183,6 +440,7 @@ export const getProfile = async () => {
         console.log(error);
     }
 }
+
 
 
 export const agentContactForm = async(contactData)=>{
@@ -224,5 +482,163 @@ const result = await axios.get(`${BASE_URL}testimonial/list/`);
   } catch (error) {
     console.error("testimonial not found:", error);
     return [];
+  }
+};
+export const getReviews = async (agentId) => {
+  try {
+    const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);
+    console.log(res.data, "featured data from api 77777777777777777777");
+    return res.data;
+    
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export const getAgentsDetails = async (id) => {
+    try {
+        const result = await api.get(`${BASE_URL}agent/detail/${id}/`, );
+        
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const filterProperties = async (filters) => {
+  try {
+    const res = await api.post("/properties/filter/", filters);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+
+export const getFilterOptions = async () => {
+  try {
+    const res = await api.get("/properties/filters/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const addReviewToServer = async ({ rating, review, id }) => {
+    try {
+        const formData = new FormData();
+        formData.append("rating", rating);
+        formData.append("review", review);
+
+        const res = await api.post(
+            `${BASE_URL}agents/reviews/submit/${id}/`,
+            formData
+        );
+
+        console.log(res, "SUCCESS RESPONSE");
+        return res.data;
+
+    } catch (error) {
+        if (error.response?.status === 400) {
+    alert("You already reviewed this agent");
+  }
+        console.log("ERROR:", error.response?.data || error.message);
+        return null;
+    }
+}; 
+
+
+export const deletReview = async ({ id }) => {
+    try {
+        const result = await api.delete(`${BASE_URL}reviews/delete/${id}/`,);
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+export const updateProfile = async (formData) => {
+  try {
+    const res = await api.put(`profile/update/`, formData); // or PUT
+    return res.data;
+  } catch (error) {
+    console.error("Update profile error:", error);
+    throw error;
+  }
+};
+
+export const updateProfileImage = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append("image", file); 
+
+    const res = await api.put("profile/image/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const getMyActivity = async () => {
+  try {
+    const res = await api.get("my-activity/");
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const changePassword = async (data) => {
+  try {
+    const res = await api.post("profile/change-password/", data);
+    return res.data;
+  } catch (error) {
+    console.log("Change password error:", error.response?.data || error);
+    throw error;
+  }
+};
+
+export const getAllPlans = async () => {
+  try {
+    const res = await api.get("plans/all/");
+    return res.data;
+  } catch (error) {
+    console.log("Plans error:", error);
+    throw error;
+  }
+};
+
+export const postComment = async (agentId, data) => {
+  try {
+    const res = await api.post(
+      `agents/${agentId}/reviews/submit/`,
+      data
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Review error:", error);
+    return false;
+  }
+};
+
+export const getRecentEnquiries = async () => {
+  try {
+    const res = await api.get("/recent_enquiries/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
   }
 };

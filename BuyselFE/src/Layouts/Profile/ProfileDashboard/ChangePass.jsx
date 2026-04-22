@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { changePassword } from "../../../Api/userApi";
 const ChangePassword = ({ setMode }) => {
   const [form, setForm] = useState({
     currentPassword: "",
@@ -11,16 +11,38 @@ const ChangePassword = ({ setMode }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (form.newPassword !== form.confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+  if (form.newPassword !== form.confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
 
-    console.log(form);
-  };
+  try {
+    const payload = {
+      old_password: form.currentPassword,
+      new_password: form.newPassword,
+      confirm_password: form.confirmPassword,
+    };
+
+    const res = await changePassword(payload);
+
+    console.log("SUCCESS:", res);
+    alert("Password changed successfully 🔥");
+
+    setForm({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
+
+    setMode(""); 
+
+  } catch (error) {
+    alert(error.response?.data?.message || "Something went wrong");
+  }
+};
 
   return (
     <div className="w-full max-w-xl bg-[#f0f0f0] rounded-2xl p-6 sm:p-8 shadow-[0px_4px_16.6px_0px_rgba(179,179,179,0.25)]">
@@ -36,6 +58,7 @@ const ChangePassword = ({ setMode }) => {
             type="password"
             name="currentPassword"
             placeholder="Enter current password"
+            value={form.currentPassword}
             onChange={handleChange}
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
           />
@@ -49,6 +72,7 @@ const ChangePassword = ({ setMode }) => {
             type="password"
             name="newPassword"
             placeholder="Enter new password"
+            value={form.newPassword}
             onChange={handleChange}
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
           />
@@ -63,6 +87,7 @@ const ChangePassword = ({ setMode }) => {
             name="confirmPassword"
             placeholder="Confirm new password"
             onChange={handleChange}
+            value={form.confirmPassword}
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
           />
         </div>

@@ -1,7 +1,106 @@
 import React from "react";
 import { useState } from "react";
+import { useEffect } from "react";
+import { getAllPlans } from "../../Api/userApi";
 import { MessageCircle, Phone } from "lucide-react";
 const PlansLayout = ({showtabs=true ,padding="py-10"}) => {
+  const [plansData, setPlansData] = useState(null);
+  useEffect(() => {
+  const fetchPlans = async () => {
+    try {
+      const data = await getAllPlans();
+      setPlansData(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchPlans();
+}, []);
+const getPlansByRole = () => {
+  if (!plansData) return [];
+
+  switch (active) {
+    case "Owner":
+      return plansData.user_plans;
+    case "Agent":
+      return plansData.normal_plans;
+    case "Premium Agent":
+      return plansData.premium_plans;
+    case "Elite Agent":
+      return plansData.elite_plans;
+    default:
+      return [];
+  }
+};
+const convert = (val) => {
+  if (val === "yes") return "check";
+  if (val === "no") return "cross";
+  return val || "N/A";
+};
+
+const getPlanData = (plan) => {
+  switch (active) {
+    case "Owner":
+      return [
+        plan.validity,
+        convert(plan.top_priority_search),
+        "N/A",
+        convert(plan.edit_option),
+        plan.meta_ads_promotion,
+        plan.bulk_whatsapp,
+        plan.offline_agent_share,
+        plan.poster_creation,
+        plan.social_media_marketing,
+        convert(plan.lead_followup_support),
+      ];
+
+    case "Agent":
+      return [
+        plan.validity,
+        convert(plan.priority_search),
+        plan.enquiries,
+        convert(plan.edit),
+        plan.meta_ads,
+        plan.Bulk_whatsapp,
+        "N/A",
+        plan.Poster,
+        plan.social_media,
+        "N/A",
+      ];
+
+    case "Premium Agent":
+      return [
+        plan.validity,
+        convert(plan.priority_search),
+        plan.enquiries,
+        convert(plan.edit),
+        plan.meta_ads,
+        plan.Bulk_whatsapp,
+        "N/A",
+        plan.Poster,
+        plan.social_media,
+        convert(plan.lead_follow),
+      ];
+
+    case "Elite Agent":
+      return [
+        plan.plan_validity_days,
+        plan.priority_search,
+        "N/A",
+        "N/A",
+        plan.meta_ads_promotion,
+        plan.bulk_whatsapp_messages,
+        "N/A",
+        plan.poster_creation,
+        plan.social_media_marketing,
+        convert(plan.lead_followup_support),
+      ];
+
+    default:
+      return [];
+  }
+};
   const features = [
     "Plan Validity",
     "Top Priority",
@@ -17,24 +116,13 @@ const PlansLayout = ({showtabs=true ,padding="py-10"}) => {
 
   const [active, setActive] = useState("Owner");
   const roles = ["Owner", "Agent", "Premium Agent", "Elite Agent"];
-  const plans = [
-    {
-      name: "Free",
-      price: "₹0/-",
-      data: ["90 Days", "check", "Upto 10", "cross", "Upto 6", "Upto 6", "Person", "3", "3 Weeks", "check"],
-    },
-    {
-      name: "Silver",
-      price: "₹199/-",
-      data: ["180 Days", "check", "Upto 25", "Limited", "Upto 12", "Upto 12", "Area", "12", "12 Weeks", "check"],
-    },
-    {
-      name: "Gold",
-      price: "₹499/-",
-      data: ["365 Days", "check", "Upto 50", "Unlimited", "Upto 24", "Upto 24", "District", "24", "36 Weeks", "check"],
-    }
-  ];
+ const rawPlans = getPlansByRole();
 
+const plans = rawPlans.map((plan) => ({
+  name: plan.name,
+  price: `₹ ${plan.price || plan.amount}`,
+  data: getPlanData(plan),
+}));
   const renderIcon = (type) => {
     if (type === "check") {
       return (
@@ -140,7 +228,7 @@ const PlansLayout = ({showtabs=true ,padding="py-10"}) => {
       </div>
 
 
-
+{/* desktop */}
 
 
       <div className="hidden lg:grid grid-cols-4 

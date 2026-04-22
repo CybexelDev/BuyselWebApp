@@ -8,7 +8,13 @@ import bgImage from "../../../assets/images/blog/BgImage.png";
 const BlogBanner = ({
   h1 = "Welcome to Buysel Blogs",
   text = "Insights, tips, and updates to help you make smarter property decisions.",
+  setSearchQuery 
 }) => {
+    const [input, setInput] = useState("");
+
+  const handleSearch = () => {
+    setSearchQuery(input);
+  };
   return (
     <div className="md:p-5 p-2 relative">
       <Navbar color="text-white" />
@@ -66,6 +72,8 @@ const BlogBanner = ({
                 className="flex-1 outline-none text-gray-600 
                  text-sm sm:text-sm 
                  inter italic"
+                   onChange={(e) => setInput(e.target.value)}
+
               />
             </div>
 
@@ -82,6 +90,7 @@ const BlogBanner = ({
                      hover:bg-[#5da015] 
                      transition shadow-md 
                      inter"
+                     onClick={handleSearch}
             >
               Search
             </button>

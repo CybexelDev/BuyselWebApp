@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import i1 from "../../../assets/images/propertDetail/i1.png";
-
+import { sendPropertyEnquiry } from "../../../Api/userApi";
 function DescAndAminities({ data }) {
   const [detail, setDetail] = useState([]);
 
@@ -9,6 +9,9 @@ function DescAndAminities({ data }) {
   useEffect(() => {
     setDetail(data);
   }, [data]);
+
+ 
+
 
   return (
     <>
