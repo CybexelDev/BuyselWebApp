@@ -11,6 +11,7 @@ import { getAgentsDetails } from '../../Api/userApi'
 
 function AgentDetail() {
 
+
   const { id } = useParams();
   const [agentsData, setAgentsData] = useState(null);
   const [refresh, setRefresh] = useState(false);

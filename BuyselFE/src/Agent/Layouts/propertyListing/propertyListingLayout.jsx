@@ -254,4 +254,4 @@ const mapped = data.map((item) => ({
   );
 };
 
-export default PropertyListingLayout;
+export default PropertyListingLayout; 

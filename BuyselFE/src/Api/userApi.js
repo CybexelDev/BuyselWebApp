@@ -415,6 +415,7 @@ export const getFeatured = async () => {
 };
 
 
+
 export const getAgents = async (category) => {
 
     try {
@@ -429,6 +430,60 @@ export const getAgents = async (category) => {
     }
 }
 
+export const getProfile = async () => { 
+    try {
+        const result = await api.get(`${BASE_URL}profile/`);
+       
+            return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+export const agentContactForm = async(contactData)=>{
+    try{
+    const data = new FormData();
+
+    data.append("first_name", contactData.first_name);   
+    data.append("last_name", contactData.last_name);     
+    data.append("contact_number", contactData.phone);   
+    data.append("email", contactData.email);           
+    data.append("message", contactData.message);        
+
+    const res = await api.post(
+        `agent/buyselanu6309/contact/`,
+        data,
+        {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    return res.data
+
+    }catch(err){
+        console.log("error:", err);
+        return false
+    }
+}
+
+
+export const getTestimonial= async () => {
+  try {
+const result = await axios.get(`${BASE_URL}testimonial/list/`);
+    if (result.data?.data) {
+      return result.data.data;
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("testimonial not found:", error);
+    return [];
+  }
+};
 export const getReviews = async (agentId) => {
   try {
     const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);

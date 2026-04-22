@@ -1,108 +1,81 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layers, List, Target } from "lucide-react";
 import SelectField from "../Select/CustomSelect";
-import {
-  Car,
-  Dumbbell,
-  ArrowUp,
-  Camera,
-  Zap,
-  Trees,
-  Waves,
-  Shield
-} from "lucide-react";
-import {
-  Tv,
-  BedDouble,
-  Bath,
-  Wind,
-  Sofa,
-  Refrigerator,
-  Warehouse
-} from "lucide-react";
-const featureIcons = {
-  Wardrobe: Warehouse,
-  TV: Tv,
-  Bed: BedDouble,
-  Geyser: Bath,
-  AC: Wind,
-  Sofa: Sofa,
-  "Dining Table": Layers,
-  Fridge: Refrigerator
-};
-const bhkList = ["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5+ BHK"];
-const furnishingFeatures = [
-  "Wardrobe",
-  "TV",
-  "Bed",
-  "Geyser",
-  "AC",
-  "Sofa",
-  "Dining Table",
-  "Fridge"
-];
-const amenitiesList = [
-  { name: "Parking", icon: Car },
-  { name: "Gym", icon: Dumbbell },
-  { name: "Lift", icon: ArrowUp },
-  { name: "CCTV", icon: Camera },
-  { name: "Power Backup", icon: Zap },
-  { name: "Garden", icon: Trees },
-  { name: "Swimming Pool", icon: Waves },
-  { name: "Security", icon: Shield },
+import { getPropertyData } from "../../Api/agentsApi";
 
-  { name: "Club House", icon: Waves },
-  { name: "Play Area", icon: Trees },
-  { name: "WiFi", icon: Zap },
-  { name: "Fire Safety", icon: Shield },
-  { name: "Visitor Parking", icon: Car },
-  { name: "24x7 Water", icon: Waves },
-  { name: "Solar Power", icon: Zap },
-  { name: "Maintenance Staff", icon: Shield }
-];
-
-function PropertyInfo({ formData, setFormData }) {
+function PropertyInfo({ formData, setFormData, errors }) {
+  const [propertyData, setPropertyData] = useState({
+    categories: [],
+    subcategories: [],
+    purposes: [],
+    amenities: [],
+    fields: [],
+  });
   const [isAmenitiesOpen, setIsAmenitiesOpen] = useState(false);
-  const [keyPoints, setKeyPoints] = useState([""]);
 
   const handlePointChange = (index, value) => {
-    const updated = [...keyPoints];
-    updated[index] = value;
-    setKeyPoints(updated);
-  };
+  const updated = [...(formData.keyPoints || [])];
+  updated[index] = value;
+  setFormData({
+    ...formData,
+    keyPoints: updated,
+  });
+};
 
-  const addPoint = () => {
-    if (keyPoints.length >= 6) return;
-    setKeyPoints([...keyPoints, ""]);
-  };
-  const removePoint = (index) => {
-    const updated = keyPoints.filter((_, i) => i !== index);
-    setKeyPoints(updated);
-  };
+const addPoint = () => {
+  const current = formData.keyPoints || [];
 
-  const updateFeatureCount = (feature, type) => {
+  if (current.length >= 6) return;
 
-    let updated = { ...(formData.features || {}) };
+  setFormData({
+    ...formData,
+    keyPoints: [...current, ""],
+  });
+};
 
-    const current = updated[feature] || 0;
+const removePoint = (index) => {
+  const updated = (formData.keyPoints || []).filter((_, i) => i !== index);
 
-    if (type === "plus") {
-      updated[feature] = current + 1;
-    }
+  setFormData({
+    ...formData,
+    keyPoints: updated,
+  });
+};
 
-    if (type === "minus" && current > 0) {
-      updated[feature] = current - 1;
-    }
 
-    setFormData({
-      ...formData,
-      features: updated
+
+  const updateFeatureCount = (fieldName, optionName, type) => {
+    setFormData((prev) => {
+      const name = optionName;
+
+      const current = prev.features?.find((f) => f.name === name)?.value || 0;
+
+      let newValue = current;
+
+      if (type === "plus") newValue = current + 1;
+      if (type === "minus") newValue = Math.max(0, current - 1);
+
+      let features = prev.features || [];
+
+      // remove if exists
+      features = features.filter((f) => f.name !== name);
+
+      // add back only if value > 0 (using spread, not push)
+      const updatedFeatures = [
+        ...features.filter((f) => f.name !== name),
+        ...(newValue > 0 ? [{ name, value: newValue }] : []),
+      ];
+
+      return {
+        ...prev,
+        features: updatedFeatures,
+      };
     });
-
   };
+
   const addLandmark = () => {
-    const updated = [...(formData.nearbyLandmarks || [])];
+    const updated = [...(formData.landmarks || [])];
 
     if (updated.length >= 3) return;
 
@@ -110,412 +83,547 @@ function PropertyInfo({ formData, setFormData }) {
 
     setFormData({
       ...formData,
-      nearbyLandmarks: updated
+      landmarks: updated,
     });
   };
 
   const updateLandmark = (index, field, value) => {
-    const updated = [...(formData.nearbyLandmarks || [])];
+    const updated = [...(formData.landmarks || [])];
 
     updated[index][field] = value;
 
     setFormData({
       ...formData,
-      nearbyLandmarks: updated
+      landmarks: updated,
     });
   };
 
   const removeLandmark = (index) => {
-    const updated = formData.nearbyLandmarks.filter((_, i) => i !== index);
+    const updated = formData.landmarks.filter((_, i) => i !== index);
 
     setFormData({
       ...formData,
-      nearbyLandmarks: updated
+      landmarks: updated,
     });
   };
-  const toggleAmenity = (amenity) => {
 
-    let updated = [...(formData.amenities || [])];
+const toggleAmenity = (amenity) => {
+  let updated = [...(formData.amenities || [])];
 
-    if (updated.includes(amenity)) {
-      updated = updated.filter(a => a !== amenity);
-    } else {
-      updated.push(amenity);
-    }
+  const exists = updated.find((a) => a.id === amenity.id);
 
-    setFormData({
-      ...formData,
-      amenities: updated
+  if (exists) {
+    updated = updated.filter((a) => a.id !== amenity.id);
+  } else {
+    updated.push({
+      id: amenity.id,
+      name: amenity.name,
     });
-  };
+  }
+
+  setFormData({
+    ...formData,
+    amenities: updated,
+  });
+};
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
+
+  const handleCategoryChange = (val) => {
+    const selected = propertyData.categories.find((c) => c.name === val);
+    setFormData((prev) => ({
+      ...prev,
+      category: val,
+      category_id: selected?.id || null,
+      subcategory: "",
+    }));
+  };
+
+  const handleSubcategoryChange = (val) => {
+    const selected = propertyData.subcategories.find((s) => s.name === val);
+    console.log("selected subcategory:", selected);
+
+    setFormData((prev) => ({
+      ...prev,
+      subcategory: val,
+      subcategory_fields: selected?.fields || [], // ✅ IMPORTANT
+    }));
+  };
+
+  const filteredSubcategories = propertyData.subcategories.filter(
+    (sub) => sub.category_id === formData.category_id,
+  );
+
+  const selectedSubcategory = propertyData.subcategories.find(
+    (s) => s.name === formData.subcategory,
+  );
+
+  const fields = selectedSubcategory?.fields || [];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getPropertyData();
+
+        console.log("Property Data:", data);
+
+        if (data) {
+          setPropertyData((prev) => ({
+            ...prev,
+            categories: data.categories || [],
+            subcategories: data.subcategories || [],
+            purposes: data.purposes || [],
+            amenities: data.amenities || [],
+            fields: data.fields || [],
+          }));
+        }
+      } catch (err) {
+        console.error("Property data fetch error:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    console.log("FULL FEATURES:", formData.features);
+  }, [formData.features]);
+
+  useEffect(() => {
+  console.log("Selected Amenities IDs:", formData.amenities);
+}, [formData.amenities]);
 
   return (
     <div className="flex gap-8">
-
       <div className="flex-1 bg-white rounded-xl p-8">
-
-        <h2 className="text-[24px] lexend font-[550] mb-6">
-          Property Details
-        </h2>
+        <h2 className="text-[24px] lexend font-[550] mb-6">Property Details</h2>
 
         {/* CATEGORY SECTION */}
 
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
           <SelectField
             label="Category"
             icon={<Layers size={16} />}
-            options={["Commercial", "Residential", "Land"]}
+            options={propertyData.categories.map((c) => c.name)}
             value={formData.category}
-            onChange={(val) =>
-              setFormData({ ...formData, category: val })
-            }
+            onChange={handleCategoryChange}
           />
           <SelectField
             label="Subcategory"
             icon={<List size={16} />}
-            options={["Office", "Shop", "Warehouse", "Apartment"]}
+            options={filteredSubcategories.map((s) => s.name)}
             value={formData.subcategory}
-            onChange={(val) =>
-              setFormData({ ...formData, subcategory: val })
-            }
+            onChange={handleSubcategoryChange}
           />
           <SelectField
             label="Purpose"
             icon={<Target size={16} />}
-            options={["Sell", "Rent"]}
+            options={propertyData.purposes.map((p) => p.name)}
             value={formData.purpose}
-            onChange={(val) =>
-              setFormData({ ...formData, purpose: val })
-            }
+            onChange={(val) => setFormData({ ...formData, purpose: val })}
           />
         </div>
 
-        {formData.subcategory === "Apartment" && (
-
+        {fields.length > 0 && (
           <div className="my-8 space-y-8">
+            {fields.map((field) => {
+              if (field.field_type === "select") {
+                if (!field.options || field.options.length === 0) return null;
+                return (
+                  <div key={field.id}>
+                    <label className="text-[14px] font-[550] mb-3 block lexend">
+                      {field.field_name}
+                    </label>
 
-            {/* BHK SELECT */}
+                    <div className="flex flex-wrap gap-3">
+                      {field.options.map((opt) => {
+                        const selected =
+                        formData.features?.find((f) => f.name === field.field_name)?.value === opt.name;
 
-            <div>
-              <label className="text-[14px] font-semibold mb-3 block">
-                BHK Type
-              </label>
+                        return (
+                          <button
+                            key={opt.id}
+                            type="button"
+                            onClick={() =>
+  setFormData((prev) => {
+    const name = field.field_name;
 
-              <div className="flex flex-wrap gap-3">
+    const updatedFeatures = [
+      ...prev.features.filter((f) => f.name !== name),
+      { name, value: opt.name },
+    ];
 
-                {bhkList.map((bhk) => {
-
-                  const selected = formData.bhk === bhk;
-
-                  return (
-
-                    <button
-                      key={bhk}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, bhk })}
-                      className={`px-5 py-3 rounded-lg border text-sm
-                                 ${selected
-                          ? "bg-lime-500 text-white border-lime-500"
-                          : "border-gray-300 text-gray-600 hover:border-lime-400"
-                        }`}
-                    >
-
-                      {bhk}
-
-                    </button>
-
-                  )
-
-                })}
-
-              </div>
-            </div>
-
-
-            {/* FURNISHINGS */}
-
-            <div>
-
-              <label className="text-[14px] font-semibold mb-4 block">
-                Flat Furnishings
-              </label>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-
-                {furnishingFeatures.map((feature) => {
-
-                  const count = formData.features?.[feature] || 0;
-                  const Icon = featureIcons[feature];
-                  const selected = count > 0;
-
-                  return (
-
-                    <div
-                      key={feature}
-                      className={`border rounded-xl p-5
-flex flex-col items-center justify-center
-gap-3 transition
-
-${selected
-                          ? "border-[#A3D950] bg-lime-400"
-                          : "border-gray-200 bg-white hover:border-lime-400"
-                        }`}
-                    >
-
-                      <Icon
-                        size={28}
-                        className={selected ? "text-black" : "text-gray-500"}
-                      />
-                      <span
-                        className={`text-sm font-medium ${selected ? "text-black" : "text-gray-700"
-                          }`}
-                      >
-                        {feature}
-                      </span>
-
-                      <div className="flex items-center gap-4 mt-1">
-
-                        <button
-                          type="button"
-                          onClick={() => updateFeatureCount(feature, "minus")}
-                          className={`text-xl font-semibold  hover:text-black ${selected ? "text-black" : "text-gray-600"} `}
-                        >
-                          -
-                        </button>
-
-                        <span className={`text-md font-semibold w-5 text-center  ${selected ? "text-black" : "text-gray-600"}`} >
-                          {count}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() => updateFeatureCount(feature, "plus")}
-                          className={`text-xl font-semibold  hover:text-black  ${selected ? "text-black" : "text-gray-600"} `}
-                        >
-                          +
-                        </button>
-
-                      </div>
-
+    return {
+      ...prev,
+      features: updatedFeatures,
+    };
+  })
+}
+                            className={`px-5 py-3 rounded-lg border text-sm cursor-pointer
+                                  ${
+                                    selected
+                                      ? "bg-lime-500 text-white border-lime-500"
+                                      : "border-gray-300 text-gray-600 hover:border-lime-400"
+                                  }`}
+                          >
+                            {opt.name}
+                          </button>
+                        );
+                      })}
                     </div>
+                  </div>
+                );
+              }
 
-                  )
+              if (field.field_type === "countable") {
+                return (
+                  <div key={field.id}>
+                    <label className="font-[550] text-[14px] block mb-3 lexend">
+                      {field.field_name}
+                    </label>
 
-                })}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {field.options.map((opt) => {
+                        const count =
+                          formData.features?.find((f) => f.name === opt.name)
+                            ?.value || 0;
 
-              </div>
-            </div>
+                        const selected = count > 0;
 
+                        return (
+                          <div
+                            key={opt.name}
+                            onClick={() => {
+                              setFormData((prev) => {
+                                const name = opt.name;
+
+                                const current =
+                                  prev.features?.find((f) => f.name === name)
+                                    ?.value || 0;
+
+                                const newValue = current > 0 ? 0 : 1;
+
+                                const updatedFeatures = [
+                                  ...prev.features.filter(
+                                    (f) => f.name !== name,
+                                  ),
+                                  ...(newValue > 0
+                                    ? [{ name, value: newValue }]
+                                    : []),
+                                ];
+
+                                return {
+                                  ...prev,
+                                  features: updatedFeatures,
+                                };
+                              });
+                            }}
+                            className={`border rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition cursor-pointer ${
+                              selected
+                                ? "border-[#A3D950] bg-lime-400"
+                                : "border-gray-200 bg-white hover:border-lime-400"
+                            }`}
+                          >
+                            <img
+                              src={opt.icon}
+                              alt={opt.name}
+                              className={`w-6 h-6 mx-auto ${
+                                selected ? "text-black" : "text-gray-500"
+                              }`}
+                            />
+
+                            <p
+                              className={`text-sm font-medium ${
+                                selected ? "text-black" : "text-gray-700"
+                              }`}
+                            >
+                              {opt.name}
+                            </p>
+
+                            {/* ✅ COUNT UI */}
+                            <div className="flex items-center gap-4 mt-1">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  updateFeatureCount(
+                                    field.field_name,
+                                    opt.name,
+                                    "minus",
+                                  );
+                                }}
+                              >
+                                -
+                              </button>
+
+                              <span>{count}</span>
+
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  updateFeatureCount(
+                                    field.field_name,
+                                    opt.name,
+                                    "plus",
+                                  );
+                                }}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+
+              return null;
+            })}
           </div>
-
         )}
+
         {/* BASIC PROPERTY DETAILS */}
 
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+          <Input
+            label="Title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            error={errors?.title}
+          />
 
-          <Input label="Title" name="title" value={formData.title} onChange={handleChange} />
+          <Input
+            label="Land Area"
+            name="landArea"
+            placeholder="*Acre/Cent"
+            value={formData.landArea}
+            onChange={handleChange}
+            error={errors?.landArea}
+          />
 
-          <Input label="Land Area" name="landArea" value={formData.landArea} onChange={handleChange} />
-
-          <Input label="Square Feet" name="squareFeet" value={formData.squareFeet} onChange={handleChange} />
-
+          <Input
+            label="Square Feet"
+            name="squareFeet"
+            value={formData.squareFeet}
+            onChange={handleChange}
+            error={errors?.squareFeet}
+          />
         </div>
-
 
         {/* LOCATION SECTION */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
-
-  <Input label="City" name="city" value={formData.city} onChange={handleChange} />
-  <Input label="Village" name="village" value={formData.village} onChange={handleChange} />
-  <Input label="Taluk" name="taluk" value={formData.taluk} onChange={handleChange} />
-
-  <Input label="Pincode" name="pincode" value={formData.pincode} onChange={handleChange} />
-  <Input label="District" name="district" value={formData.district} onChange={handleChange} />
-  <Input label="State" name="state" value={formData.state} onChange={handleChange} />
-
-  <Input label="Google Location" name="googleLocation" value={formData.googleLocation} onChange={handleChange} />
-
-  {/* Nearby Landmarks */}
-  <div className="sm:col-span-2 lg:col-span-2">
-
-    <label className="flex items-center gap-2 font-semibold mb-3 lexend text-[15px] sm:text-[16px]">
-      <Layers size={16} className="text-lime-500" />
-      Nearby Landmarks
-    </label>
-
-    <div className="space-y-3">
-
-      {(formData.nearbyLandmarks || []).map((item, index) => (
-
-        <div
-          key={index}
-          className="flex flex-col sm:flex-row gap-3 sm:items-center"
-        >
-
-          {/* Landmark Name */}
-          <input
-            type="text"
-            placeholder="Landmark name"
-            value={item.name}
-            onChange={(e) =>
-              updateLandmark(index, "name", e.target.value)
-            }
-            className="
-            w-full
-            sm:flex-1
-            h-[40px] sm:h-[42px]
-            px-4 sm:px-5
-            rounded-full
-            bg-[#F3F3F3]
-            border border-[#E4E3E3]
-            text-[13px] sm:text-[14px]
-            shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-            outline-none
-            "
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+          <Input
+            label="City"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            error={errors?.city}
+          />
+          <Input
+            label="Village"
+            name="village"
+            value={formData.village}
+            onChange={handleChange}
+          />
+          <Input
+            label="Taluk"
+            name="taluk"
+            value={formData.taluk}
+            onChange={handleChange}
           />
 
-          {/* Distance */}
-          <input
-            type="text"
-            placeholder="Distance (km)"
-            value={item.distance}
-            onChange={(e) =>
-              updateLandmark(
-                index,
-                "distance",
-                e.target.value.replace(/[^0-9.]/g, "")
-              )
-            }
-            className="
-            w-full sm:w-[140px]
-            h-[40px] sm:h-[42px]
-            px-4
-            rounded-full
-            bg-[#F3F3F3]
-            border border-[#E4E3E3]
-            text-[13px] sm:text-[14px]
-            shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-            outline-none
-            "
+          <Input
+            label="Pincode"
+            name="pincode"
+            value={formData.pincode}
+            onChange={handleChange}
+            error={errors?.pincode}
+          />
+          <Input
+            label="District"
+            name="district"
+            value={formData.district}
+            onChange={handleChange}
+          />
+          <Input
+            label="State"
+            name="state"
+            value={formData.state}
+            onChange={handleChange}
+            error={errors?.state}
           />
 
-          {/* Remove */}
-          {formData.nearbyLandmarks.length > 1 && (
+          <Input
+            label="Google Location"
+            name="googleLocation"
+            value={formData.googleLocation}
+            onChange={handleChange}
+            error={errors?.googleLocation}
+          />
+
+          {/* Nearby Landmarks */}
+          <div className="sm:col-span-2 lg:col-span-2">
+            <label className="flex items-center gap-2 font-semibold mb-3 lexend text-[15px] sm:text-[16px]">
+              <Layers size={16} className="text-lime-500" />
+              Nearby Landmarks
+            </label>
+
+            <div className="space-y-3">
+              {(formData.landmarks || []).map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col sm:flex-row gap-3 sm:items-center"
+                >
+                  {/* Landmark Name */}
+                  <input
+                    type="text"
+                    placeholder="Landmark name"
+                    value={item.name}
+                    onChange={(e) =>
+                      updateLandmark(index, "name", e.target.value)
+                    }
+                    className="
+              w-full
+              sm:flex-1
+              h-[40px] sm:h-[42px]
+              px-4 sm:px-5
+              rounded-full
+              bg-[#F3F3F3]
+              border border-[#E4E3E3]
+              text-[13px] sm:text-[14px]
+              shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+              outline-none
+              "
+                  />
+
+                  {/* Distance */}
+                  <input
+                    type="text"
+                    placeholder="Distance (km)"
+                    value={item.distance}
+                    onChange={(e) =>
+                      updateLandmark(
+                        index,
+                        "distance",
+                        e.target.value.replace(/[^0-9.]/g, ""),
+                      )
+                    }
+                    className="
+              w-full sm:w-[140px]
+              h-[40px] sm:h-[42px]
+              px-4
+              rounded-full
+              bg-[#F3F3F3]
+              border border-[#E4E3E3]
+              text-[13px] sm:text-[14px]
+              shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+              outline-none
+              "
+                  />
+
+                  {/* Remove */}
+                  {formData.landmarks.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeLandmark(index)}
+                      className="
+                text-red-500
+                text-xs sm:text-sm
+                font-medium
+                self-start sm:self-auto
+                hover:underline
+                "
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
             <button
               type="button"
-              onClick={() => removeLandmark(index)}
+              onClick={addLandmark}
               className="
-              text-red-500
-              text-xs sm:text-sm
-              font-medium
-              self-start sm:self-auto
-              hover:underline
-              "
+        mt-3
+        text-lime-600
+        text-sm
+        font-medium
+        hover:underline
+        "
             >
-              Remove
+              + Add Landmark
             </button>
-          )}
-
+          </div>
         </div>
 
-      ))}
-
-    </div>
-
-    <button
-      type="button"
-      onClick={addLandmark}
-      className="
-      mt-3
-      text-lime-600
-      text-sm
-      font-medium
-      hover:underline
-      "
-    >
-      + Add Landmark
-    </button>
-
-  </div>
-
-</div>
-
-
         <div className="grid grid-cols-1 gap-8 mt-8">
-
           <Textarea
             label="Description"
             name="description"
             value={formData.description}
             onChange={handleChange}
           />
-
-
         </div>
         <div className="mt-8">
-
           <label className="flex items-center gap-2 lexend text-[16px]  font-semibold mb-3">
             <Layers size={16} className="text-lime-500" />
             Key Selling Points
           </label>
 
           <div className="space-y-4">
-
-            {keyPoints.map((point, index) => (
-
+            {formData.keyPoints?.map((point, index) => (
               <div
                 key={index}
                 className="flex flex-col sm:flex-row sm:items-center gap-3"
               >
-
                 <input
                   type="text"
                   placeholder="Enter key selling point"
                   value={point}
                   onChange={(e) => handlePointChange(index, e.target.value)}
                   className="
-        w-full
-        sm:flex-1
-        h-[40px] sm:h-[42px]
-        px-4 sm:px-5
-        rounded-full
-        bg-[#F3F3F3]
-        border border-[#E4E3E3]
-        text-[13px] sm:text-[14px]
-        text-[#757575]
-        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-        outline-none
-        lexend
-        "
+          w-full
+          sm:flex-1
+          h-[40px] sm:h-[42px]
+          px-4 sm:px-5
+          rounded-full
+          bg-[#F3F3F3]
+          border border-[#E4E3E3]
+          text-[13px] sm:text-[14px]
+          text-[#757575]
+          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+          outline-none
+          lexend
+          "
                 />
 
-                {keyPoints.length > 1 && (
+                {formData.keyPoints.length > 1 && (
                   <button
                     type="button"
                     onClick={() => removePoint(index)}
                     className="
-          text-red-500
-          text-xs sm:text-sm
-          font-medium
-          self-start sm:self-auto
-          hover:underline
-          "
+            text-red-500
+            text-xs sm:text-sm
+            font-medium
+            self-start sm:self-auto
+            hover:underline
+            "
                   >
                     Remove
                   </button>
                 )}
-
               </div>
-
             ))}
 
             {/* Add Button */}
@@ -524,67 +632,50 @@ ${selected
               type="button"
               onClick={addPoint}
               className="
-    text-lime-600
-    text-sm
-    font-medium
-    hover:underline
-    host-grotesk
-    "
+      text-lime-600
+      text-sm
+      font-medium
+      hover:underline
+      host-grotesk
+      "
             >
               + Add Point
             </button>
-
           </div>
-
-       
-
         </div>
-
 
         {/* PRICE + OWNER */}
 
         <div className="grid grid-cols-3 gap-6 mt-8">
           <div className="col-span-3">
-
             <label className="flex items-center gap-2 lexend text-[16px]  font-semibold mb-2">
               <Layers size={16} className="text-lime-500" />
               Amenities
             </label>
 
             {formData.amenities?.length > 0 ? (
-
-              <div className="flex items-center justify-between
-        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-        bg-[#F3F3F3] px-4 py-3 rounded-lg">
-
+              <div
+                className="flex items-center justify-between
+          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+          bg-[#F3F3F3] px-4 py-3 rounded-lg"
+              >
                 <div className="flex flex-wrap gap-2 flex-1">
-
                   {formData.amenities.map((amenity) => (
+  <span
+    key={amenity.id}
+    className="flex items-center gap-1 px-3 py-[3px] rounded-full bg-lime-100 text-lime-700 text-xs"
+  >
+    {amenity.name}
 
-                    <span
-                      key={amenity}
-                      className="flex items-center gap-1
-      px-3 py-[3px]
-      rounded-full
-      bg-lime-100
-      text-lime-700
-      text-xs"
-                    >
-
-                      {amenity}
-
-                      <button
-                        type="button"
-                        onClick={() => toggleAmenity(amenity)}
-                        className="ml-1 text-lime-700 hover:text-red-500"
-                      >
-                        ×
-                      </button>
-
-                    </span>
-
-                  ))}
-
+    <button
+      type="button"
+      onClick={() => toggleAmenity(amenity)}
+      className="ml-1 text-lime-700 hover:text-red-500"
+    >
+      ×
+    </button>
+  </span>
+))}
                 </div>
 
                 <button
@@ -594,11 +685,8 @@ ${selected
                 >
                   + Add more
                 </button>
-
               </div>
-
             ) : (
-
               <button
                 type="button"
                 onClick={() => setIsAmenitiesOpen(true)}
@@ -606,62 +694,68 @@ ${selected
               >
                 + Add Amenities
               </button>
-
             )}
-
           </div>
 
+          <Input
+            label="Owner Name"
+            name="owner"
+            value={formData.owner}
+            onChange={handleChange}
+            error={errors?.owner}
+          />
 
-          <Input label="Owner" name="owner" value={formData.owner} onChange={handleChange} />
+          <Input
+            label="Phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            error={errors?.phone}
+          />
 
-          <Input label="Phone" name="phone" value={formData.phone} onChange={handleChange} />
-
-          <Input label="WhatsApp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} />
-
+          <Input
+            label="WhatsApp"
+            name="whatsapp"
+            value={formData.whatsapp}
+            onChange={handleChange}
+            error={errors?.whatsapp}
+          />
         </div>
         {isAmenitiesOpen && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-
             <div className="bg-white rounded-2xl p-8 w-[500px]">
-
-              <h3 className="text-lg font-semibold mb-6">
-                Select Amenities
-              </h3>
+              <h3 className="text-lg font-semibold mb-6">Select Amenities</h3>
 
               <div className="grid grid-cols-4 gap-4 mb-6">
-
-                {amenitiesList.map((item) => {
-
-                  const Icon = item.icon;
-                  const isSelected = formData.amenities?.includes(item.name);
+                {propertyData.amenities.map((item) => {
+                  const isSelected = formData.amenities?.some((a) => a.id === item.id);
 
                   return (
                     <button
-                      key={item.name}
+                      key={item.id}
                       type="button"
-                      onClick={() => toggleAmenity(item.name)}
+                      onClick={() => toggleAmenity(item)}
                       className={`flex flex-col items-center justify-center
-              w-[90px] h-[70px] rounded-xl border transition
-              ${isSelected
-                          ? "border-lime-500 bg-lime-50 text-lime-600"
-                          : "border-gray-300 text-gray-500 hover:border-lime-400"
-                        }`}
+                w-[80px] h-[70px] rounded-xl border transition
+                ${
+                  isSelected
+                    ? "border-lime-500 bg-lime-50 text-lime-600"
+                    : "border-gray-300 text-gray-500 hover:border-lime-400"
+                }`}
                     >
+                      <img
+                        src={item.icon}
+                        alt={item.name}
+                        className="w-6 h-6 object-contain"
+                      />
 
-                      <Icon size={20} />
-
-                      <span className="text-[12px] mt-1">
-                        {item.name}
-                      </span>
-
+                      <span className="text-[12px] mt-1">{item.name}</span>
                     </button>
                   );
                 })}
-
               </div>
 
               <div className="flex justify-end gap-3">
-
                 <button
                   onClick={() => setIsAmenitiesOpen(false)}
                   className="px-4 py-2 rounded-lg border"
@@ -675,49 +769,64 @@ ${selected
                 >
                   Save
                 </button>
-
               </div>
-
             </div>
-
           </div>
         )}
       </div>
-
     </div>
   );
 }
 
 export default PropertyInfo;
-const Input = ({ label, name, value, onChange }) => {
-
+const Input = ({ label, name, value, onChange, error, placeholder }) => {
   const handleInputChange = (e) => {
     let val = e.target.value;
 
     // Only numbers
-    if (["phone", "whatsapp", "pincode", "pricePerAcre", "totalPrice", "landArea", "squareFeet"].includes(name)) {
+    if (
+      [
+        "phone",
+        "whatsapp",
+        "pincode",
+        "pricePerAcre",
+        "totalPrice",
+        "squareFeet",
+      ].includes(name)
+    ) {
       val = val.replace(/\D/g, "");
     }
 
     // Only text
-    if (["title", "city", "village", "taluk", "district", "state"].includes(name)) {
+    if (
+      [
+        "title",
+        "city",
+        "village",
+        "taluk",
+        "district",
+        "state",
+        "owner",
+      ].includes(name)
+    ) {
       val = val.replace(/[^a-zA-Z\s]/g, "");
     }
 
     onChange({
       target: {
         name,
-        value: val
-      }
+        value: val,
+      },
     });
   };
 
   return (
     <div className="w-full">
-
       {/* Label */}
-      <label className="flex items-center gap-2 font-semibold mb-2 lexend 
-      text-[14px] md:text-[15px] lg:text-[16px]">
+      <label
+        className="flex items-center gap-2 font-semibold mb-2 lexend 
+        text-[14px] md:text-[15px] lg:text-[16px]"
+      >
         <Layers size={16} className="text-lime-500 shrink-0" />
         {label}
       </label>
@@ -727,8 +836,11 @@ const Input = ({ label, name, value, onChange }) => {
         name={name}
         value={value || ""}
         onChange={handleInputChange}
+        placeholder={placeholder}
         inputMode={
-          ["phone", "whatsapp", "pincode", "pricePerAcre", "totalPrice", "landArea", "squareFeet"].includes(name)
+          ["phone", "whatsapp", "pincode", "landArea", "squareFeet"].includes(
+            name,
+          )
             ? "numeric"
             : "text"
         }
@@ -739,22 +851,23 @@ const Input = ({ label, name, value, onChange }) => {
               ? 10
               : undefined
         }
-        className="
-        w-full
-        h-[40px] md:h-[42px] lg:h-[44px]
-        px-4 md:px-5
-        rounded-full
-        bg-[#F3F3F3]
-        border border-[#E4E3E3]
-        text-[13px] md:text-[14px]
-        text-black lexend
-        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-        outline-none
-        focus:border-lime-500
-        transition
-        "
+        className={`
+          w-full
+          h-[40px] md:h-[42px] lg:h-[44px]
+          px-4 md:px-5
+          rounded-full
+          bg-[#F3F3F3]
+          border
+          ${error ? "border-red-500" : "border-[#E4E3E3]"}
+          text-[13px] md:text-[14px]
+          text-black lexend
+          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+          outline-none
+          focus:border-lime-500
+          transition
+        `}
       />
-
+      {error && <p className="text-red-500 text-xs mt-1 ml-2">{error}</p>}
     </div>
   );
 };
@@ -771,12 +884,12 @@ const Textarea = ({ label, name, value, onChange }) => (
       value={value}
       onChange={onChange}
       className="w-full px-5 py-4 rounded-2xl
-      bg-[#F3F3F3]
-      border border-[#E4E3E3]
-      text-[14px] text-black
-      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-      lexend
-      outline-none"
+        bg-[#F3F3F3]
+        border border-[#E4E3E3]
+        text-[14px] text-black
+        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+        lexend
+        outline-none"
     />
   </div>
 );

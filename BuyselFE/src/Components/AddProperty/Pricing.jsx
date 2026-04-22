@@ -1,20 +1,24 @@
 import React from "react";
 
-function Pricing({ formData, setFormData }) {
+function Pricing({ formData, setFormData, errors }) {
   const updateField = (key, value) => {
     setFormData({
       ...formData,
-      [key]: value,
+      pricing: {
+        ...formData.pricing,
+        [key]: value,
+      },
     });
   };
 
   return (
     <div className="bg-white p-9 rounded-2xl w-full">
-      <h2 className="lexend text-[24px] leading-[145%] font-[600]  mb-6">Pricing & Availability</h2>
-
+      <h2 className="lexend text-[24px] leading-[145%] font-[600]  mb-6">
+        Pricing & Availability
+      </h2>
 
       <div className="space-y-[24px]">
-        {formData.purpose === "Rent" && (
+        {formData.purpose === "rent" && (
           <>
             <div>
               <label className="block lexend text-[16px] font-[600] mb-2">
@@ -26,41 +30,59 @@ function Pricing({ formData, setFormData }) {
                 inputMode="numeric"
                 maxLength={10}
                 placeholder="e.g., 25000"
-                value={formData.monthlyRent}
+                value={formData.pricing.monthlyRent}
                 onChange={(e) =>
-                  updateField(
-                    "monthlyRent",
-                    e.target.value.replace(/\D/g, "")
-                  )
+                  updateField("monthlyRent", e.target.value.replace(/\D/g, ""))
                 }
-                className="w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
-          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]"
+                className={`w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3] 
+         border ${errors.monthlyRent ? "border-red-500" : "border-[#E4E3E3]"}
+        text-[13px] md:text-[14px]
+        text-black lexend
+        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+        outline-none
+        focus:border-lime-500
+        transition
+      `}
               />
+              {errors?.monthlyRent && (
+                <p className="text-red-500 text-xs mt-1 ml-2">
+                  {errors.monthlyRent}
+                </p>
+              )}
             </div>
 
             <div>
               <label className="block lexend text-[16px] font-[600] mb-2">
-                Maintenance Charges
+                Deposit
               </label>
 
               <input
                 type="text"
-                placeholder="e.g., 3000"
-                value={formData.maintainceCharge}
+                placeholder="e.g., 30000"
+                value={formData.pricing.deposit}
                 onChange={(e) =>
-                  updateField(
-                    "maintainceCharge",
-                    e.target.value.replace(/\D/g, "")
-                  )
+                  updateField("deposit", e.target.value.replace(/\D/g, ""))
                 }
-                className="w-1/2 py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
-          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]"
+                className={`w-1/2 py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
+         border ${errors.deposit ? "border-red-500" : "border-[#E4E3E3]"}
+        text-[13px] md:text-[14px]
+        text-black lexend
+        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+        outline-none
+        focus:border-lime-500
+        transition
+      `}
               />
+              {errors?.deposit && (
+                <p className="text-red-500 text-xs mt-1 ml-2">
+                  {errors.deposit}
+                </p>
+              )}
             </div>
           </>
         )}
 
-        {formData.purpose === "Sell" && (
+        {formData.purpose === "sale" && (
           <>
             <div>
               <label className="block lexend text-[16px] font-[600] mb-2">
@@ -70,93 +92,118 @@ function Pricing({ formData, setFormData }) {
               <input
                 type="text"
                 placeholder="e.g., 5000000"
-                value={formData.totalPrice}
+                value={formData.pricing.totalPrice}
                 onChange={(e) =>
-                  updateField(
-                    "totalPrice",
-                    e.target.value.replace(/\D/g, "")
-                  )
+                  updateField("totalPrice", e.target.value.replace(/\D/g, ""))
                 }
-                className="w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
-          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]"
+                className={`w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
+                  border
+                  ${errors.totalPrice ? "border-red-500" : "border-[#E4E3E3]"}
+        text-[13px] md:text-[14px]
+        text-black lexend
+        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+        outline-none
+        focus:border-lime-500
+        transition
+      `}
               />
+              {errors?.totalPrice && (
+                <p className="text-red-500 text-xs mt-1 ml-2">
+                  {errors.totalPrice}
+                </p>
+              )}
             </div>
 
             {/* Price per Acre */}
+       <div>
+  <label className="block lexend text-[16px] font-[600] mb-2">
+    Price per Acre/Cent
+  </label>
+
+  <div className="relative w-2/3 md:w-1/2">
+  {/* INPUT */}
+  <input
+    type="text"
+    placeholder="e.g., 2000000"
+    value={
+      formData.pricing.pricePerUnit }
+    onChange={(e) =>
+      updateField(
+        "pricePerUnit",
+        e.target.value.replace(/\D/g, "")
+      )
+    }
+    className="w-full py-[10px] pl-[20px] pr-[100px] rounded-[30px]
+      border border-[#E4E3E3]
+      text-[13px] md:text-[14px] lexend 
+      bg-[#f3f3f3]
+      shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+      outline-none focus:border-lime-500"
+  />
+
+  {formData.pricing.pricePerUnit && formData.pricing.unit && (
+  <span className="absolute right-[90px] top-1/2 -translate-y-1/2  text-sm lexend">
+    / {formData.pricing.unit}
+  </span>
+)}
+
+  {/* DROPDOWN */}
+  <select
+    value={formData.pricing.unit}
+    onChange={(e) => updateField("unit", e.target.value)}
+    className="absolute right-4 top-1/2 -translate-y-1/2
+      bg-transparent outline-none text-sm cursor-pointer"
+  >
+    <option value="">Unit</option>
+    <option value="Acre">Acre</option>
+    <option value="Cent">Cent</option>
+  </select>
+</div>
+
+{(errors?.pricePerUnit || errors?.unit) && (
+  <p className="text-red-500 text-xs mt-1 ml-2">
+    {errors.pricePerUnit || errors.unit}
+  </p>
+)}
+</div>
+          </>
+        )}
+
+        {formData.purpose === "lease" && (
+          <>
             <div>
               <label className="block lexend text-[16px] font-[600] mb-2">
-                Price per Acre
+                Total Amount (₹)
               </label>
 
               <input
                 type="text"
-                placeholder="e.g., 2000000"
-                value={formData.pricePerAcre}
+                placeholder="e.g., 5000000"
+                value={formData.pricing?.totalAmount}
                 onChange={(e) =>
-                  updateField(
-                    "pricePerAcre",
-                    e.target.value.replace(/\D/g, "")
-                  )
+                  updateField("totalAmount", e.target.value.replace(/\D/g, ""))
                 }
-                className="w-1/2 py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
-          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]"
+                className={`w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
+    border
+    ${errors?.totalAmount ? "border-red-500 " : "border-[#E4E3E3]"}
+    text-[13px] md:text-[14px]
+    text-black lexend
+    shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
+    outline-none
+     focus:border-lime-500 
+    transition
+  `}
               />
+              {errors?.totalAmount && (
+                <p className="text-red-500 text-xs mt-1 ml-2">
+                  {errors.totalAmount}
+                </p>
+              )}
             </div>
           </>
         )}
 
-        {/* Price Negotiable */}
-        <div className="flex justify-between items-center rounded-[20px] bg-[#f3f3f3] py-[11px] px-[24px] ">
-          <div>
-            <p className="block lexend text-[16px] font-[600] leading-[135%] mb-1">Price Negotiable</p>
-            <p className="text-[12px] inter font-[400] leading-[150%] text-[#A2A2A2] ">
-              Allow buyers to negotiate the price
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={() =>
-              updateField("priceNegotiable", !formData.priceNegotiable)
-            }
-            className={`w-12 h-7 rounded-full relative transition cursor-pointer
-            shadow-[inset_0px_3px_4px_rgba(0,0,0,0.25)]
-            ${formData.priceNegotiable ? "bg-lime-500" : "bg-gray-300"}`}
-          >
-            <span
-              className={`absolute top-0.5 w-6 h-6 bg-white rounded-full transition
-              ${formData.priceNegotiable ? "right-0.5" : "left-0.5"}`}
-            />
-          </button>
-        </div>
-
-        {/* Available Date */}
-        <div className="mb-10">
-          <label className="block lexend text-[16px] font-[600] leading-[135%] mb-2">
-            Available Date
-          </label>
-
-          <input
-            type={formData.availableDate ? "date" : "text"}
-            placeholder="Pick a date"
-            value={formData.availableDate}
-            onFocus={(e) => (e.target.type = "date")}
-            onBlur={(e) => {
-              if (!formData.availableDate) {
-                e.target.type = "text";
-              }
-            }}
-            onChange={(e) =>
-              setFormData({ ...formData, availableDate: e.target.value })
-            }
-            className="w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3] border-[#E4E3E3] text-[14px] leading-[150%] font-[400]
-               focus:ring-2 focus:ring-gray-300 outline-none inter placeholder:italic
-               shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]"
-          />
-        </div>
-
         {/* Actions */}
-
       </div>
     </div>
   );

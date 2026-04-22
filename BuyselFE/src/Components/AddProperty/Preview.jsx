@@ -4,11 +4,6 @@ import { PlayCircle } from "lucide-react";
 import Propertycard from "../PropertyCard/Propertycard";
 import { GraduationCap } from "lucide-react";
 
-const nearbyPlaces = [
-  { name: "Delhi Public School", distance: "1.2 KM" },
-  { name: "Delhi Public School", distance: "1.2 KM" },
-  { name: "Delhi Public School", distance: "1.2 KM" },
-];
 const features = [
     "Plan Validity 90 Days",
     "Social Media Marketing",
@@ -18,69 +13,97 @@ const features = [
     "Poster Creation",
   ];
 
+
+
+const PreviewProperty = ({formData,setFormData}) => {
+
 const property = {
-  id: 1,
-  title: "Modern Luxury Villa",
-  location: "Kochi, Kerala",
-  price: "1.25 Cr",
-  area: "2400 sqft",
-  owner: "Rahul Nair",
-  contact: "919876543210",
-  images: [
-    "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800",
-  ],
+  label: formData.title, // ✅ FIX
+  city: formData.city,   // ✅ FIX
+  location: `${formData.city}, ${formData.state}`,
+  price:
+    formData.purpose === "sale"
+      ? formData.pricing?.totalPrice
+      : formData.purpose === "rent"
+      ? formData.pricing?.monthlyRent
+      : formData.pricing?.totalAmount,
+  perprice: formData.pricing?.pricePerUnit || "", // ✅ optional
+  unit: formData.pricing?.unit || "",  
+  land_area: formData.squareFeet, // ✅ FIX
+  owner: formData.owner,
+  phone: formData.phone,       // ✅ FIX
+  whatsapp: formData.phone,    // ✅ FIX (reuse phone if same)
+images: formData.images?.map((img) => img.preview || img) || []};
+
+const pricingDetails = () => {
+  if (formData.purpose === "sale") {
+    return [
+      {
+        label: "Total Price",
+        value: formData.pricing?.totalPrice || "N/A",
+      },
+      {
+        label: `Price per ${formData.pricing?.unit || "N/A"}`,
+        value: formData.pricing?.pricePerUnit || "N/A",
+      },
+    ];
+  }
+
+  if (formData.purpose === "rent") {
+    return [
+      {
+        label: "Monthly Rent",
+        value: formData.pricing?.monthlyRent || "N/A",
+      },
+      {
+        label: "Deposit",
+        value: formData.pricing?.deposit || "N/A", // ✅ FIX
+      },
+    ];
+  }
+
+  if (formData.purpose === "lease") {
+    return [
+      {
+        label: "Total Amount",
+        value: formData.pricing?.totalAmount || "N/A", // ✅ FIX
+      },
+    ];
+  }
+
+  return [];
 };
- 
-const detail={
-description:"Check out this 3 bhk house for sale in Saibaba Colony, a popular residential locality that contains many of the in-Demand properties in coimbatore. The floor plan additionally contains 3 bedrooms, 3 bathrooms and 2 balconies. All in all, the independent house is spread over a super built up area of 2750 sq.Ft. This is a ready to move house, which is 5-10 years old. The ownership right of this property is co-Operative society. By paying just 1.5 crore",
-  keySellingPoint:[
-    {content:"Prime location in Whitefield with excellent connectivity"},
-    {content:"Spacious rooms with large windows and natural ventilation"},
-    {content:"Modular kitchen with chimney and hob"},
-    {content:"Gated community with 24/7 security"},
-    {content:"Close to major IT parks (Prestige Tech Park, ITPL)"},
-    {content:"Well-connected to metro station and main road"}
-  ],
-  amenities:[
-    {
-     _id:"1",
-     name:"Water supply"
-    },
-    {
-     _id:"2",
-     name:"Gated Community"
-    },
-    {
-     _id:"3",
-     name:"Near by Hospital"
-    },
-    {
-     _id:"4",
-     name:"Kids’ Play Area"
-    },
-    {
-     _id:"5",
-     name:"CCTV Surveillance"
-    },
-    {
-     _id:"6",
-     name:"Solar Panels & Green Energy"
-    },
-    {
-     _id:"7",
-     name:"Near bus stop"
-    },
-  ],
-    address:"Kalapatti, Coimbatore, Tamil Nadu",
 
-}
 
-const PreviewProperty = () => {
+
+  const detail = {
+  description: formData.description || "No description added",
+
+  keySellingPoint:
+    formData.keyPoints?.map((item) => ({
+      content: item,
+    })) || [],
+
+    amenities:
+    formData.amenities?.map((item) => ({
+      _id: item.id,
+      name: item.name, // ✅ FIX HERE
+    })) || [],
+
+  address: `${formData.city}, ${formData.state}`,
+};
+
+const nearbyPlaces =
+  formData.nearbyLandmarks?.map((item) => ({
+    name: item.name || "",
+    distance: item.distance || "",
+  })) || [];
+
+
+
     const [selectedImage, setSelectedImage] = useState(null);
   return (
-    <div className="flex-1 space-y-8 mb-5 relative">
+    <div className="flex-1 space-y-8  relative p-9 rounded-2xl w-full">
 
       <h1 className="text-2xl font-semibold lexend text-black">
         Preview Your Listing
@@ -96,26 +119,33 @@ const PreviewProperty = () => {
 
           <div className="bg-white rounded-2xl border border-[#7BC21F] p-6 shadow-sm host-grotesk">
 
-            <h3 className="font-semibold text-gray-800 mb-4 text-[20px]">
-              Property Features
-            </h3>
+  <h3 className="font-semibold text-gray-800 mb-4 text-[20px]">
+    Property Features
+  </h3>
 
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+  <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
 
-              <DetailItem title="Bedrooms" value="2 Bedrooms" />
-              <DetailItem title="Bathrooms" value="3 Bathrooms" />
-              <DetailItem title="Parking" value="Yes" />
-              <DetailItem title="Facing" value="East" />
-              <DetailItem title="Furnishing" value="Fully Furnished" />
+    {(formData.features || []).map((item, index) => (
+  <DetailItem
+    key={index}
+    title={item.name}
+    value={item.value}
+  />
+))}
 
-            </div>
+  </div>
 
-          </div>
+</div>
 
           <DetailBox title="Pricing Details">
-            <DetailRow label="Sale Price" value="4.14 - 5.52 Crore" />
-            <DetailRow label="Sale by Acres" value="1.15 -2.2 Lakhs" />
-          </DetailBox>
+  {pricingDetails().map((item, index) => (
+    <DetailRow
+      key={index}
+      label={item.label}
+      value={item.value}
+    />
+  ))}
+</DetailBox>
 
         </div>
 
@@ -182,7 +212,7 @@ const PreviewProperty = () => {
     {/* Address */}
 
     <p className="text-sm opacity-90 mb-4">
-      Whitefield Main Road, Whitefield, Chennai – 560066
+     {detail.address}
     </p>
 
     {/* Places List */}
@@ -225,19 +255,21 @@ const PreviewProperty = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
 
-         {[1, 2, 3].map((i) => {
-  const img = `https://picsum.photos/seed/${i + 20}/300/200`;
+         {formData.images?.map((item, i) => (
+  <img
+    key={i}
+    src={item.preview || item}
+    className="rounded-[20px] h-28 w-full object-cover cursor-pointer hover:scale-105 transition duration-200"
+    onClick={() => setSelectedImage(item.preview || item)}
+    alt="property"
+  />
+))}
 
-  return (
-    <img
-      key={i}
-      src={img}
-      className="rounded-[20px] h-28 w-full object-cover cursor-pointer hover:scale-105 transition duration-200"
-      onClick={() => setSelectedImage(img)}
-      alt="interior"
-    />
-  );
-})}
+{formData.images?.length === 0 && (
+  <p className="text-gray-400 text-sm">No images uploaded</p>
+)}
+
+
 
         
 

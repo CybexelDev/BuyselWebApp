@@ -2,6 +2,14 @@ import { Check, TrendingUp } from 'lucide-react'
 import React from 'react'
 
 function CurrentPlan({plan,showRenewButton }) {
+
+const listingFeature = plan.features?.find((f) =>
+  f.toLowerCase().includes("property listings")
+);
+
+const listingCount = listingFeature
+  ? listingFeature.match(/\d+/)?.[0] || "0"
+  : "0";
   return (
     <div className="mb-12">
           <h2 className="text-xl font-bold mb-4 instrument-sans">
@@ -40,7 +48,7 @@ function CurrentPlan({plan,showRenewButton }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto">
                   <div className="bg-white rounded-lg p-[10px] border border-gray-200">
                     <p className="text-2xl sm:text-3xl font-bold text-center text-[#6ABD11]">
-                      {plan.listings}
+                      {listingCount}
                     </p>
                     <p className="text-sm text-gray-600 mt-1 text-center">
                       Property Listings
@@ -68,13 +76,16 @@ function CurrentPlan({plan,showRenewButton }) {
 
               {/* Features */}
               <div className="mt-6 pt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                {plan.features.map((feature, idx) => (
-                  <div
+              {plan.features?.map((feature, idx) => (
+                    <div
                     key={idx}
-                    className="flex items-center gap-2 text-xs sm:text-sm text-gray-700"
+                    className="flex items-center  gap-2 text-xs sm:text-sm md:text-[14px] text-gray-700"
                   >
-                    <Check className="w-4 h-4 text-[#6ABD11]" />
+                    <Check className="w-4 h-4 text-[#6ABD11] shrink-0" />
+                    <span className="truncate">
                     {feature}
+                    </span>
+
                   </div>
                 ))}
               </div>

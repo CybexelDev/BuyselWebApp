@@ -45,9 +45,11 @@ useEffect(() => {
 
   fetchMessages();
 }, []);
+
+
 const handleDelete = async (id) => {
   const confirmDelete = window.confirm("Are you sure to delete?");
-
+  
   if (!confirmDelete) return;
 
   const res = await deleteInboxMessage(id);
