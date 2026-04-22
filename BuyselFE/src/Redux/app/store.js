@@ -116,18 +116,18 @@ const rootReducer = combineReducers({
 // };
 
 
-// const persistConfig = {
-//   key: 'root',
-//   storage,     
-// };
+const persistConfig = {
+  key: 'root',
+  storage,     
+};
 
 
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
-// const store = createStore(persistedReducer);
+const store = createStore(persistedReducer);
 
-// // Persistor for persisting the store
-// const persistor = persistStore(store);
+// Persistor for persisting the store
+const persistor = persistStore(store);
 
-// export { store, persistor };
+export { store, persistor };
