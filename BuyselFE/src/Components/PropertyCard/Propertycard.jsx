@@ -122,9 +122,20 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
         </div>
 
 
-        <p className="instrument-sans flex items-center text-[12px] gap-1 mb-2 text-black font-[400] ">
-          <img src={map} alt="map" />  {property?.city}
-        </p>
+      <p className="instrument-sans flex items-center justify-between text-[12px] mb-2 text-black font-[400]">
+
+  <span className="flex items-center gap-1">
+    <img src={map} alt="map" />
+    {property?.city}
+  </span>
+
+  {property?.distance_km && (
+    <span className="text-gray-500 text-[11px] host-grotesk">
+      {property.distance_km.toFixed(1)} km
+    </span>
+  )}
+
+</p>
 
 
         <div className=" text-black space-y-1">

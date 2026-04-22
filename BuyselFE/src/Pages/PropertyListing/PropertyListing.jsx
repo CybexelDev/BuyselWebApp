@@ -6,6 +6,7 @@ import MapSection from '../../Layouts/PropertyDetail/MapSection/MapSection'
 import Footer from '../../Components/Footer/Footer'
 import { getProperty } from '../../Api/userApi'
 import { filter } from 'framer-motion/m'
+import { getNearbyProperties,filterProperties } from '../../Api/userApi'
 
 
 function PropertListing() {
@@ -16,22 +17,33 @@ function PropertListing() {
     setFilters(data);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getProperty(filters);
-        if (res) {
-          setData(res);
-        }
-      } catch (error) {
-        console.log(error);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      let res;
+
+      if (filters.nearby) {
+        res = await getNearbyProperties(filters.lat, filters.lng);
+        setData(res?.data || []);
+      } 
+      
+      else if (filters.isFilterApplied) {
+        res = await filterProperties(filters);
+        setData(res || []);
+      } 
+      
+      else {
+        res = await getProperty(filters);
+        setData(res || []);
       }
-    };
-    fetchData();
-  }, [filters]);
 
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
+  fetchData();
+}, [filters]);
   return (
     <>
       <Header setParentFilters={handleFilters}  />

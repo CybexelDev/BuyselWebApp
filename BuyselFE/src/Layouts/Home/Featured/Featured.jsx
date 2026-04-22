@@ -15,17 +15,21 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
   const sliderRef = useRef(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getFeatured();
+  if (data && data.length > 0) {
+    setFeatured(data);
+    return;
+  }
 
-      if (data) {
-        setFeatured(data);
-      }
-    };
+  const fetchData = async () => {
+    const res = await getFeatured();
 
-    fetchData();
-  }, []);
+    if (res) {
+      setFeatured(res);
+    }
+  };
 
+  fetchData();
+}, [data]);
 
   const scrollNext = () => {
     if (sliderRef.current) {

@@ -33,6 +33,23 @@ export const userRegister = async (name, email, mobail, password, confirm_passwo
     }
 };
 
+export const getNearbyProperties = async (lat, lng) => {
+  try {
+    const res = await axios.get(`${BASE_URL}nearby-properties/`, {
+      params: {
+        lat,
+        lng,
+      },
+    });
+
+   return res.data.data.map((item) => ({
+      ...item,
+      images: item.image, 
+    }));  } catch (error) {
+    console.log("Nearby properties error:", error);
+    return [];
+  }
+};
 
 export const otpSent = async (otpValue, email) => {
     const formData = new FormData();
@@ -256,11 +273,8 @@ export const clearWishlist = async () => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await api.get(`${BASE_URL}property/${id}/`, {
-            params: {
-                id: userId,
-            },
-        });
+        const result = await api.get(`${BASE_URL}property/${id}/`,          
+      );
         return result.data;
     } catch (error) {
         console.log("Property detail error:", error);
@@ -305,12 +319,7 @@ export const getAgentPlanDetails = async () => {
 
 export const getRelatedProperties = async (id) => {
   try {
-    const userId = localStorage.getItem("id");
-    const res = await api.get(`${BASE_URL}property/${id}/related/`, {
-      params: {
-        id: userId,
-      },
-    });
+    const res = await api.get(`${BASE_URL}property/related/${id}/`);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -443,6 +452,27 @@ export const getAgentsDetails = async (id) => {
     }
 }
 
+
+export const filterProperties = async (filters) => {
+  try {
+    const res = await api.post("/properties/filter/", filters);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+
+export const getFilterOptions = async () => {
+  try {
+    const res = await api.get("/properties/filters/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 export const addReviewToServer = async ({ rating, review, id }) => {
     try {
