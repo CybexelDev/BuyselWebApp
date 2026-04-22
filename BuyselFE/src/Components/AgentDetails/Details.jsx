@@ -1,45 +1,13 @@
-import React, { useState } from "react";
-import { agentContactForm } from "../../Api/userApi";
+import React from "react";
 
 function Details({ agentData }) {
-  const [contactData, setContactData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-
-  const handlesubmit = async (e) => {
-    e.preventDefault();
-    if (!contactData.first_name || !contactData.last_name || !contactData.email || !contactData.phone || !contactData.message)
-       {
-      alert("Please fill required fields");
-      return;
-    }
-    const res = await agentContactForm(contactData);
-
-    if (res) {
-      alert("Enquiry sent ✅");
-    } else {
-      alert("Failed ❌");
-    }
-     setContactData({
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-  };
-
   const details = [
     {
       stats: {
-        "Properties Listed": 125,
-        "Deals Closed": 75,
-        "Years Experience": 8,
-        "Areas Served": 95,
+        "Properties Listed": agentData?.properties_listed || 0,
+        "Deals Closed": agentData?.deals_closed || 0,
+        "Years Experience": agentData?.years_of_experience || 0,
+        "Areas Served": agentData?.served_area || 0,
       },
       specializations: [
         "Residential",
@@ -47,7 +15,6 @@ function Details({ agentData }) {
         "Luxury Villas",
         "Investment Properties",
       ],
-      operatingCities: ["Coimbatore", "Salem", "Tiruppur"],
       about:
         "Experienced real estate professional specializing in premium residential and commercial properties across Mumbai and Navi Mumbai. I help clients find their dream homes and make smart property investments with complete transparency and trust.",
     },
@@ -60,31 +27,26 @@ function Details({ agentData }) {
     eliteAgent: "bg-gradient-to-b from-[#FFFCDC] to-[#FFFFFF]",
   };
 
+
   return (
-    
-   <div
-  className={`w-full py-6 bg-white
-    ${
-      agentData.role === "agent"
-        ? "px-4 sm:px-6 md:px-10 lg:px-[122px]"
-        : "px-4 sm:px-6 md:px-10 lg:px-[64px]"
-    }`}
->
-      <div
-  className={`grid 
-    grid-cols-1 
-    ${agentData.role !== "agent" ? "lg:grid-cols-[1.7fr_1fr]" : "lg:grid-cols-1"} 
-    gap-15 lg:gap-[36px]`}
->
+    <div className="w-full 
+                px-4 sm:px-6 md:px-10 lg:px-[64px] 
+                py-6 bg-white">
+
+      <div className="grid 
+                  grid-cols-1 
+                  lg:grid-cols-[1.7fr_1fr] 
+                  gap-15 lg:gap-[36px]">
+
         {/* Left Side */}
         <div>
+
           {/* Stats */}
-          <div
-            className="flex flex-wrap justify-between             
+          <div className="flex flex-wrap justify-between 
                       gap-1 sm:gap-4
                       host-grotesk text-center 
-                      mb-6 lg:mb-[34px]"
-          >
+                      mb-6 lg:mb-[34px]">
+
             {Object.entries(agent.stats).map(([key, value], idx) => (
               <div key={idx} className="flex-1 lg:min-w-[120px]">
                 <h2 className="text-[20px] sm:text-[24px] lg:text-[30px] font-[500] leading-[135%]">
@@ -99,121 +61,122 @@ function Details({ agentData }) {
 
           {/* About */}
           <div className="mb-6 host-grotesk">
-            <h3
-              className="font-[700] 
+            <h3 className="font-[700] 
                        text-[18px] lg:text-[20px] 
-                       leading-[135%] mb-2"
-            >
+                       leading-[135%] mb-2">
               About the Agent
             </h3>
 
-            <p
-              className="text-[#564C4C] 
+            <p className="text-[#564C4C] 
                       text-[14px] lg:text-[16px] 
-                      leading-[150%] font-[500]"
-            >
-              {agent.about}
+                      leading-[150%] font-[500]">
+              {agentData?.professional_bio || "No about available."}
             </p>
           </div>
 
           {/* Specialization + Cities */}
           <div className="space-y-8 lg:space-y-[46px] host-grotesk">
+
             {/* Specialization */}
             <div>
-              <h3
-                className="text-[18px] lg:text-[20px] 
+              <h3 className="text-[18px] lg:text-[20px] 
                          leading-[135%] font-[700] 
-                         mb-3 lg:mb-[14px]"
-              >
+                         mb-3 lg:mb-[14px]">
                 Specialization
               </h3>
 
               <div className="flex flex-wrap gap-[12px] lg:gap-[20px]">
-                {agent.specializations.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-[#75c222] text-white 
-                           px-5 lg:px-[40px] 
-                           py-2.5 lg:py-[15px] 
-                           rounded-[10px] 
-                           text-[14px] lg:text-[16px] 
-                           leading-[135%] font-[400]"
-                  >
-                    {item}
+                {agentData?.specializations?.length > 0 ? (
+                  agentData?.specializations.map((item, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-[#75c222] text-white 
+                      px-5 lg:px-[40px] 
+                      py-2.5 lg:py-[15px] 
+                      rounded-[10px] 
+                      text-[14px] lg:text-[16px] 
+                      leading-[135%] font-[400]"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-gray-400 text-[14px] lg:text-[16px]">
+                    Specializations not available
                   </span>
-                ))}
+                )}
               </div>
             </div>
 
             {/* Operating Cities */}
             <div>
-              <h3
-                className="text-[18px] lg:text-[20px] 
+              <h3 className="text-[18px] lg:text-[20px] 
                          leading-[135%] font-[700] 
-                         mb-3 lg:mb-[14px]"
-              >
+                         mb-3 lg:mb-[14px]">
                 Operating Cities
               </h3>
 
               <div className="flex flex-wrap gap-[12px] lg:gap-[20px]">
-                {agent.operatingCities.map((city, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-[#75c222] text-white 
-                           px-5 lg:px-[40px] 
-                           py-2.5 lg:py-[15px] 
-                           rounded-[10px] 
-                           text-[14px] lg:text-[16px] 
-                           leading-[135%] font-[400]"
-                  >
-                    {city}
+                {agentData?.operating_cities?.length > 0 ? (
+                  agentData.operating_cities.map((city, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-[#75c222] text-white 
+                       px-5 lg:px-[40px] 
+                       py-2.5 lg:py-[15px] 
+                       rounded-[10px] 
+                       text-[14px] lg:text-[16px] 
+                       leading-[135%] font-[400]"
+                    >
+                      {city}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-gray-400 text-[14px] lg:text-[16px]">
+                    Operating cities not available
                   </span>
-                ))}
+                )}
               </div>
             </div>
+
           </div>
         </div>
 
+
         {/* Right Side - Contact Form */}
-        {agentData.role !== "agent" && ( 
-        <div 
-          className={`${roleStyles[agentData.role] || "bg-white"}
+        <div
+          className={`${roleStyles[agentData?.agent_type] || "bg-white"}
              py-4 sm:py-[18px] 
              px-4 sm:px-6 lg:px-[37px] 
              rounded-[20px] lg:rounded-[24px]
              shadow-[0_4px_8.1px_0_rgba(106,101,101,0.25)]`}
         >
-          <form className="space-y-4 sm:space-y-[20px]" onSubmit={handlesubmit}>
+          <form className="space-y-4 sm:space-y-[20px]">
+
             {/* Heading */}
             <div>
-              <h3
-                className="host-grotesk 
+              <h3 className="host-grotesk 
                      text-[18px] lg:text-[20px] 
                      font-[700] leading-[135%] 
-                     mb-1"
-              >
+                     mb-1">
                 Contact Agent
               </h3>
-              <p
-                className="host-grotesk 
+              <p className="host-grotesk 
                     font-[500] 
                     text-[14px] lg:text-[16px] 
                     leading-[150%] 
-                    text-[#AAA3A3]"
-              >
+                    text-[#AAA3A3]">
                 Get instant response • No brokerage
               </p>
             </div>
 
             {/* Names */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
-              <label
-                className="lexend 
+              <label className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
                         text-black 
-                        sm:col-span-2"
-              >
+                        sm:col-span-2">
                 Name
               </label>
 
@@ -232,10 +195,6 @@ function Details({ agentData }) {
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-                value={contactData.first_name}
-                onChange={(e) => {
-                  setContactData({ ...contactData, first_name: e.target.value });
-                }}
               />
 
               <input
@@ -253,21 +212,15 @@ function Details({ agentData }) {
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-                   value={contactData.last_name}
-                onChange={(e) => {
-                  setContactData({ ...contactData, last_name: e.target.value });
-                }}
               />
             </div>
 
             {/* Phone */}
             <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-              <label
-                className="lexend 
+              <label className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
-                        text-black"
-              >
+                        text-black">
                 Mobile Number
               </label>
 
@@ -287,21 +240,15 @@ function Details({ agentData }) {
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-                   value={contactData.phone}
-                onChange={(e) => {
-                  setContactData({ ...contactData, phone: e.target.value });
-                }}
               />
             </div>
 
             {/* Email */}
             <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-              <label
-                className="lexend 
+              <label className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
-                        text-black"
-              >
+                        text-black">
                 Email
               </label>
 
@@ -319,21 +266,15 @@ function Details({ agentData }) {
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-                   value={contactData.email}
-                onChange={(e) => {
-                  setContactData({ ...contactData, email: e.target.value });
-                }}
               />
             </div>
 
             {/* Message */}
             <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-              <label
-                className="lexend 
+              <label className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
-                        text-black"
-              >
+                        text-black">
                 Message
               </label>
 
@@ -353,10 +294,6 @@ function Details({ agentData }) {
                    resize-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
-                   value={contactData.message}
-                onChange={(e) => {
-                  setContactData({ ...contactData, message: e.target.value });
-                }}
               />
             </div>
 
@@ -374,9 +311,9 @@ function Details({ agentData }) {
             >
               Send Enquiry
             </button>
+
           </form>
         </div>
-        )}
       </div>
     </div>
   );
