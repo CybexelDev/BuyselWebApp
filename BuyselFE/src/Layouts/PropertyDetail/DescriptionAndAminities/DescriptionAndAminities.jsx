@@ -145,7 +145,7 @@ const handleSubmit = async (e) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-black text-[#79C41A] py-4 rounded-2xl text-lg font-medium shadow-lg hover:opacity-90 transition"
+            className="w-full bg-black text-[#79C41A] py-4 rounded-2xl text-lg font-medium shadow-lg hover:opacity-90 transition cursor-pointer"
           >
             {loading ? "Sending..." : "Submit"}
           </button>

@@ -577,3 +577,13 @@ export const postComment = async (agentId, data) => {
     return false;
   }
 };
+
+export const getRecentEnquiries = async () => {
+  try {
+    const res = await api.get("/recent_enquiries/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

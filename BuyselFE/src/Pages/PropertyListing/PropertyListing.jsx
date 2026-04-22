@@ -29,7 +29,7 @@ useEffect(() => {
       
       else if (filters.isFilterApplied) {
         res = await filterProperties(filters);
-        setData(res || []);
+        setData(res?.data || []);
       } 
       
       else {

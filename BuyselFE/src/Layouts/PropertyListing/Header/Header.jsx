@@ -312,8 +312,11 @@ useEffect(() => {
           <div>
             <label className="block text-[13px] font-semibold instrument-sans mb-2">Price Range</label>
             <div className="flex gap-3">
-              <input type="text" placeholder="Min" className="w-1/2 bg-[#E6E8E1] rounded-xl p-3 outline-none text-[#909090] text-[13px] font-semibold instrument-sans" />
-              <input type="text" placeholder="Max" className="w-1/2 bg-[#E6E8E1] rounded-xl p-3 outline-none text-[#909090] text-[13px] font-semibold instrument-sans" />
+              <input type="text" placeholder="Min" className="w-1/2 bg-[#E6E8E1] rounded-xl p-3 outline-none text-[#909090] text-[13px] font-semibold instrument-sans"   value={minPrice}
+  onChange={(e) => setMinPrice(e.target.value)} />
+              <input type="text" placeholder="Max" className="w-1/2 bg-[#E6E8E1] rounded-xl p-3 outline-none text-[#909090] text-[13px] font-semibold instrument-sans" value={maxPrice}
+              onChange={(e)=>setMaxPrice(e.target.value)}
+              />
             </div>
           </div>
         </div>
