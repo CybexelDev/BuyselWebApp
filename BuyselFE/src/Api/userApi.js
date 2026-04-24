@@ -555,3 +555,34 @@ export const searchProperties = async (query) => {
   }
 
   }
+
+
+  export const searchAgents = async (query) => {
+  try {
+    const res = await api.get(`agents/search/?search=${query}`);
+    if (res) {
+       console.log(res.data, "agent searching");
+      return res.data;
+    }   
+    
+  } catch (error) {
+     console.log("Search error:", error);
+     return [];
+  }
+
+  }
+
+  export const getCity = async () => {
+  try {
+    const res = await api.get(`agents/cities/`);
+    if (res) {
+       console.log(res.data, "agent searching");
+      return res.data.cities;
+    }   
+    
+  } catch (error) {
+     console.log("Search error:", error);
+     return [];
+  }
+
+  }
