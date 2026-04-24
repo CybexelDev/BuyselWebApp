@@ -1,4 +1,5 @@
 import React from "react";
+import { useState,useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import i1 from "../../../assets/images/profile/i1.png"
 import i2 from "../../../assets/images/profile/i2.png"
@@ -6,10 +7,12 @@ import i3 from "../../../assets/images/profile/i3.png"
 import i4 from "../../../assets/images/profile/i4.png"
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { getRecentEnquiries } from "../../../Api/userApi";
 
 export default function RecentEnquiries() {
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    const [enquiries, setEnquiries] = useState([]);
 
     const logout = ()=>{
       dispatch({ type: "LOGOUT" });
@@ -19,6 +22,17 @@ export default function RecentEnquiries() {
       navigate('/')
     }
 
+useEffect(() => {
+  const fetchEnquiries = async () => {
+    const res = await getRecentEnquiries();
+
+    if (res) {
+      setEnquiries(res.data || []);
+    }
+  };
+
+  fetchEnquiries();
+}, []);
     return (
         <div className="w-full  p-4 md:p-8">
             <h2 className="text-[20px] instrument-sans font-[600] text-[#000] mb-4">
@@ -32,32 +46,35 @@ export default function RecentEnquiries() {
 
                         <div className="min-w-[700px]">
 
-                            <div className="bg-[#7AC70C] text-[#F7F7F7] host-grotesk rounded-lg px-4 py-3 grid grid-cols-4 text-[16px] font-[500]">
+                            <div className="bg-[#7AC70C] text-[#F7F7F7] host-grotesk rounded-lg px-4 py-3 grid grid-cols-[2fr_1fr_1fr] text-[16px] font-[500]">
                                 <span>Property Name</span>
                                 <span>Agent/Owner</span>
-                                <span>Date</span>
-                                <span>Status</span>
-                            </div>
+<span className="text-right">Date</span>                             </div>
 
                             {/* Row 1 */}
-                            <div className="grid grid-cols-4 px-4 py-4 text-[#595959] text-[15px] font-[500] instrument-sans items-center">
-                                <span>2BHK Apartment – Green Park Residency</span>
-                                <span>Raja riyal estates</span>
-                                <span>Apr,22,2025</span>
-                                <span className="flex items-center gap-2 text-[#A27D20] font-medium">
-                                    Pending
-                                    <Trash2 size={16} className="text-red-500 cursor-pointer" />
-                                </span>
-                            </div>
+                           {enquiries.map((item) => (
+  <div
+    key={item.id}
+    className="grid grid-cols-[2fr_1fr_1fr] px-4 py-4 text-[#595959] text-[15px] font-[500] instrument-sans items-center"
+  >
+    <span className="truncate">
+      {item.property_name || "N/A"}
+    </span>
 
-                            <div className="grid grid-cols-4 px-4 py-4 text-[#595959] text-[15px] font-[500] instrument-sans items-center">
-                                <span>2BHK Apartment – Green Park Residency</span>
-                                <span>Raja riyal estates</span>
-                                <span>Apr,22,2025</span>
-                                <span className="text-[#4A7D12ED] font-medium">
-                                    Responded
-                                </span>
-                            </div>
+    <span>
+      {item.agent_name || "N/A"}
+    </span>
+
+    <span className="text-right">
+      {item.date}
+    </span>
+  </div>
+))}
+{enquiries.length === 0 && (
+  <p className="text-center text-gray-400 py-6">
+    No enquiries found
+  </p>
+)}
 
                         </div>
                     </div>

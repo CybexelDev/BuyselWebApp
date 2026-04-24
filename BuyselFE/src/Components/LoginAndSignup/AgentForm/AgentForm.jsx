@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 
 const AgentForm = () => {
-    const [login, setLogin] = useState({ username: '', password: '' })
+    const [login, setLogin] = useState({ email: '', password: '' })
     const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const AgentForm = () => {
     const handleLogin = async () => {
         setLoading(true);
         try {
-            const response = await premiumAgentLogin(login.username, login.password);
+            const response = await premiumAgentLogin(login.email, login.password);
 
             if (response) {
                 console.log("Login success page:", response);
@@ -60,10 +60,10 @@ const AgentForm = () => {
             <div className="space-y-4">
 
                 <div>
-                    <label className="text-[16px] text-[#525252] host-grotesk">Username</label>
+                    <label className="text-[16px] text-[#525252] host-grotesk">Email</label>
                     <input
-                        value={login.username}
-                        onChange={(e) => setLogin({ ...login, username: e.target.value })}
+                        value={login.email}
+                        onChange={(e) => setLogin({ ...login, email: e.target.value })}
                         type="text"
                         className="w-full border border-[#cbc8c8] rounded-[10px] p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-green-400"
                     />

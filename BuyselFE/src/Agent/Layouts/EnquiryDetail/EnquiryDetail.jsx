@@ -6,24 +6,34 @@ import {
   Calendar, ShieldCheck, Zap
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useParams } from "react-router-dom";
+import { getEnquiryDetail } from '../../../Api/agentsApi';
+import { useState ,useEffect } from 'react';
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+};
 
 const EnquiryDetailLayout = () => {
-  const detail = {
-    user: {
-      name: "Neymar Jr",
-      phone: "+91 6282980763",
-      email: "neymarjr.r@example.com",
-      message: "I am interested in this property. Is the price negotiable? I would like to schedule a site visit this coming weekend if possible.",
-      receivedAt: "March 05, 2026 • 10:24 AM"
-    },
-    property: {
-      title: "Green Valley Apartments",
-      location: "Sector 45, Gurgaon, Haryana",
-      price: "₹85,00,000",
-      description: "A premium 3BHK apartment featuring modern amenities, sustainable architecture, and a breathtaking view of the central park. Includes 2 parking spots and 24/7 security.",
-      image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800"
+  const { id } = useParams();
+  const [detail, setDetail] = useState(null);
+  useEffect(() => {
+  const fetchDetail = async () => {
+    const res = await getEnquiryDetail(id);
+
+    if (res) {
+      setDetail(res.data);
     }
   };
+
+  fetchDetail();
+}, [id]);
+if (!detail) return <div>Loading...</div>;
+
+
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex overflow-x-hidden">
@@ -61,13 +71,11 @@ const EnquiryDetailLayout = () => {
                     </div>
                     <div>
                       <h1 className="text-2xl font-black text-slate-900 instrument-sans leading-tight">
-                        {detail.user.name}
-                      </h1>
+{detail.enquiry.name }                     </h1>
                       <div className="flex items-center gap-1.5 text-slate-400 mt-1">
                         <Calendar size={12} className="text-[#74C122]" />
                         <span className="text-[11px] font-bold uppercase tracking-tight host-grotesk">
-                          {detail.user.receivedAt}
-                        </span>
+{formatDate(detail.enquiry.date)}                        </span>
                       </div>
                     </div>
                   </div>
@@ -75,11 +83,11 @@ const EnquiryDetailLayout = () => {
                   <div className="space-y-1">
                     <div className="flex items-center gap-4 px-4 py-2 rounded-2xl bg-white  group hover:border-[#74C122]/30 transition-all">
                       <Phone size={18} className="text-[#74C122]" />
-                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.user.phone}</span>
+                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.enquiry.phone}</span>
                     </div>
                     <div className="flex items-center gap-4 px-4 py-2  rounded-2xl bg-white  group hover:border-[#74C122]/30 transition-all">
                       <Mail size={18} className="text-[#74C122]" />
-                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.user.email}</span>
+                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.enquiry.email}</span>
                     </div>
                   </div>
 
@@ -89,7 +97,7 @@ const EnquiryDetailLayout = () => {
                     </h3>
                     <div className="px-6 py-3 rounded-3xl bg-white  relative">
                       <p className="italic text-slate-600 text-sm leading-relaxed relative z-10 font-medium host-grotesk">
-                        "{detail.user.message}"
+                        "{detail.enquiry.message}"
                       </p>
                     </div>
                   </div>
@@ -98,7 +106,7 @@ const EnquiryDetailLayout = () => {
 
    <div className="flex gap-4 host-grotesk">
   <a 
-    href={`tel:${detail.user.phone}`}
+    href={`tel:$${detail.enquiry.phone}`}
     className="flex-1 bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer border border-slate-800"
   >
     <Phone size={16} fill="white" stroke="none" /> 
@@ -106,8 +114,7 @@ const EnquiryDetailLayout = () => {
   </a>
 
   <a 
-    href={`https://wa.me/${detail.user.phone.replace(/\D/g, '')}`} 
-    target="_blank" 
+href={`https://wa.me/${detail.enquiry.phone.replace(/\D/g, '')}`}    target="_blank" 
     rel="noopener noreferrer"
     className="flex-1 bg-gradient-to-r from-[#74C122] to-[#5ea11a] text-white py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg shadow-[#74C122]/30 hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer"
   >
@@ -127,8 +134,11 @@ const EnquiryDetailLayout = () => {
               {/* Image Container with Price Overlay */}
               <div className="relative h-72 overflow-hidden group">
                 <img 
-                  src={detail.property.image} 
-                  alt="Property" 
+src={
+  detail.property.image ||
+  detail.property.images?.[0] ||
+  "https://via.placeholder.com/600x400"
+}                  alt="Property" 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -136,8 +146,7 @@ const EnquiryDetailLayout = () => {
                   <div className="bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-white/20 shadow-2xl flex items-center gap-2">
                     <Tag size={18} className="text-[#74C122]" />
                     <span className="text-xl font-black text-slate-900 tracking-tight host-grotesk">
-                      {detail.property.price}
-                    </span>
+₹{Number(detail.property.price).toLocaleString()}                    </span>
                   </div>
                 </div>
               </div>
@@ -148,12 +157,12 @@ const EnquiryDetailLayout = () => {
                   <Home size={14} /> Inquiry Target
                 </div>
                 <h2 className="text-3xl font-black text-slate-900 mb-3 instrument-sans">
-                  {detail.property.title}
+                  {detail.property.label}
                 </h2>
                 
                 <div className="flex items-center gap-2 text-slate-500 mb-8">
                   <MapPin size={18} className="text-red-400" />
-                  <span className="text-sm font-semibold host-grotesk">{detail.property.location}</span>
+                  <span className="text-sm font-semibold host-grotesk">{detail.property.city}, {detail.property.state}</span>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6">

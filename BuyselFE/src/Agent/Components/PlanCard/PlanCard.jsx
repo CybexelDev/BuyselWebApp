@@ -1,7 +1,7 @@
 import React from "react";
 import { Check } from "lucide-react";
 
-function PlanCard({ title, Icon, price, savings, features, buttonText,dropdown }) {
+function PlanCard({ title, Icon, price, savings, features=[], buttonText,dropdown }) {
   return (
     <div className="relative rounded-2xl overflow-hidden transition-all duration-300 border border-gray-200 shadow-lg hover:shadow-xl h-full flex flex-col">
       <div className="p-6 sm:p-8 bg-white flex flex-col flex-1">
@@ -26,11 +26,15 @@ function PlanCard({ title, Icon, price, savings, features, buttonText,dropdown }
             ₹{price}
           </span>
 
-          {savings && (
-            <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
-              {savings}
-            </p>
-          )}
+          {savings ? (
+  <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
+    {savings}
+  </p>
+) : (
+  <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
+    {price} per day
+  </p>
+)}
         </div>
 
         {/* Button */}
@@ -42,7 +46,7 @@ function PlanCard({ title, Icon, price, savings, features, buttonText,dropdown }
         <div className="space-y-3 mt-auto">
           {features.map((feature, idx) => (
             <div key={idx} className="flex items-start gap-3">
-              <Check className="w-5 h-5 text-[#6ABD11]" />
+              <Check className="w-5 h-5 text-[#6ABD11] shrink-0" />
               <span className="text-gray-700 text-sm">{feature}</span>
             </div>
           ))}

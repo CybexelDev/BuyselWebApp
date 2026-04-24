@@ -157,6 +157,7 @@ const handleSave = async () => {
     setIsDirty(false);
   }
 };
+
 const handleChangePassword = async () => {
   const { currentPassword, newPassword, confirmPassword } = passwordData;
 

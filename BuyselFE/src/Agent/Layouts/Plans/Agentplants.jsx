@@ -8,131 +8,78 @@ import { motion } from "framer-motion";
 import Advertisment from "../../Components/Advertisment/Advertisment";
 import PlanCard from "../../Components/PlanCard/PlanCard";
 import CurrentPlan from "../../Components/CurrentPlan/CurrentPlan";
+import { agentPlans } from "../../../Api/agentsApi";
 
 function AgentPlans() {
 
-  const [selectedPlan, setSelectedPlan] = useState({
-    1: "starter",
-    2: "silver",
-  });
+  const [selectedPlan, setSelectedPlan] = useState({});
+ const [upgradePlans, setUpgradePlans] = useState([]);
+const [planData, setPlanData] = useState(null);
+const [adPackages, setAdPackages] = useState([]);
+const [reelPackages, setReelPackages] = useState([]);
+const [selectedAdType, setSelectedAdType] = useState({});
 
-  
 
-const premiumPlans = {
-  id: 1,
-  name: "Premium Agent",
-  icon: Zap,
-  plans: [
-    {
-      id: "starter",
-      label: "Starter Plan",
-      duration: "3 Months",
-      price: 3999,
-      savings: "Starter Plan",
-      features: [
-        "25 Property Listings",
-        "Featured Listing Access",
-        "Priority Email Support",
-        "3 Months Validity",
-      ],
-    },
-    {
-      id: "growth",
-      label: "Growth Plan",
-      duration: "6 Months",
-      price: 7999,
-      savings: "Save ₹1000",
-      features: [
-        "50 Property Listings",
-        "Advanced Analytics",
-        "Marketing Tools",
-        "6 Months Validity",
-      ],
-    },
-    {
-      id: "pro",
-      label: "Pro Plan",
-      duration: "12 Months",
-      price: 13999,
-      savings: "Save ₹3000",
-      features: [
-        "100 Property Listings",
-        "Premium Featured Access",
-        "24/7 Priority Support",
-        "Marketing Tools",
-        "12 Months Validity",
-      ],
-    },
-  ],
-};
-const elitePlans = {
-  id: 2,
-  name: "Elite Agent",
-  icon: Crown,
-  plans: [
-    {
-      id: "silver",
-      label: "Silver Plan",
-      duration: "3 Months",
-      price: 6999,
-      savings: "Starter Elite",
-      features: [
-        "75 Property Listings",
-        "Premium Spotlight Listings",
-        "3 Months Validity",
-      ],
-    },
-    {
-      id: "gold",
-      label: "Gold Plan",
-      duration: "6 Months",
-      price: 14999,
-      savings: "Save ₹2000",
-      features: [
-        "150 Property Listings",
-        "Dedicated Account Manager",
-        "6 Months Validity",
-      ],
-    },
-    {
-      id: "platinum",
-      label: "Platinum Plan",
-      duration: "12 Months",
-      price: 24999,
-      savings: "Save ₹5000",
-      features: [
-        "300 Property Listings",
-        "Dedicated Manager",
-        "24/7 Support",
-        "12 Months Validity",
-      ],
-    },
-  ],
+useEffect(() => {
+  const fetchPlan = async () => {
+  const res = await agentPlans();
+      console.log("agentPlans response:", res); // 👈 HERE
+
+  const data = res?.data || res;
+
+  if (data?.current_plan && data?.plans) {
+    const current = data.current_plan;
+
+    const currentGroup = data.plans.find((group) =>
+      group.name.toLowerCase().includes(current.type)
+    );
+
+    const matchedPlan = currentGroup?.plans.find(
+      (p) => p.id === current.plan_key
+    );
+
+    setPlanData({
+      name: current.type === "premium" ? "Premium Agent" : "Elite Agent",
+      label: current.name,
+      expiresOn: current.expiry_date,
+      status: current.is_active ? "Active" : "Inactive",
+      features: matchedPlan?.features || [],
+    });
+
+    const formattedPlans = data.plans.map((group) => ({
+      id: group.id,
+      name: group.name,
+      icon: group.name.toLowerCase().includes("premium") ? Zap : Crown,
+      plans: group.plans,
+    }));
+
+    setUpgradePlans(formattedPlans);
+
+    setSelectedPlan({
+      1: data.plans[0]?.plans?.[0]?.id,
+      2: data.plans[1]?.plans?.[0]?.id,
+    });
+  }
+
+  // ✅ NOW THIS WILL WORK ALWAYS
+  setAdPackages(data?.advertisement_packages || []);
+  setReelPackages(data?.reel_packages || []);
 };
 
-  const planData = {
-    name: "Premium Agent",
-    label: "Growth Plan",
-    expiresOn: "2026-03-08",
-    listings: 50,
-    status: "Active",
-    features: [
-      "50 Property Listings",
-      "Advanced Analytics",
-      "Marketing Tools",
-      "6 Months Validity",
-    ],
-  };
+  fetchPlan();
+}, []);
 
 
 
- 
-  const upgradePlans = [premiumPlans, elitePlans];
+let showRenewButton = false;
+if (planData?.expiresOn) {
   const today = new Date();
   const expiry = new Date(planData.expiresOn);
   const diffTime = expiry - today;
   const diffDays = diffTime / (1000 * 60 * 60 * 24);
-  const showRenewButton = diffDays <= 10;
+
+  showRenewButton = diffDays <= 10;
+}
 
 
 
@@ -167,10 +114,12 @@ const elitePlans = {
         </div>
 
         {/* Current Plan */}
-      <CurrentPlan
-          plan={planData}
-          showRenewButton={showRenewButton}
-        />
+      {planData && (
+  <CurrentPlan
+    plan={planData}
+    showRenewButton={showRenewButton}
+  />
+)}
 
         {/* Upgrade Plans */}
         <div>
@@ -219,7 +168,76 @@ const elitePlans = {
           </div>
         </div>
 
-        <Advertisment />
+        <div className="mt-12">
+  <h2 className="text-2xl font-bold mb-2">Advertisement Packages</h2>
+  <p className="text-gray-600 mb-8">
+    Promote your properties and get maximum visibility.
+  </p>
+
+  <div className="grid sm:grid-cols-2 gap-8">
+    {adPackages.map((ad) => {
+      const selectedType =
+        selectedAdType[ad.id] || ad.plans[0]?.type;
+
+      const activePlan =
+        ad.plans.find((p) => p.type === selectedType) ||
+        ad.plans[0];
+
+      return (
+        <PlanCard
+          key={ad.id}
+          title={ad.name}
+          Icon={TrendingUp}
+          price={activePlan.price_per_day}
+          features={activePlan.features}
+          buttonText="Advertise Now"
+          dropdown={
+            <Dropdown
+              value={selectedType}
+              onChange={(value) =>
+                setSelectedAdType((prev) => ({
+                  ...prev,
+                  [ad.id]: value,
+                }))
+              }
+              options={ad.plans.map((p) => ({
+                label: p.type,
+                value: p.type,
+              }))}
+            />
+          }
+        />
+      );
+    })}
+  </div>
+</div>
+
+  <div className="mt-12">
+  <h2 className="text-2xl font-bold mb-2">Reel Packages</h2>
+
+  <p className="text-gray-600 mb-8">
+    Highlight your properties with professional video reels.
+  </p>
+
+  <div className="grid sm:grid-cols-2 gap-8">
+    {reelPackages.map((reel) => {
+      const activePlan = reel.plans[0]; // only 1 plan in your case
+
+      if (!activePlan) return null;
+
+      return (
+        <PlanCard
+          key={reel.id}
+          title={reel.name}
+          Icon={TrendingUp}
+          price={activePlan.price_per_day}
+          features={activePlan.features}
+          buttonText="Advertise Now"
+        />
+      );
+    })}
+  </div>
+</div>
 
         {/* Bottom CTA */}
         <div className="mt-12 bg-[#6ABD117A] rounded-2xl p-10 text-white text-center">

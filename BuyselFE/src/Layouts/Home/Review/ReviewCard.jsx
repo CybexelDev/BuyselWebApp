@@ -11,6 +11,8 @@ const ReviewCard = ({ item }) => {
         <img
           src={item.image}
           alt={item.name}
+            onError={() => console.log("IMAGE FAILED:", item.image)}
+
           className="w-[66px] h-[66px] rounded-full "
         />
 
@@ -30,22 +32,52 @@ const ReviewCard = ({ item }) => {
             </div>
 
 
-        <div className="flex gap-1 mb-[7px]">
-  {[...Array(5)].map((_, i) => (
-    <svg
-      key={i}
-      className={`h-3 md:w-4 h-3 md:h-4 ${
-        i < item.rating
-          ? "text-[#e0a417]"
-          : "text-[#c1c1c1]"
-      }`}
-      viewBox="0 0 15 15"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M6.4582 2.70771L5.57461 5.41568L2.77148 5.44577L-0.046875 5.4909L1.08047 6.30329C1.70508 6.75462 2.61914 7.43161 3.12187 7.79267C3.62461 8.15373 4.12734 8.49975 4.23398 8.52984C4.32539 8.57497 4.4168 8.68028 4.4168 8.77055C4.4168 8.86081 4.03594 10.0794 3.56367 11.4785C3.10664 12.8776 2.74102 14.036 2.77148 14.0661C2.80195 14.0962 3.85312 13.3891 5.10234 12.4865L7.37226 10.8617L7.99687 11.2829C8.33203 11.5236 9.35273 12.2458 10.282 12.9228C11.1961 13.5847 11.973 14.0962 12.0035 14.0661C12.034 14.036 11.6684 12.8174 11.1809 11.3582C10.4039 9.0263 10.3277 8.68028 10.541 8.55993C10.6629 8.4847 11.1809 8.13869 11.6684 7.77763C12.1711 7.41656 13.0852 6.75462 13.7098 6.30329L14.8371 5.4909L12.0187 5.44577L9.20039 5.41568L8.33203 2.70771C7.84453 1.21833 7.41797 -0.000250816 7.3875 -0.000250816C7.35703 -0.000250816 6.93047 1.21833 6.4582 2.70771Z" />
-    </svg>
-  ))}
+<div className="flex gap-1 mb-[7px]">
+  {[...Array(5)].map((_, i) => {
+    const full = i < Math.floor(item.rating);
+    const half = i === Math.floor(item.rating) && item.rating % 1 !== 0;
+
+    return (
+      <svg
+        key={i}
+        className="w-4 h-4"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        {/* Full Star */}
+        {full && (
+          <path
+            fill="#e0a417"
+            d="M12 2l2.9 6.6 7.1.6-5.4 4.6 1.6 7-6.2-3.7-6.2 3.7 1.6-7-5.4-4.6 7.1-.6L12 2z"
+          />
+        )}
+
+        {/* Half Star */}
+        {half && (
+          <>
+            <defs>
+              <linearGradient id={`half-${i}`}>
+                <stop offset="50%" stopColor="#e0a417" />
+                <stop offset="50%" stopColor="#c1c1c1" />
+              </linearGradient>
+            </defs>
+            <path
+              fill={`url(#half-${i})`}
+              d="M12 2l2.9 6.6 7.1.6-5.4 4.6 1.6 7-6.2-3.7-6.2 3.7 1.6-7-5.4-4.6 7.1-.6L12 2z"
+            />
+          </>
+        )}
+
+        {/* Empty Star */}
+        {!full && !half && (
+          <path
+            fill="#c1c1c1"
+            d="M12 2l2.9 6.6 7.1.6-5.4 4.6 1.6 7-6.2-3.7-6.2 3.7 1.6-7-5.4-4.6 7.1-.6L12 2z"
+          />
+        )}
+      </svg>
+    );
+  })}
 </div>
 
 
@@ -58,7 +90,7 @@ const ReviewCard = ({ item }) => {
       </h3>
 
       <p className="text-[#313131] text-[14px] sm:text-[15px] md:text-[16px] lg:text-[16px] leading-[18px] sm:leading-[20px] md:leading-[23px] lg:leading-[25px] font-[500] mb-3 sm:mb-5 lg:mb-[30px]">
-        {item.text}
+        {item.review}
       </p>
 
 

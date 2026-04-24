@@ -1,8 +1,8 @@
 import React from "react";
 import { Home, Tag, Image, Calendar, Eye } from "lucide-react";
 
-function SidebarProgress({ step }) {
-const steps = [
+function SidebarProgress({ step,isAgent }) {
+const allSteps = [
   {
     name: "Property Info",
     icon: (
@@ -48,6 +48,8 @@ const steps = [
     )
   }
 ];
+  const steps = isAgent ? allSteps.slice(0, 4) : allSteps;
+
 
   const progress = Math.round((step / steps.length) * 100);
 return (
@@ -117,7 +119,7 @@ return (
       <div className="lg:hidden absolute top-[15px] left-[10%] right-[10%] h-[2px] bg-[#84CC16]" />
 
       {steps.map((item, index) => {
-
+ 
 const active = step === index + 1;
 const completed = step > index + 1;
         return (

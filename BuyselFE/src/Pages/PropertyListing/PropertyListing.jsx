@@ -6,6 +6,7 @@ import MapSection from '../../Layouts/PropertyDetail/MapSection/MapSection'
 import Footer from '../../Components/Footer/Footer'
 import { getProperty, searchProperties } from '../../Api/userApi'
 import { filter } from 'framer-motion/m'
+import { getNearbyProperties,filterProperties } from '../../Api/userApi'
 
 
 function PropertListing() {
@@ -18,7 +19,35 @@ function PropertListing() {
     setFilters(data);
   };
 
-  useEffect(() => {
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      let res;
+
+      if (filters.nearby) {
+        res = await getNearbyProperties(filters.lat, filters.lng);
+        setData(res?.data || []);
+      } 
+      
+      else if (filters.isFilterApplied) {
+        res = await filterProperties(filters);
+        setData(res?.data || []);
+      } 
+      
+      else {
+        res = await getProperty(filters);
+        setData(res || []);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchData();
+}, [filters]);
+
+   useEffect(() => {
     if (!searchQuery) {
       const fetchData = async () => {
         try {
@@ -46,7 +75,6 @@ function PropertListing() {
   useEffect(() => {
 
   }, [searchQuery]);
-
   return (
     <>
       <Header setParentFilters={handleFilters} onchange={(e) => setSearchQuery(e.target.value)} />

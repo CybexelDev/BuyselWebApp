@@ -150,21 +150,34 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
         </div>
 
 
-        <p className="instrument-sans flex items-center text-[12px] gap-1 mb-2 text-black font-[400] ">
-          <img src={map} alt="map" />  {property?.city}
-        </p>
+      <p className="instrument-sans flex items-center justify-between text-[12px] mb-2 text-black font-[400]">
+
+  <span className="flex items-center gap-1">
+    <img src={map} alt="map" />
+    {property?.city}
+  </span>
+
+  {property?.distance_km && (
+    <span className="text-gray-500 text-[11px] host-grotesk">
+      {property.distance_km.toFixed(1)} km
+    </span>
+  )}
+
+</p>
 
 
         <div className=" text-black space-y-1">
-          <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">₹ {property.perprice}</h2>
-          <p className="instrument-sans text-[11px] text-[#B0ABAB] font-[500]">Total ₹{property.price}</p>
+          <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">Total ₹{property.price}</h2>
+          <p className="instrument-sans text-[11px] text-[#B0ABAB] font-[500]">₹{property.perprice}
+            <span> / {property.unit}</span>
+          </p>
         </div>
 
 
         <div className="instrument-sans flex justify-between my-2 font-[500] text-[12px] text-black">
           <span className="flex items-center gap-0.5 w-[45%] truncate">
             <img src={measure} alt="" className="w-[13px] h-[13px]" />
-            <span className="truncate">{property?.land_area ?? property?.sq_ft ?? "Area not available"}</span>
+            <span className="truncate">{property?.land_area ?? "Area not available"} sq.ft</span>
           </span>
           <span className="flex items-center gap-0.5 w-[45%] truncate">
             <img src={apartment} alt="" className="w-[13px] h-[13px]" />

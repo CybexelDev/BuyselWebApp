@@ -49,7 +49,7 @@ const SuccessModal = ({ isOpen}) => {
         <div className="flex flex-col gap-4 px-8">
 
           <button
-            onClick={()=>navigate("/")}
+            onClick={()=>navigate("/agent/property")}
             className="w-full py-4 bg-[#82CD28] text-white rounded-full font-bold text-[16px] hover:bg-[#74b924] inter"
           >
             Go to Home

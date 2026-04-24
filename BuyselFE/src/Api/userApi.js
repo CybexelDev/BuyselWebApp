@@ -33,6 +33,23 @@ export const userRegister = async (name, email, mobail, password, confirm_passwo
     }
 };
 
+export const getNearbyProperties = async (lat, lng) => {
+  try {
+    const res = await axios.get(`${BASE_URL}nearby-properties/`, {
+      params: {
+        lat,
+        lng,
+      },
+    });
+
+   return res.data.data.map((item) => ({
+      ...item,
+      images: item.image, 
+    }));  } catch (error) {
+    console.log("Nearby properties error:", error);
+    return [];
+  }
+};
 
 export const otpSent = async (otpValue, email) => {
     const formData = new FormData();
@@ -146,24 +163,6 @@ export const sendFacebookToken = async (accessToken) => {
     }
 };
 
-export const getProfile = async () => {
-    try {
-
-         const userId = localStorage.getItem("id");
-        
-        const result = await api.get(`${BASE_URL}profile/`, {
-            params: {
-                id: userId,
-            },
-        });
-        console.log(result, "profile data 77777777777777777777");
-     
-        return result.data;
-
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 
 export const getProperty = async (filters) => {
@@ -256,7 +255,9 @@ export const clearWishlist = async () => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await api.get(`${BASE_URL}property/${id}/`);
+        const result = await api.get(`${BASE_URL}property/${id}/`,          
+      );
+
         return result.data;
     } catch (error) {
         console.log("Property detail error:", error);
@@ -397,6 +398,7 @@ export const getFeatured = async () => {
 };
 
 
+
 export const getAgents = async (category) => {
 
     try {
@@ -411,6 +413,60 @@ export const getAgents = async (category) => {
     }
 }
 
+export const getProfile = async () => { 
+    try {
+        const result = await api.get(`${BASE_URL}profile/`);
+       
+            return result.data;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+export const agentContactForm = async(contactData)=>{
+    try{
+    const data = new FormData();
+
+    data.append("first_name", contactData.first_name);   
+    data.append("last_name", contactData.last_name);     
+    data.append("contact_number", contactData.phone);   
+    data.append("email", contactData.email);           
+    data.append("message", contactData.message);        
+
+    const res = await api.post(
+        `agent/buyselman5443/contact/`,
+        data,
+        {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    return res.data
+
+    }catch(err){
+        console.log("error:", err);
+        return false
+    }
+}
+
+
+export const getTestimonial= async () => {
+  try {
+const result = await axios.get(`${BASE_URL}testimonial/list/`);
+    if (result.data?.data) {
+      return result.data.data;
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("testimonial not found:", error);
+    return [];
+  }
+};
 export const getReviews = async (agentId) => {
   try {
     const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);
@@ -434,6 +490,27 @@ export const getAgentsDetails = async (id) => {
     }
 }
 
+
+export const filterProperties = async (filters) => {
+  try {
+    const res = await api.post("/properties/filter/", filters);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+
+export const getFilterOptions = async () => {
+  try {
+    const res = await api.get("/properties/filters/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 export const addReviewToServer = async ({ rating, review, id }) => {
     try {
@@ -539,6 +616,16 @@ export const postComment = async (agentId, data) => {
   }
 };
 
+
+export const getRecentEnquiries = async () => {
+  try {
+    const res = await api.get("/recent_enquiries/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 export const searchProperties = async (query) => {
   try {
