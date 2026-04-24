@@ -5,8 +5,7 @@ import { getAgents } from "../../../Api/userApi";
 import { useNavigate } from "react-router-dom";
 
 
-
-export default function AgentTabs() {
+export default function AgentTabs({searchedData, query, }) {
     const [activeTab, setActiveTab] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [agents, setAgents] = useState([]);
@@ -21,21 +20,25 @@ export default function AgentTabs() {
             ? agents
             : agents.filter((agent) => agent.agent_type === activeTab);
 
-    // Pagination Logic
     const totalPages = Math.max(1, Math.ceil(filteredAgents.length / itemsPerPage));
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentAgents = filteredAgents.slice(startIndex, endIndex);
 
     useEffect(() => {
-        const getAgent = async () => {
+        if (query.length > 0) {
+            setAgents(searchedData);
+        }else{
+              const getAgent = async () => {
             const data = await getAgents({category: activeTab});
             if (data) {
                 setAgents(data);
             }
         };
         getAgent();
-    }, [activeTab]);
+        }
+      
+    }, [activeTab, searchedData]);
 
 
     return (

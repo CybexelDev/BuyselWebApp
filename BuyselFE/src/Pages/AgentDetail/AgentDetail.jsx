@@ -16,6 +16,9 @@ function AgentDetail() {
   const [agentsData, setAgentsData] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
+  console.log(agentsData, "zzzzzzzzzzzzzzzzzzzzzzzzzz");
+  
+
   const agentData = {
     name: "Arun Kumar",
     role: "premiumAgent",
@@ -50,7 +53,7 @@ function AgentDetail() {
       <Details agentData={agentsData} />
       {isPremiumOrElite && (
         <>
-          <ActivePropertyListing agentData={agentData} />
+          <ActivePropertyListing agentData={agentsData?.properties} role={agentsData?.agent_type} />
           <AddPropertyBanner />
         </>
       )}

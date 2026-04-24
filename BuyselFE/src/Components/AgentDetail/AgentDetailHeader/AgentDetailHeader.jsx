@@ -18,6 +18,39 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
       ? "linear-gradient(to right, #FEFCDC,  #83cc1687 100%)"
       : "linear-gradient(to right, #D9D9D9 10%, #83cc1687 100%)";
 
+
+  const handleWtspClick = (e) => {
+
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      e.preventDefault(); // 🚫 stop redirect
+      alert("Please login to connect with agent");
+      return;
+    }
+
+    // ✅ open WhatsApp manually
+    const url = `https://wa.me/${agentData?.whatsapp_number}?text=${encodeURIComponent(
+      `Hi ${agentData?.username}, I found your profile on BuySel and I'm interested in your services.`
+    )}`;
+
+    window.open(url, "_blank");
+
+  }
+
+  const handleCallClick = (e) => {
+
+    const token = localStorage.getItem("accessToken");
+ if (!token) {
+      e.preventDefault(); // 🚫 stop redirect
+      alert("Please login to connect with agent");
+      return;
+    }
+   const url = `tel:${agentData?.phone_number}`;
+    window.open(url, "_self");
+
+  }
+
   return (
     <div className="p-5 relative">
       <Navbar />
@@ -122,7 +155,12 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
               </div>
 
               <div className="flex flex-wrap justify-center sm:justify-start gap-3 mt-5">
-                <a className="bg-[#6ABD11ED] text-white px-6 md:px-13 py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-black hover:text-white transition flex items-center gap-2 cursor-pointer">
+                <a
+                  href="#"
+                  onClick={handleWtspClick}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bg-[#6ABD11ED] text-white px-6 md:px-13 py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-black hover:text-white transition flex items-center gap-2 cursor-pointer">
                   <svg
                     width="15"
                     height="15"
@@ -144,7 +182,10 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
                   WhatsApp
                 </a>
 
-                <a href={`tel:${agentData?.phone_number}`} className="bg-[#312F2F] text-white px-8 md:px-17 shadow-md py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-gray-800 hover:text-white border border-transparent hover:border-[#312F2F] transition flex items-center gap-2 cursor-pointer">
+                <a
+                 href="#"
+                 onClick={handleCallClick}
+                 className="bg-[#312F2F] text-white px-8 md:px-17 shadow-md py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-gray-800 hover:text-white border border-transparent hover:border-[#312F2F] transition flex items-center gap-2 cursor-pointer">
                   <svg
                     width="13"
                     height="13"

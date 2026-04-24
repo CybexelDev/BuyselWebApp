@@ -257,6 +257,7 @@ export const getPropertyDetail = async (id) => {
     try {
         const result = await api.get(`${BASE_URL}property/${id}/`,          
       );
+
         return result.data;
     } catch (error) {
         console.log("Property detail error:", error);
@@ -615,6 +616,7 @@ export const postComment = async (agentId, data) => {
   }
 };
 
+
 export const getRecentEnquiries = async () => {
   try {
     const res = await api.get("/recent_enquiries/");
@@ -624,3 +626,50 @@ export const getRecentEnquiries = async () => {
     return null;
   }
 };
+
+export const searchProperties = async (query) => {
+  try {
+    const res = await api.get(`properties/search/?label=${query}`);
+    if (res) {
+      return res.data.data;
+      console.log(res.data, "Search result from API 77777777777777777777");
+      
+    }   
+    
+  } catch (error) {
+     console.log("Search error:", error);
+     return [];
+  }
+
+  }
+
+
+  export const searchAgents = async (query) => {
+  try {
+    const res = await api.get(`agents/search/?search=${query}`);
+    if (res) {
+       console.log(res.data, "agent searching");
+      return res.data;
+    }   
+    
+  } catch (error) {
+     console.log("Search error:", error);
+     return [];
+  }
+
+  }
+
+  export const getCity = async () => {
+  try {
+    const res = await api.get(`agents/cities/`);
+    if (res) {
+       console.log(res.data, "agent searching");
+      return res.data.cities;
+    }   
+    
+  } catch (error) {
+     console.log("Search error:", error);
+     return [];
+  }
+
+  }
