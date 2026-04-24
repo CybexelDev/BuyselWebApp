@@ -32,6 +32,16 @@ export const premiumAgentLogin = async (email, password) => {
   }
 };
 
+export const getEnquiryDetail = async (id) => {
+  try {
+    const res = await api.get(`/agent/enquiry/${id}/`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
 export const getAgentProfile = async () => {
   try {
 
@@ -143,6 +153,15 @@ export const deleteInboxMessage = async (id) => {
   }
 };
 
+export const getAgentEnquiries = async () => {
+  try {
+    const res = await api.get("/agent/enquiries/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 export const registerAgent = async (data) => {
   try {
