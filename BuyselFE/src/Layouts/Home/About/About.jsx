@@ -29,7 +29,7 @@ function About() {
              We offer verified listings, trusted agents and a smooth experience for buying, renting and leasing.
              With smart filters and clear details, BuySel helps you find the right property quickly and confidently.</p>
             
-            <ButtonHead color='bg-[#edebeb]' text="Learn More" textColor='black' hover="" />
+            <ButtonHead color='bg-[#edebeb]' text="Learn More" textColor='black' hover="" path="/about"/>
              
         </div>
 

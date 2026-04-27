@@ -9,7 +9,7 @@ import Navbar from "../../../Components/Navbar/Navbar";
 import { getFilterOptions } from "../../../Api/userApi";
 //start
 
-const Header = ({ setParentFilters, onchange }) => {
+const Header = ({ setParentFilters, onchange ,filters}) => {
   const [activeTab, setActiveTab] = useState("Rent");
   const [activeCategory, setActiveCategory] = useState("Residential");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -43,7 +43,15 @@ const handleNearbyClick = () => {
     }
   );
 };
+useEffect(() => {
+  if (filters?.purpose) {
+    setActiveTab(filters.purpose);
+  }
 
+  if (filters?.category) {
+    setActiveCategory(filters.category);
+  }
+}, [filters]);
   useEffect(() => {
     setParentFilters({
       purpose: activeTab,

@@ -2,10 +2,13 @@ import React, { use, useEffect, useState } from "react";
 import StarRating from "../../../Components/StarRating/StarRating";
 import location from '../../../assets/images/icons/location.png'
 import { getAgents } from "../../../Api/userApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 
 
 export default function AgentTabs({searchedData, query, locationDats }) {
+    const [searchParams]=useSearchParams()
+    const type = searchParams.get("type");
     const [activeTab, setActiveTab] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [agents, setAgents] = useState([]);
@@ -24,7 +27,11 @@ export default function AgentTabs({searchedData, query, locationDats }) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentAgents = filteredAgents.slice(startIndex, endIndex);
-
+useEffect(() => {
+  if (type) {
+    setActiveTab(type);
+  }
+}, [type]);
     useEffect(() => {
         if (query.length > 0) {
             setAgents(searchedData);

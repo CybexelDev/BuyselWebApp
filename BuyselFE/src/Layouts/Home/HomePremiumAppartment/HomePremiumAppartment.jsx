@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { premiumHomes } from "../../../Constance/constance";
 
-
+import { getProperty } from "../../../Api/userApi";
+import { useNavigate } from "react-router-dom";
 
 
 const HomePremiumAppartment = () => {
 
+    const navigate=useNavigate()
 const [homes, setHomes] = useState([]);
-
+const handleNavigate = (path) => {
+  navigate(path);
+  window.scrollTo({
+    top: 0,
+    behavior: "instant", 
+  });
+};
   useEffect(() => {
     // Simulate API call
     setHomes(premiumHomes);
   }, []);
 
+  const categoryMap = {
+  "Residential Apartment": "Residential",
+  "Independent Villa / House": "Residential",
+  "Residential Plot / Land":  "Land / Plot",
+};
 
+const handleClick = (item) => {
+  const category = categoryMap[item.title];
+
+  handleNavigate(`/propertyListing?purpose=Buy&category=${category}`);
+};
     return (
         <div>
             <div className="w-full">
@@ -22,7 +40,7 @@ const [homes, setHomes] = useState([]);
 
                 <div className='md:flex flex-row gap-7 mt-14 px-10 lg:px-50'>
                     {homes.map((item) => (
-                    <div  className='relative w-full basis-1/3 h-[318px] bg-gray-200 rounded-[37px] overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg mb-5'
+                    <div  className='relative w-full basis-1/3 h-[318px] bg-gray-200 rounded-[37px] overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg mb-5'   onClick={() => handleClick(item)} 
                         style={{
                             backgroundImage: `url('${item.image}')`,
                             backgroundSize: "cover",
