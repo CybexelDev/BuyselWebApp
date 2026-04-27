@@ -170,7 +170,7 @@ export const getProperty = async (filters) => {
     try {
          const userId = localStorage.getItem("id");
 
-        const result = await api.get(`${BASE_URL}properties/`, {
+        const result = await api.get(`${BASE_URL}all-properties/`, {
             params: {
                 ...filters,
                 id: userId,
@@ -255,7 +255,7 @@ export const clearWishlist = async () => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await api.get(`${BASE_URL}property/${id}/`,          
+        const result = await axios.get(`${BASE_URL}property/${id}/`,          
       );
 
         return result.data;
