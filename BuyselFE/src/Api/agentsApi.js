@@ -475,8 +475,35 @@ export const agentPlans = async () => {
   }
 };
 
+export const getAgentNotifications = async () => {
+  try {
+    const res = await api.get("/agent/notifications/");
+    return res.data; 
+  } catch (error) {
+    console.error("notification error:", error);
+    return [];
+  }
+};
 
+export const markNotificationAsRead = async (id) => {
+  try {
+    const res = await api.post(`/agent/notifications/read/${id}/`);
+    return res.data;
+  } catch (error) {
+    console.error("mark read error:", error);
+    return false;
+  }
+};
 
+export const getUnreadCount = async () => {
+  try {
+    const res = await api.get("/agent/notifications/unread-count/");
+    return res.data?.unread_count || 0;
+    } catch (error) {
+    console.error("unread count error:", error);
+    return 0;
+  }
+};
 
 
 

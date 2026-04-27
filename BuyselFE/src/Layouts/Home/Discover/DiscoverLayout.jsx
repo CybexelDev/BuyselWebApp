@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import image1 from "../../../assets/images/discover/image1.png"
 import image2 from "../../../assets/images/discover/image2.png"
 import image3 from "../../../assets/images/discover/image3.png"
@@ -29,9 +30,40 @@ const properties = [
 
 function DiscoverLayout() {
   // card
+  const navigate=useNavigate()
+     const handleNavigate = (path) => {
+  navigate(path);
+  window.scrollTo({
+    top: 0,
+    behavior: "instant", 
+  });
+};
+const categoryMap = {
+  "Shops & Showrooms": "Commercial",
+  "Office Spaces": "Commercial",
+
+  "Apartments": "Residential",
+  "Independent Houses": "Residential",
+  "Villas": "Residential",
+
+  "Plots / Land": "Land / Plot",
+
+  "Industrial Properties": "Industrial",
+};
+
+const handleClick = (item) => {
+  if (!item.text) return; 
+
+  const title = item.text.join(" "); 
+  
+  const category = categoryMap[title];
+
+  handleNavigate(`/propertyListing?purpose=Buy&category=${category}`);
+};
   const PropertyCard = ({ item, isDesktop }) => (
    <div
   key={item.id}
+   onClick={() => handleClick(item)}
   className={`
 ${isDesktop ? item.height : "h-[160px] md:h-[250px]"}
     rounded-[21px] 

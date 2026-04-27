@@ -933,6 +933,7 @@ export const premiumHomes = [
     description:
       "A perfect choice for those who enjoy a stylish and hassle-free lifestyle.",
     image:v1,
+    path:""
   },
   {
     id: 2,

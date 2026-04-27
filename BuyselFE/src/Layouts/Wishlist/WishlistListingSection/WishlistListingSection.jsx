@@ -8,6 +8,7 @@ import { getWishlist, filterWishlist,sortWishlist,clearWishlist} from "../../../
 import { useSelector } from "react-redux";
 import { addToWishlist,removeToWishlist } from "../../../Api/userApi";
 import { Heart } from "lucide-react";
+import { toast } from "sonner";
 function WishlistListingSection() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +32,8 @@ const removeWishlist = (id) => {
   removeToWishlist({ id });
 
   setData((prev) => prev.filter((item) => item.id !== id));
+    toast.success("remove unliked")
+
 };
 
 const handleSort = async (type) => {
