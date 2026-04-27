@@ -189,7 +189,7 @@ export const getPropertyData = async () => {
   try {
     const res = await api.get("/agent/property-meta/");
 
-    if (res.data?.data) {
+    if (res.data?.data) { 
       return res.data.data;
     }
 
@@ -267,7 +267,9 @@ if (data.purpose === "sale") {
 
 formData.append("price", price);
 
-   formData.append(
+
+
+formData.append(
   "field_values",
   JSON.stringify(data.features || [])
 );
@@ -400,10 +402,10 @@ if (data.purpose === "sale") {
 
     formData.append("price", price);
 
-    formData.append(
-      "field_values",
-      JSON.stringify(data.features || [])
-    );
+formData.append(
+  "field_values",
+  JSON.stringify(data.features || [])
+);
 
     (data.amenities || []).forEach((id) => {
   formData.append("amenities", id);

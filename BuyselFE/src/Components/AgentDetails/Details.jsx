@@ -1,6 +1,38 @@
 import React from "react";
-
+import { useState } from "react";
+import { agentContactForm } from "../../Api/userApi";
 function Details({ agentData }) {
+  const [contactData, setContactData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    if (!contactData.first_name || !contactData.last_name || !contactData.email || !contactData.phone || !contactData.message)
+       {
+      alert("Please fill required fields");
+      return;
+    }
+    
+    const res = await agentContactForm(contactData);
+
+    if (res) {
+      alert("Enquiry sent ✅");
+    } else {
+      alert("Failed ❌");
+    }
+     setContactData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+  };
   const details = [
     {
       stats: {
@@ -144,39 +176,45 @@ function Details({ agentData }) {
 
 
         {/* Right Side - Contact Form */}
-        <div
-          className={`${roleStyles[agentData?.agent_type] || "bg-white"}
+         {agentData?.role !== "agent" && ( 
+        <div 
+          className={`${roleStyles[agentData?.role] || "bg-white"}
              py-4 sm:py-[18px] 
              px-4 sm:px-6 lg:px-[37px] 
              rounded-[20px] lg:rounded-[24px]
              shadow-[0_4px_8.1px_0_rgba(106,101,101,0.25)]`}
         >
-          <form className="space-y-4 sm:space-y-[20px]">
-
+          <form className="space-y-4 sm:space-y-[20px]" onSubmit={handlesubmit}>
             {/* Heading */}
             <div>
-              <h3 className="host-grotesk 
+              <h3
+                className="host-grotesk 
                      text-[18px] lg:text-[20px] 
                      font-[700] leading-[135%] 
-                     mb-1">
+                     mb-1"
+              >
                 Contact Agent
               </h3>
-              <p className="host-grotesk 
+              <p
+                className="host-grotesk 
                     font-[500] 
                     text-[14px] lg:text-[16px] 
                     leading-[150%] 
-                    text-[#AAA3A3]">
+                    text-[#AAA3A3]"
+              >
                 Get instant response • No brokerage
               </p>
             </div>
 
             {/* Names */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
-              <label className="lexend 
+              <label
+                className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
                         text-black 
-                        sm:col-span-2">
+                        sm:col-span-2"
+              >
                 Name
               </label>
 
@@ -195,6 +233,10 @@ function Details({ agentData }) {
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
+                value={contactData.first_name}
+                onChange={(e) => {
+                  setContactData({ ...contactData, first_name: e.target.value });
+                }}
               />
 
               <input
@@ -212,15 +254,21 @@ function Details({ agentData }) {
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
+                   value={contactData.last_name}
+                onChange={(e) => {
+                  setContactData({ ...contactData, last_name: e.target.value });
+                }}
               />
             </div>
 
             {/* Phone */}
             <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-              <label className="lexend 
+              <label
+                className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
-                        text-black">
+                        text-black"
+              >
                 Mobile Number
               </label>
 
@@ -240,15 +288,21 @@ function Details({ agentData }) {
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
+                   value={contactData.phone}
+                onChange={(e) => {
+                  setContactData({ ...contactData, phone: e.target.value });
+                }}
               />
             </div>
 
             {/* Email */}
             <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-              <label className="lexend 
+              <label
+                className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
-                        text-black">
+                        text-black"
+              >
                 Email
               </label>
 
@@ -266,15 +320,21 @@ function Details({ agentData }) {
                    outline-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
+                   value={contactData.email}
+                onChange={(e) => {
+                  setContactData({ ...contactData, email: e.target.value });
+                }}
               />
             </div>
 
             {/* Message */}
             <div className="flex flex-col space-y-2 sm:space-y-[10px]">
-              <label className="lexend 
+              <label
+                className="lexend 
                         text-[14px] lg:text-[16px] 
                         font-[600] leading-[135%] 
-                        text-black">
+                        text-black"
+              >
                 Message
               </label>
 
@@ -294,6 +354,10 @@ function Details({ agentData }) {
                    resize-none
                    focus:ring-2 focus:ring-[#d8d7d7]
                    placeholder:text-[#757575] placeholder:italic"
+                   value={contactData.message}
+                onChange={(e) => {
+                  setContactData({ ...contactData, message: e.target.value });
+                }}
               />
             </div>
 
@@ -311,9 +375,9 @@ function Details({ agentData }) {
             >
               Send Enquiry
             </button>
-
           </form>
         </div>
+        )}
       </div>
     </div>
   );

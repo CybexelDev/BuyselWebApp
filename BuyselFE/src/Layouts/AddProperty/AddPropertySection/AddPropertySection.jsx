@@ -64,6 +64,11 @@ function AddPropertySection() {
 
   const [formData, setFormData] = useState(getInitialFormData());
   const [categories, setCategories] = useState([]);
+  const [propertyData, setPropertyData] = useState({
+    categories: [],
+    subcategories: [],
+  });
+
   const [errors, setErrors] = useState({});
 
   const agentId = useSelector((state) => state.agent.agentId);
@@ -72,11 +77,12 @@ function AddPropertySection() {
 
   const { id } = useParams();
 
-  // ✅ Fetch categories
+  // ✅ Fetch full meta
   useEffect(() => {
     const fetchMeta = async () => {
       try {
         const res = await getPropertyData();
+        setPropertyData(res);
         setCategories(res?.categories || []);
       } catch (err) {
         console.error("Meta fetch error:", err);
@@ -87,26 +93,39 @@ function AddPropertySection() {
 
   // ✅ Fetch property (Edit mode)
   useEffect(() => {
-    if (!id || categories.length === 0) return;
+    if (
+      !id ||
+      categories.length === 0 ||
+      propertyData.subcategories.length === 0
+    )
+      return;
 
     const fetchProperty = async () => {
       try {
         const data = await getPropertyById(id);
 
-    const perprice = data.perprice || "";
+        // 🔥 BUILD OPTION → FIELD MAP (NO HARDCODING)
+        const optionToFieldMap = {};
 
-    let price = "";
-    let unit = "";
+        propertyData.subcategories.forEach((sub) => {
+          sub.fields?.forEach((field) => {
+            field.options?.forEach((opt) => {
+              optionToFieldMap[opt.name] = field.field_name;
+            });
+          });
+        });
 
-    if (perprice.includes("/")) {
-      [price, unit] = perprice.split("/");
-    }
+        const perprice = data.perprice || "";
+        let price = "";
+        let unit = "";
 
+        if (perprice.includes("/")) {
+          [price, unit] = perprice.split("/");
+        }
 
         const categoryName =
-          categories.find(
-            (c) => Number(c.id) === Number(data.category)
-          )?.name || "";
+          categories.find((c) => Number(c.id) === Number(data.category))
+            ?.name || "";
 
         setFormData({
           ...getInitialFormData(),
@@ -137,11 +156,26 @@ function AddPropertySection() {
           landArea: data.land_area || "",
           squareFeet: data.sq_ft || "",
 
-          features: data.features || [],
+          // ✅ FIXED FEATURES MAPPING
+          features: (data.features || []).map((f) => {
+            if (typeof f.value === "number") {
+              return {
+                name: optionToFieldMap[f.name] || null,
+                option: f.name,
+                value: f.value,
+              };
+            }
+
+            return {
+              name: f.name,
+              option: null,
+              value: f.value,
+            };
+          }),
+
           amenities: data.amenities || [],
           keyPoints: data.selling_points || [],
           landmarks: data.landmarks || [],
-
           images: data.images || [],
 
           pricing: {
@@ -159,98 +193,29 @@ function AddPropertySection() {
     };
 
     fetchProperty();
-  }, [id, categories]);
+  }, [id, categories, propertyData.subcategories]);
 
-
+  // ✅ Auto-fill phone (only add mode)
   useEffect(() => {
-  if (id) return; // ❌ skip edit mode
+    if (id) return;
 
-  const fetchProfile = async () => {
-    try {
-      const data = await getAgentProfile();
+    const fetchProfile = async () => {
+      try {
+        const data = await getAgentProfile();
 
-      setFormData((prev) => ({
-  ...prev,
-  phone: data.phone_number || "",
-  whatsapp: data.whatsapp_number || data.phone_number || "",
-}));
-    } catch (err) {
-      console.error("Profile fetch error:", err);
-    }
-  };
-
-  fetchProfile();
-}, [id]);
-
-  // ✅ Validation
-  const validateStep = () => {
-    const errors = {};
-
-    if (step === 1) {
-      if (!formData.category) errors.category = "Required";
-      if (!formData.subcategory) errors.subcategory = "Required";
-      if (!formData.purpose) errors.purpose = "Required";
-      if (!formData.title) errors.title = "Required";
-
-      if (!formData.landArea) errors.landArea = "Required";
-      if (!formData.squareFeet) errors.squareFeet = "Required";
-
-      if (!formData.city) errors.city = "Required";
-      if (!formData.pincode) errors.pincode = "Required";
-      if (!formData.state) errors.state = "Required";
-      if (!formData.googleLocation)
-        errors.googleLocation = "Required";
-
-      if (!formData.owner) errors.owner = "Required";
-      if (!formData.phone) errors.phone = "Required";
-      if (!formData.whatsapp) errors.whatsapp = "Required";
-    }
-
-    if (step === 2) {
-      if (formData.purpose === "Rent") {
-        if (!formData.pricing?.monthlyRent)
-          errors.monthlyRent = "Monthly rent required";
-        if (!formData.pricing?.deposit)
-          errors.deposit = "Deposit required";
+        setFormData((prev) => ({
+          ...prev,
+          phone: data.phone_number || "",
+          whatsapp:
+            data.whatsapp_number || data.phone_number || "",
+        }));
+      } catch (err) {
+        console.error("Profile fetch error:", err);
       }
+    };
 
-if (formData.purpose === "sale") {
-  if (!formData.pricing?.totalPrice)
-    errors.totalPrice = "Total price required";
-
-  if (!formData.pricing?.pricePerUnit)
-    errors.pricePerUnit = "Price per unit required";
-
-  if (!formData.pricing?.unit)
-    errors.unit = "Please select unit (Acre/Cent)";
-}
-
-      if (formData.purpose === "Lease") {
-        if (!formData.pricing?.totalAmount)
-          errors.totalAmount = "Total amount required";
-      }
-    }
-
-    if (step === 3) {
-      if (!formData.images || formData.images.length === 0) {
-        errors.images = "At least 1 image required";
-      }
-    }
-
-    return errors;
-  };
-
-  const handleNext = () => {
-    const validationErrors = validateStep();
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    setErrors({});
-    setStep((prev) => prev + 1);
-  };
+    fetchProfile();
+  }, [id]);
 
   // ✅ Submit
   const handleSubmit = async (e) => {
@@ -259,6 +224,11 @@ if (formData.purpose === "sale") {
     try {
       const payload = {
         ...formData,
+        features: (formData.features || []).map((f) => ({
+          name: f.name,
+          option: f.option || null,
+          value: f.value,
+        })),
         amenities: formData.amenities.map((a) => a.id),
       };
 
@@ -304,27 +274,39 @@ if (formData.purpose === "sale") {
             </div>
           </motion.div>
           )}
-          <form onSubmit={(e)=>e.preventDefault()} className="flex-1" autoComplete="off">
+
+          <form onSubmit={(e) => e.preventDefault()}>
             {step === 1 && (
-              <PropertyInfo formData={formData} setFormData={setFormData} errors={errors}  />
+              <PropertyInfo
+                formData={formData}
+                setFormData={setFormData}
+                errors={errors}
+              />
             )}
             {step === 2 && (
-              <Pricing formData={formData} setFormData={setFormData} errors={errors}/>
+              <Pricing
+                formData={formData}
+                setFormData={setFormData}
+                errors={errors}
+              />
             )}
             {step === 3 && (
-              <MediaUpload formData={formData} setFormData={setFormData} errors={errors} />
+              <MediaUpload
+                formData={formData}
+                setFormData={setFormData}
+                errors={errors}
+              />
             )}
             {step === 4 && (
-              <PreviewProperty formData={formData} setFormData={setFormData} />
+              <PreviewProperty formData={formData} />
             )}
             {!isAgent && step === 5 && (
-              <Payment formData={formData} setFormData={setFormData} />
-            )}
-
+              <Payment formData={formData} />
+            )}  
             <Button
               step={step}
               maxStep={maxStep}
-              next={handleNext}
+              next={() => setStep(step + 1)}
               back={() => setStep(step - 1)}
               handleSubmit={handleSubmit}
             />

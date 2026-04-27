@@ -199,6 +199,9 @@ const toggleAmenity = (amenity) => {
   console.log("Selected Amenities IDs:", formData.amenities);
 }, [formData.amenities]);
 
+
+
+
   return (
     <div className="flex gap-8">
       <div className="flex-1 bg-white rounded-xl p-8">
@@ -301,28 +304,30 @@ const toggleAmenity = (amenity) => {
                             key={opt.name}
                             onClick={() => {
                               setFormData((prev) => {
-                                const name = opt.name;
+  const fieldName = field.field_name;
+  const optionName = opt.name;
 
-                                const current =
-                                  prev.features?.find((f) => f.name === name)
-                                    ?.value || 0;
+  const current =
+    prev.features?.find(
+      (f) => f.name === fieldName && f.option === optionName
+    )?.value || 0;
 
-                                const newValue = current > 0 ? 0 : 1;
+  const newValue = current > 0 ? 0 : 1;
 
-                                const updatedFeatures = [
-                                  ...prev.features.filter(
-                                    (f) => f.name !== name,
-                                  ),
-                                  ...(newValue > 0
-                                    ? [{ name, value: newValue }]
-                                    : []),
-                                ];
+  const filtered = prev.features.filter(
+    (f) => !(f.name === fieldName && f.option === optionName)
+  );
 
-                                return {
-                                  ...prev,
-                                  features: updatedFeatures,
-                                };
-                              });
+  return {
+    ...prev,
+    features: [
+      ...filtered,
+      ...(newValue > 0
+        ? [{ name: fieldName, option: optionName, value: newValue }]
+        : []),
+    ],
+  };
+});
                             }}
                             className={`border rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition cursor-pointer ${
                               selected
@@ -515,7 +520,7 @@ const toggleAmenity = (amenity) => {
                       updateLandmark(
                         index,
                         "distance",
-                        e.target.value.replace(/[^0-9.]/g, ""),
+                        e.target.value
                       )
                     }
                     className="
