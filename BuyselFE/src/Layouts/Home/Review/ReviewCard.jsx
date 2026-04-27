@@ -3,7 +3,7 @@ import React from "react";
 
 const ReviewCard = ({ item }) => {
   return (
-<div className="bg-[#bfeb8a] host-grotesk rounded-[24px] px-4 sm:px-5 md:px-[22px] pt-3 md:pt-6 h-[350px] md:h-[378px]  flex flex-col relative">
+<div className="bg-[#bfeb8a] host-grotesk rounded-[24px] px-4 sm:px-5 md:px-[22px] pt-3 md:pt-6 h-[350px] md:h-[378px] flex flex-col relative">
 
 
 <div className="flex relative justify-between items-start mb-[12px] md:mb-[20px]">
@@ -89,7 +89,7 @@ const ReviewCard = ({ item }) => {
         {item.title}
       </h3>
 
-      <p className="text-[#313131] text-[14px] sm:text-[15px] md:text-[16px] lg:text-[16px] leading-[18px] sm:leading-[20px] md:leading-[23px] lg:leading-[25px] font-[500] mb-3 sm:mb-5 lg:mb-[30px]">
+      <p className="text-[#313131] text-[14px] sm:text-[15px] md:text-[16px] lg:text-[16px] leading-[18px] sm:leading-[20px] md:leading-[23px] lg:leading-[25px] font-[500] mb-3 sm:mb-5 lg:mb-[10px] line-clamp-3">
         {item.review}
       </p>
 
