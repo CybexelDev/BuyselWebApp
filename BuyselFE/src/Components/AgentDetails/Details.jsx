@@ -17,7 +17,7 @@ function Details({ agentData }) {
       alert("Please fill required fields");
       return;
     }
-    
+
     const res = await agentContactForm(contactData);
 
     if (res) {

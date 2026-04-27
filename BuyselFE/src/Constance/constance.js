@@ -46,8 +46,7 @@ export const properties= [
       "price": 4200000,
       "status": "For Rent",
       "type": "Apartment",
-            "category":"Lease",
-
+      "category":"Lease",
       "bedrooms": 2,
       "bathrooms": 2,
       "area": "1150 sq.ft | 2BHK",
@@ -78,8 +77,7 @@ export const properties= [
       "type": "House",
       "bedrooms": 3,
       "bathrooms": 3,
-            "category":"Lease",
-
+      "category":"Lease",
       "area": "2100 sq.ft | 3BHK",
       "furnished": "Unfurnished",
       "parking": 2,
@@ -130,7 +128,6 @@ export const properties= [
         "https://i.pinimg.com/736x/5d/f3/30/5df330f354f797d23015f305ee624b88.jpg"
       ],
           featured: true,
-       
 
     },
       {
@@ -936,6 +933,7 @@ export const premiumHomes = [
     description:
       "A perfect choice for those who enjoy a stylish and hassle-free lifestyle.",
     image:v1,
+    path:""
   },
   {
     id: 2,

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { useEffect } from 'react'
 import Home from './Pages/Home/Home'
 import PropertListing from './Pages/PropertyListing/PropertyListing'
 import AgentListing from './Pages/Agents/Agents'
@@ -34,6 +35,7 @@ import TermsPage from "./Pages/Terms/TermsPage"
 import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy'
 import RegisterAgent from './Pages/RegisterAgent/RegisterAgent'
 import Inbox from './Agent/Pages/Inbox/Inbox'
+import { toast } from 'sonner'
 import Faqs from './Pages/Faqs/Faqs'
 
 function App() {
@@ -43,7 +45,7 @@ function App() {
   const { image, userName, userId, accessToken } = useSelector((state) => state.user);
      
   console.log(image, userName, userId, accessToken, "yyyyyyyyyyyyyy");
-  
+ 
   return (
     <>
  {/* App page */}
@@ -82,7 +84,7 @@ function App() {
           <Route path='/agent/inbox' element={<Inbox/>}/>
           <Route path='/agent/enquiry' element={<Enquiry/>}/>
           <Route path='/agent/user-enquiry' element={<UserEnquiry/>}/>
-          <Route path='/agent/enquiryDetails' element={<EnquiryDetail/>}/>
+<Route path='/agent/enquiry/:id' element={<EnquiryDetail/>} />
           <Route path="/agent/property" element={<AgentPropertyListing />}/>
           
         </Routes>

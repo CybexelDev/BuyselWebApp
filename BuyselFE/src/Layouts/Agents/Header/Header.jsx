@@ -4,8 +4,10 @@ import logo from "../../../assets/images/logo/logo.png";
 import agenthero from "../../../assets/images/agenthero/agenthero1.png";
 import { Icon } from "@iconify/react";
 
-function Header() {
+function Header({ onchange, location }) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [open, setOpen] = useState(false);
+  const [selecetdLocation, setSelectedLocation] = useState("Location");
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -69,12 +71,11 @@ function Header() {
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
 
+      <div className="relative z-50">
+        <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
+      </div>
 
-        <div className="relative z-50">
-      <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
-            </div>
 
-            
       <div className="absolute top-2 sm:top-3 md:top-4 lg:top-5 left-1/2 -translate-x-1/2 z-40 w-[7%]">
         <img
           src={logo}
@@ -201,31 +202,68 @@ function Header() {
     mt-3
     mx-auto"
       >
-        <button
-          className="
-    host-grotesk
-    flex items-center gap-0.5
-    bg-black text-white
-    px-2 xl:px-3
-    /* ≤ 899px */
-    sm:max-[900px]:mb-[2px]
-
-    min-[900px]:max-[1023px]:mb-[5px]
-    lg:mb-[4px]
-    mb-[8px]
-    h-[30px] sm:h-[32px] lg:h-[35px] xl:h-[42px]
-    rounded-[11px] md:rounded-[13px]
-    text-[12px] xl:text-[14px]
-    leading-[150%]
-    font-[500]
-  "
+       <div className="relative inline-block">
+  <button
+    onClick={() => setOpen(!open)}
+    className="
+      host-grotesk cursor-pointer
+      flex items-center gap-0.5
+      bg-black text-white
+      px-2 xl:px-3
+      h-[30px] sm:h-[32px] lg:h-[35px] xl:h-[42px]
+      rounded-[11px] md:rounded-[13px]
+      text-[12px] xl:text-[14px]
+      font-[500]
+    "
+  >
+    {selecetdLocation}
+    <Icon
+      icon="iconamoon:arrow-down-2-light"
+      className="w-[20px] h-[20px]"
+    />
+  </button>
+    {open && (
+    <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl  z-50 p-1">
+      <ul className="text-sm text-white host-grotesk">
+       {Array.isArray(location) &&
+  location.map((loc, index) => (
+    <li
+      key={index}
+      onClick={() => {
+        setOpen(false);
+        setSelectedLocation(loc);
+      }}
+      className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
+    >
+      {loc}
+    </li>
+))}
+      
+{/* 
+        <li
+          onClick={() => {
+            setOpen(false);
+            console.log("Trichy");
+          }}
+          className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
         >
-          Location
-          <Icon
-            icon="iconamoon:arrow-down-2-light"
-            className="w-[20px] h-[20px] md:w-[24px] md:h-[24px] text-white"
-          />
-        </button>
+          Trichy
+        </li>
+
+        <li
+          onClick={() => {
+            setOpen(false);
+            console.log("Chennai");
+          }}
+          className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
+        >
+          Chennai
+        </li> */}
+
+      </ul>
+    </div>
+  )}
+</div>
 
         <div
           className="flex flex-row items-end gap-[10px]  min-[900px]:max-[1023px]:gap-[7px]   lg:gap-[12px]
@@ -257,23 +295,24 @@ function Header() {
             </svg>
 
             <input
+              onChange={onchange}
               type="text"
               placeholder="(Search agents by name, location, city etc)"
               className="
-          host-grotesk
-          w-full
-          text-[11px] md:text-[13px] lg:text-[14px]
-          font-[400]
-          placeholder:italic
-          outline-none
-          bg-transparent
-          placeholder:text-[#757575]
-          truncate"
+              host-grotesk
+              w-full
+              text-[11px] md:text-[13px] lg:text-[14px]
+              font-[400]
+              placeholder:italic
+              outline-none
+              bg-transparent
+              placeholder:text-[#757575]
+              truncate"
             />
           </div>
 
           <button
-          className="
+            className="
     instrument-sans
     flex items-center justify-center
     h-[33px]
