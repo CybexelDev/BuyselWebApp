@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import StarRating from "../../../Components/StarRating/StarRating";
 import location from '../../../assets/images/icons/location.png'
 import { getAgents } from "../../../Api/userApi";
 import { useNavigate } from "react-router-dom";
 
 
-export default function AgentTabs({searchedData, query, }) {
+export default function AgentTabs({searchedData, query, locationDats }) {
     const [activeTab, setActiveTab] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [agents, setAgents] = useState([]);
@@ -28,17 +28,24 @@ export default function AgentTabs({searchedData, query, }) {
     useEffect(() => {
         if (query.length > 0) {
             setAgents(searchedData);
-        }else{
+        }
+        else{
               const getAgent = async () => {
             const data = await getAgents({category: activeTab});
             if (data) {
                 setAgents(data);
             }
-        };
+        };  
         getAgent();
         }
       
     }, [activeTab, searchedData]);
+
+    useEffect(() => {
+        if (locationDats.length > 0) {
+            setAgents(locationDats);
+        }
+    }, [locationDats]);
 
 
     return (
@@ -49,7 +56,7 @@ export default function AgentTabs({searchedData, query, }) {
                     <button
                         key={tab}
                         onClick={() => {
-                            setActiveTab(tab);
+                            setActiveTab(tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite");
                             setCurrentPage(1);
                         }}
                         className={`px-3 sm:px-5 py-2 rounded-[9px] text-sm host-grotesk font-medium transition-all duration-300 cursor-pointer

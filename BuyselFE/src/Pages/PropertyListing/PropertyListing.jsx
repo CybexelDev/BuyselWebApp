@@ -14,30 +14,99 @@ function PropertListing() {
   const [filters, setFilters] = useState({ purpose: "Rent", category: "Residential", });
   const [searchQuery, setSearchQuery] = useState("");
 
-
   const handleFilters = (data) => {
     setFilters(data);
   };
 
-useEffect(() => {
+    const normalizeProperties = (data) => {
+  return data.map((item) => ({
+    ...item,
+    image: item.image || item.images || [], 
+  }));
+};
+
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       let res;
+
+//       if (filters.nearby) {
+//         res = await getNearbyProperties(filters.lat, filters.lng);
+//         setData(res?.data || []);
+//       } 
+      
+//       else if (filters.isFilterApplied) {
+//         res = await filterProperties(filters);
+//         setData(res?.data || []);
+//       } 
+      
+//       else {
+//         res = await getProperty(filters);
+//         setData(res || []);
+//       }
+
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+
+//   fetchData();
+// }, [filters]);
+
+
+//    useEffect(() => {
+//     if (!searchQuery) {
+//       const fetchData = async () => {
+//         try {
+//           const res = await getProperty(filters);
+//           if (res) {
+//             setData(res);
+//           }
+//         } catch (error) {
+//           console.log(error);
+//         }
+//       };
+//       fetchData();
+//     }
+
+
+//     if (searchQuery) {
+//       const fetchDataSearch = async () => {
+//         const serchedData = await searchProperties(searchQuery);
+//         setData(serchedData);
+//       };
+//       fetchDataSearch();
+//     } 
+//   }, [filters, searchQuery]);
+
+  // useEffect(() => {
+
+  // }, [searchQuery]);
+
+
+  useEffect(() => {
   const fetchData = async () => {
     try {
       let res;
 
-      if (filters.nearby) {
-        res = await getNearbyProperties(filters.lat, filters.lng);
-        setData(res?.data || []);
+      if (searchQuery) {
+        res = await searchProperties(searchQuery);
       } 
-      
+      else if (filters.nearby) {
+        res = await getNearbyProperties(filters.lat, filters.lng);
+      } 
       else if (filters.isFilterApplied) {
         res = await filterProperties(filters);
-        setData(res?.data || []);
       } 
-      
       else {
         res = await getProperty(filters);
-        setData(res || []);
       }
+
+      const rawData = res?.data || res || [];
+      const finalData = normalizeProperties(rawData);
+
+      console.log("FINAL DATA:", finalData);
+      setData(finalData);
 
     } catch (error) {
       console.log(error);
@@ -45,36 +114,8 @@ useEffect(() => {
   };
 
   fetchData();
-}, [filters]);
+}, [filters, searchQuery]);
 
-   useEffect(() => {
-    if (!searchQuery) {
-      const fetchData = async () => {
-        try {
-          const res = await getProperty(filters);
-          if (res) {
-            setData(res);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }
-
-
-    if (searchQuery) {
-      const fetchDataSearch = async () => {
-        const serchedData = await searchProperties(searchQuery);
-        setData(serchedData);
-      };
-      fetchDataSearch();
-    } 
-  }, [filters, searchQuery]);
-
-  useEffect(() => {
-
-  }, [searchQuery]);
   return (
     <>
       <Header setParentFilters={handleFilters} onchange={(e) => setSearchQuery(e.target.value)} />
