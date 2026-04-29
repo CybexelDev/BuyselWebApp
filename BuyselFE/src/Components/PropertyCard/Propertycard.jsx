@@ -6,7 +6,7 @@ import measure from '../../assets/images/icons/measure.svg'
 import apartment from '../../assets/images/icons/apartment.svg'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "sonner";
 
 
 
@@ -54,7 +54,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
           files: [file],
         });
       } else {
-        alert("Sharing not supported on this device");
+        toast.error("Sharing not supported on this device");
       }
     } catch (err) {
       console.log(err);
@@ -69,7 +69,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
     if (!token) {
       e.preventDefault(); // 🚫 stop redirect
-      alert("Please login to contact");
+      toast.error("Please login to contact");
       return;
     }
 
@@ -84,7 +84,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
     if (!token) {
       e.preventDefault(); // 🚫 stop redirect
-      alert("Please login to contact");
+      toast.error("Please login to contact");
       return;
     }
     window.location.href = `tel:${property.phone}`;

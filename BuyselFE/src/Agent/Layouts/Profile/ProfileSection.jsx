@@ -11,6 +11,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { getAgentProfile } from '../../../Api/agentsApi';
 import { motion } from 'framer-motion';
 import { changeAgentPassword } from '../../../Api/agentsApi';
+import { toast } from 'sonner';
 const AgentProfileLayout = () => {
     const fileInputRef = useRef(null);
 const [profileImageFile, setProfileImageFile] = useState(null);   
@@ -163,12 +164,12 @@ const handleChangePassword = async () => {
 
   // ✅ validation
   if (!currentPassword || !newPassword || !confirmPassword) {
-    alert("All fields required");
+    toast.warning("All fields required");
     return;
   }
 
   if (newPassword !== confirmPassword) {
-    alert("Passwords do not match");
+    toast.error("Passwords do not match");
     return;
   }
 
@@ -179,7 +180,7 @@ const handleChangePassword = async () => {
   );
 
   if (res) {
-    alert("Password updated successfully");
+    toast.success("Password updated successfully");
 
     setPasswordData({
       currentPassword: "",
@@ -187,7 +188,7 @@ const handleChangePassword = async () => {
       confirmPassword: "",
     });
   } else {
-    alert("Failed to update password");
+    toast.error("Failed to update password");
   }
 };
     return (

@@ -19,6 +19,7 @@ function WishlistListingSection() {
   
   const addWishlist = (id) => {
   addToWishlist({ id });
+    toast.success("Added to wishlist")
 
   setData((prev) =>
     prev.map((item) =>
@@ -30,6 +31,7 @@ function WishlistListingSection() {
 };
 const removeWishlist = (id) => {
   removeToWishlist({ id });
+  toast.error("Removed from wishlist ");
 
   setData((prev) => prev.filter((item) => item.id !== id));
     toast.success("remove unliked")
@@ -112,11 +114,11 @@ useEffect(() => {
           ))}
         </div>
 
-        <div className="flex items-center gap-2 host-grotesk">
+        <div className="flex items-center gap-10 md:gap-2 host-grotesk">
           <div className="relative">
             <button
               onClick={() => setShowSort(!showSort)}
-              className="text-[16px] border-[0.5px] border-[#C6C6C6] px-3 py-[6px] rounded-[9px] bg-white flex gap-2 font-medium"
+              className=" text-[13px] md:text-[16px] border-[0.5px] border-[#C6C6C6] px-3 py-[6px] rounded-[9px] bg-white flex gap-2 font-medium"
             >
 
               <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 16 16"><polygon fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" points="1.75 1.75 14.25 1.75 14.25 3.25 9.25 8.75 9.25 12.75 6.75 14.25 6.75 8.75 1.75 3.25" /></svg>
@@ -164,7 +166,7 @@ useEffect(() => {
             )}
           </div>
 
-          <button className="text-[16px] bg-[#C70000] text-white px-3 py-[6px] rounded-[9px] flex gap-2 font-medium "
+          <button className="text-[13px] md:text-[16px] bg-[#C70000] text-white px-3 py-[6px] rounded-[9px] flex gap-1 md:gap-2 font-medium justify-center items-center  "
            onClick={async () => {
     await clearWishlist();
     setData([]);

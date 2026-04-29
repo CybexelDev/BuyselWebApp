@@ -14,6 +14,7 @@ import {
 import { TfiRulerAlt2 } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
 import { deletePropertyListing, getPropertyListing } from "../../../Api/agentsApi";
+import { toast } from "sonner";
 
 const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-slate-50", lg = "lg:py-12", onClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -70,7 +71,7 @@ const mapped = data.map((item) => ({
       if(res){
         setProperties((prev)=>prev.filter((item)=>item.id !== id))
       }else{
-        alert("Delete failed")
+        toast.error("Delete failed")
         console.log("Failed");
       }
      }

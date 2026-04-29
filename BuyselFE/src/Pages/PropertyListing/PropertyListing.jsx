@@ -20,7 +20,7 @@ const purpose = searchParams.get("purpose");
 const category = searchParams.get("category");
 useEffect(() => {
   setFilters({
-    purpose: purpose || "Buy",
+    purpose: purpose || "Rent",
     category: category || "Residential",
   });
 }, [purpose, category]);

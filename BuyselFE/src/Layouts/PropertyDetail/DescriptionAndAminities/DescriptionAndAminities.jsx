@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import i1 from "../../../assets/images/propertDetail/i1.png"
 import { sendPropertyEnquiry } from '../../../Api/userApi'
+import { toast } from 'sonner'
 export const DescriptionAndAminities = ({ data }) => {
   const [detail, setDetail] = useState([])
   const [loading, setLoading] = useState(false);
@@ -40,9 +41,9 @@ const handleSubmit = async (e) => {
   const res = await sendPropertyEnquiry(payload);
 
   if (res) {
-    alert("Enquiry sent ✅");
+    toast.success("Enquiry sent ✅");
   } else {
-    alert("Failed ❌");
+    toast.error("Failed ❌");
   }
 };
   return (

@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { persistor, store } from './Redux/app/store.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { Toaster } from 'sonner'; 
+import { Toaster } from 'sonner';
 
 const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -15,33 +15,39 @@ createRoot(document.getElementById('root')).render(
     <PersistGate loading={null} persistor={persistor}>
       <StrictMode>
         <GoogleOAuthProvider clientId={client_id}>
-          
-          <Toaster 
-            position="top-left"
-className="flex justidy-center items-center"            toastOptions={{
+
+          <Toaster
+            position="top-center"
+            className="flex justify-center items-center" toastOptions={{
               unstyled: true,
               classNames: {
-toast: `
+                toast: `
   glass
   text-black
-  px-10 py-3 
+
+  px-4 sm:px-6 md:px-10 lg:px-12
+  py-2 sm:py-3
+
+
   text-center
-  flex items-center 
-  justify-center
-  
-  gap-3   
+  flex items-center justify-center
+
+  w-fit max-w-[60%] sm:max-w-md md:max-w-lg
   mx-auto
+
   host-grotesk
   el
+
   transition-all duration-300 ease-out
   animate-[fadeIn_0.3s_ease-out]
-`, error: 'text-red-400',      
-      warning: 'text-yellow-400',
-      info: 'text-blue-400',
-},
+
+`, error: 'text-red-400',
+                warning: 'text-yellow-400',
+                info: 'text-blue-400',
+              },
             }}
           />
-          
+
           <App />
         </GoogleOAuthProvider>
       </StrictMode>

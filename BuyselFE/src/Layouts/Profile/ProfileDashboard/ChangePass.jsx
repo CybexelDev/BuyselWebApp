@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { changePassword } from "../../../Api/userApi";
+import { toast } from "sonner";
 const ChangePassword = ({ setMode }) => {
   const [form, setForm] = useState({
     currentPassword: "",
@@ -15,7 +16,7 @@ const ChangePassword = ({ setMode }) => {
   e.preventDefault();
 
   if (form.newPassword !== form.confirmPassword) {
-    alert("Passwords do not match");
+    toast.error("Passwords do not match");
     return;
   }
 
@@ -29,7 +30,7 @@ const ChangePassword = ({ setMode }) => {
     const res = await changePassword(payload);
 
     console.log("SUCCESS:", res);
-    alert("Password changed successfully 🔥");
+    toast.success("Password changed successfully ");
 
     setForm({
       currentPassword: "",
@@ -40,7 +41,7 @@ const ChangePassword = ({ setMode }) => {
     setMode(""); 
 
   } catch (error) {
-    alert(error.response?.data?.message || "Something went wrong");
+    toast.error(error.response?.data?.message || "Something went wrong");
   }
 };
 

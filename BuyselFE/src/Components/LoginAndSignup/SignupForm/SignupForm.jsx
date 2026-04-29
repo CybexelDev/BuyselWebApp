@@ -4,7 +4,7 @@ import google from '../../../assets/images/LoginAndSignUp/google.png'
 import apple from '../../../assets/images/LoginAndSignUp/apple.png'
 import facbook from '../../../assets/images/LoginAndSignUp/facebook.png'
 import { userRegister } from '../../../Api/userApi';
-
+import { toast } from 'sonner';
 
 const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
@@ -16,7 +16,7 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
     const handleRegister = async () => {
 
         if (!checked) {
-            alert("Please accept Terms and Conditions");
+            toast.info("Please accept Terms and Conditions");
             return;
         }
 

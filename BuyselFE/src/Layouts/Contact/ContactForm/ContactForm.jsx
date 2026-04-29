@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { sendContact } from "../../../Api/userApi";
+import { toast } from "sonner";
 
 function ContactForm() {
     const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ function ContactForm() {
     const res = await sendContact(formData);
 
     if (res) {
-      alert("Message sent ✅");
+      toast.success("Message sent ");
       setFormData({
         name: "",
         email: "",
@@ -34,7 +35,7 @@ function ContactForm() {
         message: ""
       });
     } else {
-      alert("Failed ❌");
+      toast.error("Failed ");
     }
 
     setLoading(false);

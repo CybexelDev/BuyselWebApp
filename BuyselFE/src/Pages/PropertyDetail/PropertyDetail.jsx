@@ -10,7 +10,8 @@ import { getPropertyDetail } from '../../Api/userApi'
 import { getRelatedProperties } from '../../Api/userApi'
 function PropertyDetail() {
 
-  const { id } = useParams()
+  const { id,type } = useParams()
+
   const [productDetail, setProductDetail] = useState(null)
   const [similarProperties, setSimilarProperties] = useState([]);
   const [loading, setLoading] = useState(true)
@@ -32,7 +33,7 @@ const transformProperty = (data) => {
   return {
     id: data.id,
 
-    title: data.property_code, 
+    title: data.label, 
     location: `${data.city}, ${data.state}`,
     status: data.purpose,
     
@@ -87,7 +88,7 @@ useEffect(() => {
 
 useEffect(() => {
   const fetchData = async () => {
-    const res = await getPropertyDetail(id)
+    const res = await getPropertyDetail(id,type)
 
     if (res) {
       const formatted = transformProperty(res)

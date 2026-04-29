@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { sendEnquiry } from "../../../Api/userApi";
+import { toast } from "sonner";
 function Chatbox({ close, simple = false, msgPlaceholder="Your need or requirements" }) {
   const [formData, setFormData] = useState({
   name: "",
@@ -12,14 +13,14 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (!formData.name || !formData.message ) {
-    alert("Please fill required fields");
+    toast.error("Please fill required fields");
     return;
   }
 
   const res = await sendEnquiry(formData);
 
   if (res) {
-    alert("Enquiry sent ✅");
+    toast.success("Enquiry sent ");
 
     setFormData({
       name: "",
@@ -30,7 +31,7 @@ const handleSubmit = async (e) => {
 
     close(); // optional
   } else {
-    alert("Failed ❌");
+    toast.error("Failed ");
   }
 };
     return (

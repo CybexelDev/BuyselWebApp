@@ -1,6 +1,6 @@
 import axios from "axios";
 import api from "./axiosInstance";
-
+import { toast } from "sonner";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -35,7 +35,7 @@ export const userRegister = async (name, email, mobail, password, confirm_passwo
 
 export const getNearbyProperties = async (lat, lng) => {
   try {
-    const res = await axios.get(`${BASE_URL}nearby-properties/`, {
+    const res = await axios.get(`${BASE_URL}filter/nearby-properties/`, {
       params: {
         lat,
         lng,
@@ -44,7 +44,7 @@ export const getNearbyProperties = async (lat, lng) => {
 
    return res.data.data.map((item) => ({
       ...item,
-      images: item.image, 
+      images: item.images, 
     }));  } catch (error) {
     console.log("Nearby properties error:", error);
     return [];
@@ -256,7 +256,7 @@ export const clearWishlist = async () => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await axios.get(`${BASE_URL}property/${id}/`,          
+        const result = await axios.get(`${BASE_URL}property-detail/${id}/`,          
       );
 
         return result.data;
@@ -494,7 +494,7 @@ export const getAgentsDetails = async (id) => {
 
 export const filterProperties = async (filters) => {
   try {
-    const res = await api.post("/properties/filter/", filters);
+    const res = await api.post("property-filter/", filters);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -529,7 +529,7 @@ export const addReviewToServer = async ({ rating, review, id }) => {
 
     } catch (error) {
         if (error.response?.status === 400) {
-    alert("You already reviewed this agent");
+    toast.warning("You already reviewed this agent");
   }
         console.log("ERROR:", error.response?.data || error.message);
         return null;

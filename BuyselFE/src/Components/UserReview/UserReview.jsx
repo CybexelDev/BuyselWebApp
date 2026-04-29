@@ -5,7 +5,7 @@ import Modal from "../Modal/Modal";
 import { Star } from "lucide-react";
 import { addReviewToServer, deletReview } from "../../Api/userApi";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
-
+import { toast } from "sonner";
 function UserReview({ review, id, triggerRefresh }) {
 
   const [reviews, setReviews] = useState([])
@@ -287,7 +287,7 @@ function UserReview({ review, id, triggerRefresh }) {
         <button
           onClick={() => {
             if (!rating || !reviewss.trim()) {
-              alert("Please add rating and review");
+              toast.warning("Please add rating and review");
               return;
             }
             addReview()
