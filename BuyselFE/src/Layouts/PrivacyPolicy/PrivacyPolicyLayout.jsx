@@ -142,28 +142,23 @@ return ( <div className="bg-[#F4F4F4] py-6 sm:py-8 md:py-10 px-4 sm:px-5 md:px-1
 
   <div key={index} className="space-y-3 pb-6 border-b border-[#F3F3F3]">
 
-{/* Title Row */}
 <div className="flex items-start md:items-center gap-3">
 
-  {/* Number Circle */}
   <div className="w-[24px] h-[24px] md:w-[28px] md:h-[28px] flex items-center justify-center rounded-full bg-[#D6FF98] text-[#4A7C0A] text-xs md:text-sm font-semibold">
     {index + 1}
   </div>
 
-  {/* Title */}
   <h3 className="font-bold instrument-sans text-[#0F172A] text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] leading-snug md:mt-[4px]">
     {section.title}
   </h3>
 </div>
 
-{/* Description */}
 {section.description && (
   <p className="text-[#475569] text-[14px] sm:text-[15px] md:text-[16px] host-grotesk font-[400] leading-relaxed">
     {section.description}
   </p>
 )}
 
-{/* Sub Sections */}
 {section.subSections && (
 
   <div className="space-y-4">
@@ -189,7 +184,6 @@ return ( <div className="bg-[#F4F4F4] py-6 sm:py-8 md:py-10 px-4 sm:px-5 md:px-1
   </div>
 )}
 
-{/* Normal Points */}
 {!section.subSections && section.points && (
 
   <ul className="space-y-2 text-[#475569] text-[14px] sm:text-[15px] md:text-[16px] host-grotesk">

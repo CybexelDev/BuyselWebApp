@@ -10,7 +10,6 @@ function PropertiesSection({ propertiesData }) {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [page, setPage] = useState(1);
   const [properties, setProperties] = useState([]);
-  console.log(properties, "properties in sectionnnnnnnnnnnnnnnn");
 
   useEffect(() => {
     setProperties(propertiesData);
@@ -20,27 +19,22 @@ function PropertiesSection({ propertiesData }) {
     function handleResize() {
       const width = window.innerWidth;
 
-      // Mobile
       if (width < 640) {
         setItemsPerPage(2 * 5);
       }
 
-      // sm
       else if (width < 768) {
         setItemsPerPage(2 * 5);
       }
 
-      // md
       else if (width < 1024) {
         setItemsPerPage(2 * 5);
       }
 
-      // lg
       else if (width < 1280) {
         setItemsPerPage(3 * 4);
       }
 
-      // xl
       else {
         setItemsPerPage(4 * 3);
       }
@@ -91,9 +85,6 @@ const addWishlist = (id) => {
   return (
     <div className='py-8 px-1 md:px-6 lg:px-8 mb-2 -mt-20'>
 
-
-      {/* property Listing */}
-
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-4">
         {currentProperties.map((property) => (
           <Propertycard
@@ -128,8 +119,7 @@ const addWishlist = (id) => {
             onClick={() => setPage(p => p - 1)}
             className="w-[23px] sm:w-[25px] h-[23px] sm:h-[25px]
               flex items-center justify-center rounded-full bg-black text-white
-              "
-          >
+              ">
             <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
 
@@ -145,15 +135,12 @@ const addWishlist = (id) => {
 
             addPage(1);
             addPage(totalPages);
-
             addPage(page - 1);
             addPage(page);
             addPage(page + 1);
-
             pages.sort((a, b) => a - b);
 
-
-
+            
             return pages.map((p, i) => {
               if (i > 0 && p - pages[i - 1] > 1) {
                 return (

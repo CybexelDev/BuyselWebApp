@@ -21,26 +21,26 @@ const [passwordData, setPasswordData] = useState({
   confirmPassword: "",
 });
  const [isEditing, setIsEditing] = useState(false);
- const [profileImage, setProfileImage] = useState(null); // ✅ ADD THIS
+ const [profileImage, setProfileImage] = useState(null);
     const [isDirty, setIsDirty] = useState(false);
    const [formData, setFormData] = useState({
   name: '',
   title: '',
   number: '',
   location: '',
-  address: '',          // ✅ ADD
-  pincode: '',          // ✅ ADD
+  address: '',          
+  pincode: '',          
   buySelId: '',
   email: '',
   website: '',
-  instagram: '',        // ✅ ADD
+  instagram: '',        
   facebook: '',
   whatsapp: '',
-  linkedin: '',         // ✅ ADD
+  linkedin: '',        
   description: '',
-  experience: 0,        // ✅ ADD
-  propertiesListed: 0,  // ✅ ADD
-  dealsClosed: 0,       // ✅ ADD
+  experience: 0,        
+  propertiesListed: 0,  
+  dealsClosed: 0,      
   specializations: [],
   operatingCities: '',
 });
@@ -62,19 +62,19 @@ useEffect(() => {
 
   description: data.professional_bio || "",
 
-  // ✅ SOCIAL
-  website: "", // backend doesn't have
+  //  SOCIAL
+  website: "", 
   instagram: data.instagram || "",
   facebook: data.facebook || "",
   whatsapp: data.whatsapp_number || "",
   linkedin: data.linkedin || "",
 
-  // ✅ STATS
+  //  STATS
   experience: data.years_of_experience || 0,
   propertiesListed: data.properties_listed || 0,
   dealsClosed: data.deals_closed || 0,
 
-  // ✅ OTHERS
+  //OTHERS
   specializations: data.specializations || [],
   operatingCities: data.operating_cities?.join(", ") || "",
   buySelId: data.agent_id,
@@ -83,7 +83,7 @@ useEffect(() => {
 setFormData(mappedData);
 setOriginalData(mappedData);
 
-// ✅ IMAGE FIX
+//IMAGE FIX
 setProfileImage(data.profile_image);
 
         }
@@ -139,7 +139,7 @@ const handleImageChange = (e) => {
   const file = e.target.files[0];
 
   if (file) {
-    setProfileImageFile(file); // ✅ for API
+    setProfileImageFile(file);
 
     const reader = new FileReader();
     reader.onloadend = () => setProfileImage(reader.result); // ✅ preview
@@ -162,7 +162,7 @@ const handleSave = async () => {
 const handleChangePassword = async () => {
   const { currentPassword, newPassword, confirmPassword } = passwordData;
 
-  // ✅ validation
+  //  validation
   if (!currentPassword || !newPassword || !confirmPassword) {
     toast.warning("All fields required");
     return;
@@ -285,12 +285,12 @@ const handleChangePassword = async () => {
 
   <InputField label="Location" name="location" value={formData.location} onChange={handleChange} icon={<MapPin size={18} />} disabled={!isEditing} />
 
-  {/* ✅ NEW ADDRESS FIELD */}
+  {/* NEW ADDRESS FIELD */}
   <InputField label="Address" name="address" value={formData.address} onChange={handleChange} icon={<MapPin size={18} />} disabled={!isEditing} />
 
   <InputField label="Website" name="website" value={formData.website} onChange={handleChange} icon={<Share2 size={18} />} disabled={!isEditing} />
 
-  {/* ✅ NEW INSTAGRAM FIELD */}
+  {/* NEW INSTAGRAM FIELD */}
   <InputField label="Instagram" name="instagram" value={formData.instagram} onChange={handleChange} icon={<Share2 size={18} />} disabled={!isEditing} />
 
   <InputField label="Facebook" name="facebook" value={formData.facebook} onChange={handleChange} icon={<FaFacebook size={18} />} disabled={!isEditing} />

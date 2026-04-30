@@ -5,10 +5,10 @@ import filterIcon from "../../../assets/images/header/Filter.png";
 import Search from "../../../assets/images/header/Search.png";
 import { getNearbyProperties } from "../../../Api/userApi";
 import Navbar from "../../../Components/Navbar/Navbar";
-
 import { getFilterOptions } from "../../../Api/userApi";
 import { toast } from "sonner";
-//start
+
+
 
 const Header = ({ setParentFilters, onchange ,filters}) => {
   const [activeTab, setActiveTab] = useState("Rent");
@@ -27,12 +27,7 @@ const handleNearbyClick = () => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
 
-      console.log("Lat:", lat, "Lng:", lng);
-
       const data = await getNearbyProperties(lat, lng);
-
-      console.log("Nearby properties:", data);
-
       setParentFilters({
         nearby: true,
         lat,
@@ -254,7 +249,7 @@ useEffect(() => {
 };
 
 const FilterModal = ({ onClose,setParentFilters  }) => {
-  const [selectedPurpose, setSelectedPurpose] = useState("");
+const [selectedPurpose, setSelectedPurpose] = useState("");
 const [selectedCategory, setSelectedCategory] = useState("");
 const [selectedDistrict, setSelectedDistrict] = useState("");
 const [selectedCity, setSelectedCity] = useState("");
@@ -340,8 +335,7 @@ useEffect(() => {
       city: selectedCity,
       min_price: minPrice,
       max_price: maxPrice,
-
-      isFilterApplied: true,   // 🔥 THIS IS KEY
+      isFilterApplied: true,
       nearby: false,
     });
 
@@ -357,7 +351,6 @@ useEffect(() => {
       city: "",
       min_price: "",
       max_price: "",
-
       isFilterApplied: false,
       nearby: false,
     });

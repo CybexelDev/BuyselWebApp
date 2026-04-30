@@ -8,7 +8,6 @@ import location from '../../../assets/images/profile/location.png'
 import { Link } from "react-scroll"
 import { FaEdit } from "react-icons/fa";
 import { useRef } from "react";
-
 import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
 import Navbar from "../../../Components/Navbar/Navbar";
@@ -35,13 +34,11 @@ const ProfileHeader = ({setMode, setParentProfileData}) => {
     try {
       const res = await updateProfileImage(file);
 
-      // ✅ update parent
       setParentProfileData((prev) => ({
         ...prev,
         image: res.image_url,
       }));
 
-      // ✅ ALSO update local state (THIS WAS MISSING)
       setProfileData((prev) => ({
         ...prev,
         image: res.image_url,
@@ -60,7 +57,6 @@ useEffect(() => {
       const data = await getProfile();  
 
       if (data) {
-        console.log(data, "Profile data fetched successfully"); // ✅ fixed
         setProfileData(data);
         setParentProfileData(data);
       }

@@ -61,7 +61,7 @@ function agentReducer(state = initialAgentState, action) {
         agent_type: action.payload.agent_type,
         isLoggedIn: true,
       };
-    case 'AGENT_LOGOUT':
+    case 'AGENT_LOGOUT':                                                                    
       return {
         ...state,
         agentName: null,
@@ -127,7 +127,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = createStore(persistedReducer);
 
-// Persistor for persisting the store
 const persistor = persistStore(store);
 
 export { store, persistor };

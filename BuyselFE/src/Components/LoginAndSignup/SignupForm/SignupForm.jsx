@@ -11,8 +11,6 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
     const [register, setRegister] = useState({ name: '', email: '', mobail: '', password: '', confirm_password: '' })
     const [checked, setChecked] = useState(false);
 
-    console.log(checked, "chechyyyyyyyyyyyyyyy");
-
     const handleRegister = async () => {
 
         if (!checked) {
@@ -30,7 +28,6 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
             )
 
             if (response) {
-                console.log("Otp sent success page:", response);
                 setEmail(response.email)
                 SetOtpSent(true)
             } else {

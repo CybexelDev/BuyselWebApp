@@ -6,15 +6,16 @@ const ForgotPasswordForm = ({setOtpSent, setEmail}) => {
 
   const handleSubmit = () => {
     console.log("Send reset link to:", localEmail);
-        setEmail(localEmail);   // ✅ send email to parent
-    setOtpSent(true);  // ✅ go to OTP screen
+        setEmail(localEmail);   
+    setOtpSent(true); 
 
-    // call API here
+
   };
 
   return (
     <>
-      <div className="text-center mb-6">
+      <div className="text-center m-6">
+
         <h2 className="text-[20px] font-[500] host-grotesk text-[#1e1a1a]">
           Forgot Password
         </h2>

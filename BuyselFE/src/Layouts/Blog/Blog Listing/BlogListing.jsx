@@ -32,7 +32,6 @@ const [currentPage, setCurrentPage] = useState(1);
 useEffect(() => {
   const fetchBlogs = async () => {
     let res;
-
     if (isSearching) {
       res = await searchBlogs(searchQuery);
     } else if (activeCategory) {
@@ -67,7 +66,6 @@ useEffect(() => {
 }, [searchQuery, activeCategory]);
 
 const filteredBlogs = blogs;
-// 🔥 featured from filtered (not from all blogs)
 let featuredBlogs = [];
 let remainingBlogs = [];
 
@@ -76,14 +74,12 @@ if (!isSearching) {
     featuredBlogs = filteredBlogs.slice(0, 2);
     remainingBlogs = filteredBlogs.slice(2);
   } else {
-    // 🔥 if less than 2 → show everything in grid
     featuredBlogs = [];
     remainingBlogs = filteredBlogs;
   }
 } else {
   remainingBlogs = filteredBlogs;
 }
-// 🔥 pagination on remaining blogs
 const blogsPerPage = 6;
 const totalPages = Math.ceil(remainingBlogs.length / blogsPerPage);
 
@@ -97,7 +93,6 @@ const currentBlogs = remainingBlogs.slice(
 return (
   <div className="bg-white min-h-screen px-4 sm:px-6 md:px-9 py-2">
 
-    {/* ================= CATEGORIES ================= */}
     <div className="flex justify-start sm:justify-center 
                     gap-4 sm:gap-10 lg:gap-14 
                     w-full mb-12 border-b pb-6 border-[#CAC0C0] 
@@ -185,7 +180,8 @@ onClick={() => {
 
 
       {/* RIGHT */}
-      <div      className="cursor-pointer"               onClick={()=>navigate(`/blog/${featuredBlogs[1].id}`)}
+      <div className="cursor-pointer"  
+      onClick={()=>navigate(`/blog/${featuredBlogs[1].id}`)}
 >
         <img
           src={featuredBlogs[1].image}
@@ -217,7 +213,6 @@ onClick={() => {
 )}
 
 
-    {/* ================= BLOG GRID ================= */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" ref={blogGridRef}>
 
       {currentBlogs.map((blog) => (
@@ -251,7 +246,6 @@ onClick={() => {
     </div>
 
 
-    {/* ================= PAGINATION ================= */}
     <div className="flex justify-center mt-14 mb-20 px-2">
       <div className="flex items-center 
                       gap-3 sm:gap-5 lg:gap-7

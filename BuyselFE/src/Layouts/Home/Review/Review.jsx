@@ -9,7 +9,6 @@ const Review = () => {
   const [index, setIndex] = useState(0);
   const [transition, setTransition] = useState(true);
 
-  // ✅ Fetch Data
   useEffect(() => {
     const fetchReviews = async () => {
       const res = await getTestimonial();
@@ -29,7 +28,6 @@ const Review = () => {
     fetchReviews();
   }, []);
 
-  // ✅ Responsive visible count
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -48,21 +46,21 @@ const Review = () => {
 
   const total = review.length;
 
-  // ✅ Clone data for infinite loop
+  // Clone data for infinite loop
   const clonedReviews = [
     ...review.slice(-visible),
     ...review,
     ...review.slice(0, visible),
   ];
 
-  // ✅ Start from real first item
+  // Start from real first item
   useEffect(() => {
     if (total > 0) {
       setIndex(visible);
     }
   }, [total, visible]);
 
-  // ✅ Auto Slide
+  // Auto Slide
   useEffect(() => {
     if (total === 0) return;
 
@@ -73,7 +71,7 @@ const Review = () => {
     return () => clearInterval(interval);
   }, [total]);
 
-  // ✅ Infinite loop correction
+  // Infinite loop correction
   useEffect(() => {
     if (index === total + visible) {
       setTimeout(() => {
@@ -84,7 +82,7 @@ const Review = () => {
 
   }, [index, total, visible]);
 
-  // ✅ Re-enable transition after jump
+  // Re-enable transition after jump
   useEffect(() => {
     if (!transition) {
       requestAnimationFrame(() => {
@@ -93,11 +91,10 @@ const Review = () => {
     }
   }, [transition]);
 
-  // ✅ Buttons
   const nextSlide = () => setIndex((prev) => prev + 1);
   const prevSlide = () => setIndex((prev) => prev - 1);
 
-  // ✅ Progress bar (based on real slides)
+  // Progress bar (based on real slides)
   const maxIndex = Math.max(total - visible, 0);
   const realIndex = (index - visible + total) % total;
 
@@ -108,15 +105,12 @@ const Review = () => {
   return (
     <section className="relative w-full my-6 py-6">
       <div className="absolute inset-0">
-        {/* Top Left Blob */}
         <div className="absolute top-18 sm:top-8 md:-top-16 -left-22 sm:-left-12 md:-left-16 w-50 sm:w-58 md:w-[280px] h-36 sm:h-46 md:h-[257px] bg-[#84CC1659] rounded-full md:blur-3xl blur-2xl" />
 
-        {/* Bottom Right Blob */}
         <div className="absolute bottom-8 sm:bottom-6 md:bottom-8 right-0 w-50 sm:w-58 md:w-[280px] h-40 sm:h-46 md:h-[257px] bg-[#84CC1659] rounded-full md:blur-3xl blur-xl" />
       </div>
 
       <div className="relative mx-[20px] lg:mx-[74px]">
-        {/* Heading */}
         <div className="host-grotesk flex flex-col justify-center items-center text-center max-w-[90%] sm:max-w-[400px] md:max-w-[427px] mb-7 sm:mb-8 md:mb-[28px] mx-auto gap-[12px]">
           <h2 className="text-[20px] sm:text-[22px] md:text-[24px] font-[600] text-black">
             What Our <span className="text-[#A4A4A4]">Users</span> Say About
@@ -129,7 +123,6 @@ const Review = () => {
           </p>
         </div>
 
-        {/* Slider */}
         <div className="relative overflow-hidden">
           <div
             className="flex"
@@ -144,7 +137,7 @@ const Review = () => {
   className="flex-shrink-0"
   style={{
     width: `${100 / visible}%`,
-    padding: "0 12px", // same as px-3 but controlled
+    padding: "0 12px", 
     boxSizing: "border-box",
   }}
 >
@@ -154,7 +147,6 @@ const Review = () => {
           </div>
         </div>
 
-        {/* Controls */}
         <div className="flex items-center justify-between md:justify-end gap-[13px] mt-[20px] md:mt-[37px]">
           <div className="w-[90px] md:w-[120px] h-[3px] bg-gray-300 rounded-full overflow-hidden ml-3 md:ml-0">
             <div

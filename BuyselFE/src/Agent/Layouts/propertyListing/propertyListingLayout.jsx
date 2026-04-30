@@ -37,7 +37,7 @@ const mapped = data.map((item) => ({
   features: Array.isArray(item.features)
   ? item.features
   : [],
-  keyPoints: item.selling_points || [], // ✅ moved here
+  keyPoints: item.selling_points || [], 
   area:item.sq_ft
     ? `${item.sq_ft} sq.ft`
     : item.land_area
@@ -71,6 +71,7 @@ const mapped = data.map((item) => ({
       if(res){
         setProperties((prev)=>prev.filter((item)=>item.id !== id))
       }else{
+
         toast.error("Delete failed")
         console.log("Failed");
       }

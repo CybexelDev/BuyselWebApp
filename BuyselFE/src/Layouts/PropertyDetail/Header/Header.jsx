@@ -75,6 +75,7 @@ const HeaderProperty = ({ property }) => {
     const token = localStorage.getItem("accessToken");
 
     if (!token) {
+
       e.preventDefault(); // 🚫 stop redirect
       toast.error("Please login to contact");
       return;
@@ -90,6 +91,7 @@ const HeaderProperty = ({ property }) => {
     const token = localStorage.getItem("accessToken");
 
     if (!token) {
+
       e.preventDefault(); // 🚫 stop redirect
       toast.error("Please login to contact");
       return;
@@ -316,14 +318,12 @@ const HeaderProperty = ({ property }) => {
 
                   <p className="font-semibold text-[15px] lg:text-[19px] flex items-center gap-2">
 
-                    {/* 🔥 ICON FROM BACKEND */}
                     <img
                       src={item.icon}
                       alt=""
                       className="w-[18px] h-[18px] lg:w-[24px] lg:h-[24px]"
                     />
 
-                    {/* 🔥 NAME */}
                     {item.name}
                   </p>
 

@@ -10,11 +10,7 @@ import { toast } from "sonner";
 const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properties from trusted owners and agents.", data = null }) => {
   const [featured, setFeatured] = useState([]);
 
-  console.log(featured, "featured dataaaaammmm");
-
-
   const sliderRef = useRef(null);
-
   useEffect(() => {
   if (data && data.length > 0) {
     setFeatured(data);
@@ -35,7 +31,7 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
   const scrollNext = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({
-        left: 330, // Card width + gap
+        left: 330, 
         behavior: "smooth",
       });
     }

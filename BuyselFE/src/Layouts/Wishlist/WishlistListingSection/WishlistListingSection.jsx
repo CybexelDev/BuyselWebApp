@@ -52,8 +52,6 @@ const handleSort = async (type) => {
   if (res) setData(res);
 };
   const {userId} = useSelector((state) => state.user);
-
-  console.log(userId, "uuuuuuuuuuuuuu");
   
 
 const filteredProperties = [...data]; 

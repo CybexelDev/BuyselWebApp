@@ -79,12 +79,7 @@ const ReviewCard = ({ item }) => {
     );
   })}
 </div>
-
-
-
-      {/* Quote */}
      
-
        <h3 className="font-[500] text-[#313131] text-[16px] sm:text-[17px] md:text-[18px] lg:text-[18px] leading-[18px] sm:leading-[22px] md:leading-[25px] lg:leading-[25px] mb-2 sm:mb-3 lg:mb-[8px]">
         {item.title}
       </h3>

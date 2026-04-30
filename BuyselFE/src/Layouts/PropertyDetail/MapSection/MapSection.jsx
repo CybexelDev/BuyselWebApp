@@ -25,11 +25,7 @@ const MapSection = ({ address, latitude, longitude, landmarks }) => {
         </div>
       </div>
       
-      
-
       <div className="relative mt-0 lg:mt-8">
-
-        {/* 🟢 GREEN SECTION */}
         <div className="bg-[#6ABD11ED] text-white 
                         rounded-3xl 
                         w-full md:w-[90%] lg:w-[65%] 
@@ -39,7 +35,6 @@ const MapSection = ({ address, latitude, longitude, landmarks }) => {
                         host-grotesk
                         relative z-10 shadow-lg lg:shadow-none">
 
-          {/* 3. Increased pt-16 to pt-24 on mobile to ensure the text starts AFTER the map overlap */}
           <div className="pt-24 lg:pt-0 
                           mt-2 sm:mt-6 lg:mt-24 
                           px-1 sm:px-2 lg:px-5 
@@ -82,7 +77,7 @@ const MapSection = ({ address, latitude, longitude, landmarks }) => {
           </div>
         </div>
 
-        {/* 💻 DESKTOP FLOATING MAP */}
+        {/* DESKTOP FLOATING MAP */}
         <div className="absolute top-12 left-0 max-[1279px]:w-[520px] min-[1280px]:w-[600px] min-[1281px]:w-[660px] min-[1500px]:w-[700px] min-[1891px]:w-[800px] min-[2100px]:w-[900px] min-[2440px]:w-[1000px] z-10 hidden lg:block shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] rounded-[40px]">
           <Map
             latitude={latitude}

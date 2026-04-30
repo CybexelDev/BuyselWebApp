@@ -5,8 +5,9 @@ import { toast } from 'sonner'
 export const DescriptionAndAminities = ({ data }) => {
   const [detail, setDetail] = useState([])
   const [loading, setLoading] = useState(false);
+
 const [errors, setErrors] = useState({});
-  console.log(detail.keySellingPoint, "llll");
+
 
 
   useEffect(() => {
@@ -71,7 +72,6 @@ const handleSubmit = async (e) => {
     property_hash_id:data.id
   };
 
-  console.log(payload); 
 
   const res = await sendPropertyEnquiry(payload);
 

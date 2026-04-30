@@ -15,9 +15,7 @@
 /* Specific Desktop Fix */
 @media (min-width: 1024px) {
     .detail-cta-container {
-        /* This pushes the bottom of the gray box down on desktop */
         padding-bottom: 20px; 
-        /* Optional: increase min-height slightly for better desktop proportion */
         min-height: 60vh; 
     }
 }
