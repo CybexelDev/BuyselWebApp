@@ -18,7 +18,7 @@ export default function LoginAndSignup() {
     const [otpSent, setOtpSent] = useState(false)
     const [email, setEmail] = useState('')
     const [isForgot, setIsForgot] = useState(false);
-    const [isReset, setIsReset] = useState(true);
+    const [isReset, setIsReset] = useState(false);
 
     return (
         <div className="md:h-[100vh] h-[100%] w-full bg-white flex items-center justify-center p-3 md:p-8">

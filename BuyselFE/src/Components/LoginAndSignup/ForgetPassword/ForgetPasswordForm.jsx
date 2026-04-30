@@ -5,7 +5,7 @@ const ForgotPasswordForm = ({setOtpSent, setEmail}) => {
   const [localEmail, setLocalEmail] = useState("");
 
   const handleSubmit = () => {
-    console.log("Send reset link to:", email);
+    console.log("Send reset link to:", localEmail);
         setEmail(localEmail);   // ✅ send email to parent
     setOtpSent(true);  // ✅ go to OTP screen
 
