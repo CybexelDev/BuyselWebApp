@@ -11,7 +11,7 @@ import { handleGoogleLogin, sendFacebookToken, userLogin } from '../../../Api/us
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 
-const UserForm = ({ setSignup, onForgot }) => {
+const UserForm = ({ setSignup,onForgot }) => {
   const [login, setLogin] = useState({ username: '', password: '' })
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const UserForm = ({ setSignup, onForgot }) => {
       const response = await userLogin(login.username, login.password);
 
       if (response) {
+        console.log("user Login success page:", response);
         dispatch({
           type: 'SET_USER',
           payload: {
@@ -54,6 +55,8 @@ const UserForm = ({ setSignup, onForgot }) => {
     onSuccess: async (tokenResponse) => {
       try {
         const response = await handleGoogleLogin({ tokenResponse });
+        console.log(response, "wwwwwwwwww");
+
         dispatch({
           type: 'SET_USER',
           payload: {
@@ -70,6 +73,7 @@ const UserForm = ({ setSignup, onForgot }) => {
          localStorage.setItem('id', response?.user?.id);
 
         navigate("/");
+        console.log(response, "Login successs and data sented to login component");
 
       } catch (error) {
         console.error('Login failed:', error.response?.data || error.message);
@@ -101,6 +105,9 @@ const UserForm = ({ setSignup, onForgot }) => {
     function (response) {
       if (response.authResponse) {
         const accessToken = response.authResponse.accessToken;
+
+        console.log("Facebook login success:", accessToken);
+
         // 👉 send to backend
         sendFacebookToken(accessToken);
       } else {
@@ -146,8 +153,7 @@ const UserForm = ({ setSignup, onForgot }) => {
         />
       </div>
 
-      <div className="text-right text-sm text-gray-500 hover:text-gray-900 mb-5 cursor-pointer"
-      onClick={onForgot}>
+      <div className="text-right text-sm text-gray-500 mb-5 cursor-pointer" onClick={onForgot}>
         Forgot Password?
       </div>
 

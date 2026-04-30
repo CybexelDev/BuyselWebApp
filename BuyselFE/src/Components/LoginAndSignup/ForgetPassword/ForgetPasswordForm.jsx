@@ -9,6 +9,7 @@ const ForgotPasswordForm = ({setOtpSent, setEmail}) => {
         setEmail(localEmail);   
     setOtpSent(true); 
 
+
   };
 
   return (
