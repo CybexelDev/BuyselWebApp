@@ -4,7 +4,6 @@ import api from "./axiosInstance";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-// const userId = localStorage.getItem("id");
 
 export const userRegister = async (name, email, mobail, password, confirm_password) => {
     const formData = new FormData();
@@ -61,7 +60,6 @@ export const otpSent = async (otpValue, email) => {
                 "Content-Type": "multipart/form-data",
             },
         });
-        console.log(result, "veryfyyyyyyy");
 
         if (result.data.access) {
             return result.data;
@@ -112,7 +110,6 @@ export const userLogin = async (username, password) => {
                 "Content-Type": "multipart/form-data",
             },
         });
-        console.log(result, "00000000000000000000000");
 
         if (
             result.data.access &&
@@ -171,13 +168,12 @@ export const getProperty = async (filters) => {
     try {
          const userId = localStorage.getItem("id");
 
-        const result = await api.get(`${BASE_URL}properties/`, {
+        const result = await api.get(`${BASE_URL}all-properties/`, {
             params: {
                 ...filters,
                 id: userId,
             },
         });
-        console.log(result, "Filtered properties 777777777777");
         return result.data;
 
     } catch (error) {
@@ -256,7 +252,7 @@ export const clearWishlist = async () => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await api.get(`${BASE_URL}property/${id}/`,          
+        const result = await api.get(`${BASE_URL}property-detail/${id}/`,          
       );
 
         return result.data;
@@ -389,7 +385,6 @@ export const removeToWishlist = async ({ id }) => {
 export const getFeatured = async () => {
   try {
     const res = await axios.get(`${BASE_URL}featured/`);
-    console.log(res.data, "featured data from api 77777777777777777777");
     return res.data;
     
   } catch (err) {
@@ -406,7 +401,6 @@ export const getAgents = async (category) => {
         const result = await api.get(`${BASE_URL}agents/listing/`, {
             params: category,
         });
-        console.log(result, "agents list 777  777777777");
         return result.data;
 
     } catch (error) {
@@ -471,7 +465,6 @@ const result = await axios.get(`${BASE_URL}testimonial/list/`);
 export const getReviews = async (agentId) => {
   try {
     const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);
-    console.log(res.data, "featured data from api 77777777777777777777");
     return res.data;
     
   } catch (err) {
@@ -633,7 +626,6 @@ export const searchProperties = async (query) => {
     const res = await api.get(`properties/search/?label=${query}`);
     if (res) {
       return res.data.data;
-      console.log(res.data, "Search result from API 77777777777777777777");
       
     }   
     
@@ -649,7 +641,6 @@ export const searchProperties = async (query) => {
   try {
     const res = await api.get(`agents/search/?search=${query}`);
     if (res) {
-       console.log(res.data, "agent searching");
       return res.data;
     }   
     
@@ -664,7 +655,6 @@ export const searchProperties = async (query) => {
   try {
     const res = await api.get(`agents/cities/`);
     if (res) {
-       console.log(res.data, "agent searching");
       return res.data.cities;
     }   
     

@@ -77,7 +77,7 @@ function AddPropertySection() {
 
   const { id } = useParams();
 
-  // ✅ Fetch full meta
+  //Fetch full meta
   useEffect(() => {
     const fetchMeta = async () => {
       try {
@@ -91,7 +91,7 @@ function AddPropertySection() {
     fetchMeta();
   }, []);
 
-  // ✅ Fetch property (Edit mode)
+  // Fetch property (Edit mode)
   useEffect(() => {
     if (
       !id ||

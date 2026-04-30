@@ -19,7 +19,6 @@ const AgentForm = () => {
             const response = await premiumAgentLogin(login.email, login.password);
 
             if (response) {
-                console.log("Login success page:", response);
                 dispatch({
                     type: 'SET_AGENT',
                     payload: {

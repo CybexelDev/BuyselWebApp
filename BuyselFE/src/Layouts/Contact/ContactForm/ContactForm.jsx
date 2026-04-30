@@ -22,7 +22,6 @@ function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const res = await sendContact(formData);
 
     if (res) {
@@ -77,7 +76,6 @@ function ContactForm() {
 
             {/* Email + Phone */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-2 md:gap-4">
-              {/* Email */}
               <div>
                 <label className="block host-grotesk text-[16px] font-[500] leading-[135%] mb-2 sm:mb-1 md:mb-2">
                   Email

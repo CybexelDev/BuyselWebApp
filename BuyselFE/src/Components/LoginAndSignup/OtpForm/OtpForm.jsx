@@ -37,7 +37,6 @@ const OtpForm = ({ email }) => {
       const data = await otpSent(otpValue, email)
 
       if (data) {
-        console.log(data, "&&&&&&&&&&&&&&&&&&");
 
         dispatch({
           type: 'SET_USER',
@@ -144,4 +143,4 @@ const OtpForm = ({ email }) => {
   );
 };
 
-export default OtpForm;
+export default OtpForm; 

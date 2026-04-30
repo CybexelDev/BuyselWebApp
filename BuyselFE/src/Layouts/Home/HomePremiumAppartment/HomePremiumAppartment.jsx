@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { premiumHomes } from "../../../Constance/constance";
-
 import { getProperty } from "../../../Api/userApi";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +16,6 @@ const handleNavigate = (path) => {
   });
 };
   useEffect(() => {
-    // Simulate API call
     setHomes(premiumHomes);
   }, []);
 
@@ -29,7 +27,6 @@ const handleNavigate = (path) => {
 
 const handleClick = (item) => {
   const category = categoryMap[item.title];
-
   handleNavigate(`/propertyListing?purpose=Buy&category=${category}`);
 };
     return (

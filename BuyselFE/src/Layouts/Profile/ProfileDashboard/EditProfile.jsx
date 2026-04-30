@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { updateProfile } from "../../../Api/userApi";
-   import { useEffect } from "react";
+import { useEffect } from "react";
 
 const EditProfile = ({ users, setMode, setParentProfileData }) => {
 
@@ -96,12 +96,6 @@ setParentProfileData(formData);
         e.preventDefault();
       }
     }}
-
-    // onPaste={(e) => {
-    //   if (!/^\d+$/.test(e.clipboardData.getData("text"))) {
-    //     e.preventDefault();
-    //   }
-    // }}
             onChange={handleChange}
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"
           />
@@ -119,21 +113,13 @@ setParentProfileData(formData);
     placeholder="Phone"
     maxLength={10}
 
-    /* 🚫 block letters & symbols while typing */
+    /* block letters & symbols while typing */
     onBeforeInput={(e) => {
       if (!/^\d$/.test(e.data)) {
         e.preventDefault();
       }
     }}
     value={formData.alternate_mobile}
-
-    /* 🚫 block invalid paste */
-    // onPaste={(e) => {
-    //   if (!/^\d+$/.test(e.clipboardData.getData("text"))) {
-    //     e.preventDefault();
-    //   }
-    // }}
-
     onChange={handleChange}
 
             className="w-full instrument-sans bg-white rounded-[10px] px-4 py-3 text-[14px] leading-[14px] font-[400] outline-none focus:ring-2 focus:ring-gray-300 placeholder:text-[#847b7b]"

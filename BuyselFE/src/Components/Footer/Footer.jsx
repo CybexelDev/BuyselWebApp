@@ -15,20 +15,15 @@ const Footer = ({bg="bg-white",margin="mt-22"}) => {
         <div className={`px-6 md:px-12 lg:px-5 ${margin} ${bg}`}>
             <footer className="bg-black text-white rounded-t-3xl py-14">
                 <div
-                    className="max-w-7xl mx-auto
+          className="max-w-7xl mx-auto
           grid grid-cols-2
-        
-          
-
           sm:grid-cols-2
           md:grid-cols-3
           lg:grid-cols-[2.3fr_1fr_1fr_1fr_1fr]
           gap-10 md:gap-12 lg:gap-22
           px-6 md:px-8 lg:px-10
-          instrument-sans"
-                >
-                    {/* coloumn first */}
-<div className="col-span-2 md:col-span-1 text-center md:text-left flex flex-col items-center md:items-start">
+          instrument-sans" >
+           <div className="col-span-2 md:col-span-1 text-center md:text-left flex flex-col items-center md:items-start">
                         <img
                             src={logo}
                             className="w-[110px] md:w-[120px] lg:w-[126px] lg:h-[59px] "

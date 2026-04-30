@@ -35,8 +35,6 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
 
   const handleShare = async (e) => {
-    console.log("cliked thia share");
-
     e.stopPropagation();
 
     try {

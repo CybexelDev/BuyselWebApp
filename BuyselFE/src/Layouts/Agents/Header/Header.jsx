@@ -16,11 +16,8 @@ function Header({ onchange, location }) {
   }, []);
   const isVeryLarge = screenWidth > 1800;
 
-  /* SVG sizing */
   const width = 1700;
-  const height =
-
-    screenWidth < 900 ? 1080 : 440;
+  const height = screenWidth < 900 ? 1080 : 440;
 
   /* Ticket shape values */
   const cornerRadius = 40;
@@ -103,8 +100,6 @@ function Header({ onchange, location }) {
         >
           <div className="w-full h-full relative">
 
-
-
             {/* Main Content */}
             <div
               className="
@@ -181,7 +176,7 @@ function Header({ onchange, location }) {
     relative
     mb-10                 /* < 900px */
     min-[900px]:mb-0
-    min-[900px]:absolute     /* desktop: overlay */
+    min-[900px]:absolute    
     min-[900px]:left-1/2
     min-[900px]:-translate-x-1/2
     min-[900px]:bottom-[15px]
@@ -239,26 +234,6 @@ function Header({ onchange, location }) {
     </li>
 ))}
       
-{/* 
-        <li
-          onClick={() => {
-            setOpen(false);
-            console.log("Trichy");
-          }}
-          className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
-        >
-          Trichy
-        </li>
-
-        <li
-          onClick={() => {
-            setOpen(false);
-            console.log("Chennai");
-          }}
-          className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
-        >
-          Chennai
-        </li> */}
 
       </ul>
     </div>

@@ -12,9 +12,7 @@ function MapSection() {
         pb-10 pt-8 
         md:pb-12 md:pt-10
         lg:pb-12 lg:pt-10
-        px-4 md:px-8 lg:px-25
-        
-      "
+        px-4 md:px-8 lg:px-25"
     >
       <div className="max-w-7xl mx-auto">
 
@@ -37,8 +35,7 @@ function MapSection() {
               flex flex-col sm:flex-row
               gap-6 md:gap-8 lg:gap-8
               pr-0 md:pr-3 lg:pr-5
-              mt-8 md:mt-10 lg:mt-15
-            "
+              mt-8 md:mt-10 lg:mt-15"
           >
 
             {/* Card 1 */}

@@ -12,49 +12,65 @@ import { IoIosMail } from "react-icons/io";
 
 
 function AgentDashboard() {
-  // 🔹 Example Data
+  
   const [dashboard, setDashboard] = useState({
     total_properties: 0,
     total_enquiries: 0,
     remaining_listings: 0,
   });
 
-useEffect(() => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
     const fetchData = async () => {
-      const res = await getDashboard();
-      if (res) {
-        setDashboard(res);
+      try {
+        const res = await getDashboard();
+        if (res) {
+          setDashboard(res);
+        }
+      } catch (err) {
+        console.error("Error fetching dashboard:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  const totalProperties = dashboard.total_properties || 0;
-  const totalEnquiries = dashboard.total_enquiries || 0;
+  const totalProperties = dashboard?.total_properties ?? 0;
+  const totalEnquiries = dashboard?.total_enquiries ?? 0;
+  const remainingListings = dashboard?.remaining_listings ?? 0;
 
-  const remainingListings =dashboard.remaining_listings || 0
 
   const data = [
     {
       title: "Total Properties",
       value: totalProperties,
-      icon: <img src={apartment} className="w-[20px] h-[20px]" />,
+      icon: (
+        <img
+          src={apartment}
+          alt="apartment"
+          className="w-[20px] h-[20px]"
+        />
+      ),
       badge: "+2%",
     },
     {
       title: "Total Enquiries",
       value: totalEnquiries,
-  icon: (
-<IoIosMail size={26} color="#000" />
-),
+      icon: <IoIosMail size={24} />,
       badge: "+5%",
     },
     {
       title: "Remaining Listings",
       value: remainingListings,
       icon: (
-        <img src={property} className="w-5 h-4 xl:w-[27px] xl:h-[27px]" />
+        <img
+          src={property}
+          alt="property"
+          className="w-5 h-5 xl:w-[27px] xl:h-[27px]"
+        />
       ),
       badge: "limit",
     },
@@ -94,7 +110,7 @@ useEffect(() => {
           ))}
         </div>
 
-        <Linegraph />
+        <Linegraph data={dashboard?.monthly_enquiries || []} />
       </div>
     </div>
   );

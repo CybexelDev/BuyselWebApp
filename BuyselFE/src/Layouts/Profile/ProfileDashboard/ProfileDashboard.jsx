@@ -20,7 +20,6 @@ const ProfileDashboard = ({ data, users, mode, setMode, setParentProfileData }) 
     const fetchWishlist = async () => {
       try {
         const data = await getWishlist();
-
         setWish(data || []);
       } catch (error) {
         console.log(error);

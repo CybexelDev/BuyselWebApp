@@ -6,7 +6,7 @@ import { getAgentPlanDetails } from "../../Api/userApi";
 import { registerAgent } from "../../Api/agentsApi";
 
 const AgentRegistration = ({ formData, handleChange, setFormData }) => {
-  const [agentTypes, setAgentTypes] = useState([]);
+const [agentTypes, setAgentTypes] = useState([]);
 const [plans, setPlans] = useState([]);
 const [filteredPlans, setFilteredPlans] = useState([]);
 
@@ -66,9 +66,7 @@ const handleAgentTypeChange = (val) => {
 
       {/* Inputs */}
       <form onSubmit={handleSubmit}>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-6 sm:mt-8">
-
         <Input
           label="Full Name"
           name="username"

@@ -2,7 +2,6 @@ import React from "react";
 import "./faqsheader.css";
 import logo from "../../../assets/images/logo/logo.png";
 import Navbar from "../../../Components/Navbar/Navbar";
-
 import bgImage from "../../../assets/images/faqs/faqsheader.jpg";
 
 const FaqsHeader = ({
@@ -37,15 +36,13 @@ const FaqsHeader = ({
           </div>
         </div>
 
-        {/* headings */}
         <div
           className="
             relative z-10 
             flex flex-col items-center justify-center 
             text-center text-white 
             px-4 sm:px-6 
-            mt-6 sm:mt-10 md:mt-16
-          "
+            mt-6 sm:mt-10 md:mt-16"
         >
           <h1
             className="

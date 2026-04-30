@@ -15,13 +15,8 @@ function AboutHeader() {
   }, []);
   const isVeryLarge = screenWidth > 1800;
 
-  /* SVG sizing */
   const width = 1700;
-  const height =
-
-    screenWidth < 900 ? 1080 : 557;
-
-  /* Ticket shape values */
+  const height = screenWidth < 900 ? 1080 : 557;
   const cornerRadius = 40;
   const topNotchWidth = 230;
   const bottomNotchWidth = 500;
@@ -86,7 +81,6 @@ function AboutHeader() {
           </clipPath>
         </defs>
 
-        {/* Background shape */}
         <path d={ticketPath} fill="#e7e7e7" />
 
         {/* HTML Content */}

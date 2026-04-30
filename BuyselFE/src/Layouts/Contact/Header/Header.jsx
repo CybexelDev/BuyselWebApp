@@ -8,18 +8,16 @@ const Header = () => {
   return (
     <div className="md:p-5 p-2 relative ">
       <Navbar />
-      {/* bgImage */}
       <div
         className="
     relative w-full min-h-[350px] md:min-h-[420px]
     bg-[#e6e6e6] rounded-[32px] overflow-hidden
     bg-no-repeat
-    bg-[position:right_100%]   /* Mobile: push image down (80% from top) */
-    md:bg-right               /* Medium and above: align right as before */
-    bg-[length:90%_250px]                             /* Width 100%, height auto */
+    bg-[position:right_100%]   
+    md:bg-right              
+    bg-[length:90%_250px]                           
     sm:bg-[length:87%]
-    lg:bg-[length:79%]
-  "
+    lg:bg-[length:79%]"
         style={{
           backgroundImage: `url(${bgimg})`,
         }}

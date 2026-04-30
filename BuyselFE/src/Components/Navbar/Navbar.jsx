@@ -26,7 +26,7 @@ const Navbar = ({
 
   const handleNavigate = (path) => {
     navigate(path);
-    setOpen(false); // close mobile menu
+    setOpen(false); 
   };
 
   const isActive = (path) => {
@@ -41,7 +41,6 @@ const Navbar = ({
     <header className={`absolute ${top} left-0 w-full z-40 px-6 ${padding}`}>
       <div className="flex items-center justify-between py-3">
 
-        {/* DESKTOP MENU */}
         <nav className={`hidden lg:flex ${gap} poppins ${text} font-[500]`}>
           {menuItems.map((item) => (
             <p
@@ -57,7 +56,6 @@ const Navbar = ({
           ))}
         </nav>
 
-        {/* LOGIN BUTTON */}
         <div className="hidden lg:block">
           <div className="flex items-center gap-2">
             {accessToken ? <div onClick={() => navigate("/wishlist")} className="p-2 rounded-full bg-white shadow-md w-fit cursor-pointer">

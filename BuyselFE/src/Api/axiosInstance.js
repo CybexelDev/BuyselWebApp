@@ -49,18 +49,18 @@ api.interceptors.response.use(
         console.log("refresh token sented");
         // Send refresh token to backend
         const { data } = await axios.post(`${BASE_URL}agent/refresh-token/`, {
-          refresh : refreshToken,  // Send refresh_token as part of the request body
+          refresh : refreshToken,  
         },
          {
           headers: {
-            'Content-Type': 'application/json',  // Ensure you're sending JSON data
+            'Content-Type': 'application/json',  
           },
         }
         );
         
         if (data?.access && data?.refresh) {
           localStorage.setItem("accessToken", data.access);
-          localStorage.setItem("refreshToken", data.refresh);  // Store new refresh token
+          localStorage.setItem("refreshToken", data.refresh);  
           originalRequest.headers.Authorization = `Bearer ${data.access}`;
           return api(originalRequest);
         }
@@ -69,7 +69,6 @@ api.interceptors.response.use(
         // In case refresh fails, clear tokens and redirect to login
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        // window.location.href = "/login";
       }
     }
 

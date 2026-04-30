@@ -21,7 +21,6 @@ useEffect(() => {
   const fetchMessages = async () => {
     try {
       const data = await getAgentInboxMessages();
-      console.log("MESSAGES:", data);
 
       if (Array.isArray(data)) {
         const mappedData = data.map((item) => ({

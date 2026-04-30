@@ -41,11 +41,8 @@ import Faqs from './Pages/Faqs/Faqs'
 function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
-
   const { image, userName, userId, accessToken } = useSelector((state) => state.user);
-     
-  console.log(image, userName, userId, accessToken, "yyyyyyyyyyyyyy");
- 
+      
   return (
     <>
  {/* App page */}

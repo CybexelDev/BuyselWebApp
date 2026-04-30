@@ -5,8 +5,6 @@ export const DescriptionAndAminities = ({ data }) => {
   const [detail, setDetail] = useState([])
   const [loading, setLoading] = useState(false);
 
-  console.log(detail.keySellingPoint, "llll");
-
 
   useEffect(() => {
     setDetail(data)
@@ -35,7 +33,6 @@ const handleSubmit = async (e) => {
     property_hash_id:data.id
   };
 
-  console.log(payload); 
 
   const res = await sendPropertyEnquiry(payload);
 

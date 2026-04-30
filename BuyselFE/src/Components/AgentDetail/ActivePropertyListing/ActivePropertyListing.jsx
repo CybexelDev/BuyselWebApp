@@ -12,7 +12,6 @@ function ActivePropertyListing({ agentData, role }) {
   const scrollRef = useRef(null);
   const [propertyData, setPropertyData] = useState([]);
 
-  console.log(propertyData, "property data in active property listing componentttttttttttttttttttttt");
 
 
   const propertyBg = {

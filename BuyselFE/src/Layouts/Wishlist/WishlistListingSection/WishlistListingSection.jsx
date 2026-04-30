@@ -30,7 +30,6 @@ function WishlistListingSection() {
 };
 const removeWishlist = (id) => {
   removeToWishlist({ id });
-
   setData((prev) => prev.filter((item) => item.id !== id));
     toast.success("remove unliked")
 
@@ -50,8 +49,6 @@ const handleSort = async (type) => {
   if (res) setData(res);
 };
   const {userId} = useSelector((state) => state.user);
-
-  console.log(userId, "uuuuuuuuuuuuuu");
   
 
 const filteredProperties = [...data]; 

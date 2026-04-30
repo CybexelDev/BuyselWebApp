@@ -14,7 +14,6 @@ const InboxLayout = () => {
     const fetchMessages = async()=>{
       try{
         const data = await getContactMessage();
-        console.log("Messages:",data);
 
         if (Array.isArray(data)) {
         const mappedData = data.map((item) => ({
@@ -49,7 +48,6 @@ const InboxLayout = () => {
       setEnquiry((prev)=>prev.filter((item)=>item.id !== id))
     }else{
       alert("Delete failed")
-      console.log("Failed");
     }
    }
 
