@@ -6,15 +6,19 @@ import Search from "../../../assets/images/header/Search.png";
 import { getNearbyProperties } from "../../../Api/userApi";
 import Navbar from "../../../Components/Navbar/Navbar";
 import { getFilterOptions } from "../../../Api/userApi";
+import { toast } from "sonner";
+
+
 
 const Header = ({ setParentFilters, onchange ,filters}) => {
-const [activeTab, setActiveTab] = useState("Rent");
-const [activeCategory, setActiveCategory] = useState("Residential");
-const [isFilterOpen, setIsFilterOpen] = useState(false);
-const tabs = ["Rent", "Buy", "Sell", "Agent", "Lease"];
+  const [activeTab, setActiveTab] = useState("Rent");
+  const [activeCategory, setActiveCategory] = useState("Residential");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const tabs = ["Rent", "Buy", "Agent", "Lease"];
 const handleNearbyClick = () => {
   if (!navigator.geolocation) {
-    alert("Geolocation not supported");
+    toast.error("Geolocation not supported");
     return;
   }
 
@@ -31,7 +35,7 @@ const handleNearbyClick = () => {
       });
     },
     () => {
-      alert("Please allow location access");
+  toast.warning("Please allow location access");
     }
   );
 };

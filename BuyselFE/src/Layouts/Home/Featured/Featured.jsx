@@ -5,6 +5,7 @@ import Featuredcard from "../../../Components/PropertyCard/Propertycard";
 import { properties } from "../../../Constance/constance";
 import { addToWishlist, getFeatured, removeToWishlist } from "../../../Api/userApi";
 import { Heart } from "lucide-react";
+import { toast } from "sonner";
 
 const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properties from trusted owners and agents.", data = null }) => {
   const [featured, setFeatured] = useState([]);
@@ -51,7 +52,7 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
     e.stopPropagation();
 
     addToWishlist({ id });
-
+    toast.success("Added to wishlist")
     setFeatured((prev) =>
       prev.map((item) =>
         item.id === id
@@ -64,6 +65,7 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
   const removeWishlist = (id, e) => {
     e.stopPropagation();
     removeToWishlist({ id });
+  toast.error("Removed from wishlist ");
 
     setFeatured((prev) =>
       prev.map((item) =>

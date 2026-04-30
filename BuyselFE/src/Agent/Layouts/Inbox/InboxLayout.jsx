@@ -3,7 +3,7 @@ import Sidebar from "../../Components/Sidebar/Sidebar";
 import {MessageSquare,User,Home,Tag,Calendar,Search,Filter,Mail,Phone,Zap,Trash} from "lucide-react";
 import { motion } from "framer-motion";
 import { deleteAgentContactEnquiry, getContactMessage } from "../../../Api/agentsApi";
-
+import { toast } from "sonner";
 const InboxLayout = () => {
   const [expandedId, setExpandedId] = useState(null);
   const[enquiry, setEnquiry]=useState([]);
@@ -47,7 +47,9 @@ const InboxLayout = () => {
     if(res){
       setEnquiry((prev)=>prev.filter((item)=>item.id !== id))
     }else{
-      alert("Delete failed")
+
+      toast.error("Delete failed")
+      console.log("Failed");
     }
    }
 

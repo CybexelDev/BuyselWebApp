@@ -42,7 +42,7 @@ function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
   const { image, userName, userId, accessToken } = useSelector((state) => state.user);
-      
+
   return (
     <>
  {/* App page */}

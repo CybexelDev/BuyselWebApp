@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { toast } from "sonner";
 
 function MediaUpload({ formData, setFormData, errors }) {
   const fileInputRef = useRef(null);
@@ -12,7 +13,7 @@ const updateFiles = (files) => {
   const totalCount = formData.images.length + newFiles.length;
 
   if (totalCount > 10) {
-    alert("Maximum 10 images allowed");
+    toast.warning("Maximum 10 images allowed");
     return;
   }
 

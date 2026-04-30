@@ -5,7 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, LogIn, Search } from 'lucide-rea
 import "./activePropertylisting.css";
 import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
 import {  Heart } from "lucide-react";
-
+import { toast } from 'sonner';
 function ActivePropertyListing({ agentData, role }) {
   const pp = properties.slice(0, 8);
   const [activeCategory, setActiveCategory] = useState("Residential");
@@ -119,7 +119,8 @@ function ActivePropertyListing({ agentData, role }) {
 
   const addWishlist = (id) => {
     addToWishlist({ id });
-  
+      toast.success("Added to wishlist")
+
     setPropertyData((prev) =>
       prev.map((item) =>
         item.id === id
@@ -131,7 +132,8 @@ function ActivePropertyListing({ agentData, role }) {
   
    const removeWishlist = (id) => {
     removeToWishlist({ id });
-  
+    toast.error("Removed from wishlist");
+
     setPropertyData((prev) =>
       prev.map((item) =>
         item.id === id

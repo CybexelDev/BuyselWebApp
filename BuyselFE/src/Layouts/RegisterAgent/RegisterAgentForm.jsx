@@ -4,6 +4,7 @@ import SelectField from "../../Components/Select/SelectField2";
 import { Layers } from "lucide-react";
 import { getAgentPlanDetails } from "../../Api/userApi";
 import { registerAgent } from "../../Api/agentsApi";
+import { toast } from "sonner";
 
 const AgentRegistration = ({ formData, handleChange, setFormData }) => {
 const [agentTypes, setAgentTypes] = useState([]);
@@ -42,9 +43,9 @@ const handleSubmit = async (e) => {
   const res = await registerAgent(payload);
 
   if (res) {
-    alert("Registered ✅");
+    toast.success("Registered ");
   } else {
-    alert("Failed ❌");
+    toast.error("Failed ");
   }
 };
 

@@ -3,6 +3,7 @@ import Propertycard from '../../../Components/PropertyCard/Propertycard'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
 import {  Heart } from "lucide-react";
+import { toast } from 'sonner';
 
 function PropertiesSection({ propertiesData }) {
 
@@ -57,6 +58,7 @@ function PropertiesSection({ propertiesData }) {
 
 const addWishlist = (id) => {
   addToWishlist({ id });
+    toast.success("Added to wishlist")
 
   setProperties((prev) =>
     prev.map((item) =>
@@ -69,6 +71,7 @@ const addWishlist = (id) => {
 
  const removeWishlist = (id) => {
   removeToWishlist({ id });
+  toast.error("Removed from wishlist ");
 
   setProperties((prev) =>
     prev.map((item) =>

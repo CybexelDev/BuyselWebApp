@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { deleteInboxMessage } from "../../../Api/agentsApi";
+import { toast } from "sonner";
 const UserEnquiryLayout = () => {
   const [searchTerm, setSearchTerm] = useState("");
 const [enquiries, setEnquiries] = useState([]);
@@ -56,7 +57,7 @@ const handleDelete = async (id) => {
   if (res) {
     setEnquiries((prev) => prev.filter((item) => item.id !== id));
   } else {
-    alert("Delete failed");
+    toast.error("Delete failed");
   }
 };
 
