@@ -5,7 +5,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import Navbar from "../../Navbar/Navbar";
 import seller from "../../../assets/images/propertDetail/seller.jpg";
 import crown from "../../../assets/images/agentDetail/crown.png";
-
+import { toast } from "sonner";
 const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
   const roleStyles = {
     basic: "bg-white",
@@ -25,7 +25,7 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
 
     if (!token) {
       e.preventDefault(); // 🚫 stop redirect
-      alert("Please login to connect with agent");
+    toast.info("Please login to connect with agent");
       return;
     }
 
@@ -43,7 +43,7 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
     const token = localStorage.getItem("accessToken");
  if (!token) {
       e.preventDefault(); // 🚫 stop redirect
-      alert("Please login to connect with agent");
+      toast.info("Please login to connect with agent");
       return;
     }
    const url = `tel:${agentData?.phone_number}`;

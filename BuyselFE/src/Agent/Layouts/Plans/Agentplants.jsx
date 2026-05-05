@@ -27,7 +27,24 @@ useEffect(() => {
 
   const data = res?.data || res;
 
-  if (data?.current_plan && data?.plans) {
+if (data?.plans) {
+  // always set plans
+  const formattedPlans = data.plans.map((group) => ({
+    id: group.id,
+    name: group.name,
+    icon: group.name.toLowerCase().includes("premium") ? Zap : Crown,
+    plans: group.plans,
+  }));
+
+  setUpgradePlans(formattedPlans);
+
+  setSelectedPlan({
+    1: data.plans[0]?.plans?.[0]?.id,
+    2: data.plans[1]?.plans?.[0]?.id,
+  });
+
+  // only if current_plan exists
+  if (data?.current_plan) {
     const current = data.current_plan;
 
     const currentGroup = data.plans.find((group) =>
@@ -45,21 +62,8 @@ useEffect(() => {
       status: current.is_active ? "Active" : "Inactive",
       features: matchedPlan?.features || [],
     });
-
-    const formattedPlans = data.plans.map((group) => ({
-      id: group.id,
-      name: group.name,
-      icon: group.name.toLowerCase().includes("premium") ? Zap : Crown,
-      plans: group.plans,
-    }));
-
-    setUpgradePlans(formattedPlans);
-
-    setSelectedPlan({
-      1: data.plans[0]?.plans?.[0]?.id,
-      2: data.plans[1]?.plans?.[0]?.id,
-    });
   }
+}
 
   // ✅ NOW THIS WILL WORK ALWAYS
   setAdPackages(data?.advertisement_packages || []);
@@ -221,7 +225,7 @@ if (planData?.expiresOn) {
 
   <div className="grid sm:grid-cols-2 gap-8">
     {reelPackages.map((reel) => {
-      const activePlan = reel.plans[0]; // only 1 plan in your case
+      const activePlan = reel.plans[0]; 
 
       if (!activePlan) return null;
 

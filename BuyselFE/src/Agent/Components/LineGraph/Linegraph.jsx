@@ -9,31 +9,11 @@ import {
 } from "recharts";
 import { getDashboard } from "../../../Api/agentsApi";
 
-function Linegraph() {
-   const [chartData, setChartData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getDashboard();
-              
-        const apiData = res?.data?.data?.monthly_enquiries || [];
-
-        // 🔥 transform API → chart format
-        const formatted = apiData.map((item) => ({
-          month: item.month,
-          enquiries: item.count,
-        }));
-
-        setChartData(formatted);
-      } catch (error) {
-        console.error("Graph API error:", error);
-        setChartData([]);
-      }
-    };
-
-    fetchData();
-  }, []);
+function Linegraph({ data = [] }) {
+  const formatted = data.map((item) => ({
+    month: item.month,
+    enquiries: item.count,
+  }));
 
 
   return (
@@ -45,7 +25,7 @@ function Linegraph() {
 
       <div className="w-full h-[250px] sm:h-[280px] md:h-[300px] overflow-hidden">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={chartData}>
+          <AreaChart data={formatted}>
 
             {/* Gradient */}
             <defs>

@@ -5,7 +5,7 @@ import Modal from "../Modal/Modal";
 import { Star } from "lucide-react";
 import { addReviewToServer, deletReview } from "../../Api/userApi";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
-
+import { toast } from "sonner";
 function UserReview({ review, id, triggerRefresh }) {
 
   const [reviews, setReviews] = useState([])
@@ -17,7 +17,6 @@ function UserReview({ review, id, triggerRefresh }) {
 
 
 
-  // const { image, userName, userId, accessToken } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (review) {
@@ -29,17 +28,12 @@ function UserReview({ review, id, triggerRefresh }) {
   const addReview = () => {
     try {
       addReviewToServer({ rating, review: reviewss, id }).then((response) => {
-
-        // alert(response?.message);
         if (response) {
           triggerRefresh();
-
         }
       })
-
     } catch (error) {
       console.log(error);
-
     }
   }
 
@@ -287,7 +281,7 @@ function UserReview({ review, id, triggerRefresh }) {
         <button
           onClick={() => {
             if (!rating || !reviewss.trim()) {
-              alert("Please add rating and review");
+              toast.warning("Please add rating and review");
               return;
             }
             addReview()

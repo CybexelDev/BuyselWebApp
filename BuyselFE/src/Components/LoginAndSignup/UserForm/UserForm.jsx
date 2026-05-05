@@ -11,7 +11,7 @@ import { handleGoogleLogin, sendFacebookToken, userLogin } from '../../../Api/us
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 
-const UserForm = ({ setSignup }) => {
+const UserForm = ({ setSignup,onForgot }) => {
   const [login, setLogin] = useState({ username: '', password: '' })
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -153,7 +153,7 @@ const UserForm = ({ setSignup }) => {
         />
       </div>
 
-      <div className="text-right text-sm text-gray-500 mb-5 cursor-pointer">
+      <div className="text-right text-sm text-gray-500 mb-5 cursor-pointer" onClick={onForgot}>
         Forgot Password?
       </div>
 

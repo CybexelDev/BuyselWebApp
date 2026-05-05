@@ -4,19 +4,17 @@ import google from '../../../assets/images/LoginAndSignUp/google.png'
 import apple from '../../../assets/images/LoginAndSignUp/apple.png'
 import facbook from '../../../assets/images/LoginAndSignUp/facebook.png'
 import { userRegister } from '../../../Api/userApi';
-
+import { toast } from 'sonner';
 
 const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
     const [register, setRegister] = useState({ name: '', email: '', mobail: '', password: '', confirm_password: '' })
     const [checked, setChecked] = useState(false);
 
-    console.log(checked, "chechyyyyyyyyyyyyyyy");
-
     const handleRegister = async () => {
 
         if (!checked) {
-            alert("Please accept Terms and Conditions");
+            toast.info("Please accept Terms and Conditions");
             return;
         }
 
@@ -30,7 +28,6 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
             )
 
             if (response) {
-                console.log("Otp sent success page:", response);
                 setEmail(response.email)
                 SetOtpSent(true)
             } else {
@@ -122,7 +119,7 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
             <p className="text-center text-sm mt-4">
                 Already have an account?{" "}
-                <span className="text-green-600 cursor-pointer" onClick={() => setSignin("signin")}>
+                <span className="text-green-600 cursor-pointer" onClick={() => setSignin("user")}>
                     sign in
                 </span>
             </p>

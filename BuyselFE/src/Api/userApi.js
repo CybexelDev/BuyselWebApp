@@ -1,10 +1,9 @@
 import axios from "axios";
 import api from "./axiosInstance";
-
+import { toast } from "sonner";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-// const userId = localStorage.getItem("id");
 
 export const userRegister = async (name, email, mobail, password, confirm_password) => {
   const formData = new FormData();
@@ -35,7 +34,7 @@ export const userRegister = async (name, email, mobail, password, confirm_passwo
 
 export const getNearbyProperties = async (lat, lng) => {
   try {
-    const res = await axios.get(`${BASE_URL}nearby-properties/`, {
+    const res = await axios.get(`${BASE_URL}filter/nearby-properties/`, {
       params: {
         lat,
         lng,
@@ -44,30 +43,35 @@ export const getNearbyProperties = async (lat, lng) => {
 
     return res.data.data.map((item) => ({
       ...item,
-      images: item.image,
-    }));
-  } catch (error) {
+      images: item.images, 
+    }));  } catch (error) {
+
     console.log("Nearby properties error:", error);
     return [];
   }
 };
 
 export const otpSent = async (otpValue, email) => {
-  const formData = new FormData();
-  formData.append("otp", otpValue);
-  formData.append("email", email);
-  try {
-    const result = await axios.post(`${BASE_URL}user/verify-otp/`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(result, "veryfyyyyyyy");
+    const formData = new FormData();
+    formData.append("otp", otpValue);
+    formData.append("email", email);
+    try {
+        const result = await axios.post(`${BASE_URL}user/verify-otp/`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
 
-    if (result.data.access) {
-      return result.data;
-    } else {
-      return false;
+        if (result.data.access) {
+            return result.data;
+        } else {
+            return false;
+        }
+
+    } catch (error) {
+        console.error("API error:", error);
+        return false;
+
     }
 
   } catch (error) {
@@ -103,26 +107,25 @@ export const reSentOtp = async (email) => {
 
 export const userLogin = async (username, password) => {
 
-  const formData = new FormData();
-  formData.append("email", username);
-  formData.append("password", password);
+    const formData = new FormData();
+    formData.append("email", username);
+    formData.append("password", password);
 
-  try {
-    const result = await axios.post(`${BASE_URL}userlogin/`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(result, "00000000000000000000000");
+    try {
+        const result = await axios.post(`${BASE_URL}userlogin/`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
 
-    if (
-      result.data.access &&
-      result.data.user.name &&
-      result.data.user.image
-    ) {
-      return result.data;
-    }
-    return false;
+        if (
+            result.data.access &&
+            result.data.user.name &&
+            result.data.user.image
+        ) {
+            return result.data;
+        }
+        return false;
   } catch (error) {
     console.error("API error:", error);
     return false;
@@ -172,14 +175,13 @@ export const getProperty = async (filters) => {
   try {
     const userId = localStorage.getItem("id");
 
-    const result = await api.get(`${BASE_URL}all-properties/`, {
-      params: {
-        ...filters,
-        id: userId,
-      },
-    });
-    console.log(result, "Filtered properties 777777777777");
-    return result.data;
+        const result = await api.get(`${BASE_URL}all-properties/`, {
+            params: {
+                ...filters,
+                id: userId,
+            },
+        });
+        return result.data;
 
   } catch (error) {
     console.log(error);
@@ -255,10 +257,11 @@ export const sendEnquiry = async (formData) => {
   }
 };
 
-export const getPropertyDetail = async (id) => {
-  try {
-    const result = await api.get(`${BASE_URL}property-detail/${id}/`,
-    );
+export const getPropertyDetail = async (id) => { 
+    try {
+
+        const result = await axios.get(`${BASE_URL}property-detail/${id}/`,          
+      );
 
     return result.data;
   } catch (error) {
@@ -390,7 +393,6 @@ export const removeToWishlist = async ({ id }) => {
 export const getFeatured = async () => {
   try {
     const res = await axios.get(`${BASE_URL}featured/`);
-    console.log(res.data, "featured data from api 77777777777777777777");
     return res.data;
 
   } catch (err) {
@@ -402,13 +404,11 @@ export const getFeatured = async () => {
 
 
 export const getAgents = async (category) => {
-
-  try {
-    const result = await api.get(`${BASE_URL}agents/listing/`, {
-      params: category,
-    });
-    console.log(result, "agents list 777  777777777");
-    return result.data;
+    try {
+        const result = await api.get(`${BASE_URL}agents/listing/`, {
+            params: category,
+        });
+        return result.data;
 
   } catch (error) {
     console.log(error);
@@ -472,7 +472,6 @@ export const getTestimonial = async () => {
 export const getReviews = async (agentId) => {
   try {
     const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);
-    console.log(res.data, "featured data from api 77777777777777777777");
     return res.data;
 
   } catch (err) {
@@ -495,7 +494,7 @@ export const getAgentsDetails = async (id) => {
 
 export const filterProperties = async (filters) => {
   try {
-    const res = await api.post("/properties/filter/", filters);
+    const res = await api.post("property-filter/", filters);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -528,10 +527,10 @@ export const addReviewToServer = async ({ rating, review, id }) => {
     console.log(res, "SUCCESS RESPONSE");
     return res.data;
 
-  } catch (error) {
-    if (error.response?.status === 400) {
-      alert("You already reviewed this agent");
-    }
+    } catch (error) {
+        if (error.response?.status === 400) {
+    toast.warning("You already reviewed this agent");
+  }
     console.log("ERROR:", error.response?.data || error.message);
     return null;
   }
@@ -634,10 +633,9 @@ export const searchProperties = async (query) => {
     const res = await api.get(`properties/search/?label=${query}`);
     if (res) {
       return res.data.data;
-      console.log(res.data, "Search result from API 77777777777777777777");
-
-    }
-
+      
+    }   
+    
   } catch (error) {
     console.log("Search error:", error);
     return [];
@@ -650,7 +648,6 @@ export const searchAgents = async (query) => {
   try {
     const res = await api.get(`agents/search/?search=${query}`);
     if (res) {
-      console.log(res.data, "agent searching");
       return res.data;
     }
 
@@ -665,7 +662,6 @@ export const getCity = async () => {
   try {
     const res = await api.get(`agents/cities/`);
     if (res) {
-      console.log(res.data, "agent searching");
       return res.data.cities;
     }
 

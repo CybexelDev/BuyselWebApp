@@ -46,7 +46,6 @@ export const getAgentProfile = async () => {
   try {
 
     const result = await api.get("/agent/profile/");
-    console.log("get Agent Profile",result)
     if (result.data?.data?.agent_id) {
       return result.data.data;
     }
@@ -116,7 +115,6 @@ data.append(
         "Content-Type": "multipart/form-data",
       },
     });
-console.log("UPDATED:", result);
     return result.data;
 
   } catch (error) {
@@ -441,7 +439,6 @@ formData.append(
       JSON.stringify(data.landmarks || [])
     );
 
-    // ✅ images handling
     if (data.images?.length > 0) {
       data.images.forEach((img) => {
         formData.append("images", img.file || img);

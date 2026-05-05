@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import i1 from "../../../assets/images/propertDetail/i1.png"
 import { sendPropertyEnquiry } from '../../../Api/userApi'
+import { toast } from 'sonner'
 export const DescriptionAndAminities = ({ data }) => {
   const [detail, setDetail] = useState([])
   const [loading, setLoading] = useState(false);
 
-  console.log(detail.keySellingPoint, "llll");
+const [errors, setErrors] = useState({});
+
 
 
   useEffect(() => {
@@ -23,8 +25,43 @@ export const DescriptionAndAminities = ({ data }) => {
       [e.target.name]: e.target.value
     });
   };
+  const validate = () => {
+  const newErrors = {};
+
+  // NAME
+  if (!formData.name.trim()) {
+    newErrors.name = "Name is required";
+  } else if (formData.name.length < 2) {
+    newErrors.name = "Name must be at least 2 characters";
+  }
+
+  // PHONE (Indian format basic)
+  if (!formData.phone.trim()) {
+    newErrors.phone = "Phone is required";
+  } else if (!/^[6-9]\d{9}$/.test(formData.phone)) {
+    newErrors.phone = "Enter a valid 10-digit number";
+  }
+
+  // EMAIL
+  if (!formData.email.trim()) {
+    newErrors.email = "Email is required";
+  } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+    newErrors.email = "Invalid email format";
+  }
+
+  // MESSAGE
+  if (!formData.message.trim()) {
+    newErrors.message = "Message is required";
+  } else if (formData.message.length < 6) {
+    newErrors.message = "Message must be at least 6 characters";
+  }
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
 const handleSubmit = async (e) => {
   e.preventDefault();
+  if (!validate()) return;
 
   const payload = {
     name: formData.name,
@@ -35,14 +72,13 @@ const handleSubmit = async (e) => {
     property_hash_id:data.id
   };
 
-  console.log(payload); 
 
   const res = await sendPropertyEnquiry(payload);
 
   if (res) {
-    alert("Enquiry sent ✅");
+    toast.success("Enquiry sent ✅");
   } else {
-    alert("Failed ❌");
+    toast.error("Failed ❌");
   }
 };
   return (
@@ -107,6 +143,7 @@ const handleSubmit = async (e) => {
             placeholder="Your Name"
             className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
           />
+          {errors.name && <p className="text-red-600 text-sm mb-2">{errors.name}</p>}
 
           {/* PHONE */}
           <label className="block text-black font-medium mb-2">Phone</label>
@@ -118,6 +155,7 @@ const handleSubmit = async (e) => {
             placeholder="Your mobile number"
             className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
           />
+          {errors.phone && <p className="text-red-600 text-sm mb-2">{errors.phone}</p>}
 
           {/* EMAIL */}
           <label className="block text-black font-medium mb-2">Email</label>
@@ -129,6 +167,7 @@ const handleSubmit = async (e) => {
             placeholder="Your email"
             className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
           />
+          {errors.email && <p className="text-red-600 text-sm mb-2">{errors.email}</p>}
 
           {/* MESSAGE */}
           <label className="block text-black font-medium mb-2">Message</label>
@@ -140,6 +179,7 @@ const handleSubmit = async (e) => {
             placeholder="Your Message"
             className="w-full mb-5 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none resize-none"
           ></textarea>
+          {errors.message && <p className="text-red-600 text-sm mb-2">{errors.message}</p>}
 
           {/* BUTTON */}
           <button

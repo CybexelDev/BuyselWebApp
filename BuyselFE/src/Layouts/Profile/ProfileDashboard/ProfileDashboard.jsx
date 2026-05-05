@@ -20,7 +20,6 @@ const ProfileDashboard = ({ data, users, mode, setMode, setParentProfileData }) 
     const fetchWishlist = async () => {
       try {
         const data = await getWishlist();
-
         setWish(data || []);
       } catch (error) {
         console.log(error);
@@ -54,6 +53,7 @@ const ProfileDashboard = ({ data, users, mode, setMode, setParentProfileData }) 
   const addWishlist = async (id) => {
     try {
       await addToWishlist({ id });
+    toast.success("Added to wishlist")
 
       setWish((prev) =>
         prev.map((item) =>
@@ -70,6 +70,7 @@ const ProfileDashboard = ({ data, users, mode, setMode, setParentProfileData }) 
   const removeWishlist = async (id) => {
     try {
       await removeToWishlist({ id });
+  toast.error("Removed from wishlist ");
 
       setWish((prev) =>
         prev.map((item) =>
@@ -306,27 +307,80 @@ const ProfileDashboard = ({ data, users, mode, setMode, setParentProfileData }) 
           <h2 className="host-grotesk text-[18px] sm:text-[20px] font-[500] leading-[14px] mb-2 sm:mb-3">
             My Wishlist
           </h2>
-          <div className="grid grid-cols-2 gap-1 sm:gap-4">
-            {wish.slice(-2).map((property, index) => (
-              <Propertycard
-                key={index}
-                property={property}
-                shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
-                wishlistIcon={property.is_wishlisted ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
-                    <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
-                  </svg>
-                ) : (
-                  <Heart size={13} fill="none" stroke="black" className="scale-100" />
-                )}
-                click={() =>
-                  property.is_wishlisted
-                    ? removeWishlist(property.id)
-                    : addWishlist(property.id)
-                }
-              />
-            ))}
-          </div>
+          <div className="grid grid-cols-2 gap-1 sm:gap-4 host-grotesk">
+  {wish.length === 0 ? (
+    <div className="col-span-2">
+      <div className="
+            bg-[#efefef]
+        rounded-[18px]
+        p-6 sm:p-8
+        flex flex-col items-center justify-center
+        text-center
+            shadow-[0px_4px_4px_0px_rgba(183,174,174,0.25)]
+      ">
+        
+        {/* Icon */}
+        <div className="
+          w-14 h-14 
+          flex items-center justify-center 
+          rounded-full 
+          bg-white 
+          shadow-md
+          mb-4
+        ">
+          <Heart size={24} className="text-[#C70000]" />
+        </div>
+
+        {/* Title */}
+        <h3 className="text-[16px] sm:text-[18px] font-[600] text-black">
+          Your wishlist is empty
+        </h3>
+
+        {/* Subtitle */}
+        <p className="text-[13px] sm:text-[14px] text-gray-500 mt-1 max-w-[260px]">
+          Save properties you love to view them later anytime.
+        </p>
+
+        {/* CTA Button */}
+        <button
+          onClick={() => handleNavigate("/properties")}
+          className="
+            mt-5
+            px-5 py-2.5
+            rounded-full
+            bg-black text-white
+            text-[13px] sm:text-[14px]
+            font-[500]
+            hover:bg-[#222]
+            transition-all duration-300
+          "
+        >
+          Explore Properties
+        </button>
+      </div>
+    </div>
+  ) : (
+    wish.slice(-2).map((property, index) => (
+      <Propertycard
+        key={index}
+        property={property}
+        shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
+        wishlistIcon={property.is_wishlisted ? (
+          <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
+            <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
+          </svg>
+        ) : (
+          <Heart size={13} fill="none" stroke="black" />
+        )}
+        click={() =>
+          property.is_wishlisted
+            ? removeWishlist(property.id)
+            : addWishlist(property.id)
+        }
+      />
+    ))
+  )}
+</div>
         </div>
 
         {/* View all wishlist button */}

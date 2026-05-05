@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { deleteInboxMessage } from "../../../Api/agentsApi";
+import { toast } from "sonner";
 const UserEnquiryLayout = () => {
   const [searchTerm, setSearchTerm] = useState("");
 const [enquiries, setEnquiries] = useState([]);
@@ -21,7 +22,6 @@ useEffect(() => {
   const fetchMessages = async () => {
     try {
       const data = await getAgentInboxMessages();
-      console.log("MESSAGES:", data);
 
       if (Array.isArray(data)) {
         const mappedData = data.map((item) => ({
@@ -57,7 +57,7 @@ const handleDelete = async (id) => {
   if (res) {
     setEnquiries((prev) => prev.filter((item) => item.id !== id));
   } else {
-    alert("Delete failed");
+    toast.error("Delete failed");
   }
 };
 

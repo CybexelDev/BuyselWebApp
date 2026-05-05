@@ -11,6 +11,7 @@ import flat from "../../../assets/images/propertDetail/flat.png"
 import phone from "../../../assets/images/propertDetail/phone.png"
 import seller from "../../../assets/images/propertDetail/seller.jpg"
 import { X } from "lucide-react";
+import { toast } from "sonner";
 
 const HeaderProperty = ({ property }) => {
 
@@ -73,8 +74,9 @@ const HeaderProperty = ({ property }) => {
     const token = localStorage.getItem("accessToken");
 
     if (!token) {
+
       e.preventDefault(); // 🚫 stop redirect
-      alert("Please login to contact");
+      toast.error("Please login to contact");
       return;
     }
 
@@ -88,8 +90,9 @@ const HeaderProperty = ({ property }) => {
     const token = localStorage.getItem("accessToken");
 
     if (!token) {
+
       e.preventDefault(); // 🚫 stop redirect
-      alert("Please login to contact");
+      toast.error("Please login to contact");
       return;
     }
     window.location.href = `tel:${property?.seller?.phone}`;

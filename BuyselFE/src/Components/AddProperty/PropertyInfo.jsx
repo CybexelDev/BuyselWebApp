@@ -4,7 +4,7 @@ import { Layers, List, Target } from "lucide-react";
 import SelectField from "../Select/CustomSelect";
 import { getPropertyData } from "../../Api/agentsApi";
 
-function PropertyInfo({ formData, setFormData, errors }) {
+function  PropertyInfo({ formData, setFormData, errors }) {
   const [propertyData, setPropertyData] = useState({
     categories: [],
     subcategories: [],

@@ -13,11 +13,10 @@ const BlogDetail = () => {
       const res = await getBlogById(id);
       setBlog(res);
     };
-
     fetchBlog();
   }, [id]);
 
-  // 🔥 Loading state
+  //Loading state
   if (!blog) {
     return <p className="text-center mt-10">Loading...</p>;
   }
@@ -25,7 +24,7 @@ const BlogDetail = () => {
   return (
     <div className="bg-white min-h-screen px-4 sm:px-6 md:px-10 py-8">
 
-      {/* 🔙 Back Button */}
+      {/* Back Button */}
       <div className="max-w-6xl mx-auto mb-6">
         <button
           onClick={() => navigate("/blog")}
@@ -40,17 +39,17 @@ const BlogDetail = () => {
         </button>
       </div>
 
-      {/* 📄 Blog Content */}
+      {/* Blog Content */}
       <div className="max-w-5xl mx-auto">
 
-        {/* 🖼 Image */}
+        {/* Image */}
         <img
           src={blog.image}
           alt={blog.blog_head}
           className="w-full h-[220px] sm:h-[350px] md:h-[480px] object-cover rounded-[20px] sm:rounded-[30px] mb-6 sm:mb-8"
         />
 
-        {/* 🏷 Tag + Date */}
+        {/* Tag + Date */}
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="bg-[#6fba19] text-white text-xs sm:text-sm px-3 sm:px-4 py-1 rounded-full">
             Property Tips {/* static since backend doesn't give */}
@@ -61,12 +60,12 @@ const BlogDetail = () => {
           </span>
         </div>
 
-        {/* 📝 Title */}
+        {/* Title */}
         <h1 className="text-[22px] sm:text-[28px] md:text-[36px] font-semibold text-gray-900 mb-5 leading-[1.3] instrument-sans">
           {blog.blog_head}
         </h1>
 
-        {/* 📖 Content */}
+        {/* Content */}
         <div className="text-[#5f5f5f] text-[15px] sm:text-[16px] leading-[1.8] sm:leading-[1.9] host-grotesk space-y-5 sm:space-y-6">
          {blog.card_paragraph
   ?.split(/\r?\n/)

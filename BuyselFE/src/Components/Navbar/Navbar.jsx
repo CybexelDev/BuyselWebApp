@@ -27,7 +27,7 @@ const Navbar = ({
 
   const handleNavigate = (path) => {
     navigate(path);
-    setOpen(false); // close mobile menu
+    setOpen(false); 
   };
 
   const isActive = (path) => {
@@ -42,7 +42,6 @@ const Navbar = ({
     <header className={`absolute ${top} left-0 w-full z-40 px-6 ${padding}`}>
       <div className="flex items-center justify-between py-3">
 
-        {/* DESKTOP MENU */}
         <nav className={`hidden lg:flex ${gap} poppins ${text} font-[500]`}>
           {menuItems.map((item) => (
             <p

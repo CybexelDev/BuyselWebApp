@@ -7,7 +7,6 @@ import PlansLayout from "../../Plans/PlansLayout";
 import EnquiryLayoutUser from "../Tabs/Enquiries/Enquiries";
 import { useSearchParams } from "react-router-dom";
 import Properties from "../Tabs/Properties/Properties";
-//start
 
 const Header = () => {
       const [searchParams,setSearchParams]=useSearchParams()

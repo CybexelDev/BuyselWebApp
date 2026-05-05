@@ -10,7 +10,8 @@ import { getPropertyDetail } from '../../Api/userApi'
 import { getRelatedProperties } from '../../Api/userApi'
 function PropertyDetail() {
 
-  const { id } = useParams()
+  const { id,type } = useParams()
+
   const [productDetail, setProductDetail] = useState(null)
   const [similarProperties, setSimilarProperties] = useState([]);
   const [loading, setLoading] = useState(true)
@@ -32,7 +33,7 @@ const transformProperty = (data) => {
   return {
     id: data.id,
 
-    title: data.property_code, 
+    title: data.label, 
     location: `${data.city}, ${data.state}`,
     status: data.purpose,
     
@@ -58,7 +59,7 @@ longitude: coords?.lng,
       company: "Owner",
       name: data.contact_details.owner,
       phone: data.contact_details.phone,
-      image: "https://via.placeholder.com/100"
+      image: data.owner_profile_image
     },
 
     features: data.property_features.map(item => ({
@@ -78,7 +79,7 @@ useEffect(() => {
     const res = await getRelatedProperties(id);
 
     if (res) {
-      setSimilarProperties(res);
+      setSimilarProperties(res.data);
     }
   };
 
@@ -87,7 +88,7 @@ useEffect(() => {
 
 useEffect(() => {
   const fetchData = async () => {
-    const res = await getPropertyDetail(id)
+    const res = await getPropertyDetail(id,type)
 
     if (res) {
       const formatted = transformProperty(res)

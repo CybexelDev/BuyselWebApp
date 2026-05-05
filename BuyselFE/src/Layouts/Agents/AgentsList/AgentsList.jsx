@@ -13,8 +13,6 @@ export default function AgentTabs({searchedData, query, locationDats }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [agents, setAgents] = useState([]);
     const navigate = useNavigate();
-
-    console.log(activeTab, "hahahahah bbbbbb bbbbbb");
     
     const itemsPerPage = 12;
 

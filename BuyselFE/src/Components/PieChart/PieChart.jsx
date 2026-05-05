@@ -41,7 +41,6 @@ const DietChart = () => {
   return (
     <div className="flex flex-col items-center px-3 sm:px-4 md:px-6 py-3 sm:py-4 bg-white rounded-2xl w-full shadow-sm">
       
-      {/* Main Layout */}
       <div className="flex flex-col md:flex-row items-center w-full">
 
         {/* Legend (Mobile Top / Desktop Left) */}

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { agentContactForm } from "../../Api/userApi";
+import { toast } from "sonner";
 function Details({ agentData }) {
   const [contactData, setContactData] = useState({
     first_name: "",
@@ -14,16 +15,16 @@ function Details({ agentData }) {
     e.preventDefault();
     if (!contactData.first_name || !contactData.last_name || !contactData.email || !contactData.phone || !contactData.message)
        {
-      alert("Please fill required fields");
+      toast.info("Please fill required fields");
       return;
     }
 
     const res = await agentContactForm(contactData);
 
     if (res) {
-      alert("Enquiry sent ✅");
+      toast.success("Enquiry sent ");
     } else {
-      alert("Failed ❌");
+      toast.error("Failed ");
     }
      setContactData({
         first_name: "",
