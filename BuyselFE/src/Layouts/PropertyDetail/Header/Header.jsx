@@ -20,7 +20,6 @@ const HeaderProperty = ({ property }) => {
   const [touchEnd, setTouchEnd] = useState(null);
 
 
-
   const nextImage = () => {
     setCurrentIndex((prev) =>
       prev === property.images.length - 1 ? 0 : prev + 1
@@ -225,7 +224,7 @@ const HeaderProperty = ({ property }) => {
               <div className="flex items-center gap-3 lg:gap-4 mb-5 lg:mb-6">
 
                 <img
-                  src={property?.seller?.image || seller}
+                  src={property?.sowner_profile_image|| seller}
                   alt="seller"
                   className="w-14 h-14 lg:w-20 lg:h-20 rounded-full object-cover"
                 />
@@ -306,7 +305,6 @@ const HeaderProperty = ({ property }) => {
             </div>
           </div>
 
-          {/* bottom right */}
           <div className="bg-white rounded-[18px] lg:rounded-[23px] px-5 py-4 lg:px-6 lg:py-3 shadow-sm border border-[#7BC21F] host-grotesk">
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-5 text-xs lg:text-sm">
@@ -316,18 +314,15 @@ const HeaderProperty = ({ property }) => {
 
                   <p className="font-semibold text-[15px] lg:text-[19px] flex items-center gap-2">
 
-                    {/* 🔥 ICON FROM BACKEND */}
                     <img
                       src={item.icon}
                       alt=""
                       className="w-[18px] h-[18px] lg:w-[24px] lg:h-[24px]"
                     />
 
-                    {/* 🔥 NAME */}
                     {item.name}
                   </p>
 
-                  {/* VALUE */}
                   <p className="text-gray-500 pl-6 lg:pl-7">
                     {item.value}
                   </p>
@@ -335,10 +330,8 @@ const HeaderProperty = ({ property }) => {
                 </div>
               ))}
 
-
             </div>
           </div>
-
         </div>
       </div>
     </div>

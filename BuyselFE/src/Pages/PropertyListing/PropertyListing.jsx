@@ -20,7 +20,7 @@ const category = searchParams.get("category");
   
 useEffect(() => {
   setFilters({
-    purpose: purpose || "Buy",
+    purpose: purpose || "Rent",
     category: category || "Residential",
   });
 }, [purpose, category]);
@@ -79,12 +79,12 @@ useEffect(() => {
 //     }
 
 
-    const normalizeProperties = (data) => {
-  return data.map((item) => ({
-    ...item,
-    image: item.image || item.images || [], 
-  }));
-};
+//     const normalizeProperties = (data) => {
+//   return data.map((item) => ({
+//     ...item,
+//     image: item.image || item.images || [], 
+//   }));
+// };
 
 // useEffect(() => {
 //   const fetchData = async () => {
@@ -146,6 +146,7 @@ useEffect(() => {
 
 
   useEffect(() => {
+    
   const fetchData = async () => {
     try {
       let res;

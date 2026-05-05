@@ -10,8 +10,6 @@ function Profile() {
   const[profileData,setProfileData]=useState({})
   console.log(profileData,"88888888888888888888");
   
-
-  
   return (
     <div>
      <ProfileHeader  setMode={setMode}  setParentProfileData={setProfileData}  />

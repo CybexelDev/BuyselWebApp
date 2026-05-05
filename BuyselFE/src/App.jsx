@@ -84,7 +84,7 @@ function App() {
           <Route path='/agent/inbox' element={<Inbox/>}/>
           <Route path='/agent/enquiry' element={<Enquiry/>}/>
           <Route path='/agent/user-enquiry' element={<UserEnquiry/>}/>
-<Route path='/agent/enquiry/:id' element={<EnquiryDetail/>} />
+          <Route path='/agent/enquiry/:id' element={<EnquiryDetail/>} />
           <Route path="/agent/property" element={<AgentPropertyListing />}/>
           
         </Routes>

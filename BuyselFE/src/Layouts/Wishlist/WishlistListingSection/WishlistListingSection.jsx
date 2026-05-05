@@ -9,6 +9,10 @@ import { useSelector } from "react-redux";
 import { addToWishlist,removeToWishlist } from "../../../Api/userApi";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
+import empty from "../../../assets/images/wishlist/empty.gif"
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
+
 function WishlistListingSection() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -185,6 +189,11 @@ useEffect(() => {
         // if theres no data
         <div className="px-40 mb-50">
           <div className="mt-10   bg-[#F3F3F3] rounded-2xl py-20 flex flex-col items-center justify-center text-center host-grotesk" >
+             <DotLottieReact
+      src="https://lottie.host/c7f15c31-8182-48f0-b333-a9540e6c59af/V3ozq4gyPZ.lottie"
+      loop
+      autoplay
+    />
             <h2 className="text-xl font-semibold mb-2">
               No properties saved yet
             </h2>

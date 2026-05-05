@@ -20,7 +20,6 @@ const ProfileHeader = ({setMode, setParentProfileData}) => {
   const [image, setImage] = useState(profile);
   const [profileData, setProfileData] = useState({});
 
-   
 
   const handleEditClick = () => {
     fileInputRef.current.click();

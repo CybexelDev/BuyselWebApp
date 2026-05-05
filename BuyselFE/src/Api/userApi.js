@@ -172,7 +172,7 @@ export const getProperty = async (filters) => {
   try {
     const userId = localStorage.getItem("id");
 
-    const result = await api.get(`${BASE_URL}properties/`, {
+    const result = await api.get(`${BASE_URL}all-properties/`, {
       params: {
         ...filters,
         id: userId,
@@ -257,7 +257,7 @@ export const sendEnquiry = async (formData) => {
 
 export const getPropertyDetail = async (id) => {
   try {
-    const result = await api.get(`${BASE_URL}property/${id}/`,
+    const result = await api.get(`${BASE_URL}property-detail/${id}/`,
     );
 
     return result.data;
@@ -680,7 +680,7 @@ export const getCity = async () => {
 export const getCityData = async (location) => {
   try {
       const formData = new FormData();
-    formData.append("city", location);
+      formData.append("city", location);
 
     const res = await api.post(`agents/cities/`, formData);
 
@@ -693,5 +693,4 @@ export const getCityData = async (location) => {
     console.log("Search error:", error);
     return [];
   }
-
 }
