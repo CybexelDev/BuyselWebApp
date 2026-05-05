@@ -10,44 +10,44 @@ import { toast } from "sonner";
 
 
 
-const Header = ({ setParentFilters, onchange ,filters}) => {
+const Header = ({ setParentFilters, onchange, filters }) => {
   const [activeTab, setActiveTab] = useState("Rent");
   const [activeCategory, setActiveCategory] = useState("Residential");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const tabs = ["Rent", "Buy", "Agent", "Lease"];
-const handleNearbyClick = () => {
-  if (!navigator.geolocation) {
-    toast.error("Geolocation not supported");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-
-      const data = await getNearbyProperties(lat, lng);
-      setParentFilters({
-        nearby: true,
-        lat,
-        lng,
-      });
-    },
-    () => {
-  toast.warning("Please allow location access");
+  const handleNearbyClick = () => {
+    if (!navigator.geolocation) {
+      toast.error("Geolocation not supported");
+      return;
     }
-  );
-};
-useEffect(() => {
-  if (filters?.purpose) {
-    setActiveTab(filters.purpose);
-  }
 
-  if (filters?.category) {
-    setActiveCategory(filters.category);
-  }
-}, [filters]);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        const data = await getNearbyProperties(lat, lng);
+        setParentFilters({
+          nearby: true,
+          lat,
+          lng,
+        });
+      },
+      () => {
+        toast.warning("Please allow location access");
+      }
+    );
+  };
+  useEffect(() => {
+    if (filters?.purpose) {
+      setActiveTab(filters.purpose);
+    }
+
+    if (filters?.category) {
+      setActiveCategory(filters.category);
+    }
+  }, [filters]);
   useEffect(() => {
     setParentFilters({
       purpose: activeTab,
@@ -112,8 +112,8 @@ useEffect(() => {
       )
     }
   ];
-<style>
-{`
+  <style>
+    {`
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -122,7 +122,7 @@ useEffect(() => {
     scrollbar-width: none;
   }
 `}
-</style>
+  </style>
   return (
     <div className="md:p-5 p-2 relative ">
       <Navbar />
@@ -142,26 +142,26 @@ useEffect(() => {
 
         {/* CATEGORY TABS - Now properly scrollable inside the box on mobile */}
         <div className="flex justify-center mt-4 lg:mt-6 mb-5 lg:mb-4 px-2">
-        <div className="bg-[#6fba19] w-fit lg:w-[495px] justify-between rounded-full flex p-1 gap-1 px-1 overflow-x-auto whitespace-nowrap"
-                  style={{
-                    scrollbarWidth: "none",
-                    msOverflowStyle: "none"
-                  }}
-                >   {categories.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => setActiveCategory(item.name)}
-                className={`flex shrink-0 poppins text-[400] cursor-pointer items-center gap-1 px-4 py-2 rounded-full text-[11.5px] transition-all duration-200 ${activeCategory === item.name
-                  ? "bg-white text-[#6fba19] font-medium"
-                  : "text-white"
-                  }`}
-              >
-                <span className={activeCategory === item.name ? "text-[#6fba19]" : "text-white"}>
-                  {item.icon}
-                </span>
-                {item.name}
-              </button>
-            ))}
+          <div className="bg-[#6fba19] w-fit lg:w-[495px] justify-between rounded-full flex p-1 gap-1 px-1 overflow-x-auto whitespace-nowrap"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none"
+            }}
+          >   {categories.map((item) => (
+            <button
+              key={item.name}
+              onClick={() => setActiveCategory(item.name)}
+              className={`flex shrink-0 poppins text-[400] cursor-pointer items-center gap-1 px-4 py-2 rounded-full text-[11.5px] transition-all duration-200 ${activeCategory === item.name
+                ? "bg-white text-[#6fba19] font-medium"
+                : "text-white"
+                }`}
+            >
+              <span className={activeCategory === item.name ? "text-[#6fba19]" : "text-white"}>
+                {item.icon}
+              </span>
+              {item.name}
+            </button>
+          ))}
           </div>
         </div>
 
@@ -201,7 +201,7 @@ useEffect(() => {
           <div className="flex-1 flex justify-center w-full lg:w-auto px-2 xl:px-0">
             <div className="flex items-center bg-[#CEBEBE47] rounded-[17px] px-5 h-[48px] xl:h-[53px] w-full xl:w-[700px] xl:-mr-15 border-[0.5px] border-[#EAEAEA] poppins ">
               <input
-               onChange={onchange}
+                onChange={onchange}
                 type="text"
                 placeholder="What are you looking for?"
                 className="flex-1 bg-transparent outline-none text-[12px] font-[400%]"
@@ -212,8 +212,8 @@ useEffect(() => {
 
           {/* RIGHT - BUTTONS */}
           <div className="flex-1 flex justify-end  xl:justify-end items-center gap-3 w-full xl:w-auto  xl:ml-5  -mt-2 xl:mt-0">
-            <button className="bg-black text-white px-3 xl:px-11.5 py-2 xl:py-3  rounded-[14px] text-[8px] xl:text-[15px] poppins flex items-center gap-2 whitespace-nowrap hover:bg-gray-800 transition-colors cursor-pointer"   onClick={handleNearbyClick}
->
+            <button className="bg-black text-white px-3 xl:px-11.5 py-2 xl:py-3  rounded-[14px] text-[8px] xl:text-[15px] poppins flex items-center gap-2 whitespace-nowrap hover:bg-gray-800 transition-colors cursor-pointer" onClick={handleNearbyClick}
+            >
               <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.2055 0.0098877C5.9471 0.14602 4.82152 0.776879 4.08109 1.75637C3.53988 2.47356 3.24105 3.29036 3.1846 4.20676C3.1182 5.30579 3.72249 6.62727 5.12367 8.45012C5.64495 9.13079 6.30902 9.89446 6.87347 10.4722C7.6471 11.2591 7.66038 11.2558 8.7262 10.1003C9.97464 8.74563 10.9873 7.36438 11.5219 6.28196C12.0598 5.19954 12.1694 4.52219 11.9668 3.53606C11.6182 1.81614 10.2403 0.441528 8.5137 0.0895748C8.18831 0.0231686 7.48441 -0.0199957 7.2055 0.0098877ZM8.11859 3.14094C8.6764 3.35676 9.04827 3.93118 9.00843 4.51555C8.96527 5.11653 8.58343 5.59797 8.00902 5.77395C7.44788 5.94329 6.82367 5.72083 6.48167 5.23606C5.9471 4.46907 6.30902 3.40325 7.2055 3.11106C7.46449 3.02473 7.85628 3.03801 8.11859 3.14094Z" fill="white" />
                 <path d="M1.95613 7.2214C0.883665 7.86554 0.176439 8.95461 0.0203841 10.1898C-0.12571 11.3486 0.521751 12.6368 1.69714 13.52C2.90906 14.4298 4.45964 14.9876 6.39538 15.2001C6.88679 15.2532 8.32448 15.2566 8.83581 15.2001C12.4085 14.8216 14.9385 13.1017 15.2274 10.8505C15.2706 10.5251 15.254 10.2628 15.1743 9.86769C14.9485 8.77199 14.2612 7.80246 13.2983 7.22472C13.1157 7.11515 13.0526 7.09523 12.8966 7.09523C12.7604 7.09523 12.6841 7.11515 12.6044 7.16828C12.4151 7.29777 12.3553 7.40734 12.3553 7.62648C12.3553 7.86222 12.4151 7.95851 12.6575 8.11789C13.4012 8.60929 13.8296 9.15714 14.0487 9.90089C14.2612 10.6148 14.1085 11.2689 13.5772 11.9429C12.7272 13.0187 11.0073 13.8089 8.90222 14.0878C8.0821 14.1974 6.77722 14.1642 5.86413 14.0148C3.43034 13.613 1.54109 12.3911 1.15925 10.9767C1.07624 10.6612 1.08952 10.2661 1.19909 9.90089C1.41824 9.15714 1.84656 8.60929 2.59031 8.11789C2.83269 7.95851 2.89245 7.86222 2.89245 7.62648C2.89245 7.48039 2.87253 7.40734 2.82273 7.33761C2.61355 7.05539 2.29812 7.01222 1.95613 7.2214Z" fill="white" />
@@ -242,33 +242,33 @@ useEffect(() => {
         </div>
       </div>
 
-      {isFilterOpen && <FilterModal onClose={() => setIsFilterOpen(false)}     setParentFilters={setParentFilters}
- />}
+      {isFilterOpen && <FilterModal onClose={() => setIsFilterOpen(false)} setParentFilters={setParentFilters}
+      />}
     </div>
   );
 };
 
-const FilterModal = ({ onClose,setParentFilters  }) => {
-const [selectedPurpose, setSelectedPurpose] = useState("");
-const [selectedCategory, setSelectedCategory] = useState("");
-const [selectedDistrict, setSelectedDistrict] = useState("");
-const [selectedCity, setSelectedCity] = useState("");
-const [minPrice, setMinPrice] = useState("");
-const [maxPrice, setMaxPrice] = useState("");
-const [filterOptions, setFilterOptions] = useState(null);
-const selectedDistrictObj = filterOptions?.districts?.find(
-  d => d.name === selectedDistrict
-);
+const FilterModal = ({ onClose, setParentFilters }) => {
+  const [selectedPurpose, setSelectedPurpose] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [filterOptions, setFilterOptions] = useState(null);
+  const selectedDistrictObj = filterOptions?.districts?.find(
+    d => d.name === selectedDistrict
+  );
 
-const cities = selectedDistrictObj?.cities || [];
-useEffect(() => {
-  const fetchFilters = async () => {
-    const res = await getFilterOptions();
-    setFilterOptions(res);
-  };
+  const cities = selectedDistrictObj?.cities || [];
+  useEffect(() => {
+    const fetchFilters = async () => {
+      const res = await getFilterOptions();
+      setFilterOptions(res);
+    };
 
-  fetchFilters();
-}, []);
+    fetchFilters();
+  }, []);
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-end bg-white/40 overflow-y-auto xl:px-10 xl:pt-60">
       <div className="bg-white w-full max-w-[380px] max-h-[95vh] overflow-y-auto rounded-[23px] p-6 shadow-2xl relative animate-in slide-in-from-right duration-300 my-auto">
@@ -285,41 +285,41 @@ useEffect(() => {
 
         {/* Form Fields */}
         <div className="space-y-4">
-<FilterSelect
-  label="Purpose"
-  options={filterOptions?.purposes?.map(p => p.name) || []}
-  value={selectedPurpose}
-  onChange={setSelectedPurpose}
-/>
-<FilterSelect
-  label="Category"
-  options={filterOptions?.categories?.map(c => c.name) || []}
-  value={selectedCategory}
-  onChange={setSelectedCategory}
-/>       
-<FilterSelect
-  label="District"
-  options={filterOptions?.districts?.map(d => d.name) || []}
-  value={selectedDistrict}
-  onChange={(val) => {
-    setSelectedDistrict(val);
-    setSelectedCity(""); // reset city when district changes
-  }}
-/>     
-<FilterSelect
-  label="City"
-  options={cities}
-  value={selectedCity}
-  onChange={setSelectedCity}
-/>
+          <FilterSelect
+            label="Purpose"
+            options={filterOptions?.purposes?.map(p => p.name) || []}
+            value={selectedPurpose}
+            onChange={setSelectedPurpose}
+          />
+          <FilterSelect
+            label="Category"
+            options={filterOptions?.categories?.map(c => c.name) || []}
+            value={selectedCategory}
+            onChange={setSelectedCategory}
+          />
+          <FilterSelect
+            label="District"
+            options={filterOptions?.districts?.map(d => d.name) || []}
+            value={selectedDistrict}
+            onChange={(val) => {
+              setSelectedDistrict(val);
+              setSelectedCity(""); // reset city when district changes
+            }}
+          />
+          <FilterSelect
+            label="City"
+            options={cities}
+            value={selectedCity}
+            onChange={setSelectedCity}
+          />
           {/* Price Range */}
           <div>
             <label className="block text-[13px] font-semibold instrument-sans mb-2">Price Range</label>
             <div className="flex gap-3">
-              <input type="text" placeholder="Min" className="w-1/2 bg-[#E6E8E1] rounded-xl p-3 outline-none text-[#909090] text-[13px] font-semibold instrument-sans"   value={minPrice}
-  onChange={(e) => setMinPrice(e.target.value)} />
+              <input type="text" placeholder="Min" className="w-1/2 bg-[#E6E8E1] rounded-xl p-3 outline-none text-[#909090] text-[13px] font-semibold instrument-sans" value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)} />
               <input type="text" placeholder="Max" className="w-1/2 bg-[#E6E8E1] rounded-xl p-3 outline-none text-[#909090] text-[13px] font-semibold instrument-sans" value={maxPrice}
-              onChange={(e)=>setMaxPrice(e.target.value)}
+                onChange={(e) => setMaxPrice(e.target.value)}
               />
             </div>
           </div>
@@ -327,34 +327,34 @@ useEffect(() => {
 
         {/* Actions */}
         <div className="flex gap-3 mt-8">
-          <button className="flex-1 bg-[#6fba19] text-white font-semibold py-3 px-2 rounded-xl hover:bg-[#5da015] transition-colors cursor-pointer instrument-sans text-[13px]"   onClick={() => {
-    setParentFilters({
-      purpose: selectedPurpose,
-      category: selectedCategory,
-      district: selectedDistrict,
-      city: selectedCity,
-      min_price: minPrice,
-      max_price: maxPrice,
-      isFilterApplied: true,
-      nearby: false,
-    });
+          <button className="flex-1 bg-[#6fba19] text-white font-semibold py-3 px-2 rounded-xl hover:bg-[#5da015] transition-colors cursor-pointer instrument-sans text-[13px]" onClick={() => {
+            setParentFilters({
+              purpose: selectedPurpose,
+              category: selectedCategory,
+              district: selectedDistrict,
+              city: selectedCity,
+              min_price: minPrice,
+              max_price: maxPrice,
+              isFilterApplied: true,
+              nearby: false,
+            });
 
-    onClose();
-  }}>
+            onClose();
+          }}>
             Apply
           </button>
-          <button className="flex-1 bg-[#DEE2D9ED] text-black font-semibold py-3 px-2 rounded-xl hover:bg-gray-300 transition-colors cursor-pointer instrument-sans text-[13px]"  onClick={() => {
-    setParentFilters({
-      purpose: "",
-      category: "",
-      district: "",
-      city: "",
-      min_price: "",
-      max_price: "",
-      isFilterApplied: false,
-      nearby: false,
-    });
-  }}>
+          <button className="flex-1 bg-[#DEE2D9ED] text-black font-semibold py-3 px-2 rounded-xl hover:bg-gray-300 transition-colors cursor-pointer instrument-sans text-[13px]" onClick={() => {
+            setParentFilters({
+              purpose: "",
+              category: "",
+              district: "",
+              city: "",
+              min_price: "",
+              max_price: "",
+              isFilterApplied: false,
+              nearby: false,
+            });
+          }}>
             Reset
           </button>
         </div>
@@ -367,10 +367,10 @@ const FilterSelect = ({ label, options, value, onChange }) => (
   <div>
     <label className="block text-sm font-semibold mb-1">{label}</label>
     <div className="relative">
-        <select
+      <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-[#E0E4DB] rounded-[9px] p-3 outline-none text-black appearance-none" 
+        className="w-full bg-[#E0E4DB] rounded-[9px] p-3 outline-none text-black appearance-none"
       >
         <option value="">All</option>
         {options.map((opt) => (

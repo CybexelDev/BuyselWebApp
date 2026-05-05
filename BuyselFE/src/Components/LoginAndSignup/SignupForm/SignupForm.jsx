@@ -119,7 +119,7 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
             <p className="text-center text-sm mt-4">
                 Already have an account?{" "}
-                <span className="text-green-600 cursor-pointer" onClick={() => setSignin("signin")}>
+                <span className="text-green-600 cursor-pointer" onClick={() => setSignin("user")}>
                     sign in
                 </span>
             </p>

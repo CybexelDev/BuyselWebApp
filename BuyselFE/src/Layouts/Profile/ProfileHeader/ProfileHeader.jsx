@@ -155,6 +155,7 @@ useEffect(() => {
   {/* RIGHT: Content */}
   <div className="flex flex-col items-start  lg:items-start 
                   text-center lg:ml-0 lg:text-center ml-5 lg:ml-0
+                  w-full
                    lg:mt-10 host-grotesk">
 
     <h2 className="text-[16px] sm:text-[20px] md:text-2xl 
@@ -166,33 +167,52 @@ useEffect(() => {
       <img src={location} className="w-[26px] h-[24px]"/>
       {profileData?.city || "Location not available"}
     </p>
+<div className="flex w-full 
+                flex-col gap-3
+                lg:flex-row lg:items-center lg:justify-between
+                mb-7 mt-2 lg:mb-0 lg:mt-4">
 
-    <div className="flex gap-3 sm:gap-4  mb-7 mt-2 lg:mb-0 lg:mt-4 
-                    flex-nowrap justify-start lg:justify-start">
+  {/* LEFT SIDE */}
+  <div className="flex gap-3 sm:gap-4 ">
 
-
-            <Link to="personalDetails" smooth duration={500} offset={-120}>
-      <button className="bg-[#2B2E28] text-white 
-                         px-3 py-2 sm:px-5 sm:py-2 
-                         text-sm 
-                         rounded-lg text-wrap instrument-sans text-[16px] font-[550] cursor-pointer" 
-              onClick={() => setMode("edit")}>
-          Edit Profile
+    <Link to="personalDetails" smooth duration={500} offset={-120}>
+      <button
+        className="bg-[#2B2E28] text-white 
+                   px-3 py-2 sm:px-5 sm:py-2 
+                   rounded-lg text-[16px] font-[550] cursor-pointer"
+        onClick={() => setMode("edit")}
+      >
+        Edit Profile
       </button>
-     </Link>
+    </Link>
 
-
-           <Link to="personalDetails" smooth duration={500} offset={-120} >
-      <button className="bg-gray-200 
-                         px-2 py-1.5 sm:px-5 sm:py-2 
-                         text-sm sm:text-base
-                         rounded-lg instrument-sans text-[16px] font-[550] cursor-pointer"
-                onClick={() => setMode("changepassword")}>
-          Change Password
+    <Link to="personalDetails" smooth duration={500} offset={-120}>
+      <button
+        className="bg-gray-200 
+                   px-3 py-2 sm:px-5 sm:py-2 
+                   rounded-lg text-[16px] font-[550] cursor-pointer"
+        onClick={() => setMode("changepassword")}
+      >
+        Change Password
       </button>
-      </Link>
+    </Link>
 
-    </div>
+  </div>
+
+  {/* RIGHT SIDE */}
+  <div>
+    <button
+      className="border-[#79C41A] text-black bg-white 
+                 px-3 py-2 sm:px-5 sm:py-2 border-2 cursor-pointer hover:bg-[#79C41A] hover:text-white
+                 shadow-xl
+                 rounded-lg text-[16px] font-[550] flex items-center transition duration-100 gap-3"
+      onClick={() => setMode("owner")}
+    >
+       Dashboard <ArrowUpRight size={18} />
+    </button>
+  </div>
+
+</div>
 
   </div>
 </div>
