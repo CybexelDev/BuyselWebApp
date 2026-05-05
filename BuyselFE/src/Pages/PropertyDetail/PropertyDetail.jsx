@@ -106,22 +106,18 @@ useEffect(() => {
   return (
     <div>
       <HeaderProperty property={productDetail}/>
-      
       <DescriptionAndAminities data={productDetail} />
-
       <MapSection 
         address={productDetail.addressfully}
         latitude={productDetail.latitude}
         longitude={productDetail.longitude}
         landmarks={productDetail.landmarks}
       />
-
       <Featured  
         title="Similar Properties" 
         subTitle="Explore our latest listings for sale, rent and lease across"
         data={similarProperties}
       />
-
       <AppPromoBanner/>
       <Footer/>
     </div>

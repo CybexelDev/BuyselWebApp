@@ -4,7 +4,7 @@ import './hero.css'
 import logo from '../../../assets/images/logo/logo.png'
 import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
-
+import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
 import img from "../../../assets/images/carousel/he.png"
 import img2 from "../../../assets/images/carousel/he.png"
 import img3 from "../../../assets/images/carousel/he.png"
@@ -75,13 +75,13 @@ const Hero = () => {
                 onClick={prevSlide}
                 className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
               >
-                ‹
+                 <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
               </button>
               <button
                 onClick={nextSlide}
                 className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
               >
-                ›
+                <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
               </button>
             </div>
           </div>

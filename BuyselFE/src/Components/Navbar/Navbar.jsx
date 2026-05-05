@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import login from "../../assets/images/icons/login.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import add from '../../assets/images/nav/add.png'
 
 const Navbar = ({
   gap = "lg:gap-[31px]",
   top = "top-9",
   text = "text-[14px]",
   color = "text-[#676767]",
-  padding="lg:px-[49px]",
-  right="right-0"
+  padding = "lg:px-[49px]",
+  right = "right-0"
 }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -58,12 +59,15 @@ const Navbar = ({
 
         <div className="hidden lg:block">
           <div className="flex items-center gap-2">
+            <button onClick={() => navigate('/addyourproperty')} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
+              <img src={add} alt="add" className="w-[20px]" />
+            </button>
             {accessToken ? <div onClick={() => navigate("/wishlist")} className="p-2 rounded-full bg-white shadow-md w-fit cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
-                <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#6fba19" d="M12 4.595a5.9 5.9 0 0 0-3.996-1.558a5.94 5.94 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412l7.332 7.332c.17.299.498.492.875.492a.99.99 0 0 0 .792-.409l7.415-7.415c2.354-2.354 2.354-6.049-.002-8.416a5.94 5.94 0 0 0-4.209-1.754A5.9 5.9 0 0 0 12 4.595m6.791 1.61c1.563 1.571 1.564 4.025.002 5.588L12 18.586l-6.793-6.793c-1.562-1.563-1.561-4.017-.002-5.584c.76-.756 1.754-1.172 2.799-1.172s2.035.416 2.789 1.17l.5.5a1 1 0 0 0 1.414 0l.5-.5c1.512-1.509 4.074-1.505 5.584-.002" />
               </svg>
             </div> : null}
-            
+
             <button onClick={() => navigate(accessToken ? "/profile" : "/loginandsignup")} className="bg-[#6fba19] hover:bg-[#6BB535] text-white px-6 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
               {accessToken ?
                 <img src={image} alt="profile" className="w-[18px] rounded-full mr-2" />
@@ -104,12 +108,14 @@ const Navbar = ({
               {item.name}
             </p>
           ))}
-
-           {accessToken ? <div onClick={() => navigate("/wishlist")} className="p-2 rounded-full bg-white shadow-md w-fit cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
-                <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
-              </svg>
-            </div> : null}
+            <button onClick={() => navigate('/addyourproperty')} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
+              <img src={add} alt="add" className="w-[20px]" />
+            </button>
+          {accessToken ? <div onClick={() => navigate("/wishlist")} className="p-2 rounded-full bg-white shadow-md w-fit cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24">
+              <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
+            </svg>
+          </div> : null}
 
           <button onClick={() => navigate(accessToken ? "/profile" : "/loginandsignup")} className="bg-[#6fba19] hover:bg-[#6BB535] text-white px-8 py-3 transition-all duration-200 shadow-md hover:shadow-lg rounded-[14px] flex items-center gap-2">
 
