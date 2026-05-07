@@ -14,11 +14,13 @@ import ForgotPasswordForm from "../../../Components/LoginAndSignup/ForgetPasswor
 import ResetPasswordForm from "../../../Components/LoginAndSignup/ResetPassword/ResetPasswordForm";
 
 export default function LoginAndSignup() {
-    const [activeTab, setActiveTab] = useState("agent");
+    const [activeTab, setActiveTab] = useState("agent");   
     const [otpSent, setOtpSent] = useState(false)
     const [email, setEmail] = useState('')
     const [isForgot, setIsForgot] = useState(false);
     const [isReset, setIsReset] = useState(false);
+    const [isAgentForgot, setIsAgentForgot] = useState(false);
+const [isAgentReset, setIsAgentReset] = useState(false);
 
     return (
         <div className="md:h-[100vh] h-[100%] w-full bg-white flex items-center justify-center p-3 md:p-8">
@@ -62,9 +64,48 @@ export default function LoginAndSignup() {
 
                     {
                         activeTab === "agent" ? (
-    <AgentForm />
 
-  ) : activeTab === "signup" ? (
+  isAgentForgot ? (
+
+    otpSent ? (
+
+      <OtpForm
+        email={email}
+        type="agent-forgot"
+        onVerifySuccess={() => {
+          setIsAgentReset(true);
+          setIsAgentForgot(false);
+          setOtpSent(false);
+        }}
+      />
+
+    ) : (
+
+      <ForgotPasswordForm
+        setOtpSent={setOtpSent}
+        setEmail={setEmail}
+        type="agent"
+      />
+
+    )
+
+  ) : isAgentReset ? (
+
+    <ResetPasswordForm
+      email={email}
+      setIsReset={setIsAgentReset}
+      type="agent"
+    />
+
+  ) : (
+
+    <AgentForm
+      onForgot={() => setIsAgentForgot(true)}
+    />
+
+  )
+
+) : activeTab === "signup" ? (
 
     otpSent
       ? <OtpForm email={email} />
@@ -79,16 +120,25 @@ export default function LoginAndSignup() {
     otpSent ? (
       <OtpForm
         email={email}
+        type ="forgot"
+
         onVerifySuccess={() => {
           setIsReset(true);
+          setIsForgot(false);
           setOtpSent(false);
         }}
       />
     ) : (
       <ForgotPasswordForm
-        setOtpSent={setOtpSent}
-        setEmail={setEmail}
-      />
+  setOtpSent={setOtpSent}
+  setEmail={setEmail}
+  onBackToLogin={() => {
+    setIsForgot(false);
+    setOtpSent(false);
+    setEmail("");
+    setActiveTab("user");
+  }}
+/>
     )
 
   ) : isReset ? (

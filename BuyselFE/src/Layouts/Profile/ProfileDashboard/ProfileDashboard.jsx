@@ -9,9 +9,10 @@ import PersonalDetails from "./PersonalDetails";
 import { useNavigate } from "react-router-dom";
 import { getMyActivity } from "../../../Api/userApi";
 import { addToWishlist } from "../../../Api/userApi";
+import { toast } from "sonner";
 import { removeToWishlist } from "../../../Api/userApi";
 
-const ProfileDashboard = ({ data, users, mode, setMode, setParentProfileData }) => {
+const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData }) => {
   const [wish, setWish] = useState([]);
   const [activityData, setActivityData] = useState({});
 
@@ -181,7 +182,7 @@ const ProfileDashboard = ({ data, users, mode, setMode, setParentProfileData }) 
 
   return (
     <div
-      className="mb-4 mt-10 md:mb-6 md:mt-22 lg:my-6
+      className="mb-4 mt-25 md:mb-6 md:mt-22 lg:my-6
                 px-2 sm:px-6 md:px-8 xl:pl-[42px]  xl:pr-[84px]
                 bg-white min-h-screen 
                 flex flex-col md:flex-row gap-4 md:gap-6"

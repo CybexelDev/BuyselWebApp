@@ -32,6 +32,62 @@ export const userRegister = async (name, email, mobail, password, confirm_passwo
   }
 };
 
+export const forgotPassword = async (email) => {
+  const formData = new FormData();
+  formData.append("email", email);
+
+  try {
+    const result = await axios.post(
+      `${BASE_URL}user/forgot-password/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (result.data.message === "OTP sent successfully") {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Forgot password error:", error);
+    return false;
+  }
+};
+
+
+
+export const verifyForgotOtp = async (otpValue, email) => {
+  const formData = new FormData();
+  formData.append("otp", otpValue);
+  formData.append("email", email);
+
+  try {
+    const result = await axios.post(
+      `${BASE_URL}user/verify-forgot-otp/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (result.data.message === "OTP verified") {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Verify OTP error:", error);
+    return false;
+  }
+};
+
+
 export const getNearbyProperties = async (lat, lng) => {
   try {
     const res = await axios.get(`${BASE_URL}filter/nearby-properties/`, {
@@ -73,6 +129,7 @@ export const otpSent = async (otpValue, email) => {
         return false;
 
     }
+
 };
 
 
@@ -148,6 +205,44 @@ export const handleGoogleLogin = async ({ tokenResponse }) => {
   }
 }
 
+export const changePasswordReset = async (newPassword) => {
+
+  const formData = new FormData();
+
+  formData.append("new_password", newPassword);
+
+  const resetToken = localStorage.getItem("reset_token");
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}user/change-password/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${resetToken}`,
+        },
+      }
+    );
+
+    if (result.data.message === "Password changed successfully") {
+
+      return result.data;
+
+    } else {
+
+      return false;
+
+    }
+
+  } catch (error) {
+
+    console.log("Change password error:", error);
+
+    return false;
+  }
+};
 
 export const sendFacebookToken = async (accessToken) => {
   try {
@@ -173,7 +268,6 @@ export const getProperty = async (filters) => {
         const result = await api.get(`${BASE_URL}all-properties/`, {
             params: {
                 ...filters,
-                id: userId,
             },
         });
         return result.data;
@@ -182,6 +276,34 @@ export const getProperty = async (filters) => {
     console.log(error);
   }
 }
+
+export const resendForgotOtp = async (email) => {
+
+  const formData = new FormData();
+
+  formData.append("email", email);
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}user/resent-forgot-otp/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return result.data;
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
 
 export const getWishlist = async () => {
   try {
@@ -423,8 +545,9 @@ export const getProfile = async () => {
 
 
 
-export const agentContactForm = async (contactData) => {
-  try {
+export const agentContactForm = async(contactData, agentId)=>{
+    try{
+
     const data = new FormData();
 
     data.append("first_name", contactData.first_name);
@@ -434,9 +557,10 @@ export const agentContactForm = async (contactData) => {
     data.append("message", contactData.message);
 
     const res = await api.post(
-      `agent/buyselman5443/contact/`,
-      data,
-      {
+      `agent/contact/${agentId}/`, 
+        data,
+        {
+
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -464,6 +588,7 @@ export const getTestimonial = async () => {
     return [];
   }
 };
+
 export const getReviews = async (agentId) => {
   try {
     const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);
@@ -475,6 +600,15 @@ export const getReviews = async (agentId) => {
   }
 };
 
+export const toggleReviewLike = async (reviewId) => {
+  try {
+    const res = await api.post(`reviews/like/${reviewId}/`);
+    return res.data;
+  } catch (error) {
+    console.log("Like error:",error);
+    return null;
+  }
+};
 
 export const getAgentsDetails = async (id) => {
   try {
@@ -578,6 +712,7 @@ export const getMyActivity = async () => {
     console.log(error);
   }
 };
+
 
 export const changePassword = async (data) => {
   try {

@@ -67,7 +67,7 @@ const handleSubmit = async (e) => {
     name: formData.name,
     phone: formData.phone,
     email: formData.email,
-    messagebox: formData.message,
+    message: formData.message,
     property: data.id,
     property_hash_id:data.id
   };
@@ -77,6 +77,13 @@ const handleSubmit = async (e) => {
 
   if (res) {
     toast.success("Enquiry sent ✅");
+    setFormData({
+    name: "",
+    phone: "",
+    email: "",
+    message: ""
+  });
+
   } else {
     toast.error("Failed ❌");
   }

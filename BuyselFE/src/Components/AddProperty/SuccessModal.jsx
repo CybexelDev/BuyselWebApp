@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const SuccessModal = ({ isOpen}) => {
+const SuccessModal = ({ isOpen,isEdit}) => {
 
   if (!isOpen) return null;
    const navigate=useNavigate()
@@ -11,12 +11,14 @@ const SuccessModal = ({ isOpen}) => {
 
         <div className="mb-6">
           <h2 className="text-[36px] font-[650] text-black lexend  leading-tight">
-            Property Posted <br />
+            Property {isEdit ? "Update":"Posted"} <br />
             <span className="text-[#82CD28]">Successfully!</span>
           </h2>
 
           <p className="text-gray-400 mt-2 font-medium inter text-[16px] ">
-            Your property is now live on Buysel.in
+            {isEdit
+            ? "Your property details have been updated successfully."
+            : "Your property is now live on Buysel.in"}
           </p>
         </div>
 
@@ -40,7 +42,9 @@ const SuccessModal = ({ isOpen}) => {
 
         <div className="bg-[#F0FFE0] rounded-[30px] p-6 mb-8">
           <p className="text-gray-700 font-medium leading-tight inter text-[16px]">
-            Your Listing will be reviewed by our team within 24 hours.
+             {isEdit
+              ? "Your changes have been saved and are now visible."
+              : "Your listing will be reviewed by our team within 24 hours."}
             <br />
             You'll receive a notification once it's approved
           </p>

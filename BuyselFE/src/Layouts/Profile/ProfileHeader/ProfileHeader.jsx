@@ -13,12 +13,13 @@ import { ArrowUpRight } from 'lucide-react';
 import Navbar from "../../../Components/Navbar/Navbar";
 import { getProfile } from "../../../Api/userApi";
 import { updateProfileImage } from "../../../Api/userApi";
+import { useNavigate } from "react-router-dom";
 
 const ProfileHeader = ({setMode, setParentProfileData}) => {
   const fileInputRef = useRef(null);
   const [image, setImage] = useState(profile);
   const [profileData, setProfileData] = useState({});
-
+  const navigate=useNavigate()
 
   const handleEditClick = () => {
     fileInputRef.current.click();
@@ -100,11 +101,9 @@ useEffect(() => {
   className="
     absolute
 
-    bottom-[-56px]
+    bottom-[-100px]
     left-0
     md:bottom-[-100px]
-    
-   
     lg:right-15
     lg:left-6
     lg:top-50
@@ -205,7 +204,7 @@ useEffect(() => {
                  px-3 py-2 sm:px-5 sm:py-2 border-2 cursor-pointer hover:bg-[#79C41A] hover:text-white
                  shadow-xl
                  rounded-lg text-[16px] font-[550] flex items-center transition duration-100 gap-3"
-      onClick={() => setMode("owner")}
+      onClick={() => navigate("/ownerdashboard")}
     >
        Dashboard <ArrowUpRight size={18} />
     </button>
