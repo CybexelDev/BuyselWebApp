@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import i1 from "../../../assets/images/propertDetail/i1.png";
 import { sendPropertyEnquiry } from "../../../Api/userApi";
 function DescAndAminities({ data }) {
-  const [detail, setDetail] = useState([]);
+  const [detail, setDetail] = useState({});
 
-  console.log(detail.keySellingPoint, "llll");
+  console.log(detail.key_selling_points, "llll");
 
   useEffect(() => {
     setDetail(data);
@@ -20,14 +20,17 @@ function DescAndAminities({ data }) {
           <div class="md:col-span-8 ">
             {/* description ivden da */}
             <div className="w-full bg-[#efefef] rounded-[23px] px-5 py-6">
+              
               <p className="text-[#181818] host-grotesk text-[20px] font-[700]">
                 Property Description
               </p>
-              <p className="text-[#808080] mt-3 text-[16px] font-[500]">
-                <span className="inter">Address:</span> {detail.address}
-              </p>
+              
               <p className="text-[#181818] font-[400] text-[16px] host-grotesk mt-3">
                 {detail.description}
+              </p>
+
+              <p className="text-[#808080] inter mt-3 text-[16px] font-[500]">
+                <span className="inter">Address:</span> {detail.location}
               </p>
 
               <p className="text-[#181818] host-grotesk text-[20px] font-[500] mt-3">
@@ -35,11 +38,11 @@ function DescAndAminities({ data }) {
               </p>
 
               <ul className="space-y-4 mt-2 host-grotesk">
-                {detail?.keySellingPoint?.map((item, index) => (
+                {detail?.key_selling_points?.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="mt-2 w-1 h-1 bg-[#4C4545] rounded-full"></span>
                     <p className="text-[#4C4545] text-sm leading-relaxed">
-                      {item.content}
+                      {item}
                     </p>
                   </li>
                 ))}

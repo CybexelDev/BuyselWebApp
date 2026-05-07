@@ -88,22 +88,22 @@ const Sidebar = () => {
       </nav>
 
 
-<nav className="fixed bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl">
+<nav className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl">
 
   {navItems.map((item) => {
     const isActive = location.pathname === item.path;
 
-    return (
+    return (  
       <button
         key={item.id}
         onClick={() => navigate(item.path)}
-        className="relative flex items-center justify-center w-10 h-10 md:w-20 md:h-20"
+        className="relative flex items-center justify-center w-10 h-10 md:w-15 md:h-13"
       >
         {/* ICON */}
         <item.icon
   className={`z-10 transition-all duration-300 ${
     isActive ? "text-white scale-110" : "text-white/50"
-  } w-4 h-4 md:w-7 md:h-7`}
+  } w-4 h-4 md:w-6 md:h-6`}
 />
 
         {/* FLOATING ACTIVE PILL */}

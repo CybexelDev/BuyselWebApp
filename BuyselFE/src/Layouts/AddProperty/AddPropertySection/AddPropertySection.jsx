@@ -107,13 +107,13 @@ function AddPropertySection() {
         // 🔥 BUILD OPTION → FIELD MAP (NO HARDCODING)
         const optionToFieldMap = {};
 
-        propertyData.subcategories.forEach((sub) => {
-          sub.fields?.forEach((field) => {
-            field.options?.forEach((opt) => {
-              optionToFieldMap[opt.name] = field.field_name;
-            });
-          });
-        });
+propertyData.subcategories.forEach((sub) => {
+  sub.fields?.forEach((field) => {
+    field.options?.forEach((opt) => {
+      optionToFieldMap[opt.name] = field.field_name;
+    });
+  });
+});
 
         const perprice = data.perprice || "";
         let price = "";
@@ -157,35 +157,33 @@ function AddPropertySection() {
           squareFeet: data.sq_ft || "",
 
           // ✅ FIXED FEATURES MAPPING
-          features: (data.features || []).map((f) => {
-            if (typeof f.value === "number") {
-              return {
-                name: optionToFieldMap[f.name] || null,
-                option: f.name,
-                value: f.value,
-              };
-            }
-
-            return {
-              name: f.name,
-              option: null,
-              value: f.value,
-            };
-          }),
+          features: (data.features || []).map((f) => ({
+  name: f.name,
+  value: f.value,
+})),
 
           amenities: data.amenities || [],
           keyPoints: data.selling_points || [],
           landmarks: data.landmarks || [],
           images: data.images || [],
 
-          pricing: {
-            monthlyRent: data.monthly_rent || "",
-            deposit: data.deposit || "",
-            totalPrice: data.price || "",
-            pricePerUnit: price,
-            totalAmount: data.total_amount || "",
-            unit: unit,
-          },
+        pricing: {
+  ...(data.purpose === "Rent" && {
+    monthlyRent: data.monthly_rent || data.price || "",
+    deposit: data.deposit || "",
+  }),
+
+  ...(data.purpose === "Sale" && {
+    // You send:"price", data.pricing.totalPrice
+    totalPrice: data.price || "", 
+    pricePerUnit: price,
+    unit: unit,
+  }),
+
+  ...(data.purpose === "Lease" && {
+    totalAmount: data.total_amount || data.price || "",
+  }),
+},
         });
       } catch (err) {
         console.error("Fetch property error:", err);
@@ -218,36 +216,60 @@ function AddPropertySection() {
   }, [id]);
 
   // ✅ Submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const payload = {
-        ...formData,
-        features: (formData.features || []).map((f) => ({
-          name: f.name,
-          option: f.option || null,
+  try {
+    // ✅ BUILD MAP HERE (only once, only here)
+    const optionToFieldMap = {};
+
+    propertyData.subcategories.forEach((sub) => {
+      sub.fields?.forEach((field) => {
+        field.options?.forEach((opt) => {
+          optionToFieldMap[opt.name] = field.field_name;
+        });
+      });
+    });
+
+    // ✅ TRANSFORM
+    const transformedFeatures = (formData.features || []).map((f) => {
+      if (typeof f.value === "number") {
+        return {
+          name: optionToFieldMap[f.name] || f.name,
+          option: f.name,
           value: f.value,
-        })),
-        amenities: formData.amenities.map((a) => a.id),
+        };
+      }
+
+      return {
+        name: f.name,
+        option: null,
+        value: f.value,
       };
+    });
 
-      let res;
+    const payload = {
+      ...formData,
+      features: transformedFeatures,
+      amenities: formData.amenities.map((a) => a.id),
+    };
 
-      if (id) {
-        res = await updatePropertyListing(id, payload);
-      } else {
-        res = await postProperty(payload);
-      }
+    let res;
 
-      if (res) {
-        setShowSuccess(true);
-        setFormData(getInitialFormData());
-      }
-    } catch (err) {
-      console.error("Submit error:", err);
+    if (id) {
+      res = await updatePropertyListing(id, payload);
+    } else {
+      res = await postProperty(payload);
     }
-  };
+
+    if (res) {
+      setShowSuccess(true);
+      setFormData(getInitialFormData());
+    }
+  } catch (err) {
+    console.error("Submit error:", err);
+  }
+};
 
   return (
     <div className="bg-white min-h-screen p-6">
@@ -317,6 +339,7 @@ function AddPropertySection() {
       <SuccessModal
         isOpen={showSuccess}
         onClose={() => setShowSuccess(false)}
+        isEdit={!!id}
       />
     </div>
   );

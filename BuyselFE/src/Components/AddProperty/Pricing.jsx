@@ -18,7 +18,7 @@ function Pricing({ formData, setFormData, errors }) {
       </h2>
 
       <div className="space-y-[24px]">
-        {formData.purpose === "rent" && (
+        {formData.purpose === "Rent" && (
           <>
             <div>
               <label className="block lexend text-[16px] font-[600] mb-2">
@@ -82,7 +82,7 @@ function Pricing({ formData, setFormData, errors }) {
           </>
         )}
 
-        {formData.purpose === "sale" && (
+        {formData.purpose === "Sale" && (
           <>
             <div>
               <label className="block lexend text-[16px] font-[600] mb-2">
@@ -169,7 +169,7 @@ function Pricing({ formData, setFormData, errors }) {
           </>
         )}
 
-        {formData.purpose === "lease" && (
+        {formData.purpose === "Lease" && (
           <>
             <div>
               <label className="block lexend text-[16px] font-[600] mb-2">

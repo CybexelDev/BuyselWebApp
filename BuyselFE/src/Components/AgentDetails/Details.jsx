@@ -3,6 +3,7 @@ import { useState } from "react";
 import { agentContactForm } from "../../Api/userApi";
 import { toast } from "sonner";
 function Details({ agentData }) {
+  const agentId = agentData?.id;
   const [contactData, setContactData] = useState({
     first_name: "",
     last_name: "",
@@ -13,13 +14,17 @@ function Details({ agentData }) {
 
   const handlesubmit = async (e) => {
     e.preventDefault();
+    
+    
+  console.log("Agent ID:", agentId);
+
     if (!contactData.first_name || !contactData.last_name || !contactData.email || !contactData.phone || !contactData.message)
        {
       toast.info("Please fill required fields");
       return;
     }
 
-    const res = await agentContactForm(contactData);
+    const res = await agentContactForm(contactData, agentId);
 
     if (res) {
       toast.success("Enquiry sent ");

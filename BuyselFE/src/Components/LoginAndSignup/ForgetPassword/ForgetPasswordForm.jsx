@@ -3,7 +3,8 @@ import { useState } from "react";
 import { forgotPassword } from "../../../Api/userApi";
 import { agentForgotPassword } from "../../../Api/agentsApi";
 
-const ForgotPasswordForm = ({setOtpSent, setEmail, type}) => {
+const ForgotPasswordForm = ({setOtpSent, setEmail, onBackToLogin,type}) => {
+
   const [localEmail, setLocalEmail] = useState("");
 
   const handleSubmit = async () => {
@@ -49,6 +50,16 @@ const res =
       >
         Send OTP
       </button>
+
+      <p className="text-center text-sm mt-4">
+  Remember your password?{" "}
+  <span
+    className="text-green-600 cursor-pointer"
+    onClick={onBackToLogin}
+  >
+    Sign in
+  </span>
+</p>
     </>
   );
 };

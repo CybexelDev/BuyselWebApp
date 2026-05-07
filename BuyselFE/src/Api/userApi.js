@@ -545,8 +545,9 @@ export const getProfile = async () => {
 
 
 
-export const agentContactForm = async (contactData) => {
-  try {
+export const agentContactForm = async(contactData, agentId)=>{
+    try{
+
     const data = new FormData();
 
     data.append("first_name", contactData.first_name);
@@ -556,9 +557,10 @@ export const agentContactForm = async (contactData) => {
     data.append("message", contactData.message);
 
     const res = await api.post(
-      `agent/buyselman5443/contact/`,
-      data,
-      {
+      `agent/contact/${agentId}/`, 
+        data,
+        {
+
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -598,6 +600,15 @@ export const getReviews = async (agentId) => {
   }
 };
 
+export const toggleReviewLike = async (reviewId) => {
+  try {
+    const res = await api.post(`reviews/like/${reviewId}/`);
+    return res.data;
+  } catch (error) {
+    console.log("Like error:",error);
+    return null;
+  }
+};
 
 export const getAgentsDetails = async (id) => {
   try {
