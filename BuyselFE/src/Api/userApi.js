@@ -73,11 +73,6 @@ export const otpSent = async (otpValue, email) => {
         return false;
 
     }
-
-  } catch (error) {
-    console.error("API error:", error);
-    return false;
-  }
 };
 
 
