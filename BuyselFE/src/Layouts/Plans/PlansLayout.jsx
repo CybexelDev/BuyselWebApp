@@ -3,7 +3,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getAllPlans } from "../../Api/userApi";
 import { MessageCircle, Phone } from "lucide-react";
-const PlansLayout = ({showtabs=true ,padding="py-10"}) => {
+import { openRazorpay } from "../../utils/razorpay";
+
+const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [plansData, setPlansData] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 const [selectedPlan, setSelectedPlan] = useState(null);
@@ -12,101 +14,101 @@ const handleSelectPlan = (plan) => {
   setOpenModal(true);
 };
   useEffect(() => {
-  const fetchPlans = async () => {
-    try {
-      const data = await getAllPlans();
-      setPlansData(data);
-    } catch (err) {
-      console.log(err);
+    const fetchPlans = async () => {
+      try {
+        const data = await getAllPlans();
+        setPlansData(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchPlans();
+  }, []);
+  const getPlansByRole = () => {
+    if (!plansData) return [];
+
+    switch (active) {
+      case "Owner":
+        return plansData.user_plans;
+      case "Agent":
+        return plansData.normal_plans;
+      case "Premium Agent":
+        return plansData.premium_plans;
+      case "Elite Agent":
+        return plansData.elite_plans;
+      default:
+        return [];
     }
   };
+  const convert = (val) => {
+    if (val === "yes") return "check";
+    if (val === "no") return "cross";
+    return val || "N/A";
+  };
 
-  fetchPlans();
-}, []);
-const getPlansByRole = () => {
-  if (!plansData) return [];
+  const getPlanData = (plan) => {
+    switch (active) {
+      case "Owner":
+        return [
+          plan.validity,
+          convert(plan.top_priority_search),
+          "N/A",
+          convert(plan.edit_option),
+          plan.meta_ads_promotion,
+          plan.bulk_whatsapp,
+          plan.offline_agent_share,
+          plan.poster_creation,
+          plan.social_media_marketing,
+          convert(plan.lead_followup_support),
+        ];
 
-  switch (active) {
-    case "Owner":
-      return plansData.user_plans;
-    case "Agent":
-      return plansData.normal_plans;
-    case "Premium Agent":
-      return plansData.premium_plans;
-    case "Elite Agent":
-      return plansData.elite_plans;
-    default:
-      return [];
-  }
-};
-const convert = (val) => {
-  if (val === "yes") return "check";
-  if (val === "no") return "cross";
-  return val || "N/A";
-};
+      case "Agent":
+        return [
+          plan.validity,
+          convert(plan.priority_search),
+          plan.enquiries,
+          convert(plan.edit),
+          plan.meta_ads,
+          plan.Bulk_whatsapp,
+          "N/A",
+          plan.Poster,
+          plan.social_media,
+          "N/A",
+        ];
 
-const getPlanData = (plan) => {
-  switch (active) {
-    case "Owner":
-      return [
-        plan.validity,
-        convert(plan.top_priority_search),
-        "N/A",
-        convert(plan.edit_option),
-        plan.meta_ads_promotion,
-        plan.bulk_whatsapp,
-        plan.offline_agent_share,
-        plan.poster_creation,
-        plan.social_media_marketing,
-        convert(plan.lead_followup_support),
-      ];
+      case "Premium Agent":
+        return [
+          plan.validity,
+          convert(plan.priority_search),
+          plan.enquiries,
+          convert(plan.edit),
+          plan.meta_ads,
+          plan.Bulk_whatsapp,
+          "N/A",
+          plan.Poster,
+          plan.social_media,
+          convert(plan.lead_follow),
+        ];
 
-    case "Agent":
-      return [
-        plan.validity,
-        convert(plan.priority_search),
-        plan.enquiries,
-        convert(plan.edit),
-        plan.meta_ads,
-        plan.Bulk_whatsapp,
-        "N/A",
-        plan.Poster,
-        plan.social_media,
-        "N/A",
-      ];
+      case "Elite Agent":
+        return [
+          plan.plan_validity_days,
+          plan.priority_search,
+          "N/A",
+          "N/A",
+          plan.meta_ads_promotion,
+          plan.bulk_whatsapp_messages,
+          "N/A",
+          plan.poster_creation,
+          plan.social_media_marketing,
+          convert(plan.lead_followup_support),
+        ];
 
-    case "Premium Agent":
-      return [
-        plan.validity,
-        convert(plan.priority_search),
-        plan.enquiries,
-        convert(plan.edit),
-        plan.meta_ads,
-        plan.Bulk_whatsapp,
-        "N/A",
-        plan.Poster,
-        plan.social_media,
-        convert(plan.lead_follow),
-      ];
-
-    case "Elite Agent":
-      return [
-        plan.plan_validity_days,
-        plan.priority_search,
-        "N/A",
-        "N/A",
-        plan.meta_ads_promotion,
-        plan.bulk_whatsapp_messages,
-        "N/A",
-        plan.poster_creation,
-        plan.social_media_marketing,
-        convert(plan.lead_followup_support),
-      ];
-
-    default:
-      return [];
-  }
-};
+      default:
+        return [];
+    }
+  };
   const features = [
     "Plan Validity",
     "Top Priority",
@@ -122,13 +124,13 @@ const getPlanData = (plan) => {
 
   const [active, setActive] = useState("Owner");
   const roles = ["Owner", "Agent", "Premium Agent", "Elite Agent"];
- const rawPlans = getPlansByRole();
+  const rawPlans = getPlansByRole();
 
-const plans = rawPlans.map((plan) => ({
-  name: plan.name,
-  price: `₹ ${plan.price || plan.amount}`,
-  data: getPlanData(plan),
-}));
+  const plans = rawPlans.map((plan) => ({
+    name: plan.name,
+    price: `₹ ${plan.price || plan.amount}`,
+    data: getPlanData(plan),
+  }));
   const renderIcon = (type) => {
     if (type === "check") {
       return (
@@ -175,12 +177,33 @@ const plans = rawPlans.map((plan) => ({
           </button>
         ))}
 
-      </div>
 
-    </div>
+      {showtabs && (
+        <div className="flex justify-center mb-10 md:mb-15 px-2">
 
-  </div>
-)}
+          <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">
+
+            <div className="flex items-center border border-[#8AD32E] rounded-full p-1 bg-white min-w-max">
+
+              {roles.map((role) => (
+                <button
+                  key={role}
+                  onClick={() => setActive(role)}
+                  className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[24px] lexend font-semibold transition-all duration-300 ${active === role
+                      ? "bg-[#8AD32E] text-white shadow"
+                      : "text-[#7CB305]"
+                    }`}
+                >
+                  {role}
+                </button>
+              ))}
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:hidden lexend">
 
         {plans.map((plan, planIndex) => (
@@ -236,7 +259,7 @@ const plans = rawPlans.map((plan) => ({
       </div>
 
 
-{/* desktop */}
+      {/* desktop */}
 
 
       <div className="hidden lg:grid grid-cols-4 
@@ -321,55 +344,55 @@ max-w-7xl mx-auto items-start">
         ))}
 
       </div>
-<div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 lexend mt-10">
+      <div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 lexend mt-10">
 
-  {/* LEFT SIDE */}
-  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
-    
-    <img 
-      src="https://i.pravatar.cc/80" 
-      alt="agent" 
-      className="w-[80px] h-[80px] sm:w-[107px] sm:h-[107px] rounded-full object-cover" 
-    />
+        {/* LEFT SIDE */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
 
-    <div className="w-full">
-      <p className="text-[16px] sm:text-[18px] font-medium inter text-black">
-        Can't decide which plan suits your requirements best?
-      </p>
+          <img
+            src="https://i.pravatar.cc/80"
+            alt="agent"
+            className="w-[80px] h-[80px] sm:w-[107px] sm:h-[107px] rounded-full object-cover"
+          />
 
-      <p className="text-[14px] sm:text-[15px] font-medium inter text-gray-500 mt-1">
-        Consult with our property expert
-      </p>
+          <div className="w-full">
+            <p className="text-[16px] sm:text-[18px] font-medium inter text-black">
+              Can't decide which plan suits your requirements best?
+            </p>
 
-      {/* BUTTONS */}
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-3 w-full">
-        
-        <button className="flex items-center justify-center gap-2 border border-[#8AD32E] text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-[#eef7dd] transition w-full sm:w-auto">
-          Request a Callback
-        </button>
+            <p className="text-[14px] sm:text-[15px] font-medium inter text-gray-500 mt-1">
+              Consult with our property expert
+            </p>
 
-        <button className="flex items-center justify-center gap-2 border border-[#8AD32E] text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-[#eef7dd] transition w-full sm:w-auto">
-          Chat with Us
-        </button>
+            {/* BUTTONS */}
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-3 w-full">
+
+              <button className="flex items-center justify-center gap-2 border border-[#8AD32E] text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-[#eef7dd] transition w-full sm:w-auto">
+                Request a Callback
+              </button>
+
+              <button className="flex items-center justify-center gap-2 border border-[#8AD32E] text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-[#eef7dd] transition w-full sm:w-auto">
+                Chat with Us
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-3 w-full md:w-auto">
+
+          <div className="bg-[#8AD32E] text-white px-5 py-1 rounded-full text-sm font-semibold">
+            ₹199/-
+          </div>
+
+          <button className="bg-[#c9f08c] text-gray-900 px-6 py-2 rounded-full font-semibold hover:bg-[#b8e774] transition w-auto">
+            Purchase
+          </button>
+
+        </div>
 
       </div>
-    </div>
-  </div>
-
-  {/* RIGHT SIDE */}
-  <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-3 w-full md:w-auto">
-    
-    <div className="bg-[#8AD32E] text-white px-5 py-1 rounded-full text-sm font-semibold">
-      ₹199/-
-    </div>
-
-    <button className="bg-[#c9f08c] text-gray-900 px-6 py-2 rounded-full font-semibold hover:bg-[#b8e774] transition w-auto">
-      Purchase
-    </button>
-
-  </div>
-
-</div>
 
 {
   openModal && (

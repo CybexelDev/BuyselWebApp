@@ -3,17 +3,19 @@ import StarRating from "../../../Components/StarRating/StarRating";
 import location from '../../../assets/images/icons/location.png'
 import { getAgents } from "../../../Api/userApi";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import elite from '../../../assets/images/agentDetail/elite.png'
+import premium from '../../../assets/images/agentDetail/crown.png'
 
 
 
-export default function AgentTabs({searchedData, query, locationDats }) {
-    const [searchParams]=useSearchParams()
+export default function AgentTabs({ searchedData, query, locationDats }) {
+    const [searchParams] = useSearchParams()
     const type = searchParams.get("type");
     const [activeTab, setActiveTab] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [agents, setAgents] = useState([]);
     const navigate = useNavigate();
-    
+
     const itemsPerPage = 12;
 
     const filteredAgents =
@@ -25,25 +27,25 @@ export default function AgentTabs({searchedData, query, locationDats }) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentAgents = filteredAgents.slice(startIndex, endIndex);
-useEffect(() => {
-  if (type) {
-    setActiveTab(type);
-  }
-}, [type]);
+    useEffect(() => {
+        if (type) {
+            setActiveTab(type);
+        }
+    }, [type]);
     useEffect(() => {
         if (query.length > 0) {
             setAgents(searchedData);
         }
-        else{
-              const getAgent = async () => {
-            const data = await getAgents({category: activeTab});
-            if (data) {
-                setAgents(data);
-            }
-        };  
-        getAgent();
+        else {
+            const getAgent = async () => {
+                const data = await getAgents({ category: activeTab });
+                if (data) {
+                    setAgents(data);
+                }
+            };
+            getAgent();
         }
-      
+
     }, [activeTab, searchedData]);
 
     useEffect(() => {
@@ -83,16 +85,34 @@ useEffect(() => {
                         className="bg-white rounded-[23px] shadow-lg p-5 flex items-center gap-4 hover:shadow-2xl transition cursor-pointer"
                     >
 
-                        <div className="w-[100px] h-[100px] rounded-full inter overflow-hidden flex items-center justify-center bg-black text-[#75c222] text-[36px]">
+                        {/* <div className="w-[100px] h-[100px] rounded-full inter overflow-hidden flex items-center justify-center bg-black text-[#75c222] relative z-10">
                             {agent?.profile_image ? (
                                 <img
                                     src={agent?.profile_image}
                                     alt={agent?.username}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover z-10"
                                 />
                             ) : (
                                 agent?.username?.charAt(0)
                             )}
+                            <div className=" absolute bottom-[-7px] bg-[#fff] z-90 px-2 py-1 rounded-xl"> hh </div>
+                        </div> */}
+                        <div className="relative w-[100px] h-[100px] flex items-center justify-center">
+                            <div className="w-full h-full rounded-full overflow-hidden bg-black text-[#75c222]">
+                                {agent?.profile_image ? (
+                                    <img
+                                        src={agent?.profile_image}
+                                        alt={agent?.username}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    agent?.username?.charAt(0)
+                                )}
+                            </div>
+                            {agent?.agent_type === "basic" ? null : <div className="absolute bottom-[-10px] bg-white z-20 px-2 py-1 rounded-xl shadow">
+                                {agent?.agent_type === "elite" && <img src={elite} alt="Elite Agent" className="w-5 h-5" />}
+                                {agent?.agent_type === "premium" && <img src={premium} alt="Premium Agent" className="w-5 h-5" />}
+                            </div>}
                         </div>
 
                         <div>
