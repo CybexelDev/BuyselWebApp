@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 
 
-function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false }) {
+function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false,hideWishlist=false }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -20,6 +20,10 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
   const navigate = useNavigate()
 
   const images = property.images || [];
+  const purpose = property?.purpose;
+
+    console.log("PROPERTY DATA:", property);
+  console.log("PURPOSE VALUE:", purpose);
 
   const prevImage = () => {
     setCurrentIndex((prev) =>
@@ -103,6 +107,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
         />
 
         <div className="absolute top-4 right-4 sm:right-6 flex gap-1 ">
+          {!hideWishlist && (
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -111,6 +116,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
           >
             {wishlistIcon}
           </button>
+          )}
 
           <button onClick={handleShare} className="bg-white  rounded-full h-[23px] w-[23px] flex justify-center items-center " >
             <img src={telegram} alt="telegram" className="w-[12px] h-[12px]" />
@@ -165,10 +171,13 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
 
         <div className=" text-black space-y-1">
-          <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">Total ₹{property.price}</h2>
-          <p className="instrument-sans text-[11px] text-[#B0ABAB] font-[500]">₹{property.perprice}
-            <span> / {property.unit}</span>
-          </p>
+          <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">
+            Total ₹{property.price}{purpose === "Rent" && <span> / month</span>}</h2>
+           {purpose === "Sale" && (
+    <p className="instrument-sans text-[11px] text-[#B0ABAB] font-[500]">
+      ₹{property.perprice}<span> / {property.unit}</span>
+    </p>
+  )}
         </div>
 
 

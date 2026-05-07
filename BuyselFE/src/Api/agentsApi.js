@@ -34,7 +34,7 @@ export const premiumAgentLogin = async (email, password) => {
 
 export const getEnquiryDetail = async (id) => {
   try {
-    const res = await api.get(`/agent/enquiry/${id}/`);
+    const res = await api.get(`/enquiry-detail/${id}/`);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -71,6 +71,34 @@ export const changeAgentPassword = async (currentPassword, newPassword, confirmP
 
   } catch (error) {
     console.error("change password error:", error);
+    return false;
+  }
+};
+
+export const resendAgentForgotOtp = async (email) => {
+
+  const formData = new FormData();
+
+  formData.append("email", email);
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}agent/resent-forgot-otp/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return result.data;
+
+  } catch (error) {
+
+    console.log(error);
+
     return false;
   }
 };
@@ -153,7 +181,7 @@ export const deleteInboxMessage = async (id) => {
 
 export const getAgentEnquiries = async () => {
   try {
-    const res = await api.get("/agent/enquiries/");
+    const res = await api.get("/enquiry/");
     return res.data;
   } catch (err) {
     console.log(err);
@@ -176,7 +204,7 @@ export const registerAgent = async (data) => {
 
 export const getContactMessage = async()=>{
   try{
-    const result = await api.get("/agent/contacts");
+    const result = await api.get("/agent/contacts/");
 
     if(result.data?.data) {
       return result.data.data
@@ -223,7 +251,116 @@ export const getPropertyData = async () => {
   }
 };
 
+export const verifyAgentForgotOtp = async (otpValue, email) => {
 
+  const formData = new FormData();
+
+  formData.append("otp", otpValue);
+  formData.append("email", email);
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}agent/verify-forgot-otp/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (result.data.reset_token) {
+
+      return result.data;
+
+    } else {
+
+      return false;
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
+export const agentChangePasswordReset = async (newPassword) => {
+
+  const formData = new FormData();
+
+  formData.append("new_password", newPassword);
+
+  const resetToken = localStorage.getItem("reset_token");
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}agent/change-password/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${resetToken}`,
+        },
+      }
+    );
+
+    if (result.data.message === "Password changed successfully") {
+
+      return result.data;
+
+    } else {
+
+      return false;
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
+
+export const agentForgotPassword = async (email) => {
+
+  const formData = new FormData();
+
+  formData.append("email", email);
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}agent/forgot-password/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (result.data.message === "OTP sent to email") {
+
+      return result.data;
+
+    } else {
+
+      return false;
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
 
 export const postProperty = async (data) => {
   try {
@@ -233,8 +370,8 @@ export const postProperty = async (data) => {
 formData.append("category", data.category_id);
 formData.append("subcategory", data.subcategory);
 formData.append("purpose", data.purpose);
-    formData.append("label", data.title);
-    formData.append("description", data.description);
+  formData.append("label", data.title);
+formData.append("description", data.description);
 
 
  formData.append("city", data.city);
@@ -263,25 +400,24 @@ formData.append("sq_ft", data.squareFeet);
 
     let price = "";
 
-    if (data.purpose === "rent") {
-      price = data.pricing.monthlyRent;
-      formData.append("monthly_rent", data.pricing.monthlyRent);
-      formData.append("deposit", data.pricing.deposit);
-    }
-
-    if (data.purpose === "lease") {
-      price = data.pricing.totalAmount;
-      formData.append("total_amount", data.pricing.totalAmount);
-    }
-
-if (data.purpose === "sale") {
-  price = data.pricing.totalPrice;
-  formData.append("total_price", data.pricing.totalPrice);
-  // ✅ combine price + unit (space format)
-  const perPrice = `${data.pricing.pricePerUnit}/${data.pricing.unit}`;
-  formData.append("perprice", perPrice);
+  if (data.purpose === "Rent") {
+  price = data.pricing.monthlyRent;
+  formData.append("monthly_rent",data.pricing.monthlyRent);
+  formData.append("deposit",data.pricing.deposit);
 }
 
+if (data.purpose === "Lease") {
+  price = data.pricing.totalAmount;
+  formData.append("total_amount",data.pricing.totalAmount);
+}
+
+if (data.purpose === "Sale") {
+  price = data.pricing.totalPrice;
+  formData.append("total_price",data.pricing.totalPrice);
+  formData.append("perprice",
+    `${data.pricing.pricePerUnit}/${data.pricing.unit}`
+  );
+}
 formData.append("price", price);
 
 
@@ -397,27 +533,28 @@ export const updatePropertyListing = async (id, data) => {
     formData.append("phone", data.phone);
     formData.append("whatsapp", data.whatsapp);
 
-    let price = "";
+   let price = "";
 
-    if (data.purpose === "rent") {
-      price = data.pricing.monthlyRent;
-      formData.append("monthly_rent", data.pricing.monthlyRent);
-      formData.append("deposit", data.pricing.deposit);
-    }
-
-    if (data.purpose === "lease") {
-      price = data.pricing.totalAmount;
-      formData.append("total_amount", data.pricing.totalAmount);
-    }
-
-if (data.purpose === "sale") {
-  price = data.pricing.totalPrice;
-  formData.append("total_price", data.pricing.totalPrice);
-  const perPrice = `${data.pricing.pricePerUnit}/${data.pricing.unit}`;
-  formData.append("perprice", perPrice);
+if (data.purpose === "Rent") {
+  price = data.pricing.monthlyRent;
+  formData.append("monthly_rent",data.pricing.monthlyRent);
+  formData.append("deposit",data.pricing.deposit);
 }
 
-    formData.append("price", price);
+if (data.purpose === "Lease") {
+  price = data.pricing.totalAmount;
+  formData.append("total_amount",data.pricing.totalAmount);
+}
+
+if (data.purpose === "Sale") {
+  price = data.pricing.totalPrice;
+  formData.append("total_price",data.pricing.totalPrice);
+  formData.append("perprice",
+    `${data.pricing.pricePerUnit}/${data.pricing.unit}`
+  );
+}
+
+formData.append("price", price);
 
 formData.append(
   "field_values",

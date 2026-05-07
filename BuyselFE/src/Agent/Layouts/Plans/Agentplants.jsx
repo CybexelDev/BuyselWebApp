@@ -88,7 +88,7 @@ if (planData?.expiresOn) {
 
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 host-grotesk">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 host-grotesk overflow-x-hidden">
       <Sidebar />
 
       <div className="flex-1 py-3 px-6 md:py-5 md:px-10 lg:py-6 lg:px-12 mb-22 sm:mb-0">

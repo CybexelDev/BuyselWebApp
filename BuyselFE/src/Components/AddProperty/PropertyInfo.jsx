@@ -15,6 +15,7 @@ function  PropertyInfo({ formData, setFormData, errors }) {
   const [isAmenitiesOpen, setIsAmenitiesOpen] = useState(false);
 
   const handlePointChange = (index, value) => {
+    
   const updated = [...(formData.keyPoints || [])];
   updated[index] = value;
   setFormData({
@@ -45,34 +46,44 @@ const removePoint = (index) => {
 
 
 
-  const updateFeatureCount = (fieldName, optionName, type) => {
-    setFormData((prev) => {
-      const name = optionName;
+const updateFeatureCount = (fieldName, optionName, type) => {
+  setFormData((prev) => {
+    const features = prev.features || [];
 
-      const current = prev.features?.find((f) => f.name === name)?.value || 0;
+    const existing = features.find(
+      (f) => f.name === optionName
+    );
 
-      let newValue = current;
+    const current = existing?.value || 0;
 
-      if (type === "plus") newValue = current + 1;
-      if (type === "minus") newValue = Math.max(0, current - 1);
+    let newValue = current;
+    if (type === "plus") newValue = current + 1;
+    if (type === "minus") newValue = Math.max(0, current - 1);
 
-      let features = prev.features || [];
+    // remove old
+    const filtered = features.filter(
+      (f) => f.name !== optionName
+    );
 
-      // remove if exists
-      features = features.filter((f) => f.name !== name);
+    const updatedFeatures = [
+      ...filtered,
+      ...(newValue > 0
+        ? [
+            {
+              name: optionName,
+              field_name: existing?.field_name || fieldName, // ✅ FIX
+              value: newValue,
+            },
+          ]
+        : []),
+    ];
 
-      // add back only if value > 0 (using spread, not push)
-      const updatedFeatures = [
-        ...features.filter((f) => f.name !== name),
-        ...(newValue > 0 ? [{ name, value: newValue }] : []),
-      ];
-
-      return {
-        ...prev,
-        features: updatedFeatures,
-      };
-    });
-  };
+    return {
+      ...prev,
+      features: updatedFeatures,
+    };
+  });
+};
 
   const addLandmark = () => {
     const updated = [...(formData.landmarks || [])];
@@ -245,46 +256,48 @@ const toggleAmenity = (amenity) => {
                     </label>
 
                     <div className="flex flex-wrap gap-3">
-                      {field.options.map((opt) => {
-                        const selected =
-                        formData.features?.find((f) => f.name === field.field_name)?.value === opt.name;
+                      {field.options.map((opt, index) => {
+  const optionValue = typeof opt === "string" ? opt : opt.name;
 
-                        return (
-                          <button
-                            key={opt.id}
-                            type="button"
-                            onClick={() =>
-  setFormData((prev) => {
-    const name = field.field_name;
+  const selected =
+    formData.features?.find((f) => f.name === field.field_name)?.value === optionValue;
 
-    const updatedFeatures = [
-      ...prev.features.filter((f) => f.name !== name),
-      { name, value: opt.name },
-    ];
+  return (
+    <button
+      key={index}
+      type="button"
+      onClick={() =>
+        setFormData((prev) => {
+          const updatedFeatures = (prev.features || []).filter(
+            (f) => f.name !== field.field_name
+          );
 
-    return {
-      ...prev,
-      features: updatedFeatures,
-    };
-  })
-}
-                            className={`px-5 py-3 rounded-lg border text-sm cursor-pointer
-                                  ${
-                                    selected
-                                      ? "bg-lime-500 text-white border-lime-500"
-                                      : "border-gray-300 text-gray-600 hover:border-lime-400"
-                                  }`}
-                          >
-                            {opt.name}
-                          </button>
-                        );
-                      })}
+          return {
+            ...prev,
+            features: [
+              ...updatedFeatures,
+              { name: field.field_name, value: optionValue },
+            ],
+          };
+        })
+      }
+      className={`px-5 py-3 rounded-lg border text-sm cursor-pointer
+        ${
+          selected
+            ? "bg-lime-500 text-white border-lime-500"
+            : "border-gray-300 text-gray-600 hover:border-lime-400"
+        }`}
+    >
+      {optionValue}
+    </button>
+  );
+})}
                     </div>
                   </div>
                 );
               }
 
-              if (field.field_type === "countable") {
+              if (field.field_type === "multi_select") {
                 return (
                   <div key={field.id}>
                     <label className="font-[550] text-[14px] block mb-3 lexend">
@@ -294,41 +307,37 @@ const toggleAmenity = (amenity) => {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {field.options.map((opt) => {
                         const count =
-                          formData.features?.find((f) => f.name === opt.name)
-                            ?.value || 0;
+  formData.features?.find((f) => f.name === opt.name)?.value || 0;
 
                         const selected = count > 0;
 
                         return (
                           <div
                             key={opt.name}
-                            onClick={() => {
-                              setFormData((prev) => {
-  const fieldName = field.field_name;
-  const optionName = opt.name;
+                           onClick={() => {
+  setFormData((prev) => {
+    const exists = prev.features?.find(
+      (f) => f.name === opt.name
+    );
 
-  const current =
-    prev.features?.find(
-      (f) => f.name === fieldName && f.option === optionName
-    )?.value || 0;
+    let updated = (prev.features || []).filter(
+      (f) => f.name !== opt.name
+    );
 
-  const newValue = current > 0 ? 0 : 1;
-
-  const filtered = prev.features.filter(
-    (f) => !(f.name === fieldName && f.option === optionName)
-  );
-
-  return {
-    ...prev,
-    features: [
-      ...filtered,
-      ...(newValue > 0
-        ? [{ name: fieldName, option: optionName, value: newValue }]
-        : []),
-    ],
-  };
+    if (!exists) {
+updated.push({
+  name: opt.name,
+  field_name: field.field_name, // ✅ ADD THIS
+  value: 1,
 });
-                            }}
+    }
+
+    return {
+      ...prev,
+      features: updated,
+    };
+  });
+}}
                             className={`border rounded-xl p-5 flex flex-col items-center justify-center gap-3 transition cursor-pointer ${
                               selected
                                 ? "border-[#A3D950] bg-lime-400"

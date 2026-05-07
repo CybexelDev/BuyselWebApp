@@ -84,7 +84,7 @@ const rootReducer = combineReducers({
 
 
 
-//when user logintime agent logout and this work also reverse
+// when user logintime agent logout and this work also reverse
 // const appReducer = combineReducers({
 //   user: userReducer,
 //   agent: agentReducer,

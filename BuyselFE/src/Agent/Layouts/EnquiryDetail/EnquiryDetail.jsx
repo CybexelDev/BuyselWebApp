@@ -71,11 +71,11 @@ if (!detail) return <div>Loading...</div>;
                     </div>
                     <div>
                       <h1 className="text-2xl font-black text-slate-900 instrument-sans leading-tight">
-{detail.enquiry.name }                     </h1>
+{detail.name }                     </h1>
                       <div className="flex items-center gap-1.5 text-slate-400 mt-1">
                         <Calendar size={12} className="text-[#74C122]" />
                         <span className="text-[11px] font-bold uppercase tracking-tight host-grotesk">
-{formatDate(detail.enquiry.date)}                        </span>
+{formatDate(detail.created_at)}                        </span>
                       </div>
                     </div>
                   </div>
@@ -83,11 +83,11 @@ if (!detail) return <div>Loading...</div>;
                   <div className="space-y-1">
                     <div className="flex items-center gap-4 px-4 py-2 rounded-2xl bg-white  group hover:border-[#74C122]/30 transition-all">
                       <Phone size={18} className="text-[#74C122]" />
-                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.enquiry.phone}</span>
+                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.phone}</span>
                     </div>
                     <div className="flex items-center gap-4 px-4 py-2  rounded-2xl bg-white  group hover:border-[#74C122]/30 transition-all">
                       <Mail size={18} className="text-[#74C122]" />
-                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.enquiry.email}</span>
+                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.email}</span>
                     </div>
                   </div>
 
@@ -97,7 +97,7 @@ if (!detail) return <div>Loading...</div>;
                     </h3>
                     <div className="px-6 py-3 rounded-3xl bg-white  relative">
                       <p className="italic text-slate-600 text-sm leading-relaxed relative z-10 font-medium host-grotesk">
-                        "{detail.enquiry.message}"
+                        "{detail.message}"
                       </p>
                     </div>
                   </div>
@@ -106,7 +106,7 @@ if (!detail) return <div>Loading...</div>;
 
    <div className="flex gap-4 host-grotesk">
   <a 
-    href={`tel:$${detail.enquiry.phone}`}
+    href={`tel:${detail.phone}`}
     className="flex-1 bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer border border-slate-800"
   >
     <Phone size={16} fill="white" stroke="none" /> 
@@ -114,7 +114,7 @@ if (!detail) return <div>Loading...</div>;
   </a>
 
   <a 
-href={`https://wa.me/${detail.enquiry.phone.replace(/\D/g, '')}`}    target="_blank" 
+href={`https://wa.me/${detail.phone.replace(/\D/g, '')}`}    target="_blank" 
     rel="noopener noreferrer"
     className="flex-1 bg-gradient-to-r from-[#74C122] to-[#5ea11a] text-white py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg shadow-[#74C122]/30 hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer"
   >
@@ -162,7 +162,7 @@ src={
                 
                 <div className="flex items-center gap-2 text-slate-500 mb-8">
                   <MapPin size={18} className="text-red-400" />
-                  <span className="text-sm font-semibold host-grotesk">{detail.property.city}, {detail.property.state}</span>
+                  <span className="text-sm font-semibold host-grotesk">{detail.property.location}</span>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6">

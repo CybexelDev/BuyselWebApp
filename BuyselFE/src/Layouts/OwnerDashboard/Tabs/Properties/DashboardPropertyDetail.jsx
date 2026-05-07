@@ -13,27 +13,28 @@ function DashboardPropertyDetail() {
     return {
       id: data.id,
       title: data.label,
-      location: `${data.city}, ${data.state}`,
+       location: `${data.city}, ${data.state}, ${data.location_details?.pincode || "N/A"}`,
       status: data.purpose,
 
-      price: `₹${Number(data.price).toLocaleString()}`,
-      area: data.sq_ft ? `${data.sq_ft} sq.ft` : "N/A",
+      price: `${data.price_details?.price}`,
+      area: data.price_details?.sq_ft
+      ? `${data.price_details.sq_ft} sq.ft`
+      : "N/A",
       postedOn: data.created_at,
 
       description: data.description,
-
-      seller: {
-        company: "Owner",
-        name: data.owner,
-        phone: data.phone,
-        image: "https://via.placeholder.com/100"
-      },
+     seller: {
+      company: "Owner",
+      name: data.contact_details?.owner,
+      phone: data.contact_details?.phone,
+      image: data.contact_details?.owner_profile_image,
+    },
 
       // ✅ KEEP ARRAY (IMPORTANT)
-      features: data.features || [],
-
-      images: data.images?.length ? data.images : [data.image],
-      amenities: data.amenities || []
+    features: data.property_features || [],
+    images: data.images?.length ? data.images : [data.image],
+    amenities: data.amenities || [],
+    key_selling_points: data.key_selling_points || [],
     }
   }
 

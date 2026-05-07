@@ -74,7 +74,7 @@ const navigate = useNavigate();
           <div className="flex flex-col gap-3">
             {enquiries.map((item, index) => (
               <motion.div
-                key={item.id}
+                key={item.enquiry_id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -82,7 +82,7 @@ const navigate = useNavigate();
       flex flex-col lg:flex-row lg:items-center justify-between gap-4 
       hover:shadow-[0_10px_30px_-15px_rgba(116,193,34,0.2)] 
       hover:border-[#74C122]/30 transition-all cursor-pointer overflow-hidden"
-  onClick={() => navigate(`/agent/enquiry/${item.id}`)}  
+  onClick={() => navigate(`/agent/enquiry/${item.enquiry_id}`)}  
               >
 
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#74C122] opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -124,7 +124,7 @@ const navigate = useNavigate();
 
                   <div className="flex items-center gap-1 text-slate-400 font-bold">
                     <Calendar size={12} className="text-[#74C122]" />
-  {formatDate(item.date)}
+  {formatDate(item.time)}
                   </div>
 
                 
@@ -136,7 +136,7 @@ const navigate = useNavigate();
 
                   <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-tighter justify-end">
                     <Calendar size={12} className="text-[#74C122]" />
-                    <span className="whitespace-nowrap host-grotesk">  {formatDate(item.date)}
+                    <span className="whitespace-nowrap host-grotesk">  {formatDate(item.time)}
 </span>
                   </div>
 

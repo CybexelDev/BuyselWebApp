@@ -1,16 +1,24 @@
 import { Mail } from "lucide-react";
 import { useState } from "react";
+import { forgotPassword } from "../../../Api/userApi";
+import { agentForgotPassword } from "../../../Api/agentsApi";
 
-const ForgotPasswordForm = ({setOtpSent, setEmail}) => {
+const ForgotPasswordForm = ({setOtpSent, setEmail, onBackToLogin,type}) => {
+
   const [localEmail, setLocalEmail] = useState("");
 
-  const handleSubmit = () => {
-    console.log("Send reset link to:", localEmail);
-        setEmail(localEmail);   
-    setOtpSent(true); 
-
-
-  };
+  const handleSubmit = async () => {
+const res =
+  type === "agent"
+    ? await agentForgotPassword(localEmail)
+    : await forgotPassword(localEmail);
+  if (res) {
+    setEmail(localEmail);
+    setOtpSent(true);
+  } else {
+    console.log("Something went wrong");
+  }
+};
 
   return (
     <>
@@ -42,6 +50,16 @@ const ForgotPasswordForm = ({setOtpSent, setEmail}) => {
       >
         Send OTP
       </button>
+
+      <p className="text-center text-sm mt-4">
+  Remember your password?{" "}
+  <span
+    className="text-green-600 cursor-pointer"
+    onClick={onBackToLogin}
+  >
+    Sign in
+  </span>
+</p>
     </>
   );
 };

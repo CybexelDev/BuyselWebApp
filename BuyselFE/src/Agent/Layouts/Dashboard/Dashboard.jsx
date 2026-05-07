@@ -77,7 +77,7 @@ function AgentDashboard() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+<div className="flex min-h-screen bg-gray-100 overflow-x-hidden">  
       {/* Sidebar */}
       <Sidebar />
 

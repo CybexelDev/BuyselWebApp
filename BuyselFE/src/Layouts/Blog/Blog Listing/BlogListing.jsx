@@ -46,7 +46,7 @@ useEffect(() => {
     }
 
     const formatted = res.map((item, index) => ({
-      id: index + 1,
+      id: item.id,
       title: item.blog_head,
       description: item.card_paragraph,
       date: item.date,
