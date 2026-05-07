@@ -19,7 +19,7 @@ const PersonalDetails = ({ users,mode,setMode ,setParentProfileData}) => {
 </h2>
       {mode === "" && (
       <div className="bg-[#f8f8f8] rounded-[32px] px-[41px] py-[20px] sm:py-[41px]">
-        <Detail icon={<FaUser size={19}/>} label="Full Name" value={users?.full_name}
+        <Detail icon={<FaUser size={19}/>} label="Full Name" value={users?.full_name ?? users?.name}
  />
         <Detail icon={<TbMailFilled size={19} />} label="Email Address" value={users?.email} />
         <Detail icon={<Phone

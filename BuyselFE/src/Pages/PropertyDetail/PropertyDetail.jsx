@@ -59,7 +59,7 @@ longitude: coords?.lng,
       company: "Owner",
       name: data.contact_details.owner,
       phone: data.contact_details.phone,
-      image: "https://via.placeholder.com/100"
+      image: data.owner_profile_image
     },
 
     features: data.property_features.map(item => ({
@@ -79,7 +79,7 @@ useEffect(() => {
     const res = await getRelatedProperties(id);
 
     if (res) {
-      setSimilarProperties(res);
+      setSimilarProperties(res.data);
     }
   };
 
@@ -106,22 +106,18 @@ useEffect(() => {
   return (
     <div>
       <HeaderProperty property={productDetail}/>
-      
       <DescriptionAndAminities data={productDetail} />
-
       <MapSection 
         address={productDetail.addressfully}
         latitude={productDetail.latitude}
         longitude={productDetail.longitude}
         landmarks={productDetail.landmarks}
       />
-
       <Featured  
         title="Similar Properties" 
         subTitle="Explore our latest listings for sale, rent and lease across"
         data={similarProperties}
       />
-
       <AppPromoBanner/>
       <Footer/>
     </div>

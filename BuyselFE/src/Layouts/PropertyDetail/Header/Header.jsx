@@ -21,7 +21,6 @@ const HeaderProperty = ({ property }) => {
   const [touchEnd, setTouchEnd] = useState(null);
 
 
-
   const nextImage = () => {
     setCurrentIndex((prev) =>
       prev === property.images.length - 1 ? 0 : prev + 1
@@ -69,7 +68,7 @@ const HeaderProperty = ({ property }) => {
   }, []);
 
 
-    const handleWtspClick = (e) => {
+  const handleWtspClick = (e) => {
     e.stopPropagation();
 
     const token = localStorage.getItem("accessToken");
@@ -85,7 +84,7 @@ const HeaderProperty = ({ property }) => {
     window.open(url, "_blank");
 
   }
-  
+
   const handleCallClick = (e) => {
     e.stopPropagation();
     const token = localStorage.getItem("accessToken");
@@ -228,11 +227,10 @@ const HeaderProperty = ({ property }) => {
               <div className="flex items-center gap-3 lg:gap-4 mb-5 lg:mb-6">
 
                 <img
-                  src={property?.seller?.image || seller}
+                  src={property?.sowner_profile_image|| seller}
                   alt="seller"
                   className="w-14 h-14 lg:w-20 lg:h-20 rounded-full object-cover"
                 />
-
                 <div>
 
                   <div className="flex items-center gap-2">
@@ -266,7 +264,9 @@ const HeaderProperty = ({ property }) => {
                 href="#"
                 onClick={handleCallClick}
                 className="w-full shadow-sm bg-white text-black text-[15px] lg:text-[18px] py-2.5 lg:py-3 rounded-[12px] lg:rounded-[15px] mb-1 lg:mb-3 font-medium flex items-center justify-center gap-2 border border-gray-100 lg:border-none">
-                <img src={phone} className="w-[20px] h-[20px] lg:w-[24px] lg:h-[24px] rounded-full object-cover" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="#000" d="m19.23 15.26l-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.05 15.05 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2 2 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07c.53 8.54 7.36 15.36 15.89 15.89c1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98" />
+                </svg>
                 <span>Contact</span>
               </a>
             </div>
@@ -308,7 +308,6 @@ const HeaderProperty = ({ property }) => {
             </div>
           </div>
 
-          {/* bottom right */}
           <div className="bg-white rounded-[18px] lg:rounded-[23px] px-5 py-4 lg:px-6 lg:py-3 shadow-sm border border-[#7BC21F] host-grotesk">
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-5 text-xs lg:text-sm">
@@ -327,7 +326,6 @@ const HeaderProperty = ({ property }) => {
                     {item.name}
                   </p>
 
-                  {/* VALUE */}
                   <p className="text-gray-500 pl-6 lg:pl-7">
                     {item.value}
                   </p>
@@ -335,10 +333,8 @@ const HeaderProperty = ({ property }) => {
                 </div>
               ))}
 
-
             </div>
           </div>
-
         </div>
       </div>
     </div>

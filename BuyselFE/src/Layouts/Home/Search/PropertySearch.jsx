@@ -8,7 +8,9 @@ function PropertySearch() {
   const [activeTab, setActiveTab] = useState("Rent");
   const [open, setOpen] = useState(false);
   const [budget, setBudget] = useState("");
-
+const [propertyTypeOpen, setPropertyTypeOpen] = useState(false);
+const [locationValue, setLocationValue] = useState("");
+const [propertyType, setPropertyType] = useState("");
   const options = [
     "Below ₹5 Lakhs",
     "₹5 – 10 Lakhs",
@@ -16,8 +18,31 @@ function PropertySearch() {
     "₹25 – 50 Lakhs",
     "Above ₹50 Lakhs",
   ];
+  const propertyOptions = [
+  "Residential",
+  "Commercial",
+  "Land / Plot",
+  "Industrial",
+];
+const handleSearch = () => {
 
-  const tabs = ["Rent", "Sale", "Agent", "Lease"];
+  const params = new URLSearchParams();
+
+  params.append("purpose", activeTab);
+  params.append("category", propertyType);
+
+  if (locationValue) {
+    params.append("location", locationValue);
+  }
+
+  if (budget) {
+    params.append("price_range", budget);
+  }
+
+  nav(`/propertyListing?${params.toString()}`);
+};
+
+  const tabs = ["Rent", "Buy", "Agent", "Lease"];
 
   const nav = useNavigate();
 
@@ -57,19 +82,54 @@ function PropertySearch() {
             <input
               type="text"
               placeholder="Location"
+               value={locationValue}
+  onChange={(e) => setLocationValue(e.target.value)}
               className="bg-transparent w-full outline-none text-[12px] text-gray-700 placeholder-[#888888ED]"
             />
             <img src={location} alt="location" className="w-5" />
           </div>
 
-          <div className="poppins flex items-center z-10 w-auto xl:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3">
-            <input
-              type="text"
-              placeholder="Property Type"
-              className="bg-transparent w-full outline-none text-[12px] text-gray-700 placeholder-[#888888ED]"
-            />
-            <img src={apartments} alt="apartment" className="w-5" />
-          </div>
+         <div
+  className="relative poppins flex items-center justify-between w-auto xl:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3 cursor-pointer"
+  onClick={() => setPropertyTypeOpen(!propertyTypeOpen)}
+>
+
+  <span
+    className={`text-[12px] ${
+      propertyType
+        ? "text-gray-800 text-[14px]"
+        : "text-[#888888ED]"
+    }`}
+  >
+    {propertyType || "Property Type"}
+  </span>
+
+  <img src={apartments} alt="apartment" className="w-5" />
+
+  {propertyTypeOpen && (
+
+    <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg z-50 max-h-[250px] overflow-y-auto scrollbar-hide">
+
+      {propertyOptions.map((option) => (
+
+        <div
+          key={option}
+          onClick={() => {
+            setPropertyType(option);
+            setPropertyTypeOpen(false);
+          }}
+          className="px-4 py-3 text-sm cursor-pointer hover:bg-lime-50"
+        >
+          {option}
+        </div>
+
+      ))}
+
+    </div>
+
+  )}
+
+</div>
 
 
 
@@ -117,7 +177,7 @@ function PropertySearch() {
 
 
           <div className="flex justify-center">
-            <button className="instrument-sans z-10 w-[152px] sm:w-[220px] h-[52px] md:w-[220px] lg:w-[140px] xl:w-[152px] bg-[#6ABD11ED] text-white font-[600] rounded-[17px] text-[15px] mx-auto lg:mr-[10px]">
+            <button className="instrument-sans z-10 w-[152px] sm:w-[220px] h-[52px] md:w-[220px] lg:w-[140px] xl:w-[152px] bg-[#6ABD11ED] text-white font-[600] rounded-[17px] text-[15px] mx-auto lg:mr-[10px]" onClick={handleSearch}>
               Search Now
             </button>
           </div>

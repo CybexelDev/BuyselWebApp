@@ -10,6 +10,7 @@ import { handleGoogleLogin, sendFacebookToken, userLogin } from '../../../Api/us
 
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
+import { toast } from 'sonner';
 
 const UserForm = ({ setSignup,onForgot }) => {
   const [login, setLogin] = useState({ username: '', password: '' })
@@ -39,6 +40,8 @@ const UserForm = ({ setSignup,onForgot }) => {
           localStorage.setItem('id', response?.user?.id);
 
         navigate('/')
+        toast.success(`Hello ${response?.user?.name}`)
+
 
       } else {
         console.log("Invalid credentials");
@@ -74,6 +77,7 @@ const UserForm = ({ setSignup,onForgot }) => {
 
         navigate("/");
         console.log(response, "Login successs and data sented to login component");
+        toast.success(`Hello ${response?.user?.name}`)
 
       } catch (error) {
         console.error('Login failed:', error.response?.data || error.message);

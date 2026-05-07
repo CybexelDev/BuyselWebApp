@@ -75,6 +75,34 @@ export const changeAgentPassword = async (currentPassword, newPassword, confirmP
   }
 };
 
+export const resendAgentForgotOtp = async (email) => {
+
+  const formData = new FormData();
+
+  formData.append("email", email);
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}agent/resent-forgot-otp/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return result.data;
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
+
 export const updateAgentProfile = async (formData) => {
   try {
     const data = new FormData();
@@ -223,7 +251,116 @@ export const getPropertyData = async () => {
   }
 };
 
+export const verifyAgentForgotOtp = async (otpValue, email) => {
 
+  const formData = new FormData();
+
+  formData.append("otp", otpValue);
+  formData.append("email", email);
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}agent/verify-forgot-otp/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (result.data.reset_token) {
+
+      return result.data;
+
+    } else {
+
+      return false;
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
+export const agentChangePasswordReset = async (newPassword) => {
+
+  const formData = new FormData();
+
+  formData.append("new_password", newPassword);
+
+  const resetToken = localStorage.getItem("reset_token");
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}agent/change-password/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${resetToken}`,
+        },
+      }
+    );
+
+    if (result.data.message === "Password changed successfully") {
+
+      return result.data;
+
+    } else {
+
+      return false;
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
+
+export const agentForgotPassword = async (email) => {
+
+  const formData = new FormData();
+
+  formData.append("email", email);
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}agent/forgot-password/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (result.data.message === "OTP sent to email") {
+
+      return result.data;
+
+    } else {
+
+      return false;
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
 
 export const postProperty = async (data) => {
   try {

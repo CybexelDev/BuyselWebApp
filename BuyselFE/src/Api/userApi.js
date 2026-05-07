@@ -6,31 +6,87 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
 export const userRegister = async (name, email, mobail, password, confirm_password) => {
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("mobail", mobail);
-    formData.append("password", password);
-    formData.append("confirm_password", confirm_password);
-    try {
-        const result = await axios.post(`${BASE_URL}user/register/`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        console.log(result.data.message == "OTP sent to email");
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("mobail", mobail);
+  formData.append("password", password);
+  formData.append("confirm_password", confirm_password);
+  try {
+    const result = await axios.post(`${BASE_URL}user/register/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(result.data.message == "OTP sent to email");
 
-        if (result.data.message == "OTP sent to email") {
-            return result.data;
-        } else {
-            return false;
-        }
-
-    } catch (error) {
-        console.error("API error:", error);
-        return false;
+    if (result.data.message == "OTP sent to email") {
+      return result.data;
+    } else {
+      return false;
     }
+
+  } catch (error) {
+    console.error("API error:", error);
+    return false;
+  }
 };
+
+export const forgotPassword = async (email) => {
+  const formData = new FormData();
+  formData.append("email", email);
+
+  try {
+    const result = await axios.post(
+      `${BASE_URL}user/forgot-password/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (result.data.message === "OTP sent successfully") {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Forgot password error:", error);
+    return false;
+  }
+};
+
+
+
+export const verifyForgotOtp = async (otpValue, email) => {
+  const formData = new FormData();
+  formData.append("otp", otpValue);
+  formData.append("email", email);
+
+  try {
+    const result = await axios.post(
+      `${BASE_URL}user/verify-forgot-otp/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (result.data.message === "OTP verified") {
+      return result.data;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Verify OTP error:", error);
+    return false;
+  }
+};
+
 
 export const getNearbyProperties = async (lat, lng) => {
   try {
@@ -41,10 +97,11 @@ export const getNearbyProperties = async (lat, lng) => {
       },
     });
 
-   return res.data.data.map((item) => ({
+    return res.data.data.map((item) => ({
       ...item,
       images: item.images, 
     }));  } catch (error) {
+
     console.log("Nearby properties error:", error);
     return [];
   }
@@ -70,31 +127,33 @@ export const otpSent = async (otpValue, email) => {
     } catch (error) {
         console.error("API error:", error);
         return false;
+
     }
+
 };
 
 
 export const reSentOtp = async (email) => {
-    try {
-        const formData = new FormData();
-        formData.append("email", email);
+  try {
+    const formData = new FormData();
+    formData.append("email", email);
 
-        const result = await axios.post(`${BASE_URL}user/resent-otp/`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        
-        if (result.data.message == "OTP resent successfully") {
-            return result.data;
-        } else {
-            return false
-        }
+    const result = await axios.post(`${BASE_URL}user/resent-otp/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
-    } catch (error) {
-        console.log(error);
-
+    if (result.data.message == "OTP resent successfully") {
+      return result.data;
+    } else {
+      return false
     }
+
+  } catch (error) {
+    console.log(error);
+
+  }
 }
 
 
@@ -119,45 +178,83 @@ export const userLogin = async (username, password) => {
             return result.data;
         }
         return false;
-    } catch (error) {
-        console.error("API error:", error);
-        return false;
-    }
+  } catch (error) {
+    console.error("API error:", error);
+    return false;
+  }
 };
 
 
 export const handleGoogleLogin = async ({ tokenResponse }) => {
 
-    try {
-        const res = await axios.post(`${BASE_URL}auth/google/login/`, {
-            access_token: tokenResponse.access_token,
-        });
+  try {
+    const res = await axios.post(`${BASE_URL}auth/google/login/`, {
+      access_token: tokenResponse.access_token,
+    });
 
-        if (res.data.message && res.data.access) {
-            return res.data;
+    if (res.data.message && res.data.access) {
+      return res.data;
 
-        } else {
-            return false
-        }
-
-    } catch (error) {
-        console.log(error, "Login filed");
-
+    } else {
+      return false
     }
+
+  } catch (error) {
+    console.log(error, "Login filed");
+
+  }
 }
 
+export const changePasswordReset = async (newPassword) => {
+
+  const formData = new FormData();
+
+  formData.append("new_password", newPassword);
+
+  const resetToken = localStorage.getItem("reset_token");
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}user/change-password/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${resetToken}`,
+        },
+      }
+    );
+
+    if (result.data.message === "Password changed successfully") {
+
+      return result.data;
+
+    } else {
+
+      return false;
+
+    }
+
+  } catch (error) {
+
+    console.log("Change password error:", error);
+
+    return false;
+  }
+};
 
 export const sendFacebookToken = async (accessToken) => {
-    try {
-        const res = await api.post("/auth/facebook/", {
-            access_token: accessToken,
-        });
+  try {
+    const res = await api.post("/auth/facebook/", {
+      access_token: accessToken,
+    });
 
-        console.log(res.data, "Facebook login success");
+    console.log(res.data, "Facebook login success");
 
-    } catch (error) {
-        console.log(error);
-    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 
@@ -165,34 +262,61 @@ export const sendFacebookToken = async (accessToken) => {
 
 export const getProperty = async (filters) => {
 
-    try {
-         const userId = localStorage.getItem("id");
+  try {
+    const userId = localStorage.getItem("id");
 
         const result = await api.get(`${BASE_URL}all-properties/`, {
             params: {
                 ...filters,
-                id: userId,
             },
         });
         return result.data;
 
-    } catch (error) {
-        console.log(error);
-    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
+export const resendForgotOtp = async (email) => {
+
+  const formData = new FormData();
+
+  formData.append("email", email);
+
+  try {
+
+    const result = await axios.post(
+      `${BASE_URL}user/resent-forgot-otp/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return result.data;
+
+  } catch (error) {
+
+    console.log(error);
+
+    return false;
+  }
+};
+
 export const getWishlist = async () => {
-    try {
-        const userId = localStorage.getItem("id");
-        const result = await api.get(`wishlist/`, {
-            params: {
-                id: userId,
-            },
-        });
-        return result.data;
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    const userId = localStorage.getItem("id");
+    const result = await api.get(`wishlist/`, {
+      params: {
+        id: userId,
+      },
+    });
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
@@ -223,14 +347,14 @@ export const clearWishlist = async () => {
   }
 };
 
- export const sendEnquiry = async (formData) => {
+export const sendEnquiry = async (formData) => {
   try {
     const data = new FormData();
 
     data.append("name", formData.name);
-    data.append("contact", formData.contact);        
-    data.append("pin_code", formData.pincode);       
-    data.append("messages_text", formData.message);   
+    data.append("contact", formData.contact);
+    data.append("pin_code", formData.pincode);
+    data.append("messages_text", formData.message);
 
     const res = await axios.post(
       `${BASE_URL}agent/inbox-message/`,
@@ -256,11 +380,11 @@ export const getPropertyDetail = async (id) => {
         const result = await axios.get(`${BASE_URL}property-detail/${id}/`,          
       );
 
-        return result.data;
-    } catch (error) {
-        console.log("Property detail error:", error);
-        return false;
-    }
+    return result.data;
+  } catch (error) {
+    console.log("Property detail error:", error);
+    return false;
+  }
 }
 
 export const sendPropertyEnquiry = async (formData) => {
@@ -268,7 +392,7 @@ export const sendPropertyEnquiry = async (formData) => {
     const res = await api.post(
       `${BASE_URL}enquiries/`,
       formData
-    ); 
+    );
 
     return res.data;
   } catch (error) {
@@ -352,34 +476,34 @@ export const getBlogById = async (id) => {
 };
 
 export const addToWishlist = async ({ id }) => {
-    try {
-        const formData = new FormData();
-        formData.append('id', id);
-        const result = await api.post(`wishlist/`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+  try {
+    const formData = new FormData();
+    formData.append('id', id);
+    const result = await api.post(`wishlist/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
 
-        return result.data;
-    } catch (error) {
-        console.log("Error in postLoginNumber:", error);
-        throw error;
-    }
+    return result.data;
+  } catch (error) {
+    console.log("Error in postLoginNumber:", error);
+    throw error;
+  }
 };
 
 export const removeToWishlist = async ({ id }) => {
-    try {
-        const result = await api.delete(`${BASE_URL}wishlist/`, {
-            data: {
-                property_id: id, 
-            },
-        });
-        return result.data;
-    } catch (error) {
-        console.log("Error in postLoginNumber:", error);
-        throw error;
-    }
+  try {
+    const result = await api.delete(`${BASE_URL}wishlist/`, {
+      data: {
+        property_id: id,
+      },
+    });
+    return result.data;
+  } catch (error) {
+    console.log("Error in postLoginNumber:", error);
+    throw error;
+  }
 };
 
 
@@ -387,7 +511,7 @@ export const getFeatured = async () => {
   try {
     const res = await axios.get(`${BASE_URL}featured/`);
     return res.data;
-    
+
   } catch (err) {
     console.log(err);
     return null;
@@ -397,45 +521,46 @@ export const getFeatured = async () => {
 
 
 export const getAgents = async (category) => {
-
     try {
         const result = await api.get(`${BASE_URL}agents/listing/`, {
             params: category,
         });
         return result.data;
 
-    } catch (error) {
-        console.log(error);
-    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-export const getProfile = async () => { 
-    try {
-        const result = await api.get(`${BASE_URL}profile/`);
-       
-            return result.data;
+export const getProfile = async () => {
+  try {
+    const result = await api.get(`${BASE_URL}profile/`);
 
-    } catch (error) {
-        console.log(error);
-    }
+    return result.data;
+
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
 
 export const agentContactForm = async(contactData, agentId)=>{
     try{
+
     const data = new FormData();
 
-    data.append("first_name", contactData.first_name);   
-    data.append("last_name", contactData.last_name);     
-    data.append("contact_number", contactData.phone);   
-    data.append("email", contactData.email);           
-    data.append("message", contactData.message);        
+    data.append("first_name", contactData.first_name);
+    data.append("last_name", contactData.last_name);
+    data.append("contact_number", contactData.phone);
+    data.append("email", contactData.email);
+    data.append("message", contactData.message);
 
     const res = await api.post(
       `agent/contact/${agentId}/`, 
         data,
         {
+
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -443,16 +568,16 @@ export const agentContactForm = async(contactData, agentId)=>{
     )
     return res.data
 
-    }catch(err){
-        console.log("error:", err);
-        return false
-    }
+  } catch (err) {
+    console.log("error:", err);
+    return false
+  }
 }
 
 
-export const getTestimonial= async () => {
+export const getTestimonial = async () => {
   try {
-const result = await axios.get(`${BASE_URL}testimonial/list/`);
+    const result = await axios.get(`${BASE_URL}testimonial/list/`);
     if (result.data?.data) {
       return result.data.data;
     }
@@ -463,11 +588,12 @@ const result = await axios.get(`${BASE_URL}testimonial/list/`);
     return [];
   }
 };
+
 export const getReviews = async (agentId) => {
   try {
     const res = await axios.get(`${BASE_URL}agents/${agentId}/reviews/`);
     return res.data;
-    
+
   } catch (err) {
     console.log(err);
     return null;
@@ -485,13 +611,13 @@ export const toggleReviewLike = async (reviewId) => {
 };
 
 export const getAgentsDetails = async (id) => {
-    try {
-        const result = await api.get(`${BASE_URL}agent/detail/${id}/`, );
-        
-        return result.data;
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    const result = await api.get(`${BASE_URL}agent/detail/${id}/`,);
+
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
@@ -517,37 +643,37 @@ export const getFilterOptions = async () => {
 };
 
 export const addReviewToServer = async ({ rating, review, id }) => {
-    try {
-        const formData = new FormData();
-        formData.append("rating", rating);
-        formData.append("review", review);
+  try {
+    const formData = new FormData();
+    formData.append("rating", rating);
+    formData.append("review", review);
 
-        const res = await api.post(
-            `${BASE_URL}agents/reviews/submit/${id}/`,
-            formData
-        );
+    const res = await api.post(
+      `${BASE_URL}agents/reviews/submit/${id}/`,
+      formData
+    );
 
-        console.log(res, "SUCCESS RESPONSE");
-        return res.data;
+    console.log(res, "SUCCESS RESPONSE");
+    return res.data;
 
     } catch (error) {
         if (error.response?.status === 400) {
     toast.warning("You already reviewed this agent");
   }
-        console.log("ERROR:", error.response?.data || error.message);
-        return null;
-    }
-}; 
+    console.log("ERROR:", error.response?.data || error.message);
+    return null;
+  }
+};
 
 
 export const deletReview = async ({ id }) => {
-    try {
-        const result = await api.delete(`${BASE_URL}reviews/delete/${id}/`,);
-        return result.data;
-    } catch (error) {
-        console.log("Error in postLoginNumber:", error);
-        throw error;
-    }
+  try {
+    const result = await api.delete(`${BASE_URL}reviews/delete/${id}/`,);
+    return result.data;
+  } catch (error) {
+    console.log("Error in postLoginNumber:", error);
+    throw error;
+  }
 };
 
 export const updateProfile = async (formData) => {
@@ -563,7 +689,7 @@ export const updateProfile = async (formData) => {
 export const updateProfileImage = async (file) => {
   try {
     const formData = new FormData();
-    formData.append("image", file); 
+    formData.append("image", file);
 
     const res = await api.put("profile/image/", formData, {
       headers: {
@@ -586,6 +712,7 @@ export const getMyActivity = async () => {
     console.log(error);
   }
 };
+
 
 export const changePassword = async (data) => {
   try {
@@ -640,37 +767,56 @@ export const searchProperties = async (query) => {
     }   
     
   } catch (error) {
-     console.log("Search error:", error);
-     return [];
+    console.log("Search error:", error);
+    return [];
   }
 
-  }
+}
 
 
-  export const searchAgents = async (query) => {
+export const searchAgents = async (query) => {
   try {
     const res = await api.get(`agents/search/?search=${query}`);
     if (res) {
       return res.data;
-    }   
-    
+    }
+
   } catch (error) {
-     console.log("Search error:", error);
-     return [];
+    console.log("Search error:", error);
+    return [];
   }
 
-  }
+}
 
-  export const getCity = async () => {
+export const getCity = async () => {
   try {
     const res = await api.get(`agents/cities/`);
     if (res) {
       return res.data.cities;
-    }   
-    
+    }
+
   } catch (error) {
-     console.log("Search error:", error);
-     return [];
+    console.log("Search error:", error);
+    return [];
   }
 
+}
+
+
+export const getCityData = async (location) => {
+  try {
+      const formData = new FormData();
+      formData.append("city", location);
+
+    const res = await api.post(`agents/cities/`, formData);
+
+    if (res) {
+      console.log(res.data, "agent City data searching");
+      return res.data.data;
+    }
+
+  } catch (error) {
+    console.log("Search error:", error);
+    return [];
   }
+}

@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
 import logo from "../../../assets/images/logo/logo.png";
 import agenthero from "../../../assets/images/agenthero/agenthero1.png";
 import { Icon } from "@iconify/react";
+import { getCityData } from "../../../Api/userApi";
 
-function Header({ onchange, location }) {
+function Header({ onchange, location, cityDataSend }) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [open, setOpen] = useState(false);
   const [selecetdLocation, setSelectedLocation] = useState("Location");
+  
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -61,6 +63,18 @@ function Header({ onchange, location }) {
     Q 0,0 ${cornerRadius},0
     Z
   `;
+
+
+  useEffect(() => {
+   
+    const getCityDatas = async () => {
+      const city = await getCityData(selecetdLocation);
+      if (city) {
+        cityDataSend(city); 
+      }
+    };
+    getCityDatas();
+  }, [selecetdLocation]);
 
   return (
     <div
