@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { otpSent, reSentOtp } from "../../../Api/userApi";
+import { otpSent, reSentOtp,verifyForgotOtp,resendForgotOtp } from "../../../Api/userApi";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { verifyAgentForgotOtp ,resendAgentForgotOtp } from "../../../Api/agentsApi";
+import { toast } from "sonner";
 
-const OtpForm = ({ email }) => {
+const OtpForm = ({ email ,type ,onVerifySuccess}) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timeLeft, setTimeLeft] = useState(120);
 
@@ -30,44 +32,93 @@ const OtpForm = ({ email }) => {
       inputs.current[index - 1].focus();
     }
   };
+const handleOtp = async () => {
+  try {
+    const otpValue = otp.join("");
 
-  const handleOtp = async () => {
-    try {
-      const otpValue = otp.join("");
-      const data = await otpSent(otpValue, email)
+    // FORGOT PASSWORD FLOW
+   if (type === "forgot" || type === "agent-forgot") {
 
-      if (data) {
+  const data =
+    type === "agent-forgot"
+      ? await verifyAgentForgotOtp(otpValue, email)
+      : await verifyForgotOtp(otpValue, email);
 
-        dispatch({
-          type: 'SET_USER',
-          payload: {
-            userName: data?.user?.name,
-            accessToken: data?.access,
-            userId: data?.user?.id,
-            image: data?.user.image,
-            verificationStatus: data?.user?.auth_provider,
-          }
-        })
+  if (data) {
 
-        localStorage.setItem('accessToken', data?.access);
-        localStorage.setItem('refreshToken', data?.refresh);
-        localStorage.setItem('id', data?.user?.id);
+    localStorage.setItem(
+      "reset_token",
+      data.reset_token
+    );
 
-        navigate('/')
-      }
-    } catch (error) {
-
-    }
+    onVerifySuccess();
   }
 
+  return;
+}
 
-  const resendOtp = async () => {
-    try {
-      const data = await reSentOtp(email)
-    } catch (error) {
+    const data = await otpSent(otpValue, email);
+
+    if (data) {
+
+      dispatch({
+        type: 'SET_USER',
+        payload: {
+          userName: data?.user?.name,
+          accessToken: data?.access,
+          userId: data?.user?.id,
+          image: data?.user.image,
+          verificationStatus: data?.user?.auth_provider,
+        }
+      });
+
+      localStorage.setItem('accessToken', data?.access);
+      localStorage.setItem('refreshToken', data?.refresh);
+      localStorage.setItem('id', data?.user?.id);
+
+      navigate('/');
+      toast.success(`hello ${data?.user?.name} `)
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+ 
+const resendOtp = async () => {
+
+  try {
+
+    let data;
+
+    if (type === "forgot") {
+
+      data = await resendForgotOtp(email);
+
+    } else if (type === "agent-forgot") {
+
+      data = await resendAgentForgotOtp(email);
+
+    } else {
+
+      data = await reSentOtp(email);
 
     }
+
+    if (data) {
+
+      toast.success("OTP resent successfully");
+
+      setTimeLeft(120);
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
   }
+};
 
   useEffect(() => {
 

@@ -1,29 +1,50 @@
 import { Lock } from "lucide-react";
 import { useState } from "react";
-
-const ResetPasswordForm = ({ email, setIsReset }) => {
+import { toast } from "sonner";
+import { changePasswordReset } from "../../../Api/userApi";
+import { agentChangePasswordReset} from "../../../Api/agentsApi";
+const ResetPasswordForm = ({ email, setIsReset,type }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+const handleSubmit = async () => {
 
-  const handleSubmit = () => {
-    if (!password || !confirmPassword) {
-      alert("Please fill all fields");
-      return;
+  if (!password || !confirmPassword) {
+    toast.warning("Please fill all fields");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    toast.error("Passwords do not match");
+    return;
+  }
+
+  try {
+
+    const data =
+      type === "agent"
+        ? await agentChangePasswordReset(password)
+        : await changePasswordReset(password);
+
+    if (data) {
+
+      localStorage.removeItem("reset_token");
+
+      toast.success("Password changed successfully");
+
+      setIsReset(false);
+
+    } else {
+
+      toast.error("Something went wrong");
+
     }
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+  } catch (error) {
 
-    console.log("Reset password for:", email);
-    console.log("New password:", password);
+    console.log(error);
 
-    // 👉 call API here
-
-    // after success
-    setIsReset(false); // go back to login (or you can redirect)
-  };
+  }
+};
 
   return (
     <>

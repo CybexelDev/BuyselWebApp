@@ -5,6 +5,12 @@ import { getAllPlans } from "../../Api/userApi";
 import { MessageCircle, Phone } from "lucide-react";
 const PlansLayout = ({showtabs=true ,padding="py-10"}) => {
   const [plansData, setPlansData] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+const [selectedPlan, setSelectedPlan] = useState(null);
+const handleSelectPlan = (plan) => {
+  setSelectedPlan(plan);
+  setOpenModal(true);
+};
   useEffect(() => {
   const fetchPlans = async () => {
     try {
@@ -159,7 +165,7 @@ const plans = rawPlans.map((plan) => ({
           <button
             key={role}
             onClick={() => setActive(role)}
-            className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[24px] lexend font-semibold transition-all duration-300 ${
+            className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] lexend font-[550] transition-all duration-300 ${
               active === role
                 ? "bg-[#8AD32E] text-white shadow"
                 : "text-[#7CB305]"
@@ -218,7 +224,9 @@ const plans = rawPlans.map((plan) => ({
             </div>
 
 
-            <button className="mt-6 w-full bg-[#8AD32E] text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition">
+            <button className="mt-6 w-full bg-[#8AD32E] text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition"
+              onClick={() => handleSelectPlan(plan)}
+>
               Select Plan
             </button>
 
@@ -232,8 +240,8 @@ const plans = rawPlans.map((plan) => ({
 
 
       <div className="hidden lg:grid grid-cols-4 
-gap-4 lg:gap-6 xl:gap-2 
-max-w-6xl mx-auto items-start">
+gap-4 lg:gap-6 
+max-w-7xl mx-auto items-start">
 
         <div className="flex flex-col justify-center h-[120px]">
           <h1 className="text-2xl lg:text-3xl font-semibold mb-2 lexend">
@@ -284,7 +292,7 @@ max-w-6xl mx-auto items-start">
           <div key={plan.name} className="mt-2 flex flex-col items-center ml-25">
 
             <div className="bg-white 
-      w-[160px] lg:w-[180px] xl:w-[200px]
+      w-[160px] lg:w-[180px] xl:w-[280px]
       rounded-3xl p-4 lg:p-6 border-2 shadow-lg border-[#F1FDDA]">
 
               {features.map((_, i) => (
@@ -300,7 +308,9 @@ max-w-6xl mx-auto items-start">
 
             </div>
 
-            <button className="mt-6 
+            <button 
+              onClick={() => handleSelectPlan(plan)}
+            className="mt-6 
       w-[160px] lg:w-[180px] xl:w-[200px]
       bg-[#8AD32E] hover:bg-[#7ABF28]
       text-white font-bold py-3 rounded-xl lexend">
@@ -361,7 +371,68 @@ max-w-6xl mx-auto items-start">
 
 </div>
 
+{
+  openModal && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 lexend "   onClick={() => setOpenModal(false)}
+>
 
+      <div className="bg-white w-full max-w-lg rounded-3xl p-6 relative max-h-[90vh] overflow-y-auto scrollbar-hide">
+
+        <button
+          onClick={() => setOpenModal(false)}
+          className="absolute top-4 right-4 text-black text-2xl"
+        >
+          ✕
+        </button>
+
+        <div className="text-center">
+
+          <h2 className="text-3xl font-semibold lexend">
+            {selectedPlan?.name}
+          </h2>
+
+          <div className="inline-block mt-3 bg-[#8AD32E] text-white px-6 py-2 rounded-full text-xl font-bold">
+            {selectedPlan?.price}
+          </div>
+
+        </div>
+
+        <div className="mt-8 space-y-3">
+
+          {features.map((feature, index) => (
+
+            <div
+              key={index}
+              className="flex items-center justify-between bg-[#F7FCEB] rounded-2xl px-4 py-3"
+            >
+
+              <span className="text-sm font-medium text-gray-700">
+                {feature}
+              </span>
+
+              <div>
+                {renderIcon(selectedPlan?.data[index])}
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+        <button
+          className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white
+          text-black py-4 rounded-2xl font-semibold text-lg transition flex gap-2 justify-center cursor-pointer " 
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M2 4.5h6.757a3 3 0 0 1 2.122.879L14 8.5m-9 5H2m6.5-6l2 2a1.414 1.414 0 1 1-2 2L7 10c-.86.86-2.223.957-3.197.227L3.5 10"/><path d="M5 11v4.5c0 1.886 0 2.828.586 3.414S7.114 19.5 9 19.5h9c1.886 0 2.828 0 3.414-.586S22 17.386 22 15.5v-3c0-1.886 0-2.828-.586-3.414S19.886 8.5 18 8.5H9.5"/><path d="M15.25 14a1.75 1.75 0 1 1-3.5 0a1.75 1.75 0 0 1 3.5 0"/></g></svg>
+          CHECKOUT
+        </button>
+
+      </div>
+
+    </div>
+  )
+}
     </div>
   );
 };

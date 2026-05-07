@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
 
-const AgentForm = () => {
+const AgentForm = ({onForgot}) => {
     const [login, setLogin] = useState({ email: '', password: '' })
     const [loading, setLoading] = useState(false);
 
@@ -103,7 +103,7 @@ const AgentForm = () => {
 
                 <p>
                     Forgot password?{" "}
-                    <span className="text-[#6abd11] cursor-pointer">
+                    <span className="text-[#6abd11] cursor-pointer" onClick={onForgot}>
                         Change Password
                     </span>
                 </p>
