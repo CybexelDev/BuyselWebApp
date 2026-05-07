@@ -3,7 +3,7 @@ import "./userreview.css";
 import { FaStar } from "react-icons/fa";
 import Modal from "../Modal/Modal";
 import { Star } from "lucide-react";
-import { addReviewToServer, deletReview } from "../../Api/userApi";
+import { addReviewToServer, deletReview, toggleReviewLike } from "../../Api/userApi";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { toast } from "sonner";
 function UserReview({ review, id, triggerRefresh }) {
@@ -50,6 +50,25 @@ function UserReview({ review, id, triggerRefresh }) {
       triggerRefresh();
     }
   }
+
+  const handleLike = async (reviewId) => {
+  const res = await toggleReviewLike(reviewId);
+    console.log("API response:", res);
+
+  if (!res) return;
+
+  setReviews((prev) =>
+    prev.map((r) =>
+      r.id === reviewId
+        ? {
+            ...r,
+            total_likes: res.total_likes,
+            is_liked: res.liked, 
+          }
+        : r
+    )
+  );
+};
 
 
 
@@ -176,23 +195,28 @@ function UserReview({ review, id, triggerRefresh }) {
                   </p>
 
                   <div className="flex mt-auto mb-3 justify-end">
-                    <div className="flex items-center gap-2">
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3.111 6.88125C2.6985 7.10175 2.4375 7.53 2.4375 8.001V15.0397C2.4375 15.7522 3.0225 16.3125 3.723 16.3125H13.1138C13.548 16.3125 13.8818 16.0095 14.0918 15.7687C14.3295 15.4972 14.5553 15.1335 14.7623 14.7315C15.18 13.9215 15.5723 12.861 15.8565 11.8117C16.1385 10.7677 16.3275 9.68775 16.3118 8.84475C16.3043 8.43075 16.2465 8.01225 16.0778 7.67775C15.8925 7.308 15.5505 7.01625 15.0548 7.01625H11.1173C11.2793 6.29625 11.4998 5.1435 11.4203 4.11525C11.376 3.54675 11.2358 2.9445 10.878 2.4735C10.4963 1.9725 9.92025 1.6875 9.1665 1.6875C8.73 1.6875 8.322 1.92 8.10525 2.304M8.10525 2.304L7.14525 4.0035C6.76125 4.683 6.17025 5.1885 5.45175 5.6355C4.97325 5.93325 4.48125 6.18075 3.972 6.438C3.6831 6.58204 3.39608 6.7298 3.111 6.88125"
-                          fill="black"
-                        />
-                      </svg>
-                      <span className="host-grotesk text-[12px] font-[500] text-[#9B9B9B]">
-                        {review?.total_likes} Likes
-                      </span>
-                    </div>
+                   <div
+  onClick={() => handleLike(review.id)}
+  className="flex items-center gap-2 cursor-pointer group"
+>
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill={review?.is_liked ? "#84CC16" : "black"}
+    className="group-hover:scale-110 transition"
+  >
+    <path d="M3.111 6.88125C2.6985 7.10175 2.4375 7.53 2.4375 8.001V15.0397C2.4375 15.7522 3.0225 16.3125 3.723 16.3125H13.1138C13.548 16.3125 13.8818 16.0095 14.0918 15.7687C14.3295 15.4972 14.5553 15.1335 14.7623 14.7315C15.18 13.9215 15.5723 12.861 15.8565 11.8117C16.1385 10.7677 16.3275 9.68775 16.3118 8.84475C16.3043 8.43075 16.2465 8.01225 16.0778 7.67775C15.8925 7.308 15.5505 7.01625 15.0548 7.01625H11.1173C11.2793 6.29625 11.4998 5.1435 11.4203 4.11525C11.376 3.54675 11.2358 2.9445 10.878 2.4735C10.4963 1.9725 9.92025 1.6875 9.1665 1.6875C8.73 1.6875 8.322 1.92 8.10525 2.304" />
+  </svg>
+
+  <span
+    className={`text-[12px] font-[500] ${
+      review?.is_liked ? "text-[#84CC16]" : "text-[#9B9B9B]"
+    }`}
+  >
+    {review?.total_likes || 0} Likes
+  </span>
+</div>
                   </div>
                 </div>
               </div>

@@ -86,9 +86,15 @@ export default function LoginAndSignup() {
       />
     ) : (
       <ForgotPasswordForm
-        setOtpSent={setOtpSent}
-        setEmail={setEmail}
-      />
+  setOtpSent={setOtpSent}
+  setEmail={setEmail}
+  onBackToLogin={() => {
+    setIsForgot(false);
+    setOtpSent(false);
+    setEmail("");
+    setActiveTab("user");
+  }}
+/>
     )
 
   ) : isReset ? (

@@ -153,7 +153,7 @@ const UserForm = ({ setSignup,onForgot }) => {
         />
       </div>
 
-      <div className="text-right text-sm text-gray-500 mb-5 cursor-pointer" onClick={onForgot}>
+      <div className="text-right text-sm text-gray-500 mb-5 cursor-pointer hover:text-gray-900" onClick={onForgot}>
         Forgot Password?
       </div>
 

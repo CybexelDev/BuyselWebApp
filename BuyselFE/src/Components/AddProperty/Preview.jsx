@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { PlayCircle } from "lucide-react";
+import { Landmark, PlayCircle } from "lucide-react";
 import Propertycard from "../PropertyCard/Propertycard";
 import { GraduationCap } from "lucide-react";
 
@@ -22,21 +22,25 @@ const property = {
   city: formData.city,   // ✅ FIX
   location: `${formData.city}, ${formData.state}`,
   price:
-    formData.purpose === "sale"
+    formData.purpose === "Sale"
       ? formData.pricing?.totalPrice
-      : formData.purpose === "rent"
+      : formData.purpose === "Rent"
       ? formData.pricing?.monthlyRent
       : formData.pricing?.totalAmount,
   perprice: formData.pricing?.pricePerUnit || "", // ✅ optional
+  deposit: formData.pricing?.deposit || "", // ✅ optional
+
   unit: formData.pricing?.unit || "",  
   land_area: formData.squareFeet, // ✅ FIX
   owner: formData.owner,
   phone: formData.phone,       // ✅ FIX
-  whatsapp: formData.phone,    // ✅ FIX (reuse phone if same)
+  purpose: formData.purpose,
+    whatsapp: formData.phone,    // ✅ FIX (reuse phone if same)
+    // ✅ FIX (reuse phone if same)
 images: formData.images?.map((img) => img.preview || img) || []};
 
 const pricingDetails = () => {
-  if (formData.purpose === "sale") {
+  if (formData.purpose === "Sale") {
     return [
       {
         label: "Total Price",
@@ -49,7 +53,7 @@ const pricingDetails = () => {
     ];
   }
 
-  if (formData.purpose === "rent") {
+  if (formData.purpose === "Rent") {
     return [
       {
         label: "Monthly Rent",
@@ -62,7 +66,7 @@ const pricingDetails = () => {
     ];
   }
 
-  if (formData.purpose === "lease") {
+  if (formData.purpose === "Lease") {
     return [
       {
         label: "Total Amount",
@@ -90,14 +94,16 @@ const pricingDetails = () => {
       name: item.name, // ✅ FIX HERE
     })) || [],
 
-  address: `${formData.city}, ${formData.state}`,
+  address: `${formData.city},${formData.district}, ${formData.state}`,
 };
 
 const nearbyPlaces =
-  formData.nearbyLandmarks?.map((item) => ({
+  formData.landmarks?.map((item) => ({
     name: item.name || "",
     distance: item.distance || "",
   })) || [];
+
+  console.log(nearbyPlaces, "Nearby Places");
 
 
 
@@ -112,7 +118,7 @@ const nearbyPlaces =
       <div className="grid lg:grid-cols-[340px_1fr] gap-8 items-start">
 
         <div className="sticky top-6 shadow-md">
-          <Propertycard property={property} />
+          <Propertycard property={property} hideWishlist={true}  />
         </div>
 
         <div className="space-y-6 pr-10" >
@@ -224,7 +230,7 @@ const nearbyPlaces =
         >
           <div className="flex items-center gap-2">
             <div className="bg-[#74C122] p-2 rounded-full text-white">
-              <GraduationCap size={14} />
+              <Landmark size={14} />
             </div>
 
             <span className="text-sm font-medium">

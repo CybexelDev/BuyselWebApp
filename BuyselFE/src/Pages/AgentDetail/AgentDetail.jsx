@@ -16,7 +16,6 @@ function AgentDetail() {
   const [agentsData, setAgentsData] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
-  console.log(agentsData, "zzzzzzzzzzzzzzzzzzzzzzzzzz");
   
 
   const agentData = {

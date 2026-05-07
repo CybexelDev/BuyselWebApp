@@ -34,7 +34,7 @@ export const premiumAgentLogin = async (email, password) => {
 
 export const getEnquiryDetail = async (id) => {
   try {
-    const res = await api.get(`/agent/enquiry/${id}/`);
+    const res = await api.get(`/enquiry-detail/${id}/`);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -153,7 +153,7 @@ export const deleteInboxMessage = async (id) => {
 
 export const getAgentEnquiries = async () => {
   try {
-    const res = await api.get("/agent/enquiries/");
+    const res = await api.get("/enquiry/");
     return res.data;
   } catch (err) {
     console.log(err);
@@ -176,7 +176,7 @@ export const registerAgent = async (data) => {
 
 export const getContactMessage = async()=>{
   try{
-    const result = await api.get("/agent/contacts");
+    const result = await api.get("/agent/contacts/");
 
     if(result.data?.data) {
       return result.data.data
@@ -233,8 +233,8 @@ export const postProperty = async (data) => {
 formData.append("category", data.category_id);
 formData.append("subcategory", data.subcategory);
 formData.append("purpose", data.purpose);
-    formData.append("label", data.title);
-    formData.append("description", data.description);
+  formData.append("label", data.title);
+formData.append("description", data.description);
 
 
  formData.append("city", data.city);
@@ -263,25 +263,24 @@ formData.append("sq_ft", data.squareFeet);
 
     let price = "";
 
-    if (data.purpose === "rent") {
-      price = data.pricing.monthlyRent;
-      formData.append("monthly_rent", data.pricing.monthlyRent);
-      formData.append("deposit", data.pricing.deposit);
-    }
-
-    if (data.purpose === "lease") {
-      price = data.pricing.totalAmount;
-      formData.append("total_amount", data.pricing.totalAmount);
-    }
-
-if (data.purpose === "sale") {
-  price = data.pricing.totalPrice;
-  formData.append("total_price", data.pricing.totalPrice);
-  // ✅ combine price + unit (space format)
-  const perPrice = `${data.pricing.pricePerUnit}/${data.pricing.unit}`;
-  formData.append("perprice", perPrice);
+  if (data.purpose === "Rent") {
+  price = data.pricing.monthlyRent;
+  formData.append("monthly_rent",data.pricing.monthlyRent);
+  formData.append("deposit",data.pricing.deposit);
 }
 
+if (data.purpose === "Lease") {
+  price = data.pricing.totalAmount;
+  formData.append("total_amount",data.pricing.totalAmount);
+}
+
+if (data.purpose === "Sale") {
+  price = data.pricing.totalPrice;
+  formData.append("total_price",data.pricing.totalPrice);
+  formData.append("perprice",
+    `${data.pricing.pricePerUnit}/${data.pricing.unit}`
+  );
+}
 formData.append("price", price);
 
 
@@ -397,27 +396,28 @@ export const updatePropertyListing = async (id, data) => {
     formData.append("phone", data.phone);
     formData.append("whatsapp", data.whatsapp);
 
-    let price = "";
+   let price = "";
 
-    if (data.purpose === "rent") {
-      price = data.pricing.monthlyRent;
-      formData.append("monthly_rent", data.pricing.monthlyRent);
-      formData.append("deposit", data.pricing.deposit);
-    }
-
-    if (data.purpose === "lease") {
-      price = data.pricing.totalAmount;
-      formData.append("total_amount", data.pricing.totalAmount);
-    }
-
-if (data.purpose === "sale") {
-  price = data.pricing.totalPrice;
-  formData.append("total_price", data.pricing.totalPrice);
-  const perPrice = `${data.pricing.pricePerUnit}/${data.pricing.unit}`;
-  formData.append("perprice", perPrice);
+if (data.purpose === "Rent") {
+  price = data.pricing.monthlyRent;
+  formData.append("monthly_rent",data.pricing.monthlyRent);
+  formData.append("deposit",data.pricing.deposit);
 }
 
-    formData.append("price", price);
+if (data.purpose === "Lease") {
+  price = data.pricing.totalAmount;
+  formData.append("total_amount",data.pricing.totalAmount);
+}
+
+if (data.purpose === "Sale") {
+  price = data.pricing.totalPrice;
+  formData.append("total_price",data.pricing.totalPrice);
+  formData.append("perprice",
+    `${data.pricing.pricePerUnit}/${data.pricing.unit}`
+  );
+}
+
+formData.append("price", price);
 
 formData.append(
   "field_values",

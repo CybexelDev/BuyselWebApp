@@ -1,7 +1,7 @@
 import { Mail } from "lucide-react";
 import { useState } from "react";
 
-const ForgotPasswordForm = ({setOtpSent, setEmail}) => {
+const ForgotPasswordForm = ({setOtpSent, setEmail, onBackToLogin}) => {
   const [localEmail, setLocalEmail] = useState("");
 
   const handleSubmit = () => {
@@ -42,6 +42,16 @@ const ForgotPasswordForm = ({setOtpSent, setEmail}) => {
       >
         Send OTP
       </button>
+
+      <p className="text-center text-sm mt-4">
+  Remember your password?{" "}
+  <span
+    className="text-green-600 cursor-pointer"
+    onClick={onBackToLogin}
+  >
+    Sign in
+  </span>
+</p>
     </>
   );
 };
