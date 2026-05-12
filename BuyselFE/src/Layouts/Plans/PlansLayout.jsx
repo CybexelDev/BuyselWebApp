@@ -3,10 +3,17 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getAllPlans } from "../../Api/userApi";
 import { MessageCircle, Phone } from "lucide-react";
+import { s } from "framer-motion/m";
+import { openRazorpay } from "../../utils/razorpay";
+
 const PlansLayout = ({showtabs=true ,padding="py-10"}) => {
   const [plansData, setPlansData] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 const [selectedPlan, setSelectedPlan] = useState(null);
+
+
+console.log(selectedPlan, "selected plan.............");
+
 const handleSelectPlan = (plan) => {
   setSelectedPlan(plan);
   setOpenModal(true);
@@ -23,6 +30,7 @@ const handleSelectPlan = (plan) => {
 
   fetchPlans();
 }, []);
+
 const getPlansByRole = () => {
   if (!plansData) return [];
 
@@ -126,9 +134,11 @@ const getPlanData = (plan) => {
 
 const plans = rawPlans.map((plan) => ({
   name: plan.name,
-  price: `₹ ${plan.price || plan.amount}`,
+  price: `${plan.price || plan.amount}`,
+  id: plan.id,
   data: getPlanData(plan),
 }));
+
   const renderIcon = (type) => {
     if (type === "check") {
       return (
@@ -165,7 +175,7 @@ const plans = rawPlans.map((plan) => ({
           <button
             key={role}
             onClick={() => setActive(role)}
-            className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] lexend font-[550] transition-all duration-300 ${
+            className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${
               active === role
                 ? "bg-[#8AD32E] text-white shadow"
                 : "text-[#7CB305]"
@@ -187,20 +197,16 @@ const plans = rawPlans.map((plan) => ({
           <div
             key={planIndex}
             className={`bg-white rounded-3xl p-6 shadow-lg border border-[#E6F4D7]
-      ${planIndex === 2 ? "md:col-span-2" : ""}`}
+            ${planIndex === 2 ? "md:col-span-2" : ""}`}
           >
-
             <div className="text-center mb-6">
               <h2 className="text-[28px] font-semibold text-[#1F1F1F]">
                 {plan.name}
               </h2>
-
               <div className="bg-[#8AD32E] inline-block px-6 py-2 rounded-full mt-3 text-xl font-semibold text-white">
                 {plan.price}
               </div>
             </div>
-
-
 
             <div className="space-y-3">
 
@@ -209,22 +215,18 @@ const plans = rawPlans.map((plan) => ({
                   key={feature}
                   className="flex justify-between items-center bg-[#F7FCEB] rounded-full px-4 py-3"
                 >
-
                   <span className="text-sm font-medium text-gray-700">
                     {feature}
                   </span>
-
                   <div className="flex items-center">
                     {renderIcon(plan.data[i])}
                   </div>
-
                 </div>
               ))}
 
             </div>
 
-
-            <button className="mt-6 w-full bg-[#8AD32E] text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition"
+            <button className="mt-6 w-full bg-[#8AD32E] text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
               onClick={() => handleSelectPlan(plan)}
 >
               Select Plan
@@ -240,8 +242,8 @@ const plans = rawPlans.map((plan) => ({
 
 
       <div className="hidden lg:grid grid-cols-4 
-gap-4 lg:gap-6 
-max-w-7xl mx-auto items-start">
+        gap-4 lg:gap-6 
+        max-w-7xl mx-auto items-start">
 
         <div className="flex flex-col justify-center h-[120px]">
           <h1 className="text-2xl lg:text-3xl font-semibold mb-2 lexend">
@@ -252,7 +254,6 @@ max-w-7xl mx-auto items-start">
             Subscribe to Premium today to save ₹50,000 on brokerage.
           </p>
         </div>
-
 
         {plans.map((plan) => (
           <div
@@ -266,7 +267,7 @@ max-w-7xl mx-auto items-start">
 
             <div className="bg-[#8AD32E] text-white 
       px-6 lg:px-8 py-1 rounded-full font-semibold lexend">
-              {plan.price}
+            ₹ {plan.price}
             </div>
           </div>
         ))}
@@ -351,7 +352,6 @@ max-w-7xl mx-auto items-start">
         <button className="flex items-center justify-center gap-2 border border-[#8AD32E] text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-[#eef7dd] transition w-full sm:w-auto">
           Chat with Us
         </button>
-
       </div>
     </div>
   </div>
@@ -392,7 +392,7 @@ max-w-7xl mx-auto items-start">
           </h2>
 
           <div className="inline-block mt-3 bg-[#8AD32E] text-white px-6 py-2 rounded-full text-xl font-bold">
-            {selectedPlan?.price}
+           ₹ {selectedPlan?.price}
           </div>
 
         </div>
@@ -421,6 +421,16 @@ max-w-7xl mx-auto items-start">
         </div>
 
         <button
+        onClick={() =>
+              openRazorpay({
+                amount: selectedPlan?.price,
+                name: "BuySel",
+                description: selectedPlan?.name,
+                user: { name: "Ashif", email: "test@gmail.com", phone: "9876543210" },
+                onSuccess: (res) => console.log("Property Payment", res),
+              })
+            }
+
           className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white
           text-black py-4 rounded-2xl font-semibold text-lg transition flex gap-2 justify-center cursor-pointer " 
         >
@@ -436,5 +446,6 @@ max-w-7xl mx-auto items-start">
     </div>
   );
 };
+
 
 export default PlansLayout;

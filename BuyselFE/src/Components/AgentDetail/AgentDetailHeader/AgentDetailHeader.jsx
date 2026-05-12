@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./agentdetail.css";
 import logo from "../../../assets/images/logo/logo.png";
-import { Mail, MapPin, Phone } from "lucide-react";
 import Navbar from "../../Navbar/Navbar";
-import seller from "../../../assets/images/propertDetail/seller.jpg";
 import crown from "../../../assets/images/agentDetail/crown.png";
+import elite from "../../../assets/images/agentDetail/elite.png";
 import { toast } from "sonner";
 const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
   const roleStyles = {
@@ -25,7 +24,7 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
 
     if (!token) {
       e.preventDefault(); // 🚫 stop redirect
-    toast.info("Please login to connect with agent");
+      toast.info("Please login to connect with agent");
       return;
     }
 
@@ -41,12 +40,12 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
   const handleCallClick = (e) => {
 
     const token = localStorage.getItem("accessToken");
- if (!token) {
+    if (!token) {
       e.preventDefault(); // 🚫 stop redirect
       toast.info("Please login to connect with agent");
       return;
     }
-   const url = `tel:${agentData?.phone_number}`;
+    const url = `tel:${agentData?.phone_number}`;
     window.open(url, "_self");
 
   }
@@ -98,13 +97,13 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
               {agentData?.agent_type !== "basic" && (
                 <div
                   className={`
-    absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2
-    px-3 py-1 rounded-[10px] text-[10px] md:text-[14px]
-    flex items-center gap-1 shadow-md bg-white
-    w-max
-  `}
+                      absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2
+                      px-3 py-1 rounded-[10px] text-[10px] md:text-[14px]
+                      flex items-center gap-1 shadow-md bg-white
+                      w-max
+                     `}
                 >
-                  <img src={crown} alt="crown" />
+                  <img src={agentData?.agent_type === "elite" ? elite : crown} alt="crown" className="w-[20px]" />
                   <span className="font-[400] host-grotesk ">
                     {agentData?.agent_type === "premium" && "Premium Agent"}
                     {agentData?.agent_type === "elite" && "Elite Agent"}
@@ -183,9 +182,9 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
                 </a>
 
                 <a
-                 href="#"
-                 onClick={handleCallClick}
-                 className="bg-[#312F2F] text-white px-8 md:px-17 shadow-md py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-gray-800 hover:text-white border border-transparent hover:border-[#312F2F] transition flex items-center gap-2 cursor-pointer">
+                  href="#"
+                  onClick={handleCallClick}
+                  className="bg-[#312F2F] text-white px-8 md:px-17 shadow-md py-2 rounded-[10px] text-[12px] instrument-sans font-bold hover:bg-gray-800 hover:text-white border border-transparent hover:border-[#312F2F] transition flex items-center gap-2 cursor-pointer">
                   <svg
                     width="13"
                     height="13"
