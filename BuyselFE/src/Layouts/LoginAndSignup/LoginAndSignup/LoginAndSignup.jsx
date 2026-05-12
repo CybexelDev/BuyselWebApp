@@ -85,6 +85,12 @@ const [isAgentReset, setIsAgentReset] = useState(false);
         setOtpSent={setOtpSent}
         setEmail={setEmail}
         type="agent"
+         onBackToLogin={() => {
+    setIsForgot(false);
+    setOtpSent(false);
+    setEmail("");
+    setActiveTab("user");
+  }}
       />
 
     )

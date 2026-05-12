@@ -6,6 +6,7 @@ import { Star } from "lucide-react";
 import { addReviewToServer, deletReview, toggleReviewLike } from "../../Api/userApi";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { toast } from "sonner";
+import { updateReview } from "../../Api/userApi";
 function UserReview({ review, id, triggerRefresh }) {
 
   const [reviews, setReviews] = useState([])
@@ -14,8 +15,17 @@ function UserReview({ review, id, triggerRefresh }) {
   const [hover, setHover] = useState(0);
   const [reviewss, setReviewss] = useState("");
   const [openMenuId, setOpenMenuId] = useState(null);
+const [isEditingReview, setIsEditingReview] = useState(false);
+const [editingReviewId, setEditingReviewId] = useState(null);
+const handleEdit = (review) => {
+  setIsEditingReview(true);
+  setEditingReviewId(review.id);
 
+  setRating(review.rating);
+  setReviewss(review.review);
 
+  setOpen(true);
+};
 
 
   useEffect(() => {
@@ -303,15 +313,38 @@ function UserReview({ review, id, triggerRefresh }) {
 
         {/* BUTTON */}
         <button
-          onClick={() => {
-            if (!rating || !reviewss.trim()) {
-              toast.warning("Please add rating and review");
-              return;
-            }
-            addReview()
-            console.log({ rating, reviewss });
-            setOpen(false);
-          }}
+         onClick={async () => {
+  if (!rating || !reviewss.trim()) {
+    toast.warning("Please add rating and review");
+    return;
+  }
+
+  if (isEditingReview) {
+    const res = await updateReview({
+      reviewId: editingReviewId,
+      rating,
+      review: reviewss,
+    });
+
+    if (res) {
+      toast.success("Review updated");
+      triggerRefresh();
+
+      setOpen(false);
+      setIsEditingReview(false);
+      setEditingReviewId(null);
+      setRating(0);
+      setReviewss("");
+    }
+  } else {
+    addReview();
+
+    setOpen(false);
+
+    setRating(0);
+    setReviewss("");
+  }
+}}
           className="bg-[#6ABD11] text-white px-4 py-2 rounded-lg mt-4 w-full"
         >
           Submit
