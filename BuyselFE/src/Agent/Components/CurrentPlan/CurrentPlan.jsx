@@ -38,7 +38,7 @@ function CurrentPlan({ plan, showRenewButton }) {
               <p className="text-xs sm:text-sm text-gray-500 mt-1">
                 Expires on:
                 <span className="font-semibold text-gray-700 ml-1">
-                  {plan.expiresOn}
+                      {new Date(plan.expiresOn).toLocaleString()}
                 </span>
               </p>
             </div>

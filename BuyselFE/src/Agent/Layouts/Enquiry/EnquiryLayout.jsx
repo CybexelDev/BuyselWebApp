@@ -65,7 +65,7 @@ const navigate = useNavigate();
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <button className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition-all shadow-sm">
+              <button className="p-2.5 bg-white border cursor-pointer border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition-all shadow-sm">
                 <Filter size={20} />
               </button>
             </div>

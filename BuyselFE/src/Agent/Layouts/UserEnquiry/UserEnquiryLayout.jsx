@@ -111,7 +111,7 @@ const handleDelete = async (id) => {
                 />
               </div>
 
-              <button className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition">
+              <button className="p-2.5 bg-white border border-slate-200 rounded-xl cursor-pointer text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition">
                 <Filter size={20} />
               </button>
             </div>

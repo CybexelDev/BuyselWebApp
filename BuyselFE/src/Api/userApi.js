@@ -391,7 +391,6 @@ export const sendEnquiry = async (formData) => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-
         const result = await axios.get(`${BASE_URL}property-detail/${id}/`,          
       );
 

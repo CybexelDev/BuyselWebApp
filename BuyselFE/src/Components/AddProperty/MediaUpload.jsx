@@ -132,6 +132,13 @@ const updateFiles = (files) => {
 ))}
           </div>
         )}
+
+        {formData.images.length < 3 &&(
+            <p className="text-red-500 text-sm mt-3 text-center">
+              Minimum 3 images required
+            </p>
+          )}
+
       </div>
     </div>
   );
