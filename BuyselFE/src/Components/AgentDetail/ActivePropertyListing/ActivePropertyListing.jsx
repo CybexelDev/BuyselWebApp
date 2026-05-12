@@ -5,13 +5,14 @@ import { ArrowRight, ChevronLeft, ChevronRight, LogIn, Search } from 'lucide-rea
 import "./activePropertylisting.css";
 import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
 import {  Heart } from "lucide-react";
+import { searchAgentProperties } from '../../../Api/userApi';
 import { toast } from 'sonner';
-function ActivePropertyListing({ agentData, role }) {
+function ActivePropertyListing({ agentData, role,id }) {
   const pp = properties.slice(0, 8);
   const [activeCategory, setActiveCategory] = useState("Residential");
   const scrollRef = useRef(null);
   const [propertyData, setPropertyData] = useState([]);
-
+const [searchQuery, setSearchQuery] = useState("");
 
 
   const propertyBg = {
@@ -24,7 +25,23 @@ function ActivePropertyListing({ agentData, role }) {
       setPropertyData(agentData);
     }
   }, [agentData]);
+useEffect(() => {
+  const fetchSearch = async () => {
+    console.log(id)
+    if (!id) return;
 
+    const res = await searchAgentProperties(
+      id,
+      searchQuery,
+      activeCategory
+    );
+if (res?.properties) {
+  setPropertyData(res.properties);
+}
+  };
+
+  fetchSearch();
+}, [searchQuery, activeCategory]);
 
   const categories = [
     {
@@ -161,6 +178,8 @@ function ActivePropertyListing({ agentData, role }) {
             <input
               type="text"
               placeholder="Search"
+               value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
               className="outline-none bg-transparent w-full text-[14px] text-gray-600 placeholder-gray-400 inter"
             />
             <Search className="text-[#84CC16] w-5 h-5" />

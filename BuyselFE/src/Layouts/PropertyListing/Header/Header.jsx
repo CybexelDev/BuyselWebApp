@@ -49,11 +49,12 @@ const Header = ({ setParentFilters, onchange, filters }) => {
     }
   }, [filters]);
   useEffect(() => {
-    setParentFilters({
-      purpose: activeTab,
-      category: activeCategory,
-    });
-  }, [activeTab, activeCategory]);
+  setParentFilters((prev) => ({
+    ...prev,
+    purpose: activeTab,
+    category: activeCategory,
+  }));
+}, [activeTab, activeCategory]);
 
   const categories = [
     {

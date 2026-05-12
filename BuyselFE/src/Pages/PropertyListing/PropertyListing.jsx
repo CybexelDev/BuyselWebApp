@@ -25,7 +25,7 @@ useEffect(() => {
       price_range: priceRange || "",
 
   });
-}, [purpose, category]);
+}, [purpose, category,priceRange]);
 
   const handleFilters = (data) => {
     setFilters(data);
@@ -146,9 +146,9 @@ useEffect(() => {
 
   // }, [searchQuery]);
 
+useEffect(() => {
+  let ignore = false;
 
-  useEffect(() => {
-    
   const fetchData = async () => {
     try {
       let res;
@@ -159,18 +159,19 @@ useEffect(() => {
       else if (filters.nearby) {
         res = await getNearbyProperties(filters.lat, filters.lng);
       } 
-      else if (filters.isFilterApplied) {
+      else if (filters.isFilterApplied ) {
         res = await filterProperties(filters);
       } 
       else {
         res = await getProperty(filters);
       }
 
-      const rawData = res?.data || res || [];
+      const rawData = res?.data?.data || res?.data || res || [];
       const finalData = normalizeProperties(rawData);
 
-      console.log("FINAL DATA:", finalData);
-      setData(finalData);
+      if (!ignore) {
+        setData(finalData);
+      }
 
     } catch (error) {
       console.log(error);
@@ -178,8 +179,12 @@ useEffect(() => {
   };
 
   fetchData();
-}, [filters, searchQuery]);
 
+  return () => {
+    ignore = true;
+  };
+
+}, [filters, searchQuery]);
   return (
     <>
       <Header setParentFilters={handleFilters} onchange={(e) => setSearchQuery(e.target.value)}   filters={filters}/>
