@@ -170,21 +170,26 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 </p>
 
 
-        <div className=" text-black space-y-1">
-          <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">
-            Total ₹{property.price}{purpose === "Rent" && <span> / month</span>}</h2>
-           {purpose === "Sale" && (
-    <p className="instrument-sans text-[11px] text-[#B0ABAB] font-[500]">
-      ₹{property.perprice}<span> / {property.unit}</span>
-    </p>
-  )}
-        </div>
+<div className="text-black space-y-1">
+  <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">
+    Total ₹{property.price}
+    {purpose === "Rent" && ( <span> / month</span> )}
+  </h2>
+
+  <p className="instrument-sans text-[11px] text-[#B0ABAB] font-[500] min-h-[16px]">
+    {purpose === "Sale" && (
+      <>
+        ₹{property.perprice} {property.unit && ( <span> / {property.unit}</span> )}
+      </>
+    )}
+  </p>
+</div>
 
 
         <div className="instrument-sans flex justify-between my-2 font-[500] text-[12px] text-black">
           <span className="flex items-center gap-0.5 w-[45%] truncate">
             <img src={measure} alt="" className="w-[13px] h-[13px]" />
-            <span className="truncate">{property?.land_area ?? "Area not available"} sq.ft</span>
+            <span className="truncate">{property?.sq_ft ?? "Area not available"} sq.ft</span>
           </span>
           <span className="flex items-center gap-0.5 w-[45%] truncate">
             <img src={apartment} alt="" className="w-[13px] h-[13px]" />

@@ -213,34 +213,47 @@ const handleBack = () => {
 
           {/* right side */}
 <div className="flex flex-col gap-3 xl:gap-7 h-full">
-                <div className="bg-white flex flex-row gap-4 rounded-[18px] lg:rounded-[23px] px-5 py-3 lg:px-6 lg:py-3 xl:py-5 shadow-sm border border-[#7BC21F] host-grotesk">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-3 xl:gap-5 text-xs lg:text-sm">
-                
-{property?.features?.length > 0 ? (
-  property.features.map((item, index) => (
-    <div
-      key={index}
-      className=" rounded-xl px-3 py-3 flex flex-col"
-    >
-      <p className="text-sm text-gray-500">
-        {item.name}
-      </p>
+  
+                <div className="bg-white flex flex-col gap-4 rounded-[18px] lg:rounded-[23px] px-5 py-3 lg:px-6 lg:py-3 xl:py-5 shadow-sm border border-[#7BC21F] host-grotesk">
+                   <h2 className="text-lg lg:text-xl font-semibold text-black ">
+    Property Features
+  </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-3 xl:gap-5 text-xs lg:text-sm">
 
-      <p className="text-base font-semibold text-[#181818] mt-1">
-        { item.value}
+  {property?.features?.length > 0 ? (
+    property.features.map((item, index) => (
+      <div
+        key={index}
+        className="flex flex-col"
+      >
+        {/* icon + title */}
+        <div className="flex items-center gap-2">
+          <img
+            src={item.icon}
+            alt={item.name}
+            className="w-6 h-6 object-contain flex-shrink-0"
+          />
+
+          <h4 className="text-[16px] font-semibold text-black whitespace-nowrap">
+            {item.name}
+          </h4>
+        </div>
+
+        {/* value */}
+        <p className="text-[14px] text-gray-500 ml-7 mt-1">
+          {item.value}
+        </p>
+      </div>
+    ))
+  ) : (
+    <div className="py-2 col-span-full">
+      <p className="text-sm md:text-lg text-gray-500 font-medium">
+        No features available
       </p>
     </div>
-  ))
-) : (
-    <div className="py-2">
-    <p className="text-sm md:text-lg text-gray-500 font-medium">
-      No features available
-    </p>
-  </div>
   )}
 
- 
-              </div>
+</div>
             </div>
 
             <div className="lg:col-span-1 bg-[#FBFBFB] rounded-[18px] lg:rounded-[23px] px-5 lg:px-6  lg:pt-3 py-4 lg:py-4 shadow-sm">

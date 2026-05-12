@@ -217,7 +217,7 @@ const handleChangePassword = async () => {
                             {!isEditing && (
                                 <button
                                     onClick={() => setIsEditing(true)}
-                                    className="px-6 py-3 bg-[#6ABD11] text-white rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition"
+                                    className="px-6 py-3 bg-[#6ABD11] text-white rounded-xl cursor-pointer text-sm font-bold shadow hover:bg-[#5aa30e] transition"
                                 >
                                     Edit Profile
                                 </button>
@@ -412,7 +412,7 @@ const handleChangePassword = async () => {
 />
                                  <button
   onClick={handleChangePassword}
-  className="w-full py-4 mt-2 text-[#6ABD11] font-bold text-xs uppercase tracking-widest border-2 border-[#6ABD11]/20 rounded-2xl hover:bg-[#6ABD11] hover:text-white transition-all"
+  className="w-full py-4 mt-2 cursor-pointer text-[#6ABD11] font-bold text-xs uppercase tracking-widest border-2 border-[#6ABD11]/20 rounded-2xl hover:bg-[#6ABD11] hover:text-white transition-all"
 >
   Update Password
 </button>

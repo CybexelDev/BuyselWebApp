@@ -93,7 +93,7 @@ const InboxLayout = () => {
                 />
               </div>
 
-              <button className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition">
+              <button className="p-2.5 bg-white border cursor-pointer border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition">
                 <Filter size={20} />
               </button>
             </div>
@@ -185,16 +185,16 @@ const InboxLayout = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    <button className="p-2 bg-slate-50 text-slate-400 rounded-lg hover:bg-[#74C122] hover:text-white transition-all shadow-sm">
+                    <button className="p-2 bg-slate-50 text-slate-400 cursor-pointer rounded-lg hover:bg-[#74C122] hover:text-white transition-all shadow-sm">
                       <Phone size={14} />
                     </button>
 
-                    <button className="p-2 bg-slate-50 text-slate-400 rounded-lg hover:bg-[#74C122] hover:text-white transition-all shadow-sm">
+                    <button className="p-2 bg-slate-50 text-slate-400 cursor-pointer rounded-lg hover:bg-[#74C122] hover:text-white transition-all shadow-sm">
                       <MessageSquare size={14} />
                     </button>
 
                     <button onClick={()=>handleDelete(item.id)}
-                    className="p-2 text-slate-400 hover:text-red-500 transition">
+                    className="p-2 text-slate-400 hover:text-red-500 cursor-pointer transition">
                       <Trash size={18} />
                     </button>
                   </div>

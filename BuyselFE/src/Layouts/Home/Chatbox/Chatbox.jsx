@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { sendEnquiry } from "../../../Api/userApi";
 import { toast } from "sonner";
-function Chatbox({ close, simple = false, msgPlaceholder="Your need or requirements" }) {
+import { ConnectWithAdmin } from "../../../Api/agentsApi";
+function Chatbox({ close, simple = false, msgPlaceholder="Your need or requirements",type = "user", }) {
   const [formData, setFormData] = useState({
   name: "",
   contact: "",
@@ -17,7 +18,17 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  const res = await sendEnquiry(formData);
+  let res;
+
+if (type === "admin") {
+  const data = new FormData();
+  data.append("name", formData.name);
+  data.append("message", formData.message);
+
+  res = await ConnectWithAdmin(data);
+} else {
+  res = await sendEnquiry(formData);
+}
 
   if (res) {
     toast.success("Enquiry sent ");

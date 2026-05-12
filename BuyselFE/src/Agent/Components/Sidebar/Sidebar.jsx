@@ -10,6 +10,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { FaUserCog } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 
 
@@ -28,6 +29,13 @@ const Sidebar = () => {
   const [active, setActive] = useState("dashboard");
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch()
+
+        const logout = ()=>{
+      dispatch({ type: "AGENT_LOGOUT" });
+      navigate('/loginandsignup')
+    }
+    
 
   return (
     <div className="relative  ">
@@ -47,7 +55,7 @@ const Sidebar = () => {
             <button
               key={item.id}
               onClick={() => navigate(item.path)}
-              className={`group relative flex w-full items-center rounded-2xl px-4 py-3.5 transition-all duration-300 ${
+              className={`group relative flex w-full items-center cursor-pointer rounded-2xl px-4 py-3.5 transition-all duration-300 ${
                 location.pathname === item.path
                   ? "text-[#6ABD11] bg-[#6ABD117A] "
                   : "text-[#6ABD11] hover:text-black hover:bg-black/10"
@@ -75,7 +83,9 @@ const Sidebar = () => {
         </div>
 
         <div className="p-8 mt-auto">
-          <button className="flex w-full items-center gap-3 rounded-2xl p-3 text-black/60 font-bold transition-all hover:bg-red-500 hover:text-white group">
+          <button
+          onClick={logout}
+           className="flex w-full items-center gap-3 cursor-pointer rounded-2xl p-3 text-black/60 font-bold transition-all hover:bg-red-500 hover:text-white group">
             <LogOut
               size={20}
               className="group-hover:-translate-x-1 transition-transform"

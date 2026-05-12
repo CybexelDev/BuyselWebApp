@@ -32,44 +32,32 @@ const transformProperty = (data) => {
   const coords = extractLatLng(data.location);
   return {
     id: data.id,
-
     title: data.label, 
     location: `${data.city}, ${data.state}`,
     status: data.purpose,
-    
     price: `₹${Number(data.price_details.price).toLocaleString()}`,
     area: `${data.price_details.sq_ft} sq.ft`,
     postedOn: data.created_at,
-
     fullAddress: data.location,
-  latitude: coords?.lat,
-longitude: coords?.lng,
+    latitude: coords?.lat,
+    longitude: coords?.lng,
     landmarks: data.land_mark.map(item => ({
       name: item.name,
       distance: item.distance
     })),
-
     description: data.description,
     addressfully : `${data.location_details.village} ${data.location_details.city} ${data.location_details.state} ${data.location_details.pincode} `,
     keySellingPoint: data.key_selling_points.map(item => ({
       content: item
     })),
-
     seller: {
       company: "Owner",
       name: data.contact_details.owner,
       phone: data.contact_details.phone,
       image: data.owner_profile_image
     },
-
-    features: data.property_features.map(item => ({
-  name: item.field_name,
-  value: item.value,
-  icon: item.icon
-})),
-
+    features: data.property_features || [],
     images: data.images,
-
     amenities: data.amenities || []
   }
 }

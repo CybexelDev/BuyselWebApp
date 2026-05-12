@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import DashboardCard from "../../../../Components/DashboardCrad/DashboardCard";
 
 import DietChart from "../../../../Components/PieChart/PieChart";
-function Dashboard() {
+function UserDashboard() {
   const properties = [1, 2, 3, 4, 5, 6, 7, 8]; // 8 properties
   const enquiries = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //10 enquiries
   const maxLimit = 14;
@@ -210,4 +210,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default UserDashboard;

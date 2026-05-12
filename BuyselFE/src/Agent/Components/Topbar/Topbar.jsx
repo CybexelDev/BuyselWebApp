@@ -7,11 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAgentNotifications } from "../../../Api/agentsApi";
 import { markNotificationAsRead,getUnreadCount } from "../../../Api/agentsApi";
 function Topbar() {
-  const details={
-    name:"Mubaris",
-    agentId:"AI029",
-    plan:"Premium Agent"
-  }
+
   const profileRef = useRef(null)
   const [notifications, setNotifications] = useState([]);
   const[profile,setProfile]=useState(false)
