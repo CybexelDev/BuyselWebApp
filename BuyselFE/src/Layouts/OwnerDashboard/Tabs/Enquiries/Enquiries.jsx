@@ -1,3 +1,18 @@
+// import React from 'react'
+// import EnquiryLayout from '../../../../Agent/Layouts/Enquiry/EnquiryLayout'
+
+// function Enquiries() {
+//   return (
+//     <div>
+//       <EnquiryLayout />
+//     </div>
+//   )
+// }
+
+// export default Enquiries
+
+
+
 import React, { useState } from 'react';
 import { 
   MessageSquare, User, Home, Tag, 

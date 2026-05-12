@@ -319,6 +319,21 @@ export const getWishlist = async () => {
   }
 }
 
+export const updateReview = async ({ reviewId, rating, review }) => {
+  try {
+    const res = await api.put(
+      `/reviews/update/${reviewId}/`,
+      {
+        rating,
+        review,
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 
 export const filterWishlist = async (purpose) => {
   try {
@@ -376,7 +391,6 @@ export const sendEnquiry = async (formData) => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-
         const result = await axios.get(`${BASE_URL}property-detail/${id}/`,          
       );
 
@@ -519,6 +533,28 @@ export const getFeatured = async () => {
 };
 
 
+export const searchAgentProperties = async (
+  agentId,
+  search = "",
+  category = ""
+) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}agent/property-search/${agentId}/`,
+      {
+        params: {
+          search,
+          category,
+        },
+      }
+    );
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 export const getAgents = async (category) => {
     try {

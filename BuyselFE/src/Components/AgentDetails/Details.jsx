@@ -42,7 +42,9 @@ function Details({ agentData }) {
   const details = [
     {
       stats: {
-        "Properties Listed": agentData?.properties_listed || 0,
+          ...(agentData?.agent_type !== "basic" && {
+         "Properties Listed": agentData?.properties_count || 0,
+          }),
         "Deals Closed": agentData?.deals_closed || 0,
         "Years Experience": agentData?.years_of_experience || 0,
         "Areas Served": agentData?.served_area || 0,

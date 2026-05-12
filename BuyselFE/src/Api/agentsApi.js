@@ -643,4 +643,12 @@ export const getUnreadCount = async () => {
 
 
 
-
+export const ConnectWithAdmin = async (formData) => {
+  try {
+    const res = await api.post(`agent/contact-message/`, formData);
+    return res.data;
+  } catch (error) {
+    console.error("Contact error:", error);
+    return false;
+  }
+};

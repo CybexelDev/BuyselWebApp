@@ -19,7 +19,7 @@ function GetInTouch() {
 >
             
           <div onClick={(e) => e.stopPropagation()}>
-            <Chatbox close={() => setOpen(false)} simple={true} msgPlaceholder="Write your message to our team..."/>
+            <Chatbox close={() => setOpen(false)} simple={true} type="admin" msgPlaceholder="Write your message to our team..."/>
           </div>
         </div>
       )}

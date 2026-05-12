@@ -39,8 +39,8 @@ if (data?.plans) {
   setUpgradePlans(formattedPlans);
 
   setSelectedPlan({
-    1: data.plans[0]?.plans?.[0]?.id,
-    2: data.plans[1]?.plans?.[0]?.id,
+    premium: data.plans[0]?.plans?.[0]?.id,
+    elite: data.plans[1]?.plans?.[0]?.id,
   });
 
   // only if current_plan exists
@@ -52,7 +52,7 @@ if (data?.plans) {
     );
 
     const matchedPlan = currentGroup?.plans.find(
-      (p) => p.id === current.plan_key
+      (p) => p.plan_key === current.plan_key
     );
 
     setPlanData({
@@ -122,6 +122,7 @@ if (planData?.expiresOn) {
   <CurrentPlan
     plan={planData}
     showRenewButton={showRenewButton}
+    
   />
 )}
 

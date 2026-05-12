@@ -105,7 +105,7 @@ const mapped = data.map((item) => ({
 
             <button
             onClick={()=>navigate("/addyourproperty")}
-             className="flex items-center justify-center gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
+             className="flex items-center justify-center cursor-pointer gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
               <Plus size={18} />
               Add Property
             </button>
@@ -128,7 +128,7 @@ const mapped = data.map((item) => ({
             </div>
 
             {/* Filter */}
-            <button className="flex items-center justify-center gap-2 border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto">
+            <button className="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto">
               <Filter size={16} />
               Filter
             </button>
@@ -136,13 +136,13 @@ const mapped = data.map((item) => ({
           </div>
 
           {/* PROPERTY LIST */}
-          <div className="space-y-4 cursor-pointer" onClick={onClick}>
+          <div className="space-y-4" onClick={onClick}>
 
             {filteredProperties.map((property) => (
 
               <div
                 key={property.id}
-                className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition"
+                className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm cursor-pointer hover:shadow-md transition"
                 onClick={()=>navigate(`/dashboardpropertydetail/${property.id}`)}
               >
 
@@ -224,7 +224,7 @@ const mapped = data.map((item) => ({
     e.stopPropagation();
     navigate(`/editproperty/${property.id}`);
   }}
-  className="flex items-center gap-1 text-sm border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
+  className="flex items-center gap-1 text-sm border border-slate-200 cursor-pointer px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
 >
   <Pencil size={14} />
 </button>
@@ -233,7 +233,7 @@ const mapped = data.map((item) => ({
       onClick={(e) =>{
           e.stopPropagation();
          handleDelete(property.id)}}
-      className="p-2 text-slate-400 hover:text-red-500 transition"
+      className="p-2 text-slate-400 hover:text-red-500 transition cursor-pointer"
     >
       <Trash size={20} />
     </button>

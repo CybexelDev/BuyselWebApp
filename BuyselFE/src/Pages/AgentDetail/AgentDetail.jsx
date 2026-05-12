@@ -48,7 +48,7 @@ function AgentDetail() {
       <Details agentData={agentsData} />
       {isPremiumOrElite && (
         <>
-          <ActivePropertyListing agentData={agentsData?.properties} role={agentsData?.agent_type} />
+          <ActivePropertyListing agentData={agentsData?.properties} role={agentsData?.agent_type} id={id} />
           <AddPropertyBanner />
         </>
       )}
