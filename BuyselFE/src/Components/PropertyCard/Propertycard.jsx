@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 
 
-function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false,hideWishlist=false }) {
+function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false, hideWishlist = false }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -22,7 +22,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
   const images = property.images || [];
   const purpose = property?.purpose;
 
-    console.log("PROPERTY DATA:", property);
+  console.log("PROPERTY DATA:", property);
   console.log("PURPOSE VALUE:", purpose);
 
   const prevImage = () => {
@@ -108,17 +108,17 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
         <div className="absolute top-4 right-4 sm:right-6 flex gap-1 ">
           {!hideWishlist && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              click && click(e);
-            }} className="bg-white rounded-full h-[23px] w-[23px] flex justify-center items-center cursor-pointer"
-          >
-            {wishlistIcon}
-          </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                click && click(e);
+              }} className="bg-white rounded-full h-[23px] w-[23px] flex justify-center items-center cursor-pointer"
+            >
+              {wishlistIcon}
+            </button>
           )}
 
-          <button onClick={handleShare} className="bg-white  rounded-full h-[23px] w-[23px] flex justify-center items-center " >
+          <button onClick={handleShare} className="bg-white  rounded-full h-[23px] w-[23px] flex justify-center items-center cursor-pointer" >
             <img src={telegram} alt="telegram" className="w-[12px] h-[12px]" />
           </button>
         </div>
@@ -127,12 +127,12 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
           <button onClick={(e) => {
             e.stopPropagation()
             prevImage()
-          }} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center">
+          }} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="none" stroke="#181212" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14 7l-5 5m0 0l5 5" /></svg>       </button>
           <button onClick={(e) => {
             e.stopPropagation()
             nextImage()
-          }} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center">
+          }} className="bg-white w-[17.5px] h-[17.5px] rounded-full shadow text-sm flex justify-center items-center cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="none" stroke="#181212" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5m0 0l-5-5" /></svg>        </button>
         </div>
       </div>
@@ -154,30 +154,32 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
         </div>
 
 
-      <p className="instrument-sans flex items-center justify-between text-[12px] mb-2 text-black font-[400]">
+        <p className="instrument-sans flex items-center justify-between text-[12px] mb-2 text-black font-[400]">
 
-  <span className="flex items-center gap-1">
-    <img src={map} alt="map" />
-    {property?.city}
-  </span>
+          <span className="flex items-center gap-1">
+            <img src={map} alt="map" />
+            {property?.city}
+          </span>
 
-  {property?.distance_km && (
-    <span className="text-gray-500 text-[11px] host-grotesk">
-      {property.distance_km.toFixed(1)} km
-    </span>
-  )}
+          {property?.distance_km && (
+            <span className="text-gray-500 text-[11px] host-grotesk">
+              {property.distance_km.toFixed(1)} km
+            </span>
+          )}
 
-</p>
+        </p>
 
 
         <div className=" text-black space-y-1">
           <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">
             Total ₹{property.price}{purpose === "Rent" && <span> / month</span>}</h2>
-           {purpose === "Sale" && (
-    <p className="instrument-sans text-[11px] text-[#B0ABAB] font-[500]">
-      ₹{property.perprice}<span> / {property.unit}</span>
-    </p>
-  )}
+          <p className="instrument-sans text-[11px] text-[#B0ABAB] font-[500] min-h-[16px]">
+            {purpose === "Sale" && (
+              <>
+                ₹{property.perprice} {property.unit && (<span> / {property.unit}</span>)}
+              </>
+            )}
+          </p>
         </div>
 
 
@@ -205,8 +207,8 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
+              width="17"
+              height="18"
               viewBox="0 0 24 24"
             >
               <path
@@ -224,8 +226,8 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
           </a>
 
           <a
-           href="#"
-           onClick={handleCallClick}
+            href="#"
+            onClick={handleCallClick}
             className="flex items-center justify-center gap-2 flex-1 rounded-xl shadow-md shadow-gray-300/100"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 24 24"><path fill="#000" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.98.98 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02c-.37-1.11-.56-2.3-.56-3.53c0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99" /></svg>

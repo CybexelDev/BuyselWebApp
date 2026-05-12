@@ -14,7 +14,7 @@ import ForgotPasswordForm from "../../../Components/LoginAndSignup/ForgetPasswor
 import ResetPasswordForm from "../../../Components/LoginAndSignup/ResetPassword/ResetPasswordForm";
 
 export default function LoginAndSignup() {
-    const [activeTab, setActiveTab] = useState("agent");   
+    const [activeTab, setActiveTab] = useState("user");   
     const [otpSent, setOtpSent] = useState(false)
     const [email, setEmail] = useState('')
     const [isForgot, setIsForgot] = useState(false);

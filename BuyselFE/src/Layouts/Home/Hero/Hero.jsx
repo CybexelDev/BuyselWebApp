@@ -6,14 +6,13 @@ import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
 import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
 import img from "../../../assets/images/carousel/he.png"
-import img2 from "../../../assets/images/carousel/he.png"
-import img3 from "../../../assets/images/carousel/he2.png"
+import img2 from "../../../assets/images/carousel/he2.png"
+import img3 from "../../../assets/images/carousel/he3.png"
 import Navbar from "../../../Components/Navbar/Navbar";
 import ButtonHead from "../../../Components/ButtonHead/ButtonHead";
 
 const Hero = () => {
   const images = [img, img2, img3];
-
   const [current, setCurrent] = useState(0);
 
   const prevSlide = () => {
@@ -60,7 +59,7 @@ const Hero = () => {
 
           </div>
 
-          <div className="relative w-full lg:w-[63%] h-[50vh] lg:h-[90vh] overflow-hidden transition-all duration-700 "
+          <div className="relative w-full lg:w-[63%] h-[50vh] lg:h-[90vh] overflow-hidden transition-all duration-700"
             style={{
               backgroundImage: `url(${images[current]})`,
               backgroundSize: "contain",

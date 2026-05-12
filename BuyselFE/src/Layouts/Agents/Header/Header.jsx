@@ -301,27 +301,8 @@ function Header({ onchange, location, cityDataSend }) {
           </div>
 
           <button
-            className="
-    instrument-sans
-    flex items-center justify-center
-    h-[33px]
-    sm:max-[900px]:h-[40px]
-    min-[900px]:max-[1023px]:h-[38px]
-    lg:h-[45px]
-    xl:h-[52px]
-    w-[45px]
-    sm:max-[900px]:w-[120px]
-    min-[900px]:max-[1023px]:w-[100px]
-    lg:w-[120px]
-    xl:w-[152px]
-    rounded-[13px] sm:rounded-[15px] lg:rounded-[17px]
-    bg-[#75c222]
-    text-white
-    font-[650]
-    text-[13px] lg:text-[14px] xl:text-[15px]
-    hover:bg-[#6AB317]
-    transition
-  "
+            className="instrument-sans flex items-center justify-center h-[33px] sm:max-[900px]:h-[40px] min-[900px]:max-[1023px]:h-[38px] lg:h-[45px] xl:h-[52px] w-[45px]
+                       sm:max-[900px]:w-[120px] min-[900px]:max-[1023px]:w-[100px] lg:w-[120px] xl:w-[152px] rounded-[13px] sm:rounded-[15px] lg:rounded-[17px] bg-[#75c222] text-white font-[650] text-[13px] lg:text-[14px] xl:text-[15px] hover:bg-[#6AB317] transition cursor-pointer"
           >
             {/* ICON → mobile only */}
             <svg

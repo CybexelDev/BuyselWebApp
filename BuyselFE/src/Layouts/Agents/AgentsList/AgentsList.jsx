@@ -6,8 +6,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import elite from '../../../assets/images/agentDetail/elite.png'
 import premium from '../../../assets/images/agentDetail/crown.png'
 
-
-
 export default function AgentTabs({ searchedData, query, locationDats }) {
     const [searchParams] = useSearchParams()
     const type = searchParams.get("type");
@@ -67,7 +65,7 @@ export default function AgentTabs({ searchedData, query, locationDats }) {
                             setCurrentPage(1);
                         }}
                         className={`px-3 sm:px-5 py-2 rounded-[9px] text-sm host-grotesk font-medium transition-all duration-300 cursor-pointer
-              ${activeTab === tab
+              ${activeTab === (tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite")
                                 ? "bg-black text-[#75c222] shadow-md"
                                 : "text-black hover:bg-gray-200"
                             }`}

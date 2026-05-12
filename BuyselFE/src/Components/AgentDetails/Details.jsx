@@ -377,7 +377,7 @@ function Details({ agentData }) {
                  py-3 sm:py-[14px]
                  rounded-[12px] sm:rounded-[15px]
                  font-semibold
-                 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
+                 shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] cursor-pointer"
             >
               Send Enquiry
             </button>
