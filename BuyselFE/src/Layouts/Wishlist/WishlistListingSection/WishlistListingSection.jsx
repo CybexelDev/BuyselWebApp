@@ -4,9 +4,9 @@ const categories = ["Rent", "Buy", "Sell", "Lease"];
 import Propertycard from "../../../Components/PropertyCard/Propertycard";
 import { properties } from "../../../Constance/constance";
 import house from "../../../assets/images/wishlist/house.png"
-import { getWishlist, filterWishlist,sortWishlist,clearWishlist} from "../../../Api/userApi";
+import { getWishlist, filterWishlist,sortWishlist,clearWishlist,addToWishlist} from "../../../Api/userApi";
 import { useSelector } from "react-redux";
-import { addToWishlist,removeToWishlist } from "../../../Api/userApi";
+import { removeToWishlist } from "../../../Api/userApi";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import empty from "../../../assets/images/wishlist/empty.gif"
@@ -22,7 +22,13 @@ function WishlistListingSection() {
   const cardsPerPage = 8;
   
   const addWishlist = (id) => {
-  addToWishlist({ id });
+      const token = localStorage.getItem("accessToken");
+    
+      if (!token) {
+        toast.error("Please login to use wishlist");
+        return;
+      }
+     addToWishlist({ id });
     toast.success("Added to wishlist")
 
   setData((prev) =>
@@ -108,7 +114,7 @@ useEffect(() => {
   }
 }} className={`pb-1 transition-all duration-200 ${activeCategory === category
                   ? "font-bold text-black border-b-4 border-[#6ABD11ED]"
-                  : "text-[#938181] font-medium hover:text-black"
+                  : "text-[#938181] font-medium hover:text-black cursor-pointer"
                 }`}
             >
               {category}
@@ -120,7 +126,7 @@ useEffect(() => {
           <div className="relative">
             <button
               onClick={() => setShowSort(!showSort)}
-              className=" text-[13px] md:text-[16px] border-[0.5px] border-[#C6C6C6] px-3 py-[6px] rounded-[9px] bg-white flex gap-2 font-medium"
+              className=" text-[13px] md:text-[16px] border-[0.5px] border-[#C6C6C6] px-3 py-[6px] rounded-[9px] bg-white flex gap-2 font-medium cursor-pointer"
             >
 
               <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 16 16"><polygon fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" points="1.75 1.75 14.25 1.75 14.25 3.25 9.25 8.75 9.25 12.75 6.75 14.25 6.75 8.75 1.75 3.25" /></svg>
@@ -137,30 +143,26 @@ useEffect(() => {
 
             {showSort && (
               <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-lg border  z-50">
-                <button
-                 onClick={()=>handleSort("latest")
-}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                >
+                <button onClick={()=>handleSort("latest")} className="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer">
                   Latest
                 </button>
 
                 <button
                   onClick={() => handleSort("low")}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 >
                   Price: Low to High
                 </button>
 
                 <button
                   onClick={() => handleSort("high")}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 >
                   Price: High to Low
                 </button>
                 <button
                   onClick={()=>handleSort('default')}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 >
                   Default
                 </button>
@@ -168,11 +170,8 @@ useEffect(() => {
             )}
           </div>
 
-          <button className="text-[13px] md:text-[16px] bg-[#C70000] text-white px-3 py-[6px] rounded-[9px] flex gap-1 md:gap-2 font-medium justify-center items-center  "
-           onClick={async () => {
-    await clearWishlist();
-    setData([]);
-  }}
+          <button className="text-[13px] md:text-[16px] bg-[#C70000] text-white px-3 py-[6px] rounded-[9px] flex gap-1 md:gap-2 font-medium justify-center items-center cursor-pointer "
+           onClick={async () => { await clearWishlist(); setData([]); }}
           >
             <svg width="17" height="19" viewBox="0 0 17 19" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5.23059 0.0823288C5.03137 0.183891 4.85949 0.379204 4.79699 0.582329C4.76965 0.676079 4.75402 1.0667 4.75402 1.61358V2.49639L2.64856 2.50811L0.543088 2.51983L0.371213 2.63702C-0.160037 3.01592 -0.113162 3.8128 0.461056 4.10577C0.605588 4.17999 0.765744 4.17999 8.38684 4.17999C16.0079 4.17999 16.1681 4.17999 16.3126 4.10577C16.8868 3.8128 16.9337 3.01592 16.4025 2.63702L16.2306 2.51983L14.1642 2.50811L12.0978 2.49639V1.61358C12.0978 0.648735 12.0782 0.515923 11.8907 0.28936C11.6407 -0.0114212 11.8243 0.000297546 8.4259 0.000297546C5.42199 0.000297546 5.39856 0.000297546 5.23059 0.0823288ZM10.379 2.03155V2.38311H8.4259H6.47277V2.03155V1.67999H8.4259H10.379V2.03155Z" fill="white" />
@@ -202,7 +201,7 @@ useEffect(() => {
               Start exploring and save properties you like.
             </p>
 
-            <button className="bg-[#7BC21F] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
+            <button className="bg-[#7BC21F] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition cursor-pointer">
               Browse Properties
             </button>
           </div>
@@ -253,7 +252,7 @@ useEffect(() => {
                      py-1.5 sm:py-2 
                      text-xs sm:text-sm
                      bg-white rounded-full font-medium 
-                     disabled:opacity-50 whitespace-nowrap"
+                     disabled:opacity-50 whitespace-nowrap cursor-pointer"
               >
                 First
               </button>
@@ -264,7 +263,7 @@ useEffect(() => {
                 className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10
                      flex items-center justify-center
                      bg-white rounded-full shadow
-                     disabled:opacity-50"
+                     disabled:opacity-50 cursor-pointer"
               >
                 ←
               </button>
@@ -293,7 +292,7 @@ useEffect(() => {
                 className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10
                      flex items-center justify-center
                      bg-white rounded-full shadow
-                     disabled:opacity-50"
+                     disabled:opacity-50 cursor-pointer"
               >
                 →
               </button>
@@ -305,7 +304,7 @@ useEffect(() => {
                      py-1.5 sm:py-2 
                      text-xs sm:text-sm
                      bg-lime-200 rounded-full font-medium 
-                     disabled:opacity-50 whitespace-nowrap"
+                     disabled:opacity-50 whitespace-nowrap cursor-pointer"
               >
                 Last
               </button>

@@ -53,6 +53,12 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
   };
   const addWishlist = async (id) => {
     try {
+        const token = localStorage.getItem("accessToken");
+      
+        if (!token) {
+          toast.error("Please login to use wishlist");
+          return;
+        }
       await addToWishlist({ id });
     toast.success("Added to wishlist")
 

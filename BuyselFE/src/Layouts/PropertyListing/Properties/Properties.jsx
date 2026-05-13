@@ -57,6 +57,12 @@ function PropertiesSection({ propertiesData }) {
   const totalPages = Math.ceil(properties?.length / itemsPerPage);
 
 const addWishlist = (id) => {
+    const token = localStorage.getItem("accessToken");
+  
+    if (!token) {
+      toast.error("Please login to use wishlist");
+      return;
+    }
   addToWishlist({ id });
     toast.success("Added to wishlist")
 

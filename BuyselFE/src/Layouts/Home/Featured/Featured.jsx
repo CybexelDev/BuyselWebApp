@@ -50,6 +50,12 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
 
   const addWishlist = (id, e) => {
     e.stopPropagation();
+      const token = localStorage.getItem("accessToken");
+    
+      if (!token) {
+        toast.error("Please login to use wishlist");
+        return;
+      }
 
     addToWishlist({ id });
     toast.success("Added to wishlist")
@@ -140,7 +146,7 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
               onClick={scrollPrev}
               className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px]
               flex items-center justify-center rounded-full bg-black text-white
-              shadow-[0_3px_5px_rgba(0,0,0,0.45)]"
+              shadow-[0_3px_5px_rgba(0,0,0,0.45)] cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
             </button>
@@ -149,7 +155,7 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
               onClick={scrollNext}
               className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px]
               flex items-center justify-center rounded-full bg-black text-white
-              shadow-[0_3px_5px_rgba(0,0,0,0.45)]"
+              shadow-[0_3px_5px_rgba(0,0,0,0.45)] cursor-pointer"
             >
               <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
             </button>

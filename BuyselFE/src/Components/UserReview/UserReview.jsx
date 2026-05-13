@@ -37,7 +37,12 @@ const handleEdit = (review) => {
 
   const addReview = () => {
     try {
-      addReviewToServer({ rating, review: reviewss, id }).then((response) => {
+  const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    toast.error("Please login to use wishlist");
+    return;
+  }      addReviewToServer({ rating, review: reviewss, id }).then((response) => {
         if (response) {
           triggerRefresh();
         }
@@ -145,6 +150,8 @@ const handleEdit = (review) => {
                     </div>
 
                     {/* SVG on the right */}
+                    {review?.is_owner && (
+
                     <div className="relative">
                       <button
                         onClick={(e) => {
@@ -169,6 +176,7 @@ const handleEdit = (review) => {
                         </svg>
                       </button>
                     </div>
+                    )}
 
                     {openMenuId === review.id && (
                       <div className="absolute right-2 mt-5 w-30 bg-white shadow-lg rounded-xl z-50 p-2">

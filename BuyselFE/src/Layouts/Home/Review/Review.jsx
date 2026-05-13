@@ -158,14 +158,14 @@ const Review = () => {
           <div className="flex gap-3 mr-3">
             <button
               onClick={prevSlide}
-              className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px] flex items-center justify-center rounded-full bg-black text-white"
+              className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px] flex items-center justify-center rounded-full bg-black text-white cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" /> 
             </button>
 
             <button
               onClick={nextSlide}
-              className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px] flex items-center justify-center rounded-full bg-black text-white"
+              className="w-[23px] sm:w-[37px] h-[23px] sm:h-[37px] flex items-center justify-center rounded-full bg-black text-white cursor-pointer"
             >
               <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
             </button>

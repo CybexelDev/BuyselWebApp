@@ -5,35 +5,65 @@ import {
   Calendar, ShieldCheck, Zap
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { getEnquiryDetail } from '../../../../Api/userApi';
 
 const EnquiryDetailLayoutUser = () => {
     const navigate=useNavigate()
-  const detail = {
-    user: {
-      name: "Neymar Jr",
-      phone: "+91 6282980763",
-      email: "neymarjr.r@example.com",
-      message: "I am interested in this property. Is the price negotiable? I would like to schedule a site visit this coming weekend if possible.",
-      receivedAt: "March 05, 2026 • 10:24 AM"
-    },
-    property: {
-      title: "Green Valley Apartments",
-      location: "Sector 45, Gurgaon, Haryana",
-      price: "₹85,00,000",
-      description: "A premium 3BHK apartment featuring modern amenities, sustainable architecture, and a breathtaking view of the central park. Includes 2 parking spots and 24/7 security.",
-      image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800"
+const [detail, setDetail] = useState(null);
+const [loading, setLoading] = useState(false);
+
+const { id } = useParams();
+
+useEffect(() => {
+  fetchDetail();
+}, []);
+
+const fetchDetail = async () => {
+  try {
+
+    setLoading(true);
+
+    const res = await getEnquiryDetail(id);
+
+    console.log(res);
+
+    if (res) {
+      setDetail(res.data);
     }
-  };
+
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setLoading(false);
+  }
+};
+if (loading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      Loading...
+    </div>
+  );
+}
+
+if (!detail) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      No enquiry found
+    </div>
+  );
+}
 
   return (
+    
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex overflow-x-hidden">
 
       <main className="flex-1 w-full transition-all duration-300">
         <div className="max-w-6xl mx-auto p-4 md:p-10">
           
           <header className="mb-8 flex items-center justify-between">
-            <button className="group flex items-center gap-2 text-slate-500 hover:text-[#74C122] transition-colors font-bold text-sm uppercase tracking-widest instrument-sans" onClick={()=>navigate("/ownerdash?tab=enquiries")}>
+            <button className="group flex items-center gap-2 text-slate-500 hover:text-[#74C122] transition-colors font-bold text-sm uppercase tracking-widest instrument-sans" onClick={()=>navigate("/ownerdashboard?tab=enquiries")}>
               <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform"  />
               Back to Enquirys
             </button>
@@ -61,12 +91,12 @@ const EnquiryDetailLayoutUser = () => {
                     </div>
                     <div>
                       <h1 className="text-2xl font-black text-slate-900 instrument-sans leading-tight">
-                        {detail.user.name}
+                        {detail.name}
                       </h1>
                       <div className="flex items-center gap-1.5 text-slate-400 mt-1">
                         <Calendar size={12} className="text-[#74C122]" />
                         <span className="text-[11px] font-bold uppercase tracking-tight host-grotesk">
-                          {detail.user.receivedAt}
+                          {detail.created_at}
                         </span>
                       </div>
                     </div>
@@ -75,11 +105,11 @@ const EnquiryDetailLayoutUser = () => {
                   <div className="space-y-1">
                     <div className="flex items-center gap-4 px-4 py-2 rounded-2xl bg-white  group hover:border-[#74C122]/30 transition-all">
                       <Phone size={18} className="text-[#74C122]" />
-                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.user.phone}</span>
+                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.phone}</span>
                     </div>
                     <div className="flex items-center gap-4 px-4 py-2  rounded-2xl bg-white  group hover:border-[#74C122]/30 transition-all">
                       <Mail size={18} className="text-[#74C122]" />
-                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.user.email}</span>
+                      <span className="text-sm font-bold text-slate-700 host-grotesk">{detail.email}</span>
                     </div>
                   </div>
 
@@ -89,7 +119,7 @@ const EnquiryDetailLayoutUser = () => {
                     </h3>
                     <div className="px-6 py-3 rounded-3xl bg-white  relative">
                       <p className="italic text-slate-600 text-sm leading-relaxed relative z-10 font-medium host-grotesk">
-                        "{detail.user.message}"
+                        "{detail.message}"
                       </p>
                     </div>
                   </div>
@@ -98,7 +128,7 @@ const EnquiryDetailLayoutUser = () => {
 
    <div className="flex gap-4 host-grotesk">
   <a 
-    href={`tel:${detail.user.phone}`}
+    href={`tel:${detail.phone}`}
     className="flex-1 bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer border border-slate-800"
   >
     <Phone size={16} fill="white" stroke="none" /> 
@@ -106,7 +136,7 @@ const EnquiryDetailLayoutUser = () => {
   </a>
 
   <a 
-    href={`https://wa.me/${detail.user.phone.replace(/\D/g, '')}`} 
+    href={`https://wa.me/${detail.phone.replace(/\D/g, '')}`} 
     target="_blank" 
     rel="noopener noreferrer"
     className="flex-1 bg-gradient-to-r from-[#74C122] to-[#5ea11a] text-white py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-lg shadow-[#74C122]/30 hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer"
@@ -148,7 +178,7 @@ const EnquiryDetailLayoutUser = () => {
                   <Home size={14} /> Inquiry Target
                 </div>
                 <h2 className="text-3xl font-black text-slate-900 mb-3 instrument-sans">
-                  {detail.property.title}
+                  {detail.property.label}
                 </h2>
                 
                 <div className="flex items-center gap-2 text-slate-500 mb-8">

@@ -489,6 +489,30 @@ export const getBlogById = async (id) => {
 
 };
 
+export const getAllPropertyEnquiries = async () => {
+  try {
+    const response = await api.get(`${BASE_URL}enquiry/`);
+    return response.data;
+  } catch (error) {
+    console.log("Enquiry fetch error:", error);
+    return null;
+  }
+};
+
+export const getEnquiryDetail = async (id) => {
+  try {
+    const response = await api.get(
+      `${BASE_URL}enquiry-detail/${id}/`
+    );
+
+    return response.data;
+
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export const addToWishlist = async ({ id }) => {
   try {
     const formData = new FormData();
@@ -503,6 +527,25 @@ export const addToWishlist = async ({ id }) => {
   } catch (error) {
     console.log("Error in postLoginNumber:", error);
     throw error;
+  }
+};
+
+
+export const activateUserPlan = async (plan_id) => {
+  try {
+
+    const response = await api.post(
+      `${BASE_URL}activate-userplan/`,
+      {
+        plan_id: plan_id
+      }
+    );
+
+    return response.data;
+
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
 
@@ -555,7 +598,28 @@ export const searchAgentProperties = async (
     return null;
   }
 };
+export const filterAgentPropertyByCity = async (
+  agentId,
+  city
+) => {
+  try {
 
+    const formData = new FormData();
+
+    formData.append("city", city);
+
+    const res = await axios.post(
+      `${BASE_URL}agent/property_cities/${agentId}/`,
+      formData
+    );
+
+    return res.data;
+
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 export const getAgents = async (category) => {
     try {
         const result = await api.get(`${BASE_URL}agents/listing/`, {
@@ -656,6 +720,17 @@ export const getAgentsDetails = async (id) => {
   }
 }
 
+export const getAgentPropertyCities = async (id) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}agent/property_cities/${id}/`
+    );
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const filterProperties = async (filters) => {
   try {
