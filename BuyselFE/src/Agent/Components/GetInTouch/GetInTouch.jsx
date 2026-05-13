@@ -13,16 +13,23 @@ function GetInTouch() {
   </button>
 
       {open && (
-        <div
-  className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center"
-  onClick={() => setOpen(false)}
->
-            
-          <div onClick={(e) => e.stopPropagation()}>
-            <Chatbox close={() => setOpen(false)} simple={true} type="admin" msgPlaceholder="Write your message to our team..."/>
-          </div>
-        </div>
-      )}
+  <div
+    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+    onClick={() => setOpen(false)}
+  >
+    <div
+      className="w-full"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Chatbox
+        close={() => setOpen(false)}
+        simple={true}
+        type="admin"
+        msgPlaceholder="Write your message to our team..."
+      />
+    </div>
+  </div>
+)}
     </>
   );
 }
