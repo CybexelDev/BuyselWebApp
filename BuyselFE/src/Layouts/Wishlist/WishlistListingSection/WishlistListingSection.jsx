@@ -4,9 +4,9 @@ const categories = ["Rent", "Buy", "Sell", "Lease"];
 import Propertycard from "../../../Components/PropertyCard/Propertycard";
 import { properties } from "../../../Constance/constance";
 import house from "../../../assets/images/wishlist/house.png"
-import { getWishlist, filterWishlist,sortWishlist,clearWishlist} from "../../../Api/userApi";
+import { getWishlist, filterWishlist,sortWishlist,clearWishlist,addToWishlist} from "../../../Api/userApi";
 import { useSelector } from "react-redux";
-import { addToWishlist,removeToWishlist } from "../../../Api/userApi";
+import { removeToWishlist } from "../../../Api/userApi";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import empty from "../../../assets/images/wishlist/empty.gif"
@@ -22,7 +22,13 @@ function WishlistListingSection() {
   const cardsPerPage = 8;
   
   const addWishlist = (id) => {
-  addToWishlist({ id });
+      const token = localStorage.getItem("accessToken");
+    
+      if (!token) {
+        toast.error("Please login to use wishlist");
+        return;
+      }
+     addToWishlist({ id });
     toast.success("Added to wishlist")
 
   setData((prev) =>

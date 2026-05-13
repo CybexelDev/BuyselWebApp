@@ -50,6 +50,12 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
 
   const addWishlist = (id, e) => {
     e.stopPropagation();
+      const token = localStorage.getItem("accessToken");
+    
+      if (!token) {
+        toast.error("Please login to use wishlist");
+        return;
+      }
 
     addToWishlist({ id });
     toast.success("Added to wishlist")

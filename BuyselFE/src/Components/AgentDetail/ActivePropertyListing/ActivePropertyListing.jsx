@@ -5,7 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, LogIn, Search } from 'lucide-rea
 import "./activePropertylisting.css";
 import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
 import {  Heart } from "lucide-react";
-import { searchAgentProperties } from '../../../Api/userApi';
+import { searchAgentProperties,getAgentPropertyCities,filterAgentPropertyByCity} from '../../../Api/userApi';
 import { toast } from 'sonner';
 function ActivePropertyListing({ agentData, role,id }) {
   const pp = properties.slice(0, 8);
@@ -13,8 +13,31 @@ function ActivePropertyListing({ agentData, role,id }) {
   const scrollRef = useRef(null);
   const [propertyData, setPropertyData] = useState([]);
 const [searchQuery, setSearchQuery] = useState("");
+const [cities, setCities] = useState([]);
+const [selectedCity, setSelectedCity] = useState("");
+const [open, setOpen] = useState(false);
+useEffect(() => {
 
+  console.log("useEffect running");
 
+  const fetchCities = async () => {
+
+    console.log("inside fetchCities", id);
+
+    if (!id) return;
+
+    const res = await getAgentPropertyCities(id);
+
+    console.log("cities response", res);
+
+    if (res?.cities) {
+      setCities(res?.cities);
+    }
+  };
+
+  fetchCities();
+
+}, [id]);
   const propertyBg = {
     premium: "bg-gradient-to-b from-[#F3FFE2] to-[#FFFFFFC7]",
     elite: "bg-gradient-to-b from-[#FFFCDC] to-[#FFFFFF]",
@@ -33,7 +56,8 @@ useEffect(() => {
     const res = await searchAgentProperties(
       id,
       searchQuery,
-      activeCategory
+      activeCategory,
+
     );
 if (res?.properties) {
   setPropertyData(res.properties);
@@ -135,7 +159,14 @@ if (res?.properties) {
   };
 
   const addWishlist = (id) => {
+    const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    toast.error("Please login to use wishlist");
+    return;
+  }
     addToWishlist({ id });
+
       toast.success("Added to wishlist")
 
     setPropertyData((prev) =>
@@ -148,6 +179,12 @@ if (res?.properties) {
   };
   
    const removeWishlist = (id) => {
+      const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    toast.error("Please login to use wishlist");
+    return;
+  }
     removeToWishlist({ id });
     toast.error("Removed from wishlist");
 
@@ -185,12 +222,92 @@ if (res?.properties) {
             <Search className="text-[#84CC16] w-5 h-5" />
           </div>
 
-          <button className="bg-lime-500 text-white px-6 h-[44px] lg:h-[38px] rounded-full flex items-center justify-center gap-2 font-medium inter text-[14px] lg:text-[16px] w-full lg:w-auto cursor-pointer">
-            All Location
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+       <div className="relative inline-block w-full lg:w-auto">
+  <button
+    onClick={() => setOpen(!open)}
+    className="
+      flex items-center justify-between gap-1
+      bg-lime-500 text-white
+      px-5
+      h-[44px] lg:h-[38px]
+      rounded-full
+      text-[14px] lg:text-[16px]
+      font-medium inter
+      w-full lg:min-w-[180px]
+      cursor-pointer
+    "
+  >
+    {selectedCity || "All Location"}
+
+    <svg
+      className={`w-4 h-4 transition-transform duration-200 ${
+        open ? "rotate-180" : ""
+      }`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
+  </button>
+
+  {open && (
+    <div className="absolute mt-2 w-full bg-lime-500 rounded-2xl shadow-lg z-50 p-2">
+      <ul className="text-sm text-white inter">
+        
+        <li
+          onClick={async () => {
+            setSelectedCity("");
+            setOpen(false);
+
+            const res = await searchAgentProperties(
+              id,
+              searchQuery,
+              activeCategory
+            );
+
+            if (res?.properties) {
+              setPropertyData(res.properties);
+            }
+          }}
+          className="px-4 py-2 hover:text-lime-500 hover:bg-white rounded-xl cursor-pointer"
+        >
+          All Location
+        </li>
+
+        {Array.isArray(cities) &&
+          cities.map((city, index) => (
+            <li
+              key={index}
+              onClick={async () => {
+
+                setSelectedCity(city);
+                setOpen(false);
+
+                const res =
+                  await filterAgentPropertyByCity(
+                    id,
+                    city
+                  );
+
+                if (res?.properties) {
+                  setPropertyData(res.properties);
+                }
+              }}
+              className="px-4 py-2  hover:text-lime-500 hover:bg-white rounded-xl cursor-pointer"
+            >
+              {city}
+            </li>
+          ))}
+      </ul>
+    </div>
+  )}
+</div>
         </div>
 
         <div className={`activeproperty-cta-container pt-4 lg:pt-0  ${propertyBg[role]}`}>
