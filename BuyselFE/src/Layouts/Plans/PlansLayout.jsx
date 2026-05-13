@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getAllPlans } from "../../Api/userApi";
 import { MessageCircle, Phone } from "lucide-react";
+import { activateUserPlan } from "../../Api/userApi";
+import { toast } from "sonner";
 const PlansLayout = ({showtabs=true ,padding="py-10"}) => {
   const [plansData, setPlansData] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -10,6 +12,23 @@ const [selectedPlan, setSelectedPlan] = useState(null);
 const handleSelectPlan = (plan) => {
   setSelectedPlan(plan);
   setOpenModal(true);
+};
+const handleCheckout = async () => {
+
+  try {
+
+    if (!selectedPlan) return;
+
+    console.log(selectedPlan);
+
+    const res = await activateUserPlan(selectedPlan.id);
+    toast.success("Plan Activated")
+
+    console.log(res);
+
+  } catch (error) {
+    console.log(error);
+  }
 };
   useEffect(() => {
   const fetchPlans = async () => {
@@ -47,19 +66,19 @@ const convert = (val) => {
 
 const getPlanData = (plan) => {
   switch (active) {
-    case "Owner":
-      return [
-        plan.validity,
-        convert(plan.top_priority_search),
-        "N/A",
-        convert(plan.edit_option),
-        plan.meta_ads_promotion,
-        plan.bulk_whatsapp,
-        plan.offline_agent_share,
-        plan.poster_creation,
-        plan.social_media_marketing,
-        convert(plan.lead_followup_support),
-      ];
+   case "Owner":
+  return [
+    plan.validity,
+    convert(plan.priority_search),
+    plan.enquiry_limit,
+    convert(plan.property_edit_option),
+    plan.meta_ads_promotion,
+    plan.bulk_whatsapp_message,
+    plan.listing_type,
+    plan.poster_creation,
+    plan.social_media_marketing,
+    convert(plan.lead_follow_support),
+  ];
 
     case "Agent":
       return [
@@ -106,29 +125,132 @@ const getPlanData = (plan) => {
     default:
       return [];
   }
+};const planConfig = {
+  Owner: {
+    features: [
+      "Plan Validity",
+      "Priority Search",
+      "Enquiry Limit",
+      "Property Edit Option",
+      "Meta Ads Promotion",
+      "Bulk WhatsApp Message",
+      "Listing Type",
+      "Poster Creation",
+      "Social Media Marketing",
+      "Lead Follow Support",
+    ],
+
+    getData: (plan) => [
+      plan.validity,
+      convert(plan.priority_search),
+      plan.enquiry_limit,
+      plan.property_edit_option,
+      plan.meta_ads_promotion,
+      plan.bulk_whatsapp_message,
+      plan.listing_type,
+      plan.poster_creation,
+      plan.social_media_marketing,
+      convert(plan.lead_follow_support),
+    ],
+  },
+
+  Agent: {
+    features: [
+      "Plan Validity",
+      "Priority Search",
+      "No of Enquiries",
+      "Edit Option",
+      "Meta Ads",
+      "Bulk WhatsApp",
+      "Offline Share",
+      "Poster Creation",
+      "Social Media",
+      "Verified Badge",
+    ],
+
+    getData: (plan) => [
+      plan.validity,
+      plan.priority_search,
+      plan.enquiries,
+      plan.edit,
+      plan.meta_ads,
+      plan.bulk_whatsapp,
+      "N/A",
+      plan.poster,
+      plan.social_media,
+      "N/A",
+    ],
+  },
+
+  "Premium Agent": {
+    features: [
+      "Plan Validity",
+      "Priority Search",
+      "Enquiries",
+      "Edit Option",
+      "Meta Ads",
+      "Bulk WhatsApp",
+      "Residential Limit",
+      "Poster Creation",
+      "Social Media",
+      "Lead Follow",
+    ],
+
+    getData: (plan) => [
+      plan.validity,
+      plan.priority_search,
+      plan.enquiries,
+      plan.edit,
+      plan.meta_ads,
+      plan.bulk_whatsapp,
+      plan.residential_limit,
+      plan.poster,
+      plan.social_media,
+      convert(plan.lead_follow),
+    ],
+  },
+
+  "Elite Agent": {
+    features: [
+      "Plan Validity",
+      "Priority Search",
+      "Total Listings",
+      "Sale Listings",
+      "Meta Ads Promotion",
+      "Bulk WhatsApp",
+      "Lead Management",
+      "Poster Creation",
+      "Social Media",
+      "Lead Support",
+    ],
+
+    getData: (plan) => [
+      plan.plan_validity_days,
+      plan.priority_search,
+      plan.total_property_listings,
+      plan.sale_listings_limit,
+      plan.meta_ads_promotion,
+      plan.bulk_whatsapp_messages,
+      plan.lead_management,
+      plan.poster_creation,
+      plan.social_media_marketing,
+      plan.lead_followup_support,
+    ],
+  },
 };
-  const features = [
-    "Plan Validity",
-    "Top Priority",
-    "No of Enquiry",
-    "Profile Edit Option",
-    "Meta Ads Promotion",
-    "Bulk WhatsApp Message",
-    "Offline Owners Share",
-    "Poster Creation",
-    "Social Media Marketing",
-    "Verified Agent Badge",
-  ];
 
   const [active, setActive] = useState("Owner");
   const roles = ["Owner", "Agent", "Premium Agent", "Elite Agent"];
  const rawPlans = getPlansByRole();
+const features = planConfig[active].features;
 
 const plans = rawPlans.map((plan) => ({
+  id: plan.id,
   name: plan.name,
   price: `₹ ${plan.price || plan.amount}`,
-  data: getPlanData(plan),
+  data: planConfig[active].getData(plan),
 }));
+const isOwnerPlans = plans.length === 4;
   const renderIcon = (type) => {
     if (type === "check") {
       return (
@@ -148,7 +270,7 @@ const plans = rawPlans.map((plan) => ({
       );
     }
 
-    return <span className="text-[#7CB305] text-sm font-medium">{type}</span>;
+    return <span className="text-[#000000b7] text-sm font-medium text-center">{type}</span>;
   };
 
   return (
@@ -187,7 +309,7 @@ const plans = rawPlans.map((plan) => ({
           <div
             key={planIndex}
             className={`bg-white rounded-3xl p-6 shadow-lg border border-[#E6F4D7]
-      ${planIndex === 2 ? "md:col-span-2" : ""}`}
+      ${planIndex === 2 && plans.length!==4 ? "md:col-span-2" : ""}`}
           >
 
             <div className="text-center mb-6">
@@ -238,10 +360,16 @@ const plans = rawPlans.map((plan) => ({
 
 {/* desktop */}
 
-
-      <div className="hidden lg:grid grid-cols-4 
-gap-4 lg:gap-6 
-max-w-7xl mx-auto items-start">
+<div
+  className={`hidden lg:grid
+  ${
+    plans.length === 4
+      ? "grid-cols-5"
+      : "grid-cols-4   max-w-7xl "
+  }
+  gap-4 lg:gap-6
+mx-auto items-start`}
+>
 
         <div className="flex flex-col justify-center h-[120px]">
           <h1 className="text-2xl lg:text-3xl font-semibold mb-2 lexend">
@@ -257,8 +385,8 @@ max-w-7xl mx-auto items-start">
         {plans.map((plan) => (
           <div
             key={plan.name}
-            className="bg-[#F1FDDA] h-[110px] lg:h-[120px] w-[199px] 
-      rounded-3xl flex flex-col justify-center items-center ml-[90px] shadow-lg"
+            className= {` bg-[#F1FDDA] h-[110px] lg:h-[120px] w-[199px] 
+      rounded-3xl flex flex-col justify-center items-center ml-[90px] shadow-lg`}
           >
             <h2 className="text-lg lg:text-xl font-semibold mb-2 lexend">
               {plan.name}
@@ -272,13 +400,13 @@ max-w-7xl mx-auto items-start">
         ))}
 
         <div className="bg-[#8AD32E] rounded-3xl p-3 lg:p-4 mt-4
-  w-[240px] lg:w-[240px] xl:w-[320px]">
+  w-[240px] lg:w-[240px]  xl:w-[320px]">
 
           {features.map((feat, i) => (
             <div
               key={feat}
-              className={`h-[52px] lg:h-[56px] flex items-center 
-        px-4 lg:px-6 rounded-full text-white lexend
+              className={`h-[52px] lg:h-[70px] flex items-center 
+        px-4 lg:px-3 rounded-full text-white lexend
         text-[12px] lg:text-[14px]
         ${i % 2 === 0 ? "bg-black/10 font-semibold" : "font-medium"}`}
             >
@@ -291,16 +419,24 @@ max-w-7xl mx-auto items-start">
         {plans.map((plan) => (
           <div key={plan.name} className="mt-2 flex flex-col items-center ml-25">
 
-            <div className="bg-white 
-      w-[160px] lg:w-[180px] xl:w-[280px]
-      rounded-3xl p-4 lg:p-6 border-2 shadow-lg border-[#F1FDDA]">
+      <div
+  className={`bg-white
+  ${
+    plans.length === 4
+      ? "w-[140px] lg:w-[160px] xl:w-[250px]"
+      : "w-[160px] lg:w-[180px] xl:w-[280px]"
+  }
+  rounded-3xl
+  p-4 lg:p-6
+  border-2 shadow-lg border-[#F1FDDA]`}
+>
 
               {features.map((_, i) => (
                 <div
                   key={i}
-                  className={`h-[52px] lg:h-[56px] flex items-center 
+                  className={`h-[52px] lg:h-[70px] flex items-center 
             justify-center rounded-full lexend
-            ${i % 2 === 0 ? "bg-[#84CC1608]" : "bg-white"}`}
+            ${i % 2 === 0 ? "bg-[#7bbe1624]" : "bg-white"}`}
                 >
                   {renderIcon(plan.data[i])}
                 </div>
@@ -421,6 +557,8 @@ max-w-7xl mx-auto items-start">
         </div>
 
         <button
+          onClick={handleCheckout}
+
           className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white
           text-black py-4 rounded-2xl font-semibold text-lg transition flex gap-2 justify-center cursor-pointer " 
         >

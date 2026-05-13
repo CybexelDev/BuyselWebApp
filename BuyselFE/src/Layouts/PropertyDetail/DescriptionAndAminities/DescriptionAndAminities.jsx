@@ -62,6 +62,11 @@ const [errors, setErrors] = useState({});
 const handleSubmit = async (e) => {
   e.preventDefault();
   if (!validate()) return;
+  const token=localStorage.getItem("accessToken")
+  if(!token){
+    toast.error("User should login before enquiry")
+    return
+  }
 
   const payload = {
     name: formData.name,
@@ -85,7 +90,7 @@ const handleSubmit = async (e) => {
   });
 
   } else {
-    toast.error("Failed ❌");
+    toast.error("Failed ");
   }
 };
   return (
