@@ -137,7 +137,7 @@ const HeaderProperty = ({ property }) => {
                 alt=""
                 className="w-full h-[120px] md:h-[160px] lg:h-[176.5px]  object-cover inverted-radiuss overflow-hidden"
               />
-              <button onClick={() => setShowGallery(true)} className="absolute bottom-0  text-[18px] right-[0px]   bg-black text-white max-[361px]:px-[12px] max-[361px]:rounded-[7px] max-[361px]:py-[14px] max-[400px]:px-[17px]  max-[400px]:py-[14px] px-[18px] py-[13px] rounded-[19px] host-grotesk">
+              <button onClick={() => setShowGallery(true)} className="absolute bottom-0 cursor-pointer text-[18px] right-[0px]   bg-black text-white max-[361px]:px-[12px] max-[361px]:rounded-[7px] max-[361px]:py-[14px] max-[400px]:px-[17px]  max-[400px]:py-[14px] px-[18px] py-[13px] rounded-[19px] host-grotesk">
                 View All Images
               </button>
             </div>
