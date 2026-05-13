@@ -177,7 +177,7 @@ const handleSearch = () => {
 
 
           <div className="flex justify-center">
-            <button className="instrument-sans z-10 w-[152px] sm:w-[220px] h-[52px] md:w-[220px] lg:w-[140px] xl:w-[152px] bg-[#6ABD11ED] text-white font-[600] rounded-[17px] text-[15px] mx-auto lg:mr-[10px]" onClick={handleSearch}>
+            <button className="instrument-sans cursor-pointer z-10 w-[152px] sm:w-[220px] h-[52px] md:w-[220px] lg:w-[140px] xl:w-[152px] bg-[#6ABD11ED] text-white font-[600] rounded-[17px] text-[15px] mx-auto lg:mr-[10px]" onClick={handleSearch}>
               Search Now
             </button>
           </div>

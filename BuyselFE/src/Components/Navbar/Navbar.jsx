@@ -26,7 +26,7 @@ const Navbar = ({
   ];
 
   const handleNavigate = (path) => {
-    navigate(path);
+    navigate(path); 
     setOpen(false); 
   };
 
@@ -74,12 +74,11 @@ const Navbar = ({
                 :
                 <img src={login} alt="profile" className="w-[15px]" />
               }
-              <span className="text-[14px] host-grotesk font-[400]">{accessToken ? `${userName}` : "Login"}</span>
+              <span className="text-[14px] host-grotesk font-[400]">{ accessToken ? userName.length > 10 ? `${userName.slice(0, 7)}...` : userName: "Login"}</span>
             </button>
           </div>
         </div>
 
-        {/* MOBILE MENU BUTTON */}
         <button
           className={`lg:hidden relative z-50 flex flex-col gap-1 cursor-pointer ${right}`}
           onClick={() => setOpen(!open)}
