@@ -104,8 +104,6 @@ const addWishlist = (id) => {
             property={property}
             color="bg-[#fbfbfb]"
             shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
-            hideWhatsapp={true}
-            hideCall={true}
           />
         ))}
       </div>

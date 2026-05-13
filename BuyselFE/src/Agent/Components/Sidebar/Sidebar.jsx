@@ -107,13 +107,13 @@ const Sidebar = () => {
       <button
         key={item.id}
         onClick={() => navigate(item.path)}
-        className="relative flex items-center justify-center w-10 h-10 md:w-15 md:h-13"
+        className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-15 md:h-13"
       >
         {/* ICON */}
         <item.icon
   className={`z-10 transition-all duration-300 ${
     isActive ? "text-white scale-110" : "text-white/50"
-  } w-4 h-4 md:w-6 md:h-6`}
+  } w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6`}
 />
 
         {/* FLOATING ACTIVE PILL */}

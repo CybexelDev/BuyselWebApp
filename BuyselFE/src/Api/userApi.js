@@ -856,3 +856,40 @@ export const getCityData = async (location) => {
     return [];
   }
 }
+
+
+export const userCurrentPlan = async () => {
+  try {
+    const res = await api.get("/current-userplan/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export const userDashboard = async () => {
+  try {
+    const res = await api.get("/owner-dashboard/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export const userPropertyList = async () => {
+  try {
+    const res = await api.get("/owner/property/list/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+
+
