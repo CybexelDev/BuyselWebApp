@@ -27,6 +27,7 @@ const AgentForm = ({onForgot}) => {
                         agentId: response?.agent_details?.agent_id,
                         image: response?.agent_details?.profile_image,
                         agent_type: response?.agent_details?.agent_type,
+                        role:response?.login_as,
                     }
                 })
                       localStorage.setItem('accessToken', response?.access);

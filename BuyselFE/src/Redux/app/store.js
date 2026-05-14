@@ -10,6 +10,7 @@ const initialUserState = {
   userId: null,
   image: null,
   verificationStatus: null,
+  role:null,
   isLoggedIn: false,
 };
 
@@ -23,6 +24,7 @@ function userReducer(state = initialUserState, action) {
         userId: action.payload.userId,
         image: action.payload.image,
         verificationStatus: action.payload.auth_provider,
+        role:action.payload.role,
         isLoggedIn: true,
       };
     case 'LOGOUT':
@@ -33,6 +35,7 @@ function userReducer(state = initialUserState, action) {
         userId: null,
         image:null,
         verificationStatus: null,
+        role:null,
         isLoggedIn: false,
       };
     default:
@@ -46,6 +49,7 @@ const initialAgentState = {
   agentId: null,
   image: null,
   agent_type: null,
+  role:null,
   isLoggedIn: false,
 };
 
@@ -59,6 +63,7 @@ function agentReducer(state = initialAgentState, action) {
         agentId: action.payload.agentId,
         image: action.payload.image,
         agent_type: action.payload.agent_type,
+        role:action.payload.role,
         isLoggedIn: true,
       };
     case 'AGENT_LOGOUT':                                                                    
@@ -69,6 +74,7 @@ function agentReducer(state = initialAgentState, action) {
         agentId: null,
         image:null,
         agent_type: null,
+        role:null,
         isLoggedIn: false,
       };
     default:
