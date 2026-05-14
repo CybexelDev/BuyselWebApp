@@ -32,6 +32,7 @@ const UserForm = ({ setSignup,onForgot }) => {
             userId: response?.user?.id,
             image: response?.user.image,
             verificationStatus: response?.user?.auth_provider,
+            role:response?.login_as,
           }
         })
 
@@ -68,6 +69,7 @@ const UserForm = ({ setSignup,onForgot }) => {
             userId: response?.user?.id,
             image: response?.user?.image,
             verificationStatus: response?.user?.auth_provider,
+            role:response?.login_as,
           }
         })
 
