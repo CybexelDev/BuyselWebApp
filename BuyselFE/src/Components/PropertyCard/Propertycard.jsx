@@ -12,7 +12,8 @@ import { toast } from "sonner";
 
 
 
-function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", shadow, hideWhatsapp = false, hideCall = false, hideWishlist = false }) {
+
+function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", shadow, hideContact=false,hideWishlist=false }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -198,7 +199,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
 
 
-
+  
         <div className="flex mt-2 gap-1 w-full h-[39px] instrument-sans">
           <a
             href="#"
@@ -220,7 +221,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
             </svg>
             <span
               className={`instrument-sans font-[700] text-[13px]
-             ${hideWhatsapp ? "hidden sm:inline" : "inline"}
+              hidden sm:inline
             `}
             >
               WhatsApp
@@ -234,7 +235,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 24 24"><path fill="#000" d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.98.98 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02c-.37-1.11-.56-2.3-.56-3.53c0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99" /></svg>
             <span className={`instrument-sans font-[700] text-[14px] -ml-[5px] 
-  ${hideCall ? "hidden sm:inline" : "inline"}`}>Call</span>
+  hidden sm:inline`}>Call</span>
           </a>
         </div>
 
