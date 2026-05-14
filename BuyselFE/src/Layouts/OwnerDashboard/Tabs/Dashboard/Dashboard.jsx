@@ -241,7 +241,7 @@ const showRenewButton = Currentplan && diffDays <= 10;
       You haven’t subscribed to any plan yet.
     </p>
 
-    <button className="mt-5 px-6 py-3 bg-[#6ABD11] text-white rounded-xl font-semibold hover:bg-[#5ca60f] transition">
+    <button className="mt-5 px-6 py-3 cursor-pointer bg-[#6ABD11] text-white rounded-xl font-semibold hover:bg-[#5ca60f] transition">
       Choose Plan
     </button>
   </div>

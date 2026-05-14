@@ -68,14 +68,14 @@ const EnquiryLayoutUser = () => {
   </p>
 )}
           {/* ENQUIRIES */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 ">
             {enquiries.map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="group bg-white border border-slate-100 rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 hover:shadow-md transition-all"
+                className="group bg-white border cursor-pointer border-slate-100 rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 hover:shadow-md transition-all"
 onClick={() => navigate(`/enquiry-detail/${item.enquiry_id}`)}              >
 
                 {/* USER */}

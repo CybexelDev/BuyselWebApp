@@ -348,7 +348,7 @@ const isOwnerPlans = plans.length === 4;
 
             </div>
 
-            <button className="mt-6 w-full bg-[#8AD32E] text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
+            <button className="mt-6 w-full bg-[#8AD32E] cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
               onClick={() => handleSelectPlan(plan)}
 >
               Select Plan
@@ -396,7 +396,7 @@ mx-auto items-start`}
 
             <div className="bg-[#8AD32E] text-white 
       px-6 lg:px-8 py-1 rounded-full font-semibold lexend">
-            ₹ {plan.price}
+            {plan.price}
             </div>
           </div>
         ))}
@@ -451,7 +451,7 @@ mx-auto items-start`}
             className="mt-6 
       w-[160px] lg:w-[180px] xl:w-[200px]
       bg-[#8AD32E] hover:bg-[#7ABF28]
-      text-white font-bold py-3 rounded-xl lexend">
+      text-white font-bold py-3 rounded-xl lexend cursor-pointer">
               Select Plan
             </button>
 
@@ -559,16 +559,16 @@ mx-auto items-start`}
 
         <button
 
-//           onClick={handleCheckout}
-        onClick={() =>
-              openRazorpay({
-                amount: selectedPlan?.price,
-                name: "BuySel",
-                description: selectedPlan?.name,
-                user: { name: "Ashif", email: "test@gmail.com", phone: "9876543210" },
-                onSuccess: (res) => console.log("Property Payment", res),
-              })
-            }
+          onClick={handleCheckout}
+        // onClick={() =>
+        //       openRazorpay({
+        //         amount: selectedPlan?.price,
+        //         name: "BuySel",
+        //         description: selectedPlan?.name,
+        //         user: { name: "Ashif", email: "test@gmail.com", phone: "9876543210" },
+        //         onSuccess: (res) => console.log("Property Payment", res),
+        //       })
+        //     }
 
 
           className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white
