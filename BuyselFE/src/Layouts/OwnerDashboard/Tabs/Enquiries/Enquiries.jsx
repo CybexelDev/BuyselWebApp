@@ -55,7 +55,25 @@ const EnquiryLayoutUser = () => {
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans">
 
-        <div className="max-w-7xl mx-auto px-10  ">
+        <div className=" mx-auto px-10  ">
+          <div className='my-4'>
+                  <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} 
+                  transition={{
+    duration: 0.5,
+  }}>
+          
+                        <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2">
+                          <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
+                          Property Leads
+                        </div>
+          
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight instrument-sans">
+                          Property <span className="text-[#6ABD11]">Leads</span>
+                        </h1>
+          
+                      </motion.div>
+          </div>
+    
 
         
 {loading && (
@@ -63,12 +81,30 @@ const EnquiryLayoutUser = () => {
 )}
 
 {!loading && enquiries.length === 0 && (
-  <p className="text-center py-10 text-slate-400">
-    No enquiries found
-  </p>
+  <div className="bg-white border border-slate-200 rounded-3xl p-10 sm:p-16 text-center shadow-sm flex flex-col items-center justify-center">
+    
+        <div className="absolute top-0 right-0 w-40 h-40 bg-[#6ABD11]/10 blur-3xl rounded-full" />
+    <div className="absolute bottom-0 left-0 w-32 h-32 bg-slate-200/40 blur-3xl rounded-full" />
+
+    {/* Icon */}
+    <div className="relative w-24 h-24 rounded-3xl bg-[#6ABD11]/10 flex items-center justify-center mb-6 border border-[#6ABD11]/20">
+      <Search className="text-[#6ABD11]" size={40} />
+    </div>
+
+    <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2 host-grotesk">
+      No Enquiries Found
+    </h2>
+
+    <p className="text-slate-500 text-sm sm:text-base max-w-md host-grotesk">
+      There are currently no enquiries available. New enquiries will appear here once users contact you.
+    </p>
+    
+  </div>
 )}
+
           {/* ENQUIRIES */}
           <div className="flex flex-col gap-3 ">
+            
             {enquiries.map((item, index) => (
               <motion.div
                 key={item.id}

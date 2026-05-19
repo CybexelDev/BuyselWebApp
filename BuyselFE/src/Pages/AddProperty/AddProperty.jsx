@@ -1,3 +1,5 @@
+
+
 import React from 'react'
 import { useSelector } from "react-redux";
 
@@ -6,13 +8,14 @@ import AddPropertyHeader from '../../Layouts/AddProperty/AddPropertyHeader/AddPr
 
 function AddProperty() {
 
-const userId = useSelector((state) => state.user.userId);
-const agentId = useSelector((state) => state.agent.agentId);
+  const user = useSelector((state) => state.user);
+  const agent = useSelector((state) => state.agent);
 
-  console.log("userId:", userId);
-  console.log("agentId:", agentId);
+  const role = agent?.role || user?.role;
 
-  const isAgent = agentId && !userId;
+  const isAgent = role === "agent";
+
+  console.log("ROLE:", role);
 
   return (
     <div>
@@ -22,4 +25,5 @@ const agentId = useSelector((state) => state.agent.agentId);
   )
 }
 
-export default AddProperty
+export default AddProperty;
+

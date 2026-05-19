@@ -15,21 +15,32 @@ import { TfiRulerAlt2 } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
 import { deletePropertyListing, getPropertyListing } from "../../../Api/agentsApi";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import { deleteUserPropertyListing, userPropertyList } from "../../../Api/userApi";
 
 const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-slate-50", lg = "lg:py-12", onClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [properties, setProperties] = useState([]);
+  const userRole = useSelector((state) => state.user.role);
+const agentRole = useSelector((state) => state.agent.role);
+
+const role = userRole || agentRole;
+console.log("role :",role);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const data = await getPropertyListing();
-        console.log("API Properties:", data);
-
-        if (Array.isArray(data)) {
-const mapped = data.map((item) => ({
+        let res
+              if (role === "agent") {
+        res = await getPropertyListing();
+      } else if (role === "user") {
+        res = await userPropertyList();
+      }
+      console.log("API Properties:", res);
+        if (Array.isArray(res)) {
+const mapped = res.map((item) => ({
   id: item.id,
   title: item.label,
   location: item.city || item.location,
@@ -58,16 +69,19 @@ const mapped = data.map((item) => ({
     };
 
     fetchProperties();
-  }, []);
+  }, [role]);
 
   
      const handleDelete = async(id)=>{
       const confirmDelete = window.confirm("Are you sure delete?")
   
       if(!confirmDelete) return;
-  
-      const res = await deletePropertyListing(id);
-  
+      let res;
+      if(role === "agent"){
+          res = await deletePropertyListing(id);
+      }else if(role === "user"){
+        res = await deleteUserPropertyListing(id);
+      }
       if(res){
         setProperties((prev)=>prev.filter((item)=>item.id !== id))
       }else{
@@ -113,6 +127,7 @@ const mapped = data.map((item) => ({
           </header>
 
           {/* SEARCH + FILTER */}
+          {properties.length > 0 && (
           <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4 justify-between mb-8 shadow-sm">
 
             {/* Search */}
@@ -134,11 +149,34 @@ const mapped = data.map((item) => ({
             </button>
 
           </div>
+          )}
 
           {/* PROPERTY LIST */}
           <div className="space-y-4" onClick={onClick}>
+  {filteredProperties.length === 0 ? (
+    <div className="bg-white border border-slate-200 rounded-3xl p-10 sm:p-16 text-center shadow-sm flex flex-col items-center justify-center">
+      
+      <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-5">
+        <Search className="text-slate-400" size={34} />
+      </div>
 
-            {filteredProperties.map((property) => (
+      <h2 className="text-xl sm:text-2xl font-semibold text-slate-800 mb-2 host-grotesk">
+        No Properties Found
+      </h2>
+
+      <p className="text-slate-500 text-sm sm:text-base max-w-md mb-6 host-grotesk">
+        You haven't added any properties yet or no results match your search.
+      </p>
+
+      <button
+        onClick={() => navigate("/addyourproperty")}
+        className="bg-[#6ABD11] hover:bg-[#5aa30e] transition text-white px-6 py-3 rounded-xl font-semibold text-sm shadow-md"
+      >
+        Add New Property
+      </button>
+    </div>
+  ) : (
+    filteredProperties.map((property) => (
 
               <div
                 key={property.id}
@@ -246,9 +284,9 @@ const mapped = data.map((item) => ({
 
               </div>
 
-            ))}
-
-          </div>
+                ))
+  )}
+</div>
 
         </div>
       </main>

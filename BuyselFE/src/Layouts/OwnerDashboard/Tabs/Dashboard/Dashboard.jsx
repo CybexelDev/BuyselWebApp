@@ -108,6 +108,7 @@ const showRenewButton = Currentplan && diffDays <= 10;
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
+           transition={{ duration: 0.5}}
         >
           <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em]  mt-6">
             <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />

@@ -279,11 +279,11 @@ const isOwnerPlans = plans.length === 4;
       );
     }
 
-    return <span className="text-[#000000b7] text-sm font-medium text-center">{type}</span>;
+    return <span className="text-[#000000b7] text-[12px] lg:text-[11px] xl:text-[12px] 3xl:text-sm font-medium text-center">{type}</span>;
   };
 
   return (
-    <div className={` ${padding} bg-white  px-4 lg:px-12 xl:px-16`}>
+    <div className={` ${padding} bg-white  px-4 lg:px-6 xl:px-8 2xl:px-16`}>
      
   {showtabs && (
   <div className="flex justify-center mb-10 md:mb-15 px-2">
@@ -322,11 +322,11 @@ const isOwnerPlans = plans.length === 4;
 
           >
             <div className="text-center mb-6">
-              <h2 className="text-[28px] font-semibold text-[#1F1F1F]">
+              <h2 className="text-[23px] font-semibold text-[#1F1F1F]">
                 {plan.name}
               </h2>
               <div className="bg-[#8AD32E] inline-block px-6 py-2 rounded-full mt-3 text-xl font-semibold text-white">
-                {plan.price}
+                ₹{plan.price}
               </div>
             </div>
 
@@ -337,7 +337,7 @@ const isOwnerPlans = plans.length === 4;
                   key={feature}
                   className="flex justify-between items-center bg-[#F7FCEB] rounded-full px-4 py-3"
                 >
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-[12px] font-medium text-gray-700">
                     {feature}
                   </span>
                   <div className="flex items-center">
@@ -360,106 +360,165 @@ const isOwnerPlans = plans.length === 4;
       </div>
 
 
+
 {/* desktop */}
 
 <div
   className={`hidden lg:grid
   ${
     plans.length === 4
-      ? "grid-cols-5"
-      : "grid-cols-4   max-w-7xl "
+      ? "grid-cols-[240px_repeat(4,1fr)]"
+      : "grid-cols-[240px_repeat(3,1fr)]"
   }
-  gap-4 lg:gap-6
-mx-auto items-start`}
+  gap-2 xl:gap-4 items-start w-full`}
 >
 
-
-        <div className="flex flex-col justify-center h-[120px]">
-          <h1 className="text-2xl lg:text-3xl font-semibold mb-2 lexend">
+  {/* LEFT TEXT */}
+  <div className="flex flex-col justify-center h-[120px]">
+          <h1 className="text-2xl lg:text-2xl font-semibold mb-2 lexend">
             Hey there,
           </h1>
 
-          <p className="text-black text-[14px] lg:text-[16px] inter">
+          <p className="text-black text-[14px] lg:text-[15px] inter">
             Subscribe to Premium today to save ₹50,000 on brokerage.
           </p>
         </div>
 
-        {plans.map((plan) => (
-          <div
-            key={plan.name}
-            className= {` bg-[#F1FDDA] h-[110px] lg:h-[120px] w-[199px] 
-      rounded-3xl flex flex-col justify-center items-center ml-[90px] shadow-lg`}
-          >
-            <h2 className="text-lg lg:text-xl font-semibold mb-2 lexend">
-              {plan.name}
-            </h2>
+  {/* TOP PLAN CARDS */}
+  {plans.map((plan) => (
+    
+    <div
+      key={plan.name}
+      className="bg-[#F1FDDA]
+      h-[120px]
+      w-full
+      rounded-3xl
+      flex flex-col
+      justify-center
+      items-center
+      mx-auto
+      shadow-lg"
+    >
 
-            <div className="bg-[#8AD32E] text-white 
-      px-6 lg:px-8 py-1 rounded-full font-semibold lexend">
-            {plan.price}
-            </div>
-          </div>
-        ))}
-
-        <div className="bg-[#8AD32E] rounded-3xl p-3 lg:p-4 mt-4
-  w-[240px] lg:w-[240px]  xl:w-[320px]">
-
-          {features.map((feat, i) => (
-            <div
-              key={feat}
-              className={`h-[52px] lg:h-[70px] flex items-center 
-        px-4 lg:px-3 rounded-full text-white lexend
-        text-[12px] lg:text-[14px]
-        ${i % 2 === 0 ? "bg-black/10 font-semibold" : "font-medium"}`}
-            >
-              {feat}
-            </div>
-          ))}
-        </div>
-
-
-        {plans.map((plan) => (
-          <div key={plan.name} className="mt-2 flex flex-col items-center ml-25">
+      <h2 className="text-lg xl:text-xl font-semibold mb-2 lexend text-center">
+        {plan.name}
+      </h2>
 
       <div
-  className={`bg-white
-  ${
-    plans.length === 4
-      ? "w-[140px] lg:w-[160px] xl:w-[250px]"
-      : "w-[160px] lg:w-[180px] xl:w-[280px]"
-  }
-  rounded-3xl
-  p-4 lg:p-6
-  border-2 shadow-lg border-[#F1FDDA]`}
->
+        className="bg-[#8AD32E]
+        text-white
+        px-6 py-1
+        rounded-full
+        font-semibold
+        lexend"
+      >
+        {plan.price}
+      </div>
 
-              {features.map((_, i) => (
-                <div
-                  key={i}
-                  className={`h-[52px] lg:h-[70px] flex items-center 
-            justify-center rounded-full lexend
-            ${i % 2 === 0 ? "bg-[#7bbe1624]" : "bg-white"}`}
-                >
-                  {renderIcon(plan.data[i])}
-                </div>
-              ))}
+    </div>
+  ))}
 
-            </div>
+  {/* FEATURE COLUMN */}
+  <div
+    className="bg-[#8AD32E]
+    rounded-3xl
+    p-3
+    mt-4
+    w-full
+    max-w-[240px]"
+  >
 
-            <button 
-              onClick={() => handleSelectPlan(plan)}
-            className="mt-6 
-      w-[160px] lg:w-[180px] xl:w-[200px]
-      bg-[#8AD32E] hover:bg-[#7ABF28]
-      text-white font-bold py-3 rounded-xl lexend cursor-pointer">
-              Select Plan
-            </button>
+    {features.map((feat, i) => (
+      
+      <div
+        key={feat}
+        className={`h-[65px]
+        flex items-center
+        px-4
+        rounded-2xl
+        text-white
+        lexend
+        text-[14px]
+        ${
+          i % 2 === 0
+            ? "bg-black/10 font-semibold"
+            : "font-medium"
+        }`}
+      >
+        {feat}
+      </div>
 
+    ))}
+
+  </div>
+
+  {/* PLAN DATA COLUMNS */}
+  {plans.map((plan) => (
+
+    <div
+      key={plan.name}
+      className="mt-2 flex flex-col items-center"
+    >
+
+      <div
+        className="bg-white
+        w-full
+        rounded-3xl
+        p-2
+        border-2
+        shadow-lg
+        border-[#F1FDDA]"
+      >
+
+        {features.map((_, i) => (
+          
+          <div
+            key={i}
+            className={`h-[65px]
+            flex items-center
+            justify-center
+            rounded-2xl
+            lexend
+            text-center
+            px-2
+            ${
+              i % 2 === 0
+                ? "bg-[#7bbe1624]"
+                : "bg-white"
+            }`}
+          >
+            {renderIcon(plan.data[i])}
           </div>
+
         ))}
 
       </div>
-<div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 lexend mt-10">
+
+      {/* BUTTON */}
+      <button
+        onClick={() => handleSelectPlan(plan)}
+        className="mt-6
+        w-full
+        max-w-[220px]
+        bg-[#8AD32E]
+        hover:bg-[#7ABF28]
+        text-white
+        font-bold
+        py-3
+        rounded-xl
+        lexend
+        transition
+        cursor-pointer"
+      >
+        Select Plan
+      </button>
+
+    </div>
+
+  ))}
+
+</div>
+<div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 lexend my-10">
 
   {/* LEFT SIDE */}
   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
@@ -494,7 +553,7 @@ mx-auto items-start`}
   </div>
 
   {/* RIGHT SIDE */}
-  <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-3 w-full md:w-auto">
+  <div className="flex flex-row md:flex-col items-center md:items-end justify-between mb-4 md:justify-start gap-3 w-full md:w-auto">
     
     <div className="bg-[#8AD32E] text-white px-5 py-1 rounded-full text-sm font-semibold">
       ₹199/-
@@ -559,16 +618,16 @@ mx-auto items-start`}
 
         <button
 
-          onClick={handleCheckout}
-        // onClick={() =>
-        //       openRazorpay({
-        //         amount: selectedPlan?.price,
-        //         name: "BuySel",
-        //         description: selectedPlan?.name,
-        //         user: { name: "Ashif", email: "test@gmail.com", phone: "9876543210" },
-        //         onSuccess: (res) => console.log("Property Payment", res),
-        //       })
-        //     }
+          // onClick={handleCheckout}
+        onClick={() =>
+              openRazorpay({
+                amount: selectedPlan?.price,
+                name: "BuySel",
+                description: selectedPlan?.name,
+                user: { name: "Ashif", email: "test@gmail.com", phone: "9876543210" },
+                onSuccess: (res) => console.log("Property Payment", res),
+              })
+            }
 
 
           className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white

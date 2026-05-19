@@ -156,7 +156,7 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
           </defs>
         </svg>
       ),
-      value: activityData?.enquiries_count,
+      value: activityData?.enquiries_count || 0,
       label: "Enquiries Sent",
     },
     {
@@ -181,7 +181,7 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
           </defs>
         </svg>
       ),
-      value: activityData?.properties_listed_count,
+      value: activityData?.properties_listed_count || 0,
       label: "Properties Listed",
     },
   ];
@@ -190,7 +190,7 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
     <div
       className="mb-4 mt-25 md:mb-6 md:mt-22 lg:my-6
                 px-2 sm:px-6 md:px-8 xl:pl-[42px]  xl:pr-[84px]
-                bg-white min-h-screen 
+                bg-white
                 flex flex-col md:flex-row gap-4 md:gap-6"
     >
       <div className="w-full md:w-1/2 space-y-6 md:space-y-8 xl:space-y-[49px] ">

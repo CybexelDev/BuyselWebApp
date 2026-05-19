@@ -81,44 +81,7 @@ function Payment() {
   return (
     <div className="flex-1 space-y-8 mb-5 relative">
 
-      <h1 className="text-2xl font-semibold lexend text-black">
-        Preview Your Listing
-      </h1>
-
-      <div className="grid lg:grid-cols-[340px_1fr] gap-8 items-start">
-
-        <div className="sticky top-6 shadow-md">
-          <Propertycard property={property} />
-        </div>
-
-        <div className="space-y-6 pr-10" >
-
-          <div className="bg-white rounded-2xl border border-[#7BC21F] p-6 shadow-sm host-grotesk">
-
-            <h3 className="font-semibold text-gray-800 mb-4 text-[20px]">
-              Property Features
-            </h3>
-
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-
-              <DetailItem title="Bedrooms" value="2 Bedrooms" />
-              <DetailItem title="Bathrooms" value="3 Bathrooms" />
-              <DetailItem title="Parking" value="Yes" />
-              <DetailItem title="Facing" value="East" />
-              <DetailItem title="Furnishing" value="Fully Furnished" />
-
-            </div>
-
-          </div>
-
-          <DetailBox title="Pricing Details">
-            <DetailRow label="Sale Price" value="4.14 - 5.52 Crore" />
-            <DetailRow label="Sale by Acres" value="1.15 -2.2 Lakhs" />
-          </DetailBox>
-
-        </div>
-
-      </div>
+      
   
 <div className="max-w-6xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6">
   

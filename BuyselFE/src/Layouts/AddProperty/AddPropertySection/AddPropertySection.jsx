@@ -17,6 +17,7 @@ import {
   getAgentProfile,
 } from "../../../Api/agentsApi";
 import { useParams } from "react-router-dom";
+import { userGetPropertyById, userPostProperty } from "../../../Api/userApi";
 
 const getInitialFormData = () => ({
   landArea: "",
@@ -71,8 +72,11 @@ function AddPropertySection() {
 
   const [errors, setErrors] = useState({});
 
-  const agentId = useSelector((state) => state.agent.agentId);
-  const isAgent = !!agentId;
+  const user = useSelector((state) => state.user);
+const agent = useSelector((state) => state.agent);
+const role = agent?.role || user?.role;
+const isAgent = role === "agent";
+
   const maxStep = isAgent ? 4 : 5;
 
   const { id } = useParams();
@@ -102,7 +106,9 @@ function AddPropertySection() {
 
     const fetchProperty = async () => {
       try {
-        const data = await getPropertyById(id);
+        const data = isAgent
+  ? await getPropertyById(id)
+  : await userGetPropertyById(id);
 
         // 🔥 BUILD OPTION → FIELD MAP (NO HARDCODING)
         const optionToFieldMap = {};
@@ -197,6 +203,8 @@ propertyData.subcategories.forEach((sub) => {
   useEffect(() => {
     if (id) return;
 
+      if (!isAgent) return;
+
     const fetchProfile = async () => {
       try {
         const data = await getAgentProfile();
@@ -256,11 +264,24 @@ const handleSubmit = async (e) => {
 
     let res;
 
-    if (id) {
-      res = await updatePropertyListing(id, payload);
-    } else {
-      res = await postProperty(payload);
-    }
+if (id) {
+
+  if (isAgent) {
+    res = await updatePropertyListing(id, payload);
+
+  } else {
+    res = await updateUserPropertyListing(id, payload);
+  }
+
+} else {
+
+  if (isAgent) {
+    res = await postProperty(payload);
+
+  } else {
+    res = await userPostProperty(payload);
+  }
+}
 
     if (res) {
       setShowSuccess(true);
