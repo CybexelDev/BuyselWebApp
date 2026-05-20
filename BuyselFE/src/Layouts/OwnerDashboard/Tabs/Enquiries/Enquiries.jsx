@@ -83,7 +83,7 @@ const EnquiryLayoutUser = () => {
 {!loading && enquiries.length === 0 && (
   <div className="bg-white border border-slate-200 rounded-3xl p-10 sm:p-16 text-center shadow-sm flex flex-col items-center justify-center">
     
-        <div className="absolute top-0 right-0 w-40 h-40 bg-[#6ABD11]/10 blur-3xl rounded-full" />
+     <div className="absolute top-0 right-0 w-40 h-40 bg-[#6ABD11]/10 blur-3xl rounded-full" />
     <div className="absolute bottom-0 left-0 w-32 h-32 bg-slate-200/40 blur-3xl rounded-full" />
 
     {/* Icon */}

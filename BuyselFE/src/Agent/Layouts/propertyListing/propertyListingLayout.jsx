@@ -168,12 +168,11 @@ const mapped = res.map((item) => ({
         You haven't added any properties yet or no results match your search.
       </p>
 
-      <button
-        onClick={() => navigate("/addyourproperty")}
-        className="bg-[#6ABD11] hover:bg-[#5aa30e] transition text-white px-6 py-3 rounded-xl font-semibold text-sm shadow-md"
-      >
-        Add New Property
-      </button>
+       <button
+            onClick={()=>navigate("/addyourproperty")}
+             className="flex items-center justify-center cursor-pointer gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
+              Add NewProperty
+            </button>
     </div>
   ) : (
     filteredProperties.map((property) => (

@@ -7,10 +7,11 @@ import DashboardCard from "../../../../Components/DashboardCrad/DashboardCard";
 
 import DietChart from "../../../../Components/PieChart/PieChart";
 import { userCurrentPlan, userDashboard } from "../../../../Api/userApi";
+import { useNavigate } from "react-router-dom";
 function UserDashboard() {
 
 
-
+const nav = useNavigate()
   const [Currentplan, setCurrentPlan] = useState(null);
   const [dashboardData, setDashboardData] = useState(null);
 
@@ -242,7 +243,8 @@ const showRenewButton = Currentplan && diffDays <= 10;
       You haven’t subscribed to any plan yet.
     </p>
 
-    <button className="mt-5 px-6 py-3 cursor-pointer bg-[#6ABD11] text-white rounded-xl font-semibold hover:bg-[#5ca60f] transition">
+    <button onClick={()=>nav("/ownerdashboard?tab=plans")}
+     className="mt-5 px-6 py-3 cursor-pointer bg-[#6ABD11] text-white rounded-xl font-semibold hover:bg-[#5ca60f] transition">
       Choose Plan
     </button>
   </div>
