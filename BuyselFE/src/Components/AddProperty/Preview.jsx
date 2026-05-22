@@ -118,7 +118,7 @@ const nearbyPlaces =
       <div className="grid lg:grid-cols-[340px_1fr] gap-8 items-start">
 
         <div className="sticky top-6 shadow-md">
-          <Propertycard property={property} hideWishlist={true}  />
+          <Propertycard property={property} hideWishlist={true} hideContact={true}  />
         </div>
 
         <div className="space-y-6 pr-10" >

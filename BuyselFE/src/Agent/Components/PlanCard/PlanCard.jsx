@@ -38,7 +38,7 @@ function PlanCard({ title, Icon, price, savings, features=[], buttonText,dropdow
         </div>
 
         {/* Button */}
-        <button className="cursor-pointer w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-[#6ABD11] to-[#5ca60f] text-white shadow-lg hover:shadow-xl transition-all duration-300 mb-6">
+        <button  className="cursor-pointer w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-[#6ABD11] to-[#5ca60f] text-white shadow-lg hover:shadow-xl transition-all duration-300 mb-6">
           {buttonText}
         </button>
 

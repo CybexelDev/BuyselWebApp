@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TrendingUp, Check } from "lucide-react";
 import apartment from "../../../../assets/images/icons/apartment.svg";
 import property from "../../../../assets/images/profile/property.svg";
@@ -6,28 +6,38 @@ import { motion } from "framer-motion";
 import DashboardCard from "../../../../Components/DashboardCrad/DashboardCard";
 
 import DietChart from "../../../../Components/PieChart/PieChart";
+import { userCurrentPlan, userDashboard } from "../../../../Api/userApi";
 function UserDashboard() {
-  const properties = [1, 2, 3, 4, 5, 6, 7, 8]; // 8 properties
-  const enquiries = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //10 enquiries
-  const maxLimit = 14;
-  const totalProperties = properties.length;
-  const totalEnquiries = enquiries.length;
-  const remainingListings = maxLimit - totalProperties;
-  const Currentplan = {
-    name: "Silver",
-    label: "30 Days",
-    expiresOn: "2026-03-20",
-    listings: 12,
-    status: "Active",
-    features: [
-      "Unlimited Listings",
-      "Priority Support",
-      "Featured Properties",
-      "Advanced Analytics",
-    ],
-  };
 
-  const data = [
+
+
+  const [Currentplan, setCurrentPlan] = useState(null);
+  const [dashboardData, setDashboardData] = useState(null);
+
+  useEffect(()=>{
+    const fetchCurrentPlan = async()=>{
+      const plandata = await userCurrentPlan()
+      const dashboard = await userDashboard()
+
+      if(plandata){
+        setCurrentPlan(plandata)
+      }
+      if(dashboard){
+        setDashboardData(dashboard)
+      }
+    }
+    fetchCurrentPlan()
+
+  },[])
+
+const totalProperties = dashboardData?.data?.property_listed || 0;
+
+const totalEnquiries = dashboardData?.data?.total_enquiries || 0;
+
+const remainingListings =
+  dashboardData?.data?.remaining_property || 0;
+
+    const datas = [
     {
       title: "Total Properties",
       value: totalProperties,
@@ -79,11 +89,17 @@ function UserDashboard() {
     },
   ];
 
-  const today = new Date();
-  const expiry = new Date(Currentplan.expiresOn);
-  const diffTime = expiry - today;
-  const diffDays = diffTime / (1000 * 60 * 60 * 24);
-  const showRenewButton = diffDays <= 10;
+
+const today = new Date();
+
+const expiry = Currentplan?.data?.plan_expiry_date
+  ? new Date(Currentplan.data.plan_expiry_date)
+  : null;
+const diffTime = expiry ? expiry - today : 0;
+const diffDays = diffTime / (1000 * 60 * 60 * 24);
+const showRenewButton = Currentplan && diffDays <= 10;
+
+
 
   return (
     <div className="mb-22 md:mb-12 mx-4 sm:mx-6 lg:mx-10">
@@ -102,7 +118,7 @@ function UserDashboard() {
           </h1>
         </motion.div>
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-8 ">
-          {data.map((item, index) => (
+          {datas.map((item, index) => (
             <DashboardCard
               key={index}
               icon={item.icon}
@@ -116,94 +132,128 @@ function UserDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 host-grotesk">
-          <h2 className="text-xl font-bold mb-4 instrument-sans">
-            Your Current Plan
-          </h2>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+       {Currentplan ? (
+  <div className="lg:col-span-2 host-grotesk">
+    <h2 className="text-xl font-bold mb-4 instrument-sans">
+      Your Current Plan
+    </h2>
 
-          <div className="bg-white rounded-2xl shadow-lg border border-[#6ABD11]/20 overflow-hidden">
-            <div className="bg-gradient-to-r from-[#6ABD11]/10 to-transparent p-5 sm:p-6 lg:p-8">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 sm:gap-8">
-                {/* Plan Info */}
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="w-5 h-5 text-[#6ABD11]" />
-                    <span className="text-xs sm:text-sm md:text-[12px] font-semibold text-[#6ABD11] uppercase tracking-wide">
-                      Active Subscription
-                    </span>
-                  </div>
+    <div className="bg-white rounded-2xl shadow-lg border border-[#6ABD11]/20 overflow-hidden">
+      <div className="bg-gradient-to-r from-[#6ABD11]/10 to-transparent p-5 sm:p-6 lg:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 sm:gap-8">
 
-                  <h3 className="text-lg sm:text-xl  font-bold text-gray-900 mb-2 instrument-sans">
-                    {Currentplan.name} Plan
-                  </h3>
+          {/* Plan Info */}
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <TrendingUp className="w-5 h-5 text-[#6ABD11]" />
 
-                  <p className="text-gray-600 text-sm sm:text-sm">
-                    Active for {Currentplan.label}
-                  </p>
+              <span className="text-xs sm:text-sm md:text-[12px] font-semibold text-[#6ABD11] uppercase tracking-wide">
+                Active Subscription
+              </span>
+            </div>
 
-                  <p className="text-xs sm:text-[12px] text-gray-500 mt-1">
-                    Expires on:
-                    <span className="font-semibold text-gray-700 ml-1">
-                      {Currentplan.expiresOn}
-                    </span>
-                  </p>
-                </div>
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 instrument-sans">
+              {Currentplan.data.name}
+            </h3>
 
-                {/* Listings */}
-                <div className="flex justify-center ">
-                  <div className="bg-white rounded-lg p-[8px] w-full md:w-auto border border-gray-200">
-                    <p className="text-2xl sm:text-2xl font-bold text-center text-[#6ABD11]">
-                      {Currentplan.listings}
-                    </p>
-                    <p className="text-[14px] text-gray-600 mt-1 text-center">
-                      Property Listings
-                    </p>
-                  </div>
-                </div>
+            <p className="text-gray-600 text-sm">
+              Active for {Currentplan.data.validity}
+            </p>
 
-                {/* Status */}
-                <div className="flex flex-col gap-2 items-center">
-                  <span className="bg-[#6ABD11ED]  text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold text-center">
-                    {Currentplan.status}
-                  </span>
+            <p className="text-xs sm:text-[12px] text-gray-500 mt-1">
+              Expires on:
+              <span className="font-semibold text-gray-700 ml-1">
+                {new Date(
+                  Currentplan.data.plan_expiry_date
+                ).toLocaleDateString()}
+              </span>
+            </p>
+          </div>
 
-                  <p className="text-xs text-gray-500 text-center">
-                    Current Subscription
-                  </p>
+          {/* Listings */}
+          <div className="flex justify-center">
+            <div className="bg-white rounded-lg p-[8px] w-full md:w-auto border border-gray-200">
+              <p className="text-2xl sm:text-2xl font-bold text-center text-[#6ABD11]">
+                {Currentplan.data.features?.property_listing_limit}
+              </p>
 
-                  {showRenewButton && (
-                    <button className="mt-2 cursor-pointer px-4 py-3 bg-[#6ABD11ED]  text-white rounded-lg text-xs sm:text-[14px] font-semibold hover:bg-[#5ca60f] transition">
-                      Renew Subscription
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* Features */}
-              <div className="mt-6 pt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                {Currentplan.features.map((feature, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-1 text-xs sm:text-[14px] text-gray-700"
-                  >
-                    <Check className="w-4 h-4 text-[#6ABD11]" />
-                    {feature}
-                  </div>
-                ))}
-              </div>
+              <p className="text-[14px] text-gray-600 mt-1 text-center">
+                Property Listings
+              </p>
             </div>
           </div>
+
+          {/* Status */}
+          <div className="flex flex-col gap-2 items-center">
+            <span className="bg-[#6ABD11ED] text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold text-center">
+              Active
+            </span>
+
+            <p className="text-xs text-gray-500 text-center">
+              Current Subscription
+            </p>
+
+            {showRenewButton && (
+              <button className="mt-2 cursor-pointer px-4 py-3 bg-[#6ABD11ED] text-white rounded-lg text-xs sm:text-[14px] font-semibold hover:bg-[#5ca60f] transition">
+                Renew Subscription
+              </button>
+            )}
+          </div>
         </div>
+
+        {/* Features */}
+        <div className="mt-6 pt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {Object.entries(Currentplan?.data.features || {}).map(
+            ([key, value], idx) => (
+              <div
+                key={idx}
+                className="flex items-start gap-2 text-xs sm:text-[13px] text-gray-700"
+              >
+                <Check className="w-4 h-4 text-[#6ABD11] mt-1" />
+
+                <div>
+                  <span className="font-semibold capitalize">
+                    {key.replaceAll("_", " ")}:
+                  </span>{" "}
+                  {value}
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+) : (
+  <div className="lg:col-span-2 host-grotesk bg-white rounded-2xl border border-dashed border-gray-300 p-10 flex flex-col items-center justify-center text-center">
+    <img
+      src={property}
+      alt="No Plan"
+      className="w-16 h-16 opacity-50 mb-4"
+    />
+
+    <h3 className="text-xl font-bold text-gray-800 mb-2">
+      No Active Plan
+    </h3>
+
+    <p className="text-gray-500 text-sm max-w-md">
+      You haven’t subscribed to any plan yet.
+    </p>
+
+    <button className="mt-5 px-6 py-3 bg-[#6ABD11] text-white rounded-xl font-semibold hover:bg-[#5ca60f] transition">
+      Choose Plan
+    </button>
+  </div>
+)}
 
         <div className="bg-white flex flex-col items-center px-3 sm:px-1 py-1 overflow-hidden">
           <h2 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 instrument-sans w-full text-left">
             Enquiries by Month
           </h2>
 
-          <div className="w-full">
-            <DietChart />
-          </div>
+          <div className="w-full flex-1 flex items-stretch">
+<DietChart data={dashboardData?.data?.monthly_enquiries || []}/></div>
         </div>
       </div>
     </div>

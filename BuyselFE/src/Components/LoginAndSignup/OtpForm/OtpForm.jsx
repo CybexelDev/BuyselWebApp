@@ -69,6 +69,7 @@ const handleOtp = async () => {
           userId: data?.user?.id,
           image: data?.user.image,
           verificationStatus: data?.user?.auth_provider,
+          role:data?.login_as,
         }
       });
 
