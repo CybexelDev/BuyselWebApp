@@ -50,13 +50,11 @@
 import api from "../Api/axiosInstance";
 
 export const openRazorpay = async ({
-  amount,
   name,
   description,
   user,
   plan_type,
   plan_id,
-  perprice,
   onSuccess,
 }) => {
 
@@ -85,7 +83,6 @@ export const openRazorpay = async ({
     const { data: order } = await api.post(
       `create-payment/`,
       {
-        amount,
         plan_type,
         plan_id,
       }

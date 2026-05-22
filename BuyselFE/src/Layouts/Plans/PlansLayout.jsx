@@ -563,14 +563,11 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                 //           onClick={handleCheckout}
                 onClick={() =>
                   openRazorpay({
-                    amount: selectedPlan?.price,
                     name: "BuySel",
-
                     description: selectedPlan?.name,
 
                     // ✅ required
                     plan_type: selectedPlan?.plan_type,
-
                     plan_id: selectedPlan?.plan_id,
 
                     // ✅ success callback
