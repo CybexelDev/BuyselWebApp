@@ -8,7 +8,7 @@ const Footer = ({bg="bg-white",margin="mt-22"}) => {
   navigate(path);
   window.scrollTo({
     top: 0,
-    behavior: "instant", 
+    behavior: "instant",
   });
 };
     return (
@@ -82,6 +82,7 @@ const Footer = ({bg="bg-white",margin="mt-22"}) => {
                             <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/")}>Home</li>
                             <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/about")}>About Us</li>
                             <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/propertyListing")}>Properties</li>
+                            <li className="hover:text-white cursor-pointer" onClick={()=>handleNavigate("/agents")}>Agents</li>
                             <li className="hover:text-white cursor-pointer"onClick={()=>handleNavigate("/contact")}>Contact</li>
                         </ul>
                     </div>
