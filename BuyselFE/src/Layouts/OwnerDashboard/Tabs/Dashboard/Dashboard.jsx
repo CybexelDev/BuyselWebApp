@@ -7,10 +7,11 @@ import DashboardCard from "../../../../Components/DashboardCrad/DashboardCard";
 
 import DietChart from "../../../../Components/PieChart/PieChart";
 import { userCurrentPlan, userDashboard } from "../../../../Api/userApi";
+import { useNavigate } from "react-router-dom";
 function UserDashboard() {
 
 
-
+const nav = useNavigate()
   const [Currentplan, setCurrentPlan] = useState(null);
   const [dashboardData, setDashboardData] = useState(null);
 
@@ -108,6 +109,7 @@ const showRenewButton = Currentplan && diffDays <= 10;
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
+           transition={{ duration: 0.5}}
         >
           <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em]  mt-6">
             <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
@@ -241,7 +243,8 @@ const showRenewButton = Currentplan && diffDays <= 10;
       You haven’t subscribed to any plan yet.
     </p>
 
-    <button className="mt-5 px-6 py-3 bg-[#6ABD11] text-white rounded-xl font-semibold hover:bg-[#5ca60f] transition">
+    <button onClick={()=>nav("/ownerdashboard?tab=plans")}
+     className="mt-5 px-6 py-3 cursor-pointer bg-[#6ABD11] text-white rounded-xl font-semibold hover:bg-[#5ca60f] transition">
       Choose Plan
     </button>
   </div>

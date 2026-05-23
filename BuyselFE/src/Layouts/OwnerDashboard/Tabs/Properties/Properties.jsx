@@ -9,10 +9,9 @@ function Properties() {
     <div>
       <PropertyListingLayout
         showSidebar={false}
-        showEdit={false}
         bg=""
         lg="lg:py-0"
-        onClick={() => navigate("/dashboardpropertydeatil")}
+
       />
     </div>
   )

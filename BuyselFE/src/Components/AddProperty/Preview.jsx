@@ -109,19 +109,19 @@ const nearbyPlaces =
 
     const [selectedImage, setSelectedImage] = useState(null);
   return (
-    <div className="flex-1 space-y-8  relative p-9 rounded-2xl w-full">
+    <div className="flex-1 space-y-8  relative p-9 lg:p-0 2xl:p-9 rounded-2xl w-full">
 
       <h1 className="text-2xl font-semibold lexend text-black">
         Preview Your Listing
       </h1>
 
-      <div className="grid lg:grid-cols-[340px_1fr] gap-8 items-start">
+      <div className="grid lg:grid-cols-[340px_1fr] gap-4 items-start">
 
         <div className="sticky top-6 shadow-md">
           <Propertycard property={property} hideWishlist={true} hideContact={true}  />
         </div>
 
-        <div className="space-y-6 pr-10" >
+        <div className="space-y-4 p-0" >
 
           <div className="bg-white rounded-2xl border border-[#7BC21F] p-6 shadow-sm host-grotesk">
 
@@ -129,7 +129,7 @@ const nearbyPlaces =
     Property Features
   </h3>
 
-  <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+  <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
 
     {(formData.features || []).map((item, index) => (
   <DetailItem

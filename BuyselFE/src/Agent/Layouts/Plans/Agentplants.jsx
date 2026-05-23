@@ -39,8 +39,8 @@ if (data?.plans) {
   setUpgradePlans(formattedPlans);
 
   setSelectedPlan({
-    premium: data.plans[0]?.plans?.[0]?.id,
-    elite: data.plans[1]?.plans?.[0]?.id,
+    premium: data.plans[0]?.plans?.[0]?.plan_id,
+    elite: data.plans[1]?.plans?.[0]?.plan_id,
   });
 
   // only if current_plan exists
@@ -48,7 +48,7 @@ if (data?.plans) {
     const current = data.current_plan;
 
     const currentGroup = data.plans.find((group) =>
-      group.name.toLowerCase().includes(current.type)
+      group.name.toLowerCase().includes(current.plan_type)
     );
 
     const matchedPlan = currentGroup?.plans.find(
@@ -56,7 +56,7 @@ if (data?.plans) {
     );
 
     setPlanData({
-      name: current.type === "premium" ? "Premium Agent" : "Elite Agent",
+      name: current.plan_type === "premium" ? "Premium Agent" : "Elite Agent",
       label: current.name,
       expiresOn: current.expiry_date,
       status: current.is_active ? "Active" : "Inactive",
@@ -140,7 +140,7 @@ if (planData?.expiresOn) {
             {upgradePlans.map((agent) => {
 
               const activePlan = agent.plans.find(
-                (p) => p.id === selectedPlan[agent.id]
+                (p) => p.plan_id === selectedPlan[agent.id]
               );
 
               return (
@@ -163,7 +163,7 @@ if (planData?.expiresOn) {
                       }
                       options={agent.plans.map((plan) => ({
                         label: plan.label,
-                        value: plan.id,
+                        value: plan.plan_id,
                       }))}
                     />
                   }
@@ -173,7 +173,7 @@ if (planData?.expiresOn) {
           </div>
         </div>
 
-        <div className="mt-12">
+        {/* <div className="mt-12">
   <h2 className="text-2xl font-bold mb-2">Advertisement Packages</h2>
   <p className="text-gray-600 mb-8">
     Promote your properties and get maximum visibility.
@@ -208,6 +208,51 @@ if (planData?.expiresOn) {
               options={ad.plans.map((p) => ({
                 label: p.type,
                 value: p.type,
+              }))}
+            />
+          }
+        />
+      );
+    })}
+  </div>
+</div> */}
+
+
+ <div className="mt-12">
+  <h2 className="text-2xl font-bold mb-2">Advertisement Packages</h2>
+  <p className="text-gray-600 mb-8">
+    Promote your properties and get maximum visibility.
+  </p>
+
+  <div className="grid sm:grid-cols-2 gap-8">
+    {adPackages.map((ad) => {
+      const selectedType =
+  selectedAdType[ad.id] || ad.plans[0]?.plan_id;
+
+const activePlan =
+  ad.plans.find((p) => p.plan_id === selectedType) ||
+  ad.plans[0];
+
+      return (
+        <PlanCard
+          key={ad.id}
+          title={ad.name}
+          Icon={TrendingUp}
+          price={activePlan.price_per_day}
+          features={activePlan.features}
+          buttonText="Advertise Now"
+          dropdown={
+            <Dropdown
+              value={selectedType}
+              onChange={(value) =>
+                setSelectedAdType((prev) => ({
+                  ...prev,
+                  [ad.id]: value,
+                }))
+              }
+              options={ad.plans.map((p) => ({
+                label: p.type,
+                value: p.plan_id,
               }))}
             />
           }

@@ -17,6 +17,7 @@ import {
   getAgentProfile,
 } from "../../../Api/agentsApi";
 import { useParams } from "react-router-dom";
+import { userGetPropertyById, userPostProperty, updateUserPropertyListing, getProfile } from "../../../Api/userApi";
 
 const getInitialFormData = () => ({
   landArea: "",
@@ -71,8 +72,11 @@ function AddPropertySection() {
 
   const [errors, setErrors] = useState({});
 
-  const agentId = useSelector((state) => state.agent.agentId);
-  const isAgent = !!agentId;
+  const user = useSelector((state) => state.user);
+const agent = useSelector((state) => state.agent);
+const role = agent?.role || user?.role;
+const isAgent = role === "agent";
+
   const maxStep = isAgent ? 4 : 5;
 
   const { id } = useParams();
@@ -102,7 +106,9 @@ function AddPropertySection() {
 
     const fetchProperty = async () => {
       try {
-        const data = await getPropertyById(id);
+        const data = isAgent
+  ? await getPropertyById(id)
+  : await userGetPropertyById(id);
 
         // 🔥 BUILD OPTION → FIELD MAP (NO HARDCODING)
         const optionToFieldMap = {};
@@ -194,12 +200,15 @@ propertyData.subcategories.forEach((sub) => {
   }, [id, categories, propertyData.subcategories]);
 
   // ✅ Auto-fill phone (only add mode)
-  useEffect(() => {
-    if (id) return;
+useEffect(() => {
+  if (id) return;
 
-    const fetchProfile = async () => {
-      try {
-        const data = await getAgentProfile();
+  const fetchProfile = async () => {
+    try {
+      let data;
+
+      if (isAgent) {
+        data = await getAgentProfile();
 
         setFormData((prev) => ({
           ...prev,
@@ -207,13 +216,28 @@ propertyData.subcategories.forEach((sub) => {
           whatsapp:
             data.whatsapp_number || data.phone_number || "",
         }));
-      } catch (err) {
-        console.error("Profile fetch error:", err);
-      }
-    };
 
-    fetchProfile();
-  }, [id]);
+      } else {
+
+        data = await getProfile();
+
+        setFormData((prev) => ({
+          ...prev,
+          owner: data.full_name || data.name || "",
+          phone: data.mobile || "",
+          whatsapp:
+            data.alternate_mobile || data.mobile || "",
+        }));
+      }
+
+    } catch (err) {
+      console.error("Profile fetch error:", err);
+    }
+  };
+
+  fetchProfile();
+
+}, [id, isAgent]);
 
   // ✅ Submit
 const handleSubmit = async (e) => {
@@ -256,11 +280,24 @@ const handleSubmit = async (e) => {
 
     let res;
 
-    if (id) {
-      res = await updatePropertyListing(id, payload);
-    } else {
-      res = await postProperty(payload);
-    }
+if (id) {
+
+  if (isAgent) {
+    res = await updatePropertyListing(id, payload);
+
+  } else {
+    res = await updateUserPropertyListing(id, payload);
+  }
+
+} else {
+
+  if (isAgent) {
+    res = await postProperty(payload);
+
+  } else {
+    res = await userPostProperty(payload);
+  }
+}
 
     if (res) {
       setShowSuccess(true);

@@ -284,11 +284,33 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       );
     }
 
-    return <span className="text-[#000000b7] text-sm font-medium text-center">{type}</span>;
+    return <span className="text-[#000000b7] text-[12px] lg:text-[11px] xl:text-[12px] 3xl:text-sm font-medium text-center">{type}</span>;
   };
 
   return (
-    <div className={` ${padding} bg-white  px-4 lg:px-12 xl:px-16`}>
+    <div className={` ${padding} bg-white  px-4 lg:px-6 xl:px-8 2xl:px-16`}>
+     
+  {showtabs && (
+  <div className="flex justify-center mb-10 md:mb-15 px-2">
+    
+    <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">
+      
+      <div className="flex items-center border border-[#8AD32E] rounded-full p-1 bg-white min-w-max">
+        
+        {roles.map((role) => (
+          <button
+            key={role}
+            onClick={() => setActive(role)}
+            className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${
+              active === role
+                ? "bg-[#8AD32E] text-white shadow"
+                : "text-[#7CB305]"
+            }`}
+          >
+            {role}
+          </button>
+        ))}
+
 
       {showtabs && (
         <div className="flex justify-center mb-10 md:mb-15 px-2">
@@ -326,11 +348,11 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
           >
             <div className="text-center mb-6">
-              <h2 className="text-[28px] font-semibold text-[#1F1F1F]">
+              <h2 className="text-[23px] font-semibold text-[#1F1F1F]">
                 {plan.name}
               </h2>
               <div className="bg-[#8AD32E] inline-block px-6 py-2 rounded-full mt-3 text-xl font-semibold text-white">
-                {plan.price}
+                ₹{plan.price}
               </div>
             </div>
 
@@ -341,7 +363,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                   key={feature}
                   className="flex justify-between items-center bg-[#F7FCEB] rounded-full px-4 py-3"
                 >
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-[12px] font-medium text-gray-700">
                     {feature}
                   </span>
                   <div className="flex items-center">
@@ -352,7 +374,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
             </div>
 
-            <button className="mt-6 w-full bg-[#8AD32E] text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
+            <button className="mt-6 w-full bg-[#8AD32E] cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
               onClick={() => handleSelectPlan(plan)}
             >
               Select Plan
@@ -364,103 +386,173 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       </div>
 
 
-      {/* desktop */}
 
-      <div
-        className={`hidden lg:grid
-          ${plans.length === 4
-            ? "grid-cols-5"
-            : "grid-cols-4   max-w-7xl"
-          }
-        gap-4 lg:gap-6
-        mx-auto items-start`}
-      >
+{/* desktop */}
 
-        <div className="flex flex-col justify-center h-[120px]">
-          <h1 className="text-2xl lg:text-3xl font-semibold mb-2 host-grotesk">
+<div
+  className={`hidden lg:grid
+  ${
+    plans.length === 4
+      ? "grid-cols-[240px_repeat(4,1fr)]"
+      : "grid-cols-[240px_repeat(3,1fr)]"
+  }
+  gap-2 xl:gap-4 items-start w-full`}
+>
+
+  {/* LEFT TEXT */}
+  <div className="flex flex-col justify-center h-[120px]">
+          <h1 className="text-2xl lg:text-2xl font-semibold mb-2 lexend">
+
             Hey there,
           </h1>
 
-          <p className="text-black text-[14px] lg:text-[16px] inter">
+          <p className="text-black text-[14px] lg:text-[15px] inter">
             Subscribe to Premium today to save ₹50,000 on brokerage.
           </p>
         </div>
 
-        {plans.map((plan) => (
+  {/* TOP PLAN CARDS */}
+  {plans.map((plan) => (
+    
+    <div
+      key={plan.name}
+      className="bg-[#F1FDDA]
+      h-[120px]
+      w-full
+      rounded-3xl
+      flex flex-col
+      justify-center
+      items-center
+      mx-auto
+      shadow-lg"
+    >
+
+      <h2 className="text-lg xl:text-xl font-semibold mb-2 lexend text-center">
+        {plan.name}
+      </h2>
+
+      <div
+        className="bg-[#8AD32E]
+        text-white
+        px-6 py-1
+        rounded-full
+        font-semibold
+        lexend"
+      >
+        {plan.price}
+      </div>
+
+    </div>
+  ))}
+
+  {/* FEATURE COLUMN */}
+  <div
+    className="bg-[#8AD32E]
+    rounded-3xl
+    p-3
+    mt-4
+    w-full
+    max-w-[240px]"
+  >
+
+    {features.map((feat, i) => (
+      
+      <div
+        key={feat}
+        className={`h-[65px]
+        flex items-center
+        px-4
+        rounded-2xl
+        text-white
+        lexend
+        text-[14px]
+        ${
+          i % 2 === 0
+            ? "bg-black/10 font-semibold"
+            : "font-medium"
+        }`}
+      >
+        {feat}
+      </div>
+
+
+    ))}
+
+  </div>
+
+
+  {/* PLAN DATA COLUMNS */}
+  {plans.map((plan) => (
+
+    <div
+      key={plan.name}
+      className="mt-2 flex flex-col items-center"
+    >
+
+
+      <div
+        className="bg-white
+        w-full
+        rounded-3xl
+        p-2
+        border-2
+        shadow-lg
+        border-[#F1FDDA]"
+      >
+
+        {features.map((_, i) => (
+          
           <div
-            key={plan.name}
-            className={` bg-[#F1FDDA] h-[110px] lg:h-[120px] w-[199px] 
-      rounded-3xl flex flex-col justify-center items-center ml-[90px] shadow-lg`}
+            key={i}
+            className={`h-[65px]
+            flex items-center
+            justify-center
+            rounded-2xl
+            lexend
+            text-center
+            px-2
+            ${
+              i % 2 === 0
+                ? "bg-[#7bbe1624]"
+                : "bg-white"
+            }`}
           >
-            <h2 className="text-lg lg:text-xl font-semibold mb-2 host-grotesk">
-              {plan.name}
-            </h2>
-
-            <div className="bg-[#8AD32E] text-white 
-      px-6 lg:px-8 py-1 rounded-full font-semibold host-grotesk">
-              ₹ {plan.price}
-            </div>
+            {renderIcon(plan.data[i])}
           </div>
+
         ))}
 
-        <div className="bg-[#8AD32E] rounded-3xl p-3 lg:p-4 mt-4
-  w-[240px] lg:w-[240px]  xl:w-[320px]">
-
-          {features.map((feat, i) => (
-            <div
-              key={feat}
-              className={`h-[52px] lg:h-[70px] flex items-center 
-        px-4 lg:px-3 rounded-full text-white host-grotesk
-        text-[12px] lg:text-[14px]
-        ${i % 2 === 0 ? "bg-black/10 font-semibold" : "font-medium"}`}
-            >
-              {feat}
-            </div>
-          ))}
-        </div>
-
-
-        {plans.map((plan) => (
-          <div key={plan.name} className="mt-2 flex flex-col items-center ml-25">
-
-            <div
-              className={`bg-white
-  ${plans.length === 4
-                  ? "w-[140px] lg:w-[160px] xl:w-[250px]"
-                  : "w-[160px] lg:w-[180px] xl:w-[280px]"
-                }
-  rounded-3xl
-  p-4 lg:p-6
-  border-2 shadow-lg border-[#F1FDDA]`}
-            >
-
-              {features.map((_, i) => (
-                <div
-                  key={i}
-                  className={`h-[52px] lg:h-[70px] flex items-center 
-            justify-center rounded-full host-grotesk
-            ${i % 2 === 0 ? "bg-[#7bbe1624]" : "bg-white"}`}
-                >
-                  {renderIcon(plan.data[i])}
-                </div>
-              ))}
-
-            </div>
-
-            <button
-              onClick={() => handleSelectPlan(plan)}
-              className="mt-6 
-      w-[160px] lg:w-[180px] xl:w-[200px]
-      bg-[#8AD32E] hover:bg-[#7ABF28]
-      text-white font-bold py-3 rounded-xl host-grotesk">
-              Select Plan
-            </button>
-
-          </div>
-        ))}
 
       </div>
+
+      {/* BUTTON */}
+      <button
+        onClick={() => handleSelectPlan(plan)}
+        className="mt-6
+        w-full
+        max-w-[220px]
+        bg-[#8AD32E]
+        hover:bg-[#7ABF28]
+        text-white
+        font-bold
+        py-3
+        rounded-xl
+        lexend
+        transition
+        cursor-pointer"
+      >
+        Select Plan
+      </button>
+
+
+    </div>
+
+  ))}
+
+</div>
+
       <div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 host-grotesk mt-10">
+
 
         {/* LEFT SIDE */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
@@ -547,6 +639,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                     <span className="text-sm font-medium text-gray-700">
                       {feature}
                     </span>
+
 
                     <div>
                       {renderIcon(selectedPlan?.data[index])}

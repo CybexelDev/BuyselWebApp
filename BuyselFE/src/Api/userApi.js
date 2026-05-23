@@ -955,16 +955,222 @@ export const userDashboard = async () => {
 };
 
 
+
 export const userPropertyList = async () => {
   try {
     const res = await api.get("/owner/property/list/");
+    return res.data || []; // ✅ raw backend data only
+  } catch (error) {
+    console.error("property listing error:", error);
+    return [];
+  }
+};
+
+export const userPostProperty = async (data) => {
+  try {
+    const formData = new FormData();
+
+   
+formData.append("category", data.category_id);
+formData.append("subcategory", data.subcategory);
+formData.append("purpose", data.purpose);
+  formData.append("label", data.title);
+formData.append("description", data.description);
+
+
+ formData.append("city", data.city);
+formData.append("taluk", data.taluk);
+formData.append("district", data.district);
+formData.append("state", data.state);
+
+formData.append("location", data.googleLocation);
+
+
+    formData.append("village", data.village);
+    formData.append("pincode", data.pincode);
+    formData.append("google_location", data.googleLocation);
+
+    
+    formData.append("land_area", data.landArea);
+formData.append("sq_ft", data.squareFeet);
+
+
+  
+    formData.append("owner", data.owner);
+    formData.append("phone", data.phone);
+    formData.append("whatsapp", data.whatsapp);
+
+
+    let price = "";
+
+  if (data.purpose === "Rent") {
+  price = data.pricing.monthlyRent;
+  formData.append("monthly_rent",data.pricing.monthlyRent);
+  formData.append("deposit",data.pricing.deposit);
+}
+
+if (data.purpose === "Lease") {
+  price = data.pricing.totalAmount;
+  formData.append("total_amount",data.pricing.totalAmount);
+}
+
+if (data.purpose === "Sale") {
+  price = data.pricing.totalPrice;
+  formData.append("total_price",data.pricing.totalPrice);
+  formData.append("perprice",
+    `${data.pricing.pricePerUnit}/${data.pricing.unit}`
+  );
+}
+formData.append("price", price);
+
+
+
+formData.append(
+  "field_values",
+  JSON.stringify(data.features || [])
+);
+    formData.append("amenities", JSON.stringify(data.amenities || []));
+    formData.append("selling_points", JSON.stringify(data.keyPoints || []));
+    formData.append("landmarks", JSON.stringify(data.landmarks || []));
+
+  
+    if (data.images?.length > 0) {
+      data.images.forEach((img) => {
+        formData.append("images", img.file || img);
+      });
+    }
+
+    // =====================
+    // API CALL
+    // =====================
+    const res = await api.post("/owner/property/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
     return res.data;
+  } catch (error) {
+    console.error("Property error:", error.response?.data || error.message);
+    return false;
+  }
+};
+
+export const deleteUserPropertyListing = async(id)=>{
+  try{
+    const res = await api.delete(`/user/property/${id}/`)
+    return res.data
+  }catch(err){
+    console.error("delete property error:",err)
+    return false
+  }
+}
+
+export const updateUserPropertyListing = async (id, data) => {
+  try {
+    const formData = new FormData();
+
+    formData.append("category", data.category_id);
+    formData.append("subcategory", data.subcategory);
+    formData.append("purpose", data.purpose);
+
+    formData.append("label", data.title);
+    formData.append("description", data.description);
+
+    formData.append("city", data.city);
+    formData.append("taluk", data.taluk);
+    formData.append("district", data.district);
+    formData.append("state", data.state);
+
+    formData.append("location", data.googleLocation);
+
+
+    formData.append("village", data.village);
+    formData.append("pincode", data.pincode);
+    formData.append("google_location", data.googleLocation);
+
+    formData.append("land_area", data.landArea);
+    formData.append("sq_ft", data.squareFeet);
+
+    formData.append("owner", data.owner);
+    formData.append("phone", data.phone);
+    formData.append("whatsapp", data.whatsapp);
+
+   let price = "";
+
+if (data.purpose === "Rent") {
+  price = data.pricing.monthlyRent;
+  formData.append("monthly_rent",data.pricing.monthlyRent);
+  formData.append("deposit",data.pricing.deposit);
+}
+
+if (data.purpose === "Lease") {
+  price = data.pricing.totalAmount;
+  formData.append("total_amount",data.pricing.totalAmount);
+}
+
+if (data.purpose === "Sale") {
+  price = data.pricing.totalPrice;
+  formData.append("total_price",data.pricing.totalPrice);
+  formData.append("perprice",
+    `${data.pricing.pricePerUnit}/${data.pricing.unit}`
+  );
+}
+
+formData.append("price", price);
+
+formData.append(
+  "field_values",
+  JSON.stringify(data.features || [])
+);
+
+formData.append(
+  "amenities",
+  JSON.stringify(
+    (data.amenities || []).map((a) => a.id || a)
+  )
+);
+
+    formData.append(
+      "selling_points",
+      JSON.stringify(data.keyPoints || [])
+    );
+
+    formData.append(
+      "landmarks",
+      JSON.stringify(data.landmarks || [])
+    );
+
+    if (data.images?.length > 0) {
+      data.images.forEach((img) => {
+        formData.append("images", img.file || img);
+      });
+    }
+
+    const res = await api.put(`/user/property/${id}/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return res.data;
+
   } catch (err) {
-    console.log(err);
-    return null;
+    console.error("update property error:", err);
+    return false;
   }
 };
 
 
+export const userGetPropertyById = async (id) => {
+  try {
+    const res = await api.get(`/user/property/${id}/`);
+    return res.data?.data || null;
+
+  } catch (error) {
+    console.error("get user property error:", error);
+    return null;
+  }
+};
 
 

@@ -1,24 +1,40 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const SuccessModal = ({ isOpen,isEdit}) => {
+const SuccessModal = ({ isOpen, isEdit }) => {
+
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user);
+  const agent = useSelector((state) => state.agent);
+
+  const role = agent?.role || user?.role;
 
   if (!isOpen) return null;
-   const navigate=useNavigate()
+
+  const handleNavigate = () => {
+    if (role === "agent") {
+      navigate("/agent/property");
+    } else {
+      navigate("/ownerdashboard?tab=properties");
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black/20 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-[40px] shadow-xl max-w-2xl w-full p-8 text-center ">
 
         <div className="mb-6">
-          <h2 className="text-[36px] font-[650] text-black lexend  leading-tight">
-            Property {isEdit ? "Update":"Posted"} <br />
+          <h2 className="text-[36px] font-[650] text-black lexend leading-tight">
+            Property {isEdit ? "Update" : "Posted"} <br />
             <span className="text-[#82CD28]">Successfully!</span>
           </h2>
 
           <p className="text-gray-400 mt-2 font-medium inter text-[16px] ">
             {isEdit
-            ? "Your property details have been updated successfully."
-            : "Your property is now live on Buysel.in"}
+              ? "Your property details have been updated successfully."
+              : "Your property is now live on Buysel.in"}
           </p>
         </div>
 
@@ -32,7 +48,11 @@ const SuccessModal = ({ isOpen,isEdit}) => {
                 strokeWidth="4"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
           </div>
@@ -42,7 +62,7 @@ const SuccessModal = ({ isOpen,isEdit}) => {
 
         <div className="bg-[#F0FFE0] rounded-[30px] p-6 mb-8">
           <p className="text-gray-700 font-medium leading-tight inter text-[16px]">
-             {isEdit
+            {isEdit
               ? "Your changes have been saved and are now visible."
               : "Your listing will be reviewed by our team within 24 hours."}
             <br />
@@ -51,15 +71,12 @@ const SuccessModal = ({ isOpen,isEdit}) => {
         </div>
 
         <div className="flex flex-col gap-4 px-8">
-
           <button
-            onClick={()=>navigate("/agent/property")}
+            onClick={handleNavigate}
             className="w-full py-4 bg-[#82CD28] text-white rounded-full font-bold text-[16px] hover:bg-[#74b924] inter"
           >
             Go to Home
           </button>
-
-         
         </div>
 
       </div>
