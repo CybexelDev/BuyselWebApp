@@ -37,6 +37,7 @@ import RegisterAgent from './Pages/RegisterAgent/RegisterAgent'
 import Inbox from './Agent/Pages/Inbox/Inbox'
 import { toast } from 'sonner'
 import Faqs from './Pages/Faqs/Faqs'
+import InvoicePage from './Pages/Invoice/Invoice'
 
 function App() {
 
@@ -76,9 +77,11 @@ function App() {
           <Route path='/privacy' element={<PrivacyPolicy/>}/>
           <Route path='/agent-register' element={<RegisterAgent/>}/>
           <Route path='/faqs' element={<Faqs/>}/>
+          <Route path='/invoice' element={<InvoicePage/>}/>
 
           {/* //agent side */} 
-          <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
+          {role !== "user" && ( <>
+           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
           <Route path='/agent/plans' element={<AgentPlans/>}/>
           <Route path='/agent/profile' element={<AgentProfile/>}/>
           <Route path='/agent/inbox' element={<Inbox/>}/>
@@ -86,7 +89,9 @@ function App() {
           <Route path='/agent/user-enquiry' element={<UserEnquiry/>}/>
           <Route path='/agent/enquiry/:id' element={<EnquiryDetail/>} />
           <Route path="/agent/property" element={<AgentPropertyListing />}/>
-          
+           </>
+          )}
+        
         </Routes>
       </Router>
     </>
