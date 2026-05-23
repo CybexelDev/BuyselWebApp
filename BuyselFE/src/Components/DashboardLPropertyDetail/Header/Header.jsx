@@ -274,7 +274,7 @@ const handleBack = () => {
                 📍 {property.location}
               </p>
 
-              <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row lg:items-start items-start sm:items-center xl:items-center justify-between mt-4 lg:mt-3 xl:mt-6 host-grotesk gap-2 sm:gap-0 lg:gap-1">
+              <div className="flex flex-col sm:flex-row lg:flex-col 2xl:flex-row lg:items-start items-start sm:items-center 2xl:items-center justify-between mt-4 lg:mt-3 xl:mt-4 2xl:mt-6 host-grotesk gap-2 sm:gap-0 lg:gap-1">
                 <div className="flex items-center gap-2 lg:gap-3">
                   <h3 className="text-lg lg:text-lg font-bold">
                     ₹ {property.price}{property.status === "Rent" && <span>/month</span>}

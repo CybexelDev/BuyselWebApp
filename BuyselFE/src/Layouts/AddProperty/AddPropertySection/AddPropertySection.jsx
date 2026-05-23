@@ -17,7 +17,7 @@ import {
   getAgentProfile,
 } from "../../../Api/agentsApi";
 import { useParams } from "react-router-dom";
-import { userGetPropertyById, userPostProperty } from "../../../Api/userApi";
+import { userGetPropertyById, userPostProperty, updateUserPropertyListing, getProfile } from "../../../Api/userApi";
 
 const getInitialFormData = () => ({
   landArea: "",
@@ -200,14 +200,15 @@ propertyData.subcategories.forEach((sub) => {
   }, [id, categories, propertyData.subcategories]);
 
   // ✅ Auto-fill phone (only add mode)
-  useEffect(() => {
-    if (id) return;
+useEffect(() => {
+  if (id) return;
 
-      if (!isAgent) return;
+  const fetchProfile = async () => {
+    try {
+      let data;
 
-    const fetchProfile = async () => {
-      try {
-        const data = await getAgentProfile();
+      if (isAgent) {
+        data = await getAgentProfile();
 
         setFormData((prev) => ({
           ...prev,
@@ -215,13 +216,28 @@ propertyData.subcategories.forEach((sub) => {
           whatsapp:
             data.whatsapp_number || data.phone_number || "",
         }));
-      } catch (err) {
-        console.error("Profile fetch error:", err);
-      }
-    };
 
-    fetchProfile();
-  }, [id]);
+      } else {
+
+        data = await getProfile();
+
+        setFormData((prev) => ({
+          ...prev,
+          owner: data.full_name || data.name || "",
+          phone: data.mobile || "",
+          whatsapp:
+            data.alternate_mobile || data.mobile || "",
+        }));
+      }
+
+    } catch (err) {
+      console.error("Profile fetch error:", err);
+    }
+  };
+
+  fetchProfile();
+
+}, [id, isAgent]);
 
   // ✅ Submit
 const handleSubmit = async (e) => {

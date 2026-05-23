@@ -959,7 +959,7 @@ export const userDashboard = async () => {
 export const userPropertyList = async () => {
   try {
     const res = await api.get("/owner/property/list/");
-    return res.data?.data || []; // ✅ raw backend data only
+    return res.data || []; // ✅ raw backend data only
   } catch (error) {
     console.error("property listing error:", error);
     return [];
@@ -1082,10 +1082,8 @@ export const updateUserPropertyListing = async (id, data) => {
     formData.append("district", data.district);
     formData.append("state", data.state);
 
-    formData.append(
-      "location",
-      `${data.city}, ${data.taluk}, ${data.district}, ${data.state}`
-    );
+    formData.append("location", data.googleLocation);
+
 
     formData.append("village", data.village);
     formData.append("pincode", data.pincode);
@@ -1126,10 +1124,12 @@ formData.append(
   JSON.stringify(data.features || [])
 );
 
-    (data.amenities || []).forEach((id) => {
-  formData.append("amenities", id);
-});
-
+formData.append(
+  "amenities",
+  JSON.stringify(
+    (data.amenities || []).map((a) => a.id || a)
+  )
+);
 
     formData.append(
       "selling_points",

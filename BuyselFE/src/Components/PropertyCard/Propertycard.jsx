@@ -189,7 +189,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
         <div className="instrument-sans flex justify-between my-2 font-[500] text-[12px] text-black">
           <span className="flex items-center gap-0.5 w-[45%] truncate">
             <img src={measure} alt="" className="w-[13px] h-[13px]" />
-            <span className="truncate">{property?.land_area ?? "Area not available"} sq.ft</span>
+            <span className="truncate">{property?.land_area ?? "Area not available"}</span>
           </span>
           <span className="flex items-center gap-0.5 w-[45%] truncate">
             <img src={apartment} alt="" className="w-[13px] h-[13px]" />

@@ -185,7 +185,7 @@ const handleSearch = () => {
       </div>
 
       {/* Social Icons */}
-      <div className="absolute w-full xl:w-0 flex items-center justify-between xl:flex-col xl:items-end lg:gap-[63px] xl:right-10 xl:-top-[10px] sm:-top-[50px] -top-[50px] px-10 xl:px-6">
+      <div className="absolute w-full xl:w-0 flex items-center justify-between xl:flex-col xl:items-end lg:gap-[63px] xl:right-6 xl:-top-[10px] sm:-top-[50px] -top-[50px] px-10 xl:px-1 2xl:px-6">
         <div className="flex  gap-2">
           <a href="https://facebook.com" target="_blank">
             <svg

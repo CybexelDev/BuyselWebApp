@@ -458,7 +458,7 @@ export const getPropertyListing = async () => {
   try {
     const result = await api.get("/agent/property/list/");
 
-    return result.data?.data || []; // ✅ raw backend data only
+    return result.data || []; // ✅ raw backend data only
   } catch (error) {
     console.error("property listing error:", error);
     return [];
@@ -508,6 +508,7 @@ export const updatePropertyListing = async (id, data) => {
     formData.append("category", data.category_id);
     formData.append("subcategory", data.subcategory);
     formData.append("purpose", data.purpose);
+    console.log("subcategory:", data.subcategory);
 
     formData.append("label", data.title);
     formData.append("description", data.description);
