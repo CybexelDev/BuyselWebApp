@@ -34,7 +34,7 @@ useEffect(() => {
   fetchEnquiries();
 }, []);
     return (
-        <div className="w-full  p-4 md:p-8">
+        <div className="w-full  p-4 md:px-8">
             <h2 className="text-[20px] instrument-sans font-[600] text-[#000] mb-4">
                 Recent Enquiries
             </h2>
@@ -52,7 +52,7 @@ useEffect(() => {
 <span className="text-right">Date</span>                             </div>
 
                             {/* Row 1 */}
-                           {enquiries.map((item) => (
+                           {enquiries.slice(0,4).map((item) => (
   <div
     key={item.id}
     className="grid grid-cols-[2fr_1fr_1fr] px-4 py-4 text-[#595959] text-[15px] font-[500] instrument-sans items-center"
