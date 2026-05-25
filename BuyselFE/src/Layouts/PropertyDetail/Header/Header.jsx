@@ -117,8 +117,12 @@ const HeaderProperty = ({ property }) => {
             <div className="col-span-2 lg:col-span-1 lg:row-span-2">
               <img
                 src={property.images[0]}
+                 onClick={() => {
+    setCurrentIndex(0);
+    setShowGallery(true);
+  }}
                 alt="property"
-                className="w-full h-[240px] md:h-[300px] lg:w-full lg:h-[365px] object-cover rounded-2xl lg:rounded-3xl"
+                className="w-full h-[240px] md:h-[300px] lg:w-full lg:h-[365px] object-cover rounded-2xl lg:rounded-3xl cursor-pointer"
               />
             </div>
             {/* left side images */}
@@ -126,7 +130,11 @@ const HeaderProperty = ({ property }) => {
               <img
                 src={property.images[1]}
                 alt=""
-                className="w-full h-[120px] md:h-[160px] lg:h-[176.5px] object-cover rounded-xl lg:rounded-3xl"
+                  onClick={() => {
+    setCurrentIndex(1);
+    setShowGallery(true);
+  }}
+                className="w-full h-[120px] md:h-[160px] lg:h-[176.5px] object-cover rounded-xl lg:rounded-3xl cursor-pointer"
               />
             </div>
 
@@ -135,7 +143,11 @@ const HeaderProperty = ({ property }) => {
               <img
                 src={property.images[2]}
                 alt=""
-                className="w-full h-[120px] md:h-[160px] lg:h-[176.5px]  object-cover inverted-radiuss overflow-hidden"
+                onClick={()=>{
+                  setCurrentIndex(2)
+                  setShowGallery(true)
+                }}
+                className="w-full h-[120px] md:h-[160px] lg:h-[176.5px]  object-cover inverted-radiuss overflow-hidden cursor-pointer"
               />
               <button onClick={() => setShowGallery(true)} className="absolute bottom-0 cursor-pointer text-[18px] right-[0px]   bg-black text-white max-[361px]:px-[12px] max-[361px]:rounded-[7px] max-[361px]:py-[14px] max-[400px]:px-[17px]  max-[400px]:py-[14px] px-[18px] py-[13px] rounded-[19px] host-grotesk">
                 View All Images

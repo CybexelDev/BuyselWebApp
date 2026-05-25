@@ -1,0 +1,104 @@
+import React from "react";
+import { Check } from "lucide-react";
+
+function PlanCardUser({ title, Icon, price, savings, features=[], buttonText,dropdown ,agentType}) {
+  return (
+    <div className="relative rounded-2xl overflow-hidden transition-all duration-300 border border-gray-200 shadow-lg hover:shadow-xl h-full flex flex-col">
+      <div className="p-6 sm:p-8 bg-white flex flex-col flex-1">
+
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-6 justify-center">
+          {Icon && (
+            <div className="w-12 h-12 rounded-lg bg-[#6ABD11]/10 flex items-center justify-center">
+              <Icon className="w-6 h-6 text-[#6ABD11]" />
+            </div>
+          )}
+    
+          <h2 className="text-xl font-bold text-gray-900 instrument-sans">
+            {title}
+          </h2>
+      
+        </div>
+        {dropdown}
+        
+
+        {/* Price */}
+        <div className="mb-6  justify-center flex flex-col items-center">
+          <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#6ABD11]">
+            ₹{price}
+          </span>
+
+          {savings ? (
+  <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
+    {savings}
+  </p>
+) : (
+  <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
+    {price} per day
+  </p>
+)}
+        </div>
+
+        {/* Button */}
+     <div className="flex justify-center mb-6">
+
+  <button
+    className="
+      cursor-pointer
+      px-8 sm:px-25
+      py-3
+      rounded-xl
+      font-semibold
+      bg-gradient-to-r
+      from-[#6ABD11]
+      to-[#5ca60f]
+      text-white
+      shadow-lg
+      hover:shadow-xl
+      transition-all
+      duration-300
+    "
+  >
+    {buttonText}
+  </button>
+
+</div>
+{/* Divider */}
+<div className="relative my-6">
+
+  <div className="border-t border-gray-200"></div>
+
+  <div className="absolute inset-0 flex justify-center -top-3">
+    <span className="bg-white px-4 text-sm font-semibold text-[#6ABD11]">
+      Plan Features
+    </span>
+  </div>
+
+</div>
+
+{/* Features */}
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-auto px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24">
+  {features.map((feature, idx) => (
+
+    <div
+      key={idx}
+      className="flex items-start gap-3"
+    >
+      <Check className="w-5 h-5 text-[#6ABD11] shrink-0 mt-[2px]" />
+
+      <span className="text-gray-700 text-sm leading-relaxed">
+        {feature}
+      </span>
+
+    </div>
+
+  ))}
+
+</div>
+
+      </div>
+    </div>
+  );
+}
+
+export default PlanCardUser;

@@ -25,11 +25,22 @@ export default function AgentTabs({ searchedData, query, locationDats }) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentAgents = filteredAgents.slice(startIndex, endIndex);
-    useEffect(() => {
-        if (type) {
-            setActiveTab(type);
-        }
-    }, [type]);
+useEffect(() => {
+    if (type) {
+
+        const formattedType =
+            type === "Agent"
+                ? "basic"
+                : type === "Premium Agent"
+                    ? "premium"
+                    : type === "Elite Agent"
+                        ? "elite"
+                        : "All";
+
+        setActiveTab(formattedType);
+    }
+}, [type]);
+
     useEffect(() => {
         if (query.length > 0) {
             setAgents(searchedData);

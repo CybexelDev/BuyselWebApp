@@ -753,6 +753,24 @@ export const getFilterOptions = async () => {
   }
 };
 
+export const getAgentPlanDetailss = async () => {
+
+  try {
+
+    const res = await axios.get(
+      `${BASE_URL}agent-plans/`
+    );
+
+    return res.data;
+
+  } catch (err) {
+
+    console.log(err);
+
+    return null;
+  }
+};
+
 export const addReviewToServer = async ({ rating, review, id }) => {
   try {
     const formData = new FormData();
