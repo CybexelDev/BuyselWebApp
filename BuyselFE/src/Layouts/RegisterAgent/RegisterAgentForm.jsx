@@ -2,23 +2,21 @@ import React from "react";
 import { useState,useEffect } from "react";
 import SelectField from "../../Components/Select/SelectField2";
 import { Layers } from "lucide-react";
-import { getAgentPlanDetails } from "../../Api/userApi";
+import { getAgentPlanDetailss } from "../../Api/userApi";
 import { registerAgent } from "../../Api/agentsApi";
 import { toast } from "sonner";
-
+import PlanCardUser from "../../Components/PlanCardUser/PlanCardUser";
 const AgentRegistration = ({ formData, handleChange, setFormData }) => {
-const [agentTypes, setAgentTypes] = useState([]);
-const [plans, setPlans] = useState([]);
-const [filteredPlans, setFilteredPlans] = useState([]);
-
+const [agentPlans, setAgentPlans] = useState([]);
+const [selectedPlans, setSelectedPlans] = useState([]);
+const [selectedPlan, setSelectedPlan] = useState(null);
 useEffect(() => {
   const fetchMeta = async () => {
-    const res = await getAgentPlanDetails();
+    const res = await getAgentPlanDetailss();
 
-    if (res) {
-      setAgentTypes(res.agent_types);
-      setPlans(res.plans);
-    }
+   if (res?.status) {
+  setAgentPlans(res.plans);
+}
   };
 
   fetchMeta();
@@ -50,14 +48,40 @@ const handleSubmit = async (e) => {
 };
 
 const handleAgentTypeChange = (val) => {
-  setFormData({ ...formData, agent_type: val, plan_id: "" });
 
-  const filtered = plans.filter(
-    (p) => p.agent_type === val
+  setFormData({
+    ...formData,
+    agent_type: val,
+    plan_id: "",
+  });
+
+  const matchedAgent =
+    agentPlans.find(
+      (item) => item.id === val
+    );
+
+  setSelectedPlans(
+    matchedAgent?.plans || []
   );
 
-  setFilteredPlans(filtered);
+  setSelectedPlan(null);
 };
+const handlePlanChange = (val) => {
+
+  setFormData({
+    ...formData,
+    plan_id: val,
+  });
+
+  const matchedPlan =
+    selectedPlans.find(
+      (item) =>
+        item.plan_id === val
+    );
+
+  setSelectedPlan(matchedPlan);
+};
+
   return (
     <div className="flex-1 bg-white rounded-xl p-8 sm:p-12 lg:px-[150px] lg:py-10 mt-[-50px]">
 
@@ -112,33 +136,7 @@ const handleAgentTypeChange = (val) => {
 
       </div>
 
-      {/* Select Fields */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
-
-      <SelectField
-  label="Agent Type"
-  options={agentTypes.map((item) => ({
-    label: item.name,
-    value: item.id
-  }))}
-  value={formData.agent_type}
-  onChange={handleAgentTypeChange}
-/>
-       <SelectField
-  label="Plan"
-  options={filteredPlans.map((item) => ({
-    label: item.name,
-    value: item.id
-  }))}
-  value={formData.plan_id}
-  onChange={(val) =>
-    setFormData({ ...formData, plan_id: val })
-  }
-/>
-      </div>
-
-      {/* Address */}
-      <div className="mt-6 sm:mt-8">
+      {/* Select Fields */}  <div className="mt-6 sm:mt-8">
         <Textarea
           label="Address"
           name="address"
@@ -146,6 +144,57 @@ const handleAgentTypeChange = (val) => {
           onChange={handleChange}
         />
       </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
+
+      <SelectField
+  label="Agent Type"
+  options={agentPlans.map((item) => ({
+    label: item.name,
+    value: item.id
+  }))}
+  registeration="true"
+  value={formData.agent_type}
+  onChange={handleAgentTypeChange}
+/>
+       <SelectField
+  label="Plan"
+ options={selectedPlans.map((item) => ({
+  label: item.label,
+  value: item.plan_id
+}))}
+  value={formData.plan_id}
+    registeration="true"
+onChange={handlePlanChange}
+/>
+      </div>
+      {
+  selectedPlan && (
+    <div className="mt-10">
+      
+      <h3 className="text-[22px] sm:text-[26px] font-semibold mb-6 lexend">
+        Plan Features
+      </h3>
+
+       <PlanCardUser
+  title={selectedPlan.label}
+  agentType={
+    agentPlans.find(
+      (item) =>
+        item.id === formData.agent_type
+    )?.name
+  }
+  price={selectedPlan.price}
+  savings={selectedPlan.duration}
+  features={selectedPlan.features || []}
+  buttonText="Current Plan"
+/>
+
+    </div>
+  )
+}
+
+      {/* Address */}
+    
 
       {/* Submit Button */}
       <div className="mt-8 flex justify-end">
