@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Check } from "lucide-react";
+import { openRazorpay } from "../../../utils/razorpay";
 
-function PlanCard({ title, Icon, price, savings, features=[], buttonText,dropdown }) {
+function PlanCard({ title, Icon, price, savings, features = [], buttonText, dropdown,  id }) {
+
+
+
+
+
+  
   return (
     <div className="relative rounded-2xl overflow-hidden transition-all duration-300 border border-gray-200 shadow-lg hover:shadow-xl h-full flex flex-col">
       <div className="p-6 sm:p-8 bg-white flex flex-col flex-1">
@@ -27,19 +34,36 @@ function PlanCard({ title, Icon, price, savings, features=[], buttonText,dropdow
           </span>
 
           {savings ? (
-  <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
-    {savings}
-  </p>
-) : (
-  <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
-    {price} per day
-  </p>
-)}
+            <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
+              {savings}
+            </p>
+          ) : (
+            <p className="text-[12px] font-semibold text-[#6ABD11] mt-1">
+              {price} per day
+            </p>
+          )}
         </div>
 
         {/* Button */}
-        <button  className="cursor-pointer w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-[#6ABD11] to-[#5ca60f] text-white shadow-lg hover:shadow-xl transition-all duration-300 mb-6">
-          {buttonText}
+        <button
+          onClick={() =>
+            openRazorpay({
+              name: "BuySel",
+              description: title,
+              plan_id: id,
+             
+              onSuccess: (res) => {
+                console.log("Property Payment", res);
+                navigate("/invoice", {
+                  state: {
+                    paymentData: res,
+                  },
+                });
+              },
+            })
+          }
+          className="cursor-pointer w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-[#6ABD11] to-[#5ca60f] text-white shadow-lg hover:shadow-xl transition-all duration-300 mb-6">
+          {buttonText} 
         </button>
 
         {/* Features */}

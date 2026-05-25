@@ -290,28 +290,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   return (
     <div className={` ${padding} bg-white  px-4 lg:px-6 xl:px-8 2xl:px-16`}>
      
-  {showtabs && (
-  <div className="flex justify-center mb-10 md:mb-15 px-2">
-    
-    <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">
-      
-      <div className="flex items-center border border-[#8AD32E] rounded-full p-1 bg-white min-w-max">
-        
-        {roles.map((role) => (
-          <button
-            key={role}
-            onClick={() => setActive(role)}
-            className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${
-              active === role
-                ? "bg-[#8AD32E] text-white shadow"
-                : "text-[#7CB305]"
-            }`}
-          >
-            {role}
-          </button>
-        ))}
-
-
+  
       {showtabs && (
         <div className="flex justify-center mb-10 md:mb-15 px-2">
 
@@ -653,7 +632,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
               <button
 
-                //           onClick={handleCheckout}
                 onClick={() =>
                   openRazorpay({
                     name: "BuySel",
