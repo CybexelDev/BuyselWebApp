@@ -1,0 +1,32 @@
+
+import React, { useState } from "react";
+import msg from "../../../assets/images/icons/msg.svg";
+import Chatbox from "./Chatbox";
+
+function Chatbutton() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <div
+        onClick={() => setOpen(true)}
+        className=" w-[35px] h-[35px] md:w-[40px] md:h-[40px] xl:w-[65px] xl:h-[65px] rounded-full bg-black flex justify-center items-center z-10 cursor-pointer">
+    <img src={msg} alt="message" className="w-1/2 h-1/2 sm:w-1/2 sm:h-1/2 md:w-3/5 md:h-3/5 xl:w-3/5 xl:h-3/5" />
+    </div>
+
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 flex items-center justify-center"
+          onClick={() => setOpen(false)} // outside click
+        >
+            
+          <div onClick={(e) => e.stopPropagation()}>
+            <Chatbox close={() => setOpen(false)} />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+export default Chatbutton;
