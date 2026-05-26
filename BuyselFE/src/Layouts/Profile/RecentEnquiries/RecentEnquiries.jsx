@@ -1,5 +1,5 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import i1 from "../../../assets/images/profile/i1.png"
 import i2 from "../../../assets/images/profile/i2.png"
@@ -14,25 +14,25 @@ export default function RecentEnquiries() {
     const dispatch = useDispatch();
     const [enquiries, setEnquiries] = useState([]);
 
-    const logout = ()=>{
-      dispatch({ type: "LOGOUT" });
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("id");
-      navigate('/')
+    const logout = () => {
+        dispatch({ type: "LOGOUT" });
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("id");
+        navigate('/')
     }
 
-useEffect(() => {
-  const fetchEnquiries = async () => {
-    const res = await getRecentEnquiries();
+    useEffect(() => {
+        const fetchEnquiries = async () => {
+            const res = await getRecentEnquiries();
 
-    if (res) {
-      setEnquiries(res.data || []);
-    }
-  };
+            if (res) {
+                setEnquiries(res.data || []);
+            }
+        };
 
-  fetchEnquiries();
-}, []);
+        fetchEnquiries();
+    }, []);
     return (
         <div className="w-full  p-4 md:px-8">
             <h2 className="text-[20px] instrument-sans font-[600] text-[#000] mb-4">
@@ -49,32 +49,32 @@ useEffect(() => {
                             <div className="bg-[#7AC70C] text-[#F7F7F7] host-grotesk rounded-lg px-4 py-3 grid grid-cols-[2fr_1fr_1fr] text-[16px] font-[500]">
                                 <span>Property Name</span>
                                 <span>Agent/Owner</span>
-<span className="text-right">Date</span>                             </div>
+                                <span className="text-right">Date</span>                             </div>
 
                             {/* Row 1 */}
-                           {enquiries.slice(0,4).map((item) => (
-  <div
-    key={item.id}
-    className="grid grid-cols-[2fr_1fr_1fr] px-4 py-4 text-[#595959] text-[15px] font-[500] instrument-sans items-center"
-  >
-    <span className="truncate">
-      {item.property_name || "N/A"}
-    </span>
+                            {enquiries.slice(0, 4).map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="grid grid-cols-[2fr_1fr_1fr] px-4 py-4 text-[#595959] text-[15px] font-[500] instrument-sans items-center"
+                                >
+                                    <span className="truncate">
+                                        {item.property_name || "N/A"}
+                                    </span>
 
-    <span>
-      {item.agent_name || "N/A"}
-    </span>
+                                    <span>
+                                        {item.agent_name || "N/A"}
+                                    </span>
 
-    <span className="text-right">
-      {item.date}
-    </span>
-  </div>
-))}
-{enquiries.length === 0 && (
-  <p className="text-center text-gray-400 py-6">
-    No enquiries found
-  </p>
-)}
+                                    <span className="text-right">
+                                        {item.date}
+                                    </span>
+                                </div>
+                            ))}
+                            {enquiries.length === 0 && (
+                                <p className="text-center text-gray-400 py-6">
+                                    No enquiries found
+                                </p>
+                            )}
 
                         </div>
                     </div>

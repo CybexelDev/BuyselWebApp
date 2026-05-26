@@ -19,7 +19,7 @@ function AgentPlans() {
   const [reelPackages, setReelPackages] = useState([]);
   const [selectedAdType, setSelectedAdType] = useState({});
 
-  console.log(upgradePlans, "[[[[[[[[[[[[[[[[");
+  console.log(adPackages, "[[[[[[[[[[[[[[[[");
   // console.log(selectedPlan, "?????????????????");
 
 
@@ -242,6 +242,7 @@ function AgentPlans() {
                   key={ad.id}
                   title={ad.name}
                   Icon={TrendingUp}
+                  id={activePlan.plan_id}
                   price={activePlan.price_per_day}
                   features={activePlan.features}
                   buttonText="Advertise Now"
@@ -284,6 +285,7 @@ function AgentPlans() {
                   key={reel.id}
                   title={reel.name}
                   Icon={TrendingUp}
+                  id={activePlan.plan_id}
                   price={activePlan.price_per_day}
                   features={activePlan.features}
                   buttonText="Advertise Now"

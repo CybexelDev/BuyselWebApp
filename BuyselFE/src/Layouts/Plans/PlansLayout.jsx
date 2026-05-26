@@ -359,7 +359,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
     </div>
   )
 }
-
+      {showtabs && (
         <div className="flex justify-center mb-10 md:mb-15 px-2">
 
           <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">

@@ -1,13 +1,15 @@
 
 import React, { useState, useEffect } from "react";
 import imgs from "../../../assets/images/ad/ad2.png"
+import img2 from "../../../assets/images/ad/ad3.png"
 import './ad.css'
 
 export default function ad() {
 
     const images = [
         `${imgs}`,
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1400",
+        `${img2}`,
+        // "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1400",
     ];
 
     const [current, setCurrent] = useState(0);
