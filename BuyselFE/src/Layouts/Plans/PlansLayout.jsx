@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getAllPlans } from "../../Api/userApi";
-import { MessageCircle, Phone } from "lucide-react";
+import { MessageCircle, Phone,UserPlus } from "lucide-react";
 import { activateUserPlan } from "../../Api/userApi";
 import { toast } from "sonner";
 import { s } from "framer-motion/m";
@@ -16,13 +16,19 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const[showLimitMessage,setShowLimitMessage] = useState(false)
+  const [showAgentModal, setShowAgentModal] = useState(false);
   const navigate=useNavigate()
 
-
   const handleSelectPlan = (plan) => {
-    setSelectedPlan(plan);
-    setOpenModal(true);
-  };
+
+  if (active !== "Owner") {
+    setShowAgentModal(true);
+    return;
+  }
+
+  setSelectedPlan(plan);
+  setOpenModal(true);
+};
   const handleCheckout = async () => {
 
     try {
@@ -358,8 +364,70 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 )}
      
   
+    <div className={` ${padding} bg-white  px-4 lg:px-12 xl:px-16`}>
+{
+  showAgentModal && (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 host-grotesk"
+      onClick={() => setShowAgentModal(false)}
+    >
 
+      <div
+        className="bg-white w-full max-w-md rounded-3xl p-8 relative text-center"
+        onClick={(e) => e.stopPropagation()}
+      >
 
+        <button
+          onClick={() => setShowAgentModal(false)}
+          className="absolute top-4 right-4 text-2xl"
+        >
+          ✕
+        </button>
+
+        <div className="flex justify-center mb-5">
+          <div className="w-20 h-20 rounded-full bg-[#F1FDDA] flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="38"
+              height="38"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#8AD32E"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 12a5 5 0 1 0-5-5a5 5 0 0 0 5 5" />
+              <path d="M20 21a8 8 0 1 0-16 0" />
+            </svg>
+          </div>
+        </div>
+
+        <h2 className="text-2xl font-semibold text-black">
+          Become an Agent
+        </h2>
+
+        <p className="text-gray-500 mt-3 leading-relaxed">
+          You need to complete the agent-registration form to become an agent
+          and access these plans.
+        </p>
+
+        <button
+  onClick={() => navigate("/agent-register")}
+  className="w-full mt-6 bg-[#8AD32E] hover:bg-[#7fc127]
+  text-white py-3 rounded-2xl font-semibold transition
+  shadow-lg
+  flex items-center justify-center gap-2"
+>
+  <UserPlus size={18} />
+  Complete Registration
+</button>
+
+      </div>
+
+    </div>
+  )
+}
       {showtabs && (
         <div className="flex justify-center mb-10 md:mb-15 px-2">
 
@@ -713,7 +781,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
               <button
 
-                //           onClick={handleCheckout}
                 onClick={() =>
                   openRazorpay({
                     name: "BuySel",

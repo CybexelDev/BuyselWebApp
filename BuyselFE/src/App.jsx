@@ -38,18 +38,19 @@ import Inbox from './Agent/Pages/Inbox/Inbox'
 import { toast } from 'sonner'
 import Faqs from './Pages/Faqs/Faqs'
 import InvoicePage from './Pages/Invoice/Invoice'
+import AgentProtectedRoute from './Agent/Components/ProtectionRouteAgent/ProtectionRouteAgent'
 
 function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
-  const { image, userName, userId, accessToken, role } = useSelector((state) => state.user);
+  const { image, userName, userId, accessToken, role, listedCount } = useSelector((state) => state.user);
 
-  console.log(role,"ppppppppppppppppp");
-  
+  console.log(listedCount, "ppppppppppppppppp");
+
 
   return (
     <>
- {/* App page */}
+      {/* App page */}
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -59,39 +60,73 @@ function App() {
           <Route path="/propertyDetail/:id" element={<PropertyDetail />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/wishlist" element={<Wishlist/>}/>
-          <Route path="/about" element={<About/>}/>
-          <Route path="/contact" element={<Contact/>}/>
-          <Route path="/agent-detail/:id" element={<AgentDetail/>}/>
-          <Route path='/addyourproperty' element={<AddProperty/>}/>
-          <Route path="/editproperty/:id" element={<AddProperty/>} />
-          <Route path='/blogdetail' element={<BlogDetailPage/>}/>
-          <Route path='/blog/:id' element={<BlogDetailPage/>}/>
-          <Route path="/loginandsignup" element={<LoginAndSignuppage />}/>
-          <Route path="/ownerdashboard" element={<OwnerDashboard />}/>   
-          <Route path="/dashboardpropertydetail/:id" element={<DashboardPropertyDetail/> }/>                 
-          <Route path='/plans'  element={<PlansPage/>}/>
-          <Route path="/enquiry-detail/:id" element={<EnquiryDetailLayoutUser/>}/>
-          <Route path="/helpcenter" element={<HelpCenter/>}/>
-          <Route path='/termsandcondition' element={<TermsPage/>}/>
-          <Route path='/privacy' element={<PrivacyPolicy/>}/>
-          <Route path='/agent-register' element={<RegisterAgent/>}/>
-          <Route path='/faqs' element={<Faqs/>}/>
-          <Route path='/invoice' element={<InvoicePage/>}/>
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/agent-detail/:id" element={<AgentDetail />} />
+          <Route path='/addyourproperty' element={<AddProperty />} />
+          <Route path="/editproperty/:id" element={<AddProperty />} />
+          <Route path='/blogdetail' element={<BlogDetailPage />} />
+          <Route path='/blog/:id' element={<BlogDetailPage />} />
+          <Route path="/loginandsignup" element={<LoginAndSignuppage />} />
+          <Route path="/ownerdashboard" element={<OwnerDashboard />} />
+          <Route path="/dashboardpropertydetail/:id" element={<DashboardPropertyDetail />} />
+          <Route path='/plans' element={<PlansPage />} />
+          <Route path="/enquiry-detail/:id" element={<EnquiryDetailLayoutUser />} />
+          <Route path="/helpcenter" element={<HelpCenter />} />
+          <Route path='/termsandcondition' element={<TermsPage />} />
+          <Route path='/privacy' element={<PrivacyPolicy />} />
+          <Route path='/agent-register' element={<RegisterAgent />} />
+          <Route path='/faqs' element={<Faqs />} />
+          <Route path='/invoice' element={<InvoicePage />} />
 
-          {/* //agent side */} 
-          {role !== "user" && ( <>
-           <Route path='/agent/dashboard' element={<AgentDashboard/>}/>
-          <Route path='/agent/plans' element={<AgentPlans/>}/>
-          <Route path='/agent/profile' element={<AgentProfile/>}/>
-          <Route path='/agent/inbox' element={<Inbox/>}/>
-          <Route path='/agent/enquiry' element={<Enquiry/>}/>
-          <Route path='/agent/user-enquiry' element={<UserEnquiry/>}/>
-          <Route path='/agent/enquiry/:id' element={<EnquiryDetail/>} />
-          <Route path="/agent/property" element={<AgentPropertyListing />}/>
-           </>
-          )}
-        
+          {/* //agent side */}
+          <>
+            <Route path='/agent/dashboard' element={
+              <AgentProtectedRoute>
+                <AgentDashboard />
+
+              </AgentProtectedRoute>
+            }
+            />
+            <Route path='/agent/plans' element={
+              <AgentProtectedRoute>
+                <AgentPlans />
+              </AgentProtectedRoute>
+            } />
+            <Route path='/agent/profile' element={
+              <AgentProtectedRoute>
+                <AgentProfile />
+              </AgentProtectedRoute>
+            } />
+            <Route path='/agent/inbox' element={
+              <AgentProtectedRoute>
+              <Inbox />
+              </AgentProtectedRoute>
+            }
+               />
+            <Route path='/agent/enquiry' element={
+              <AgentProtectedRoute>
+              <Enquiry />
+              </AgentProtectedRoute>
+              } />
+            <Route path='/agent/user-enquiry' element={
+              <AgentProtectedRoute>
+              <UserEnquiry />
+              </AgentProtectedRoute>
+              } />
+            <Route path='/agent/enquiry/:id' element={
+              <AgentProtectedRoute>
+              <EnquiryDetail />
+              </AgentProtectedRoute>
+              } />
+            <Route path="/agent/property" element={
+              <AgentProtectedRoute>
+              <AgentPropertyListing />
+              </AgentProtectedRoute>
+              
+              } />
+          </>
         </Routes>
       </Router>
     </>

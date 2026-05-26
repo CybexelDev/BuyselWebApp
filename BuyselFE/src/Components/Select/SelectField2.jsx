@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-export default function SelectField({ label, icon, options, value, onChange }) {
+export default function SelectField({ label, icon, options, value, onChange,registeration}) {
   const [open, setOpen] = useState(false);
 
   const selectedLabel = options.find(
     (opt) => opt.value === value
   )?.label;
-
+const change=registeration=="true"
   return (
     <div className="relative w-full">
 
-      <label className="flex items-center gap-2 font-semibold mb-2">
-        {icon}
+<label
+  className={`${change ? "lexend text-[13px] sm:text-[14px] lg:text-[16px]" : ""
+    } flex items-center gap-2 font-semibold mb-2`}
+>        {icon}
         {label}
       </label>
 
