@@ -8,11 +8,14 @@ import { toast } from "sonner";
 import { s } from "framer-motion/m";
 import { openRazorpay } from "../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
+import add from '../../assets/images/nav/add.png'
+
 
 const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [plansData, setPlansData] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const[showLimitMessage,setShowLimitMessage] = useState(false)
   const navigate=useNavigate()
 
 
@@ -251,6 +254,9 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const roles = ["Owner", "Agent", "Premium Agent", "Elite Agent"];
   const rawPlans = getPlansByRole();
   const features = planConfig[active].features;
+  const propertyCount = plansData?.property_count || 0;
+  console.log("count:",propertyCount);
+  
 
   const plans = rawPlans.map((plan) => ({
     id: plan.id,
@@ -289,27 +295,69 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
   return (
     <div className={` ${padding} bg-white  px-4 lg:px-6 xl:px-8 2xl:px-16`}>
+
+          {showLimitMessage && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+
+    <div className="bg-white rounded-2xl shadow-xl p-8 w-[90%] max-w-md text-center">
+
+      {/* Icon Badge */}
+      <div className="w-14 h-14 rounded-full bg-[#EEF8DF] flex items-center justify-center mx-auto mb-5">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-7 h-7 text-[#6ABD11]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.8}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+      </div>
+
+      {/* Title */}
+      <h2 className="text-xl font-semibold host-grotesk text-[#111111] mb-2">
+        Add Properties First
+      </h2>
+
+      {/* Description */}
+      <p className="text-sm host-grotesk text-[#555] leading-relaxed mb-7">
+        If you want to choose any plan, first you need to add 2 properties.
+        After adding 2 properties, you can select a plan.
+      </p>
+
+      {/* Buttons */}
+      <div className="flex flex-col gap-3">
+
+        <button
+          onClick={() => {
+            setShowLimitMessage(false);
+            navigate("/addyourproperty");
+          }}
+          className="w-full cursor-pointer py-3 bg-[#6ABD11] hover:bg-[#5aa30e] text-white text-sm font-medium rounded-lg transition"
+        >
+          
+          Add Property
+        </button>
+
+        <button
+          onClick={() => setShowLimitMessage(false)}
+          className="w-full cursor-pointer py-3 border border-gray-300 text-black text-sm rounded-lg hover:bg-gray-50 transition"
+        >
+          Maybe Later
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+)}
      
-  {showtabs && (
-  <div className="flex justify-center mb-10 md:mb-15 px-2">
-    
-    <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">
-      
-      <div className="flex items-center border border-[#8AD32E] rounded-full p-1 bg-white min-w-max">
-        
-        {roles.map((role) => (
-          <button
-            key={role}
-            onClick={() => setActive(role)}
-            className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${
-              active === role
-                ? "bg-[#8AD32E] text-white shadow"
-                : "text-[#7CB305]"
-            }`}
-          >
-            {role}
-          </button>
-        ))}
+  
 
 
       {showtabs && (
@@ -375,7 +423,13 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
             </div>
 
             <button className="mt-6 w-full bg-[#8AD32E] cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
-              onClick={() => handleSelectPlan(plan)}
+              onClick={() =>{
+                  if (propertyCount <= 2) {
+    setShowLimitMessage(true);
+    return;
+  }
+  handleSelectPlan(plan);
+}}
             >
               Select Plan
             </button>
@@ -527,7 +581,13 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
       {/* BUTTON */}
       <button
-        onClick={() => handleSelectPlan(plan)}
+        onClick={() =>{
+                  if (propertyCount <= 2) {
+    setShowLimitMessage(true);
+    return;
+  }
+  handleSelectPlan(plan);
+}}
         className="mt-6
         w-full
         max-w-[220px]
