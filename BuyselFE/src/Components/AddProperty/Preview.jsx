@@ -31,7 +31,7 @@ const property = {
   deposit: formData.pricing?.deposit || "", // ✅ optional
 
   unit: formData.pricing?.unit || "",  
-  land_area: formData.squareFeet, // ✅ FIX
+  land_area: formData.landArea, // ✅ FIX
   owner: formData.owner,
   phone: formData.phone,       // ✅ FIX
   purpose: formData.purpose,

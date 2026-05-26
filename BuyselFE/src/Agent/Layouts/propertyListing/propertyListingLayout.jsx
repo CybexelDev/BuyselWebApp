@@ -254,7 +254,13 @@ useEffect(() => {
       </p>
 
        <button
-            onClick={()=>navigate("/addyourproperty")}
+            onClick={() => {
+  if (remainingProperty <= 0) {
+    setShowLimitMessage(true);
+    return;
+  }
+  navigate("/addyourproperty");
+}}
              className="flex items-center justify-center cursor-pointer gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
               Add NewProperty
             </button>
