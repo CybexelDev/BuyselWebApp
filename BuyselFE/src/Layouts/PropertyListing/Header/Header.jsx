@@ -15,7 +15,7 @@ const Header = ({ setParentFilters, onchange, filters }) => {
   const [activeCategory, setActiveCategory] = useState("Residential");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const tabs = ["Rent", "Buy", "Agent", "Lease"];
+  const tabs = ["Rent", "Sale", "Agent", "Lease"];
   const handleNearbyClick = () => {
     if (!navigator.geolocation) {
       toast.error("Geolocation not supported");

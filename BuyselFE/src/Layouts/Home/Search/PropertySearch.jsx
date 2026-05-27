@@ -24,6 +24,13 @@ const [propertyType, setPropertyType] = useState("");
   "Land / Plot",
   "Industrial",
 ];
+   const handleNavigate = (path) => {
+  nav(path);
+  window.scrollTo({
+    top: 0,
+    behavior: "instant", 
+  });
+};
 const handleSearch = () => {
 
   const params = new URLSearchParams();
@@ -42,7 +49,7 @@ const handleSearch = () => {
   nav(`/propertyListing?${params.toString()}`);
 };
 
-  const tabs = ["Rent", "Buy", "Agent", "Lease"];
+  const tabs = ["Rent", "Sale", "Agent", "Lease"];
 
   const nav = useNavigate();
 
@@ -61,7 +68,7 @@ const handleSearch = () => {
                 onClick={() => {
                   setActiveTab(tab);
                   if (tab === "Agent") {
-                    nav("/agents");
+                    handleNavigate("/agents");
                   }
                 }}
                 className={`flex items-center justify-center w-[50px] sm:w-[73px] h-[30px] rounded-[9px] text-sm sm:text-[17px] cursor-pointer ${

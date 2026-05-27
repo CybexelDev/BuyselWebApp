@@ -27,7 +27,7 @@ const handleNavigate = (path) => {
 
 const handleClick = (item) => {
   const category = categoryMap[item.title];
-  handleNavigate(`/propertyListing?purpose=Buy&category=${category}`);
+  handleNavigate(`/propertyListing?purpose=Sale&category=${category}`);
 };
     return (
         <div>

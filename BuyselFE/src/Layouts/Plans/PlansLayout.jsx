@@ -16,6 +16,13 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [showAgentModal, setShowAgentModal] = useState(false);
   const navigate=useNavigate()
 
+   const handleNavigate = (path) => {
+  navigate(path);
+  window.scrollTo({
+    top: 0,
+    behavior: "instant", 
+  });
+};
 
   const handleSelectPlan = (plan) => {
 
@@ -344,7 +351,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
         </p>
 
         <button
-  onClick={() => navigate("/agent-register")}
+  onClick={() =>handleNavigate("/agent-register")}
   className="w-full mt-6 bg-[#8AD32E] hover:bg-[#7fc127]
   text-white py-3 rounded-2xl font-semibold transition
   shadow-lg
@@ -384,7 +391,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
           </div>
 
         </div>
-      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:hidden lexend">
 
         {plans.map((plan, planIndex) => (

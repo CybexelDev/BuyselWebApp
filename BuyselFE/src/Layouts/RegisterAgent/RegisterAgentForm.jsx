@@ -1,5 +1,5 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import SelectField from "../../Components/Select/SelectField2";
 import { Layers } from "lucide-react";
 import { getAgentPlanDetailss } from "../../Api/userApi";
@@ -7,80 +7,84 @@ import { registerAgent } from "../../Api/agentsApi";
 import { toast } from "sonner";
 import PlanCardUser from "../../Components/PlanCardUser/PlanCardUser";
 const AgentRegistration = ({ formData, handleChange, setFormData }) => {
-const [agentPlans, setAgentPlans] = useState([]);
-const [selectedPlans, setSelectedPlans] = useState([]);
-const [selectedPlan, setSelectedPlan] = useState(null);
-useEffect(() => {
-  const fetchMeta = async () => {
-    const res = await getAgentPlanDetailss();
+  const [agentPlans, setAgentPlans] = useState([]);
+  const [selectedPlans, setSelectedPlans] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  useEffect(() => {
+    const fetchMeta = async () => {
+      const res = await getAgentPlanDetailss();
 
-   if (res?.status) {
-  setAgentPlans(res.plans);
-}
+      if (res?.status) {
+        setAgentPlans(res.plans);
+      }
+    };
+
+    fetchMeta();
+  }, []);
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      full_name: formData.username,
+      email: formData.email,
+      phone_number: formData.phone,
+      password: formData.password,
+      city: formData.city,
+      pin_code: formData.pincode,
+      agent_type: formData.agent_type,
+      plan_id: formData.plan_id,
+      address: formData.address
+    };
+
+    const res = await registerAgent(payload);
+
+    if (res) {
+      toast.success("Registered ");
+      setFormData({});
+
+      setSelectedPlans([]);
+      setSelectedPlan(null);
+    } else {
+      toast.error("Failed ");
+    }
   };
 
-  fetchMeta();
-}, []);
+  const handleAgentTypeChange = (val) => {
 
+    setFormData({
+      ...formData,
+      agent_type: val,
+      plan_id: "",
+    });
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    const matchedAgent =
+      agentPlans.find(
+        (item) => item.id === val
+      );
 
-  const payload = {
-    full_name: formData.username,
-    email: formData.email,
-    phone_number: formData.phone,
-    password: formData.password,
-    city: formData.city,
-    pin_code: formData.pincode,
-    agent_type: formData.agent_type,
-    plan_id: formData.plan_id,
-    address: formData.address
+    setSelectedPlans(
+      matchedAgent?.plans || []
+    );
+
+    setSelectedPlan(null);
   };
+  const handlePlanChange = (val) => {
 
-  const res = await registerAgent(payload);
+    setFormData({
+      ...formData,
+      plan_id: val,
+    });
 
-  if (res) {
-    toast.success("Registered ");
-  } else {
-    toast.error("Failed ");
-  }
-};
+    const matchedPlan =
+      selectedPlans.find(
+        (item) =>
+          item.plan_id === val
+      );
 
-const handleAgentTypeChange = (val) => {
-
-  setFormData({
-    ...formData,
-    agent_type: val,
-    plan_id: "",
-  });
-
-  const matchedAgent =
-    agentPlans.find(
-      (item) => item.id === val
-    );
-
-  setSelectedPlans(
-    matchedAgent?.plans || []
-  );
-
-  setSelectedPlan(null);
-};
-const handlePlanChange = (val) => {
-
-  setFormData({
-    ...formData,
-    plan_id: val,
-  });
-
-  const matchedPlan =
-    selectedPlans.find(
-      (item) =>
-        item.plan_id === val
-    );
-
-  setSelectedPlan(matchedPlan);
-};
+    setSelectedPlan(matchedPlan);
+  };
 
   return (
     <div className="flex-1 bg-white rounded-xl p-8 sm:p-12 lg:px-[150px] lg:py-10 mt-[-50px]">
@@ -91,116 +95,116 @@ const handlePlanChange = (val) => {
 
       {/* Inputs */}
       <form onSubmit={handleSubmit}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-6 sm:mt-8">
-        <Input
-          label="Full Name"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-6 sm:mt-8">
+          <Input
+            label="Full Name"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
 
-        <Input
-          label="Email ID"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+          <Input
+            label="Email ID"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
 
-        <Input
-          label="Phone Number"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-        />
+          <Input
+            label="Phone Number"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+          />
 
-        <Input
-          label="Password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+          <Input
+            label="Password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
 
-        <Input
-          label="City"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-        />
+          <Input
+            label="City"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+          />
 
-        <Input
-          label="Pincode"
-          name="pincode"
-          value={formData.pincode}
-          onChange={handleChange}
-        />
+          <Input
+            label="Pincode"
+            name="pincode"
+            value={formData.pincode}
+            onChange={handleChange}
+          />
 
-      </div>
+        </div>
 
-      {/* Select Fields */}  <div className="mt-6 sm:mt-8">
-        <Textarea
-          label="Address"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
+        {/* Select Fields */}  <div className="mt-6 sm:mt-8">
+          <Textarea
+            label="Address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
 
-      <SelectField
-  label="Agent Type"
-  options={agentPlans.map((item) => ({
-    label: item.name,
-    value: item.id
-  }))}
-  registeration="true"
-  value={formData.agent_type}
-  onChange={handleAgentTypeChange}
-/>
-       <SelectField
-  label="Plan"
- options={selectedPlans.map((item) => ({
-  label: item.label,
-  value: item.plan_id
-}))}
-  value={formData.plan_id}
-    registeration="true"
-onChange={handlePlanChange}
-/>
-      </div>
-      {
-  selectedPlan && (
-    <div className="mt-10">
-      
-      <h3 className="text-[22px] sm:text-[26px] font-semibold mb-6 lexend">
-        Plan Features
-      </h3>
+          <SelectField
+            label="Agent Type"
+            options={agentPlans.map((item) => ({
+              label: item.name,
+              value: item.id
+            }))}
+            registeration="true"
+            value={formData.agent_type}
+            onChange={handleAgentTypeChange}
+          />
+          <SelectField
+            label="Plan"
+            options={selectedPlans.map((item) => ({
+              label: item.label,
+              value: item.plan_id
+            }))}
+            value={formData.plan_id}
+            registeration="true"
+            onChange={handlePlanChange}
+          />
+        </div>
+        {
+          selectedPlan && (
+            <div className="mt-10">
 
-       <PlanCardUser
-  title={selectedPlan.label}
-  agentType={
-    agentPlans.find(
-      (item) =>
-        item.id === formData.agent_type
-    )?.name
-  }
-  price={selectedPlan.price}
-  savings={selectedPlan.duration}
-  features={selectedPlan.features || []}
-  buttonText="Current Plan"
-/>
+              <h3 className="text-[22px] sm:text-[26px] font-semibold mb-6 lexend">
+                Plan Features
+              </h3>
 
-    </div>
-  )
-}
+              <PlanCardUser
+                title={selectedPlan.label}
+                agentType={
+                  agentPlans.find(
+                    (item) =>
+                      item.id === formData.agent_type
+                  )?.name
+                }
+                price={selectedPlan.price}
+                savings={selectedPlan.duration}
+                features={selectedPlan.features || []}
+                buttonText="Current Plan"
+              />
 
-      {/* Address */}
-    
+            </div>
+          )
+        }
 
-      {/* Submit Button */}
-      <div className="mt-8 flex justify-end">
-        <button
-          type="submit"
-          className="
+        {/* Address */}
+
+
+        {/* Submit Button */}
+        <div className="mt-8 flex justify-end">
+          <button
+            type="submit"
+            className="
             bg-[#84CC16]
             hover:bg-lime-600
             text-white
@@ -212,11 +216,11 @@ onChange={handlePlanChange}
             transition
             shadow-md
           "
-        >
-          Submit Registration
-        </button>
-      </div>
-</form>
+          >
+            Submit Registration
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
