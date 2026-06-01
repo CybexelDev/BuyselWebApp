@@ -419,7 +419,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   flex items-center justify-center gap-2"
 >
   <UserPlus size={18} />
-  Complete Registration
+  Register as an Agent
 </button>
 
       </div>
