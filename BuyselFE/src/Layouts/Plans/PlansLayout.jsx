@@ -349,6 +349,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                 Add Property
               </button>
 
+
               <button
                 onClick={() => setShowLimitMessage(false)}
                 className="w-full cursor-pointer py-3 border border-gray-300 text-black text-sm rounded-lg hover:bg-gray-50 transition"
@@ -488,6 +489,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
             </div>
 
             <button className="mt-6 w-full bg-[#8AD32E] cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
+
               onClick={() => {
                 if (propertyCount < 2) {
                   setShowLimitMessage(true);

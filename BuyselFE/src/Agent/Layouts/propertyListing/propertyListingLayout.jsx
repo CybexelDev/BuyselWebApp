@@ -22,13 +22,19 @@ const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-s
   const [searchTerm, setSearchTerm] = useState("");
   const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(false);
-  const [remainingProperty, setRemainingProperty] = useState(0);
   const [showLimitMessage, setShowLimitMessage] = useState(false);
 
   const userRole = useSelector((state) => state.user.role);
 const agentRole = useSelector((state) => state.agent.role);
 
 const role = userRole || agentRole;
+const property_count = useSelector((state) =>
+  role === "agent"
+    ? state.agent.property_count
+    : state.user.property_count
+);
+
+console.log("property_count :", property_count);
 console.log("role :",role);
 
   const navigate = useNavigate();
@@ -48,12 +54,7 @@ useEffect(() => {
 
       console.log("API Response :", res);
 
-      // remaining property
-      setRemainingProperty(res?.remaining_property || 0);
-      console.log(
-        "Remaining Property :",
-        res?.remaining_property
-      );
+    
 
       // data array
       if (Array.isArray(res?.data)) {
@@ -194,7 +195,7 @@ useEffect(() => {
 
             <button
            onClick={() => {
-  if (remainingProperty <= 0) {
+  if (property_count > 1) {
     setShowLimitMessage(true);
     return;
   }
@@ -255,7 +256,7 @@ useEffect(() => {
 
        <button
             onClick={() => {
-  if (remainingProperty <= 0) {
+  if (property_count > 1 ) {
     setShowLimitMessage(true);
     return;
   }

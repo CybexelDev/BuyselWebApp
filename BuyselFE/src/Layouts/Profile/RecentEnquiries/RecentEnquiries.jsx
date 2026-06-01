@@ -62,7 +62,7 @@ export default function RecentEnquiries() {
                                     </span>
 
                                     <span>
-                                        {item.agent_name || "N/A"}
+                                        {item.agent_name || item.owner_name}
                                     </span>
 
                                     <span className="text-right">
