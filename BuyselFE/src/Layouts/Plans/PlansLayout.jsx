@@ -489,7 +489,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
             <button className="mt-6 w-full bg-[#8AD32E] cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
               onClick={() => {
-                if (propertyCount <= 2) {
+                if (propertyCount < 2) {
                   setShowLimitMessage(true);
                   return;
                 }
@@ -604,16 +604,14 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
             key={plan.name}
             className="mt-2 flex flex-col items-center"
           >
-
-
             <div
               className="bg-white
-        w-full
-        rounded-3xl
-        p-2
-        border-2
-        shadow-lg
-        border-[#F1FDDA]"
+                 w-full
+                 rounded-3xl
+                 p-2
+                 border-2
+                 shadow-lg
+                 border-[#F1FDDA]"
             >
 
               {features.map((_, i) => (
@@ -643,33 +641,30 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
             {/* BUTTON */}
             <button
               onClick={() => {
-                if (propertyCount <= 2) {
+                if (propertyCount < 2) {
                   setShowLimitMessage(true);
                   return;
                 }
                 handleSelectPlan(plan);
               }}
               className="mt-6
-        w-full
-        max-w-[220px]
-        bg-[#8AD32E]
-        hover:bg-[#7ABF28]
-        text-white
-        font-bold
-        py-3
-        rounded-xl
-        lexend
-        transition
-        cursor-pointer"
+              w-full
+              max-w-[220px]
+              bg-[#8AD32E]
+              hover:bg-[#7ABF28]
+              text-white
+              font-bold
+              py-3
+              rounded-xl
+              lexend
+              transition
+              cursor-pointer"
             >
               Select Plan
             </button>
-
-
           </div>
 
         ))}
-
       </div>
 
       <div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 host-grotesk mt-10">
@@ -765,13 +760,10 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                     </div>
 
                   </div>
-
                 ))}
-
               </div>
 
               <button
-
                 onClick={() =>
                   openRazorpay({
                     name: "BuySel",
@@ -798,7 +790,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
               </button>
 
             </div>
-
           </div>
         )
       }
