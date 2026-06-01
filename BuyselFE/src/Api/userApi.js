@@ -1051,7 +1051,6 @@ formData.append(
     formData.append("selling_points", JSON.stringify(data.keyPoints || []));
     formData.append("landmarks", JSON.stringify(data.landmarks || []));
 
-  
     if (data.images?.length > 0) {
       data.images.forEach((img) => {
         formData.append("images", img.file || img);

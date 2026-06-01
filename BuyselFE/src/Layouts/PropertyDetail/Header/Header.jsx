@@ -239,10 +239,10 @@ const HeaderProperty = ({ property }) => {
               <div className="flex items-center gap-3 lg:gap-4 mb-5 lg:mb-6">
 
                 <img
-                  src={property?.sowner_profile_image|| seller}
-                  alt="seller"
-                  className="w-14 h-14 lg:w-20 lg:h-20 rounded-full object-cover"
-                />
+  src={property?.seller?.image || seller}
+  alt="seller"
+  className="w-14 h-14 lg:w-20 lg:h-20 rounded-full object-cover"
+/>
                 <div>
 
                   <div className="flex items-center gap-2">

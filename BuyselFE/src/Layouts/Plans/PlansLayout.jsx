@@ -364,7 +364,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 )}
      
   
-    <div className={` ${padding} bg-white  px-4 lg:px-12 xl:px-16`}>
 {
   showAgentModal && (
     <div
@@ -492,7 +491,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
             <button className="mt-6 w-full bg-[#8AD32E] cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
               onClick={() =>{
-                  if (propertyCount <= 2) {
+                  if (propertyCount < 2) {
     setShowLimitMessage(true);
     return;
   }
@@ -650,7 +649,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       {/* BUTTON */}
       <button
         onClick={() =>{
-                  if (propertyCount <= 2) {
+                  if (propertyCount < 2) {
     setShowLimitMessage(true);
     return;
   }
