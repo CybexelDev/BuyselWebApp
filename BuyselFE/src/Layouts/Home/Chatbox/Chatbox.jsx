@@ -3,7 +3,9 @@ import { useState } from "react";
 import { sendEnquiry } from "../../../Api/userApi";
 import { toast } from "sonner";
 import { ConnectWithAdmin } from "../../../Api/agentsApi";
-function Chatbox({ close, simple = false, msgPlaceholder="Your need or requirements",type = "user", }) {
+import enquiryImg from "../../../assets/images/enquiry/q1.png";
+
+function Chatbox({ close, simple = false, msgPlaceholder="Submit Your Requirements on",type = "user", }) {
   const [formData, setFormData] = useState({
   name: "",
   contact: "",
@@ -46,146 +48,143 @@ if (type === "admin") {
   }
 };
     return (
-    <section className="flex justify-center items-center  px-3 sm:px-6">
-      
-      <div
-        className="
-          w-[95%] sm:w-[90%] md:w-[80%] lg:w-[60%] xl:w-[469px]
-          h-auto xl:h-auto            
-          bg-white
-          border border-[#83c938]
-          rounded-[21px]
-          py-[24px] sm:py-[30px] xl:py-[36px]
-          px-[16px] sm:px-[24px] xl:px-[30px]
-          shadow-md
-        "
-      >
-        <h4 className="instrument-sans font-[600] text-[14px] sm:text-[15px] xl:text-[16px] mb-[15px] sm:mb-[19px] text-black">
-          Submit this form...
-        </h4>
+    <section className="fixed inset-0 z-50 bg-black/40 overflow-y-auto">
+    <div className="min-h-screen flex items-start lg:items-center justify-center p-3 py-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-5xl bg-white rounded-[24px] shadow-2xl">
+        
+        {/* Left Side */}
+        <div className="p-6 lg:p-10 flex items-center justify-center">
+          <div className="w-full h-full border border-[#E5E5E5] rounded-[24px] flex items-center justify-center p-6">
+            <img
+              src={enquiryImg}
+              alt="Property Enquiry"
+              className="w-full max-w-md object-contain"
+            />
+          </div>
+        </div>
 
-        <form className="space-y-[16px] sm:space-y-[19px] relative" onSubmit={handleSubmit}>
+        {/* Right Side */}
+        <div className="p-6 lg:p-10">
+          <h2 className="text-[24px] font-[600] text-center lg:text-left inter text-[#000]">
+            {msgPlaceholder}{" "}
+            <span className="text-[#75C222] inter">BuySel</span>
+          </h2> 
 
-          <input
-            type="text"
-            placeholder="Your Name"
-            className="
-              w-full h-[34px] sm:h-[37px]
-              bg-[#F2F2F2]
-              rounded-[7px]
-              px-3 sm:px-4
-              border border-[#e6dbdb]
-              text-[13px] sm:text-[14px]
-              text-[#393838]
-              outline-none
-            "
-            value={formData.name}
-            onChange={(e)=>{
-              setFormData({...formData,name:e.target.value})
-            }}
-          />
-          
+          <p className="text-gray-500 text-sm mt-2 text-center lg:text-left inter">
+            Tell us what you're looking for, and we'll connect you with the
+            right property or service.
+          </p>
+
+          <form
+            onSubmit={handleSubmit}
+            className="mt-8 space-y-5"
+          >
+            {/* Name + Contact */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 inter">
+              <div>
+                <label className="text-sm text-gray-600 mb-2 block text-left">
+                  Your Name
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="John Doe"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      name: e.target.value,
+                    })
+                  }
+                  className="w-full h-[48px] border border-[#D6D6D6] rounded-full px-5 outline-none focus:border-[#75C222]"
+                />
+              </div>
+
+              {!simple && (
+                <div>
+                  <label className="text-sm text-gray-600 mb-2 block">
+                    Way to contact you
+                  </label>
+
+                  <input
+                    type="text"
+                    placeholder="Email or Phone"
+                    value={formData.contact}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        contact: e.target.value,
+                      })
+                    }
+                    className="w-full h-[48px] border border-[#D6D6D6] rounded-full px-5 outline-none focus:border-[#75C222]"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* PIN */}
             {!simple && (
-          <input
-            type="text"
-            placeholder="Way to contact you"
-            className="
-              w-full h-[34px] sm:h-[37px]
-              bg-[#F2F2F2]
-              rounded-[7px]
-              px-3 sm:px-4
-              border border-[#e6dbdb]
-              text-[13px] sm:text-[14px]
-              text-[#393838]
-              outline-none
-            "
-            value={formData.contact}
-            onChange={(e)=>{
-              setFormData({...formData,contact:e.target.value})
-            }}
-          />
+              <div>
+                <label className="text-sm text-gray-600 mb-2 block">
+                  Your PIN Code
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="6-digit PIN"
+                  value={formData.pincode}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      pincode: e.target.value,
+                    })
+                  }
+                  className="w-full h-[48px] border border-[#D6D6D6] rounded-full px-5 outline-none focus:border-[#75C222]"
+                />
+              </div>
             )}
 
+            {/* Message */}
+            <div>
+              <label className="text-sm text-gray-600 mb-2 block text-left">
+                Your need or requirements
+              </label>
 
-             {!simple && (
-          <input
-            type="text"
-            placeholder="Your PIN Code"
-            className="
-              w-full h-[34px] sm:h-[37px]
-              bg-[#F2F2F2]
-              rounded-[7px]
-              px-3 sm:px-4
-              border border-[#e6dbdb]
-              text-[13px] sm:text-[14px]
-              text-[#393838]
-              outline-none
-            "
-                      value={formData.pincode}
-                      onChange={(e)=>{
-                        setFormData({...formData,pincode:e.target.value})
-                      }}
+              <textarea
+                placeholder={msgPlaceholder}
+                value={formData.message}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    message: e.target.value,
+                  })
+                }
+                className="w-full h-[120px] border border-[#D6D6D6] rounded-[24px] p-5 resize-none outline-none focus:border-[#75C222]"
+              />
+            </div>
 
-          />
-             )}
+            {/* Buttons */}
+            <div className="flex justify-end items-center gap-4 pt-2">
+              <button
+                type="button"
+                onClick={close}
+                className="text-gray-500 hover:text-black"
+              >
+                Cancel
+              </button>
 
-          <textarea
-            placeholder={msgPlaceholder}
-            className="
-              w-full
-              min-h-[90px] sm:min-h-[115px]
-              bg-[#efefef]
-              rounded-[7px]
-              px-3 sm:px-4
-              py-2 sm:py-3
-              border border-[#afadad]
-              text-[13px] sm:text-[14px]
-              text-[#393838]
-              outline-none
-              resize-none
-            "
-            value={formData.message}
-            onChange={(e)=>{
-              setFormData({...formData,message:e.target.value})
-            }}
-          ></textarea>
-
-           <div className="flex justify-end gap-2 -mt-[10px]">
-            <button
-              type="button"
-              onClick={close}
-              className="
-                host-grotesk
-                w-[65px] sm:w-[74px]
-                h-[30px] sm:h-[33px]
-                bg-[#cbc6c6]
-                rounded-[9px]
-                text-[13px] sm:text-[14px]
-                font-[500]
-              "
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="
-                host-grotesk
-                px-4 sm:px-5
-                py-[4px]
-                bg-[#75c222]
-                text-black
-                rounded-[9px]
-                text-[13px] sm:text-[14px]
-                font-[500]
-              "
-            >
-              Send
-            </button>
-
-          </div>
-        </form>
+              <button
+                type="submit"
+                className="bg-[#75C222] hover:bg-[#68b01d] text-white px-8 h-[48px] rounded-full font-medium shadow-lg"
+              >
+                Send →
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
   );
 }
 

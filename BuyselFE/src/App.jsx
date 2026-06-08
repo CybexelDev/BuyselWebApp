@@ -85,7 +85,6 @@ function App() {
             <Route path='/agent/dashboard' element={
               <AgentProtectedRoute>
                 <AgentDashboard />
-
               </AgentProtectedRoute>
             }
             />
@@ -101,31 +100,31 @@ function App() {
             } />
             <Route path='/agent/inbox' element={
               <AgentProtectedRoute>
-              <Inbox />
+                <Inbox />
               </AgentProtectedRoute>
             }
-               />
+            />
             <Route path='/agent/enquiry' element={
               <AgentProtectedRoute>
-              <Enquiry />
+                <Enquiry />
               </AgentProtectedRoute>
-              } />
+            } />
             <Route path='/agent/user-enquiry' element={
               <AgentProtectedRoute>
-              <UserEnquiry />
+                <UserEnquiry />
               </AgentProtectedRoute>
-              } />
+            } />
             <Route path='/agent/enquiry/:id' element={
               <AgentProtectedRoute>
-              <EnquiryDetail />
+                <EnquiryDetail />
               </AgentProtectedRoute>
-              } />
+            } />
             <Route path="/agent/property" element={
               <AgentProtectedRoute>
-              <AgentPropertyListing />
+                <AgentPropertyListing />
               </AgentProtectedRoute>
-              
-              } />
+
+            } />
           </>
         </Routes>
       </Router>
