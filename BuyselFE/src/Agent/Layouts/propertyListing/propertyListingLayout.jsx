@@ -22,19 +22,22 @@ const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-s
   const [searchTerm, setSearchTerm] = useState("");
   const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(false);
-  const [showLimitMessage, setShowLimitMessage] = useState(false);
+  const [showLimitMessage,setShowLimitMessage] = useState(false);
+  const [remainingProperty, setRemainingProperty] = useState(0);
+  const[remainingEdit,setRemainingEdit] = useState(0)
+  const [limitType, setLimitType] = useState("");
 
   const userRole = useSelector((state) => state.user.role);
 const agentRole = useSelector((state) => state.agent.role);
 
 const role = userRole || agentRole;
-const property_count = useSelector((state) =>
-  role === "agent"
-    ? state.agent.property_count
-    : state.user.property_count
-);
+// const property_count = useSelector((state) =>
+//   role === "agent"
+//     ? state.agent.listedCount
+//     : state.user.listedCount
+// );
 
-console.log("property_count :", property_count);
+// console.log("property_count :", property_count);
 console.log("role :",role);
 
   const navigate = useNavigate();
@@ -88,6 +91,12 @@ useEffect(() => {
 
         setProperties(mapped);
       }
+
+  setRemainingProperty(res.remaining_property);
+  setRemainingEdit(res.remaining_edit_count)
+  console.log("remain:",remainingProperty);
+  
+
 
     } catch (err) {
       console.error("Property fetch error:", err);
@@ -144,13 +153,16 @@ useEffect(() => {
 
     {/* Title */}
     <h2 className="text-xl font-medium host-grotesk text-[#111111] mb-2">
-      Property limit reached
+       {limitType === "property"
+    ? "Property limit reached"
+    : "Edit limit reached"}
     </h2>
 
     {/* Description */}
     <p className="text-sm host-grotesk text-[#111111] leading-relaxed mb-7">
-      You've used all available property slots on your current plan. Upgrade to add more.
-    </p>
+       {limitType === "property"
+       ? "You've used all available property slots on your current plan. Upgrade to add more."
+       : "You've used all available property edits on your current plan. Upgrade to continue editing properties."}    </p>
 
     {/* Buttons */}
     <div className="flex flex-col host-grotesk gap-2.5">
@@ -195,7 +207,8 @@ useEffect(() => {
 
             <button
            onClick={() => {
-  if (property_count > 1) {
+  if (remainingProperty <= 0) {
+    setLimitType("property");
     setShowLimitMessage(true);
     return;
   }
@@ -256,10 +269,12 @@ useEffect(() => {
 
        <button
             onClick={() => {
-  if (property_count > 1 ) {
+  if (remainingProperty <= 0) {
+    setLimitType("property");
     setShowLimitMessage(true);
     return;
   }
+
   navigate("/addyourproperty");
 }}
              className="flex items-center justify-center cursor-pointer gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
@@ -350,9 +365,16 @@ useEffect(() => {
   <div className="flex items-center gap-2">
     <button
   onClick={(e) => {
-    e.stopPropagation();
-    navigate(`/editproperty/${property.id}`);
-  }}
+  e.stopPropagation();
+
+  if (remainingEdit <= 0) {
+    setLimitType("edit");
+    setShowLimitMessage(true);
+    return;
+  }
+
+  navigate(`/editproperty/${property.id}`);
+}}
   className="flex items-center gap-1 text-sm border border-slate-200 cursor-pointer px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
 >
   <Pencil size={14} />
