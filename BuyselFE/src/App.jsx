@@ -112,7 +112,6 @@ function App() {
             <Route path='/agent/dashboard' element={
               <AgentProtectedRoute>
                 <AgentDashboard />
-
               </AgentProtectedRoute>
             }
             />
