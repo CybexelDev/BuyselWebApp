@@ -1,5 +1,6 @@
 import axios from "axios";
 import { data } from "react-router-dom";
+import { useDispatch } from "react-redux";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const api = axios.create({
@@ -8,6 +9,9 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+
+
 
 // Add a request interceptor to include the access token
 let isRefreshing = false;
@@ -30,6 +34,7 @@ api.interceptors.request.use(
 // RESPONSE INTERCEPTOR (Handle token refresh)
 
 api.interceptors.response.use(
+  
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -90,6 +95,8 @@ console.log("INTERCEPTOR HIT", {
 
       } catch (err) {
         localStorage.clear();
+        const dispatch = useDispatch();
+        dispatch({ type: "LOGOUT" });
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

@@ -54,7 +54,7 @@ const transformProperty = (data) => {
       company: "Owner",
       name: data.contact_details.owner,
       phone: data.contact_details.phone,
-      image: data.owner_profile_image
+      image: data.contact_details.owner_profile_image 
     },
     features: data.property_features || [],
     images: data.images,

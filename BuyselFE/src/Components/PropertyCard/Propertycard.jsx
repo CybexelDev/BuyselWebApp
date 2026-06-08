@@ -23,8 +23,8 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
   const images = property.images || [];
   const purpose = property?.purpose;
 
-  console.log("PROPERTY DATA:", property);
-  console.log("PURPOSE VALUE:", purpose);
+  // console.log("PROPERTY DATA:", property);
+  // console.log("PURPOSE VALUE:", purpose);
 
   const prevImage = () => {
     setCurrentIndex((prev) =>
@@ -196,8 +196,6 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
             <span className="truncate">Listed by {property?.owner}</span>
           </span>
         </div>
-
-
 
   
         <div className="flex mt-2 gap-1 w-full h-[39px] instrument-sans">

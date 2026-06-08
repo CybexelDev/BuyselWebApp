@@ -44,9 +44,9 @@ import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
 function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
-  const { image, userName, userId, accessToken, role } = useSelector((state) => state.user);
+  const { image, userName, userId, accessToken, role, listedCount } = useSelector((state) => state.user);
 
-  console.log(role, "ppppppppppppppppp");
+  console.log(listedCount, "ppppppppppppppppp");
 
 
   return (
@@ -154,8 +154,6 @@ function App() {
 
             } />
           </>
-
-
         </Routes>
       </Router>
     </>

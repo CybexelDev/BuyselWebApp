@@ -44,7 +44,7 @@ function Linegraph({ data = [] }) {
             <YAxis
               tickLine={false}
               axisLine={true}
-              width={30}
+              width={38}
             />
 
             <Tooltip
