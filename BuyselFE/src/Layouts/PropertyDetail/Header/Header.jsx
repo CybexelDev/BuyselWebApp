@@ -99,7 +99,7 @@ const HeaderProperty = ({ property }) => {
   }
 
   return (
-    <div className='px-2 md:px-5 py-3 relative'>
+    <div className='px-2 md:px-7 py-3 relative'>
       <Navbar />
       <div className="detail-cta-container">
         <div className="detail-cta-logo-container ">
