@@ -58,7 +58,7 @@ const handleClick = (item) => {
   
   const category = categoryMap[title];
 
-  handleNavigate(`/propertyListing?purpose=Buy&category=${category}`);
+  handleNavigate(`/propertyListing?purpose=Sale&category=${category}`);
 };
   const PropertyCard = ({ item, isDesktop }) => (
    <div

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const categories = ["Rent", "Buy", "Sell", "Lease"];
+const categories = ["Sale", "Rent",  "Lease"];
 import Propertycard from "../../../Components/PropertyCard/Propertycard";
 import { properties } from "../../../Constance/constance";
 import house from "../../../assets/images/wishlist/house.png"
