@@ -5,12 +5,13 @@ import apple from '../../../assets/images/LoginAndSignUp/apple.png'
 import facbook from '../../../assets/images/LoginAndSignUp/facebook.png'
 import { userRegister } from '../../../Api/userApi';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
     const [register, setRegister] = useState({ name: '', email: '', mobail: '', password: '', confirm_password: '' })
     const [checked, setChecked] = useState(false);
-
+    const navigate=useNavigate()
     const handleRegister = async () => {
 
         if (!checked) {
@@ -108,8 +109,8 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
                 <input className='mt-1' type="checkbox" onChange={(e) => setChecked(e.target.checked)} />
                 <p>
                     I agree to BuySel’s{" "}
-                    <span className="text-blue-500">Terms & Conditions</span> and{" "}
-                    <span className="text-blue-500">Privacy Policy</span>
+                    <span className="text-blue-500 cursor-pointer" onClick={()=>navigate("/termsandcondition")} >Terms & Conditions</span> and{" "}
+                    <span className="text-blue-500 cursor-pointer"  onClick={()=>navigate("/privacy")} >Privacy Policy</span>
                 </p>
             </div>
 

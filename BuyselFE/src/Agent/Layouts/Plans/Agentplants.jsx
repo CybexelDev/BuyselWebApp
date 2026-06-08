@@ -9,6 +9,9 @@ import Advertisment from "../../Components/Advertisment/Advertisment";
 import PlanCard from "../../Components/PlanCard/PlanCard";
 import CurrentPlan from "../../Components/CurrentPlan/CurrentPlan";
 import { agentPlans } from "../../../Api/agentsApi";
+import { openRazorpay } from "../../../utils/razorpay";
+import { useNavigate } from "react-router-dom";
+
 
 function AgentPlans() {
 
@@ -21,7 +24,8 @@ function AgentPlans() {
 
   console.log(adPackages, "[[[[[[[[[[[[[[[[");
   // console.log(selectedPlan, "?????????????????");
-
+ 
+  const nav = useNavigate()
 
 
   useEffect(() => {
@@ -42,10 +46,11 @@ function AgentPlans() {
 
         setUpgradePlans(formattedPlans);
 
-        setSelectedPlan({
-          premium: data.plans[0]?.plans?.[0]?.plan_id,
-          elite: data.plans[1]?.plans?.[0]?.plan_id,
-        });
+        const group = data.plans[0];
+
+setSelectedPlan({
+  [group.id]: group.plans?.[0]?.plan_id,
+});
 
         // only if current_plan exists
         if (data?.current_plan) {
@@ -129,97 +134,260 @@ function AgentPlans() {
           />
         )}
 
+
+
+        <h2 className="text-2xl font-bold mb-2 instrument-sans">
+      Upgrade Your Plan
+    </h2>
+
+    <p className="text-gray-600 mb-8">
+      Get more listings and premium features.
+    </p>
         {/* Upgrade Plans */}
-        <div>
-          <h2 className="text-2xl font-bold mb-2 instrument-sans">
-            Upgrade Your Plan
-          </h2>
-          <p className="text-gray-600 mb-8">
-            Get more listings and premium features.
-          </p>
+                {upgradePlans?.length > 0 && (
+       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+  
+  {/* Upgrade Plan Section */}
+  <div className="lg:col-span-3">
+    
 
-          <div className="grid sm:grid-cols-2 gap-8">
-            {upgradePlans.map((agent) => {
-              const activePlan = agent.plans.find(
-                (p) => p.plan_id === selectedPlan[agent.id]
-              );
+    <div className="grid gap-8">
+      {upgradePlans.map((agent) => {
+        const activePlan =
+          agent.plans.find(
+            (p) => p.plan_id === selectedPlan[agent.id]
+          ) || agent.plans[0];
 
-              return (
-                <PlanCard
-                  key={agent.id}
-                  title={agent.name}
-                  Icon={agent.icon}
-                  price={activePlan.price}
-                  plan={agent?.plans}
-                  id={activePlan.plan_id}
-                  selectedId={selectedPlan}
-                  savings={activePlan.savings}
-                  features={activePlan.features}
-                  buttonText="Upgrade Now"
-                  dropdown={
-                    <Dropdown
-                      value={selectedPlan[agent.id]}
-                      onChange={(value) =>
-                        setSelectedPlan({
-                          ...selectedPlan,
-                          [agent.id]: value,
-                        })
-                      }
-                      options={agent.plans.map((plan) => ({
-                        label: plan.label,
-                        value: plan.plan_id,
-                      }))}
-                    />
-                  }
-                />
-              );
-            })}
-          </div>
-        </div>
-
-        {/* <div className="mt-12">
-  <h2 className="text-2xl font-bold mb-2">Advertisement Packages</h2>
-  <p className="text-gray-600 mb-8">
-    Promote your properties and get maximum visibility.
-  </p>
-
-  <div className="grid sm:grid-cols-2 gap-8">
-    {adPackages.map((ad) => {
-      const selectedType =
-        selectedAdType[ad.id] || ad.plans[0]?.type;
-
-      const activePlan =
-        ad.plans.find((p) => p.type === selectedType) ||
-        ad.plans[0];
-
-      return (
-        <PlanCard
-          key={ad.id}
-          title={ad.name}
-          Icon={TrendingUp}
-          price={activePlan.price_per_day}
-          features={activePlan.features}
-          buttonText="Advertise Now"
-          dropdown={
-            <Dropdown
-              value={selectedType}
-              onChange={(value) =>
-                setSelectedAdType((prev) => ({
-                  ...prev,
-                  [ad.id]: value,
-                }))
-              }
-              options={ad.plans.map((p) => ({
-                label: p.type,
-                value: p.type,
-              }))}
-            />
-          }
-        />
-      );
-    })}
+        return (
+          <PlanCard
+            key={agent.id}
+            title={agent.name}
+            Icon={agent.icon}
+            price={activePlan.price}
+            plan={agent.plans}
+            id={activePlan.plan_id}
+            selectedId={selectedPlan}
+            savings={activePlan.savings}
+            features={activePlan.features}
+            buttonText="Upgrade Now"
+              onClick={() =>
+              openRazorpay({
+             name: "BuySel",
+             description: agent.name,
+             plan_id: activePlan.plan_id,
+             onSuccess: (res) => {
+              navigate("/invoice", {
+             state: {
+            paymentData: res,
+          },
+        });
+      },
+    })
+  }
+            dropdown={
+              <Dropdown
+                value={selectedPlan[agent.id]}
+                onChange={(value) =>
+                  setSelectedPlan({
+                    ...selectedPlan,
+                    [agent.id]: value,
+                  })
+                }
+                options={agent.plans.map((plan) => ({
+                  label: plan.label,
+                  value: plan.plan_id,
+                }))}
+              />
+            }
+          />
+        );
+      })}
+    </div>
   </div>
-</div> */}
+
+  {/* Right Side Content */}
+ {/* Right Side - Add Property Banner */}
+<div className="lg:col-span-2">
+  <style>{`
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes slide-in {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    .banner-container {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border: 2px solid #e5e5e5;
+      border-radius: 20px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .animated-bg {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(29, 158, 117, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -100px;
+      right: -100px;
+    }
+    .floating-icon {
+      position: absolute;
+      font-size: 48px;
+      opacity: 0.15;
+      animation: float 4s ease-in-out infinite;
+    }
+    .icon-1 { top: 20px; right: 40px; }
+    .icon-2 { bottom: 80px; right: 20px; animation-delay: 1s; }
+    .icon-3 { top: 50%; left: 20px; animation-delay: 0.5s; }
+    .content { position: relative; z-index: 10; }
+    .badge {
+      display: inline-block;
+  background: linear-gradient(to right, #6ABD11, #5ca60f);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      animation: slide-in 0.6s ease-out;
+    }
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      line-height: 1.2;
+      animation: slide-in 0.6s ease-out 0.1s backwards;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 24px;
+      line-height: 1.6;
+      animation: slide-in 0.6s ease-out 0.2s backwards;
+    }
+    .feature-list { margin-bottom: 28px; }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #333;
+      animation: slide-in 0.6s ease-out backwards;
+    }
+    .feature-item:nth-child(1) { animation-delay: 0.3s; }
+    .feature-item:nth-child(2) { animation-delay: 0.4s; }
+    .feature-item:nth-child(3) { animation-delay: 0.5s; }
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+  background: linear-gradient(to right, #6ABD11, #5ca60f);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .cta-button {
+      position: relative;
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+  background: linear-gradient(to right, #6ABD11, #5ca60f);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      animation: slide-in 0.6s ease-out 0.6s backwards;
+    }
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 0.6s infinite;
+    }
+    .cta-button:hover {
+      transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(106, 189, 17, 0.3);
+    }
+    .sub-text {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      margin-top: 12px;
+      animation: slide-in 0.6s ease-out 0.7s backwards;
+    }
+  `}</style>
+
+  <div className="banner-container">
+    <div className="animated-bg"></div>
+    <div className="floating-icon icon-1">🏠</div>
+
+    <div className="content">
+      <div className="badge">✨ List Your Property</div>
+      <h2 className="title">
+        Showcase Your <span style={{ color: '#6ABD11' }}>Space</span>
+      </h2>
+      <p className="subtitle">
+        Reach thousands of potential buyers and renters. Get your property noticed in minutes.
+      </p>
+      <div className="feature-list">
+        <div className="feature-item">
+          <div className="feature-icon">📊</div>
+          <span>Get 10x more visibility</span>
+        </div>
+        <div className="feature-item">
+          <div className="feature-icon">⚡</div>
+          <span>List in under 5 minutes</span>
+        </div>
+        <div className="feature-item">
+          <div className="feature-icon">🎯</div>
+          <span>Professional photos included</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button onClick={()=>nav('/agent/property')}
+      className="cta-button">
+        Start Listing Now →
+      </button>
+    </div>
+  </div>
+</div>
+
+</div>
+        )}
+
 
 
         <div className="mt-12">
@@ -246,6 +414,8 @@ function AgentPlans() {
                   price={activePlan.price_per_day}
                   features={activePlan.features}
                   buttonText="Advertise Now"
+                    onClick={() =>
+                 handleAdvertisementRequest(activePlan.plan_id)}
                   dropdown={
                     <Dropdown
                       value={selectedType}
@@ -289,6 +459,20 @@ function AgentPlans() {
                   price={activePlan.price_per_day}
                   features={activePlan.features}
                   buttonText="Advertise Now"
+                                   onClick={() =>
+              openRazorpay({
+             name: "BuySel",
+             description: reel.name,
+             plan_id: activePlan.plan_id,
+             onSuccess: (res) => {
+              navigate("/invoice", {
+             state: {
+            paymentData: res,
+          },
+        });
+      },
+    })
+  }
                 />
               );
             })}

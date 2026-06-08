@@ -188,20 +188,25 @@ export const getAgentEnquiries = async () => {
     return null;
   }
 };
-
 export const registerAgent = async (data) => {
   try {
     const res = await axios.post(
       `${BASE_URL}agent/register-request/`,
       data
     );
+
     return res.data;
   } catch (err) {
     console.log(err);
-    return false;
+
+    return (
+      err.response?.data || {
+        status: false,
+        message: "Something went wrong",
+      }
+    );
   }
 };
-
 export const getContactMessage = async()=>{
   try{
     const result = await api.get("/agent/contacts/");

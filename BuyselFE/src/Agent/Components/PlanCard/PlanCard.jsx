@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Check } from "lucide-react";
 import { openRazorpay } from "../../../utils/razorpay";
 
-function PlanCard({ title, Icon, price, savings, features = [], buttonText, dropdown,  id }) {
+function PlanCard({ title, Icon, price, savings, features = [], buttonText, dropdown,  id, onClick }) {
 
 
 
@@ -46,22 +46,7 @@ function PlanCard({ title, Icon, price, savings, features = [], buttonText, drop
 
         {/* Button */}
         <button
-          onClick={() =>
-            openRazorpay({
-              name: "BuySel",
-              description: title,
-              plan_id: id,
-             
-              onSuccess: (res) => {
-                console.log("Property Payment", res);
-                navigate("/invoice", {
-                  state: {
-                    paymentData: res,
-                  },
-                });
-              },
-            })
-          }
+          onClick={onClick}
           className="cursor-pointer w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-[#6ABD11] to-[#5ca60f] text-white shadow-lg hover:shadow-xl transition-all duration-300 mb-6">
           {buttonText} 
         </button>

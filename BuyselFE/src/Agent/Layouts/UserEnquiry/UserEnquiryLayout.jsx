@@ -18,6 +18,12 @@ import { toast } from "sonner";
 const UserEnquiryLayout = () => {
   const [searchTerm, setSearchTerm] = useState("");
 const [enquiries, setEnquiries] = useState([]);
+const [showFilter, setShowFilter] = useState(false);
+
+const [filters, setFilters] = useState({
+  pincode: "",
+  date: "",
+});
 useEffect(() => {
   const fetchMessages = async () => {
     try {
@@ -60,10 +66,35 @@ const handleDelete = async (id) => {
     toast.error("Delete failed");
   }
 };
+const filteredEnquiries = enquiries.filter((item) => {
 
-  const filteredEnquiries = enquiries.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const matchesSearch =
+    item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.contact?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.requirement?.toLowerCase().includes(searchTerm.toLowerCase());
+
+  const matchesPincode =
+    filters.pincode === "" ||
+    item.pincode?.toString().includes(filters.pincode);
+
+  const enquiryDate = new Date(item.date);
+
+  const formattedDate = `${enquiryDate.getFullYear()}-${String(
+    enquiryDate.getMonth() + 1
+  ).padStart(2, "0")}-${String(
+    enquiryDate.getDate()
+  ).padStart(2, "0")}`;
+
+  const matchesDate =
+    filters.date === "" ||
+    formattedDate === filters.date;
+
+  return (
+    matchesSearch &&
+    matchesPincode &&
+    matchesDate
   );
+});
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex text-slate-900 host-grotesk">
@@ -111,9 +142,94 @@ const handleDelete = async (id) => {
                 />
               </div>
 
-              <button className="p-2.5 bg-white border border-slate-200 rounded-xl cursor-pointer text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition">
-                <Filter size={20} />
-              </button>
+             <div className="relative">
+
+  <button
+    onClick={() => setShowFilter(!showFilter)}
+    className="p-2.5 bg-white border border-slate-200 rounded-xl cursor-pointer text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition"
+  >
+    <Filter size={20} />
+  </button>
+
+  {/* FILTER DROPDOWN */}
+  {showFilter && (
+    <div
+      className="absolute right-0 top-14 w-[320px]
+      bg-white border border-slate-200 rounded-2xl
+      shadow-2xl p-5 z-50"
+    >
+
+      {/* PINCODE */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2 host-grotesk">
+          Pincode
+        </label>
+
+        <input
+          type="text"
+          placeholder="Enter pincode"
+          value={filters.pincode}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              pincode: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* DATE */}
+      <div className="mb-5">
+
+        <label className="block text-sm font-medium mb-2 host-grotesk">
+          Date
+        </label>
+
+        <input
+          type="date"
+          value={filters.date}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              date: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* BUTTONS */}
+      <div className="flex gap-2">
+
+        <button
+          onClick={() =>
+            setFilters({
+              pincode: "",
+              date: "",
+            })
+          }
+          className="flex-1 border border-slate-200 py-2 rounded-xl text-sm host-grotesk"
+        >
+          Reset
+        </button>
+
+        <button
+          onClick={() => setShowFilter(false)}
+          className="flex-1 bg-[#6ABD11] text-white py-2 rounded-xl text-sm host-grotesk"
+        >
+          Apply
+        </button>
+
+      </div>
+
+    </div>
+  )}
+
+</div>
             </div>
           </header>
 

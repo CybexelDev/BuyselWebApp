@@ -19,16 +19,23 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [showAgentModal, setShowAgentModal] = useState(false);
   const navigate = useNavigate()
 
-  const handleSelectPlan = (plan) => {
+const handleSelectPlan = (plan) => {
 
-    if (active !== "Owner") {
-      setShowAgentModal(true);
-      return;
-    }
+  // Agent plans
+  if (active !== "Owner") {
+    setShowAgentModal(true);
+    return;
+  }
 
-    setSelectedPlan(plan);
-    setOpenModal(true);
-  };
+  // Owner plans
+  if (propertyCount < 2) {
+    setShowLimitMessage(true);
+    return;
+  }
+
+  setSelectedPlan(plan);
+  setOpenModal(true);
+};
   const handleCheckout = async () => {
 
     try {
@@ -377,7 +384,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
               <button
                 onClick={() => setShowAgentModal(false)}
-                className="absolute top-4 right-4 text-2xl"
+                className="absolute top-4 right-4 text-2xl cursor-pointer"
               >
                 ✕
               </button>
@@ -413,13 +420,15 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
               <button
                 onClick={() => navigate("/agent-register")}
                 className="w-full mt-6 bg-[#8AD32E] hover:bg-[#7fc127]
-  text-white py-3 rounded-2xl font-semibold transition
+  text-white py-3 rounded-2xl font-semibold transition cursor-pointer
   shadow-lg
   flex items-center justify-center gap-2"
-              >
-                <UserPlus size={18} />
-                Complete Registration
-              </button>
+>
+  <UserPlus size={18} />
+  Register as an Agent
+</button>
+              
+              
 
             </div>
 
@@ -489,13 +498,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
             <button className="mt-6 w-full bg-[#8AD32E] cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
 
-              onClick={() => {
-                if (propertyCount < 2) {
-                  setShowLimitMessage(true);
-                  return;
-                }
-                handleSelectPlan(plan);
-              }}
+              onClick={() => handleSelectPlan(plan)}
             >
               Select Plan
             </button>
@@ -640,14 +643,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
             </div>
 
             {/* BUTTON */}
-            <button
-              onClick={() => {
-                if (propertyCount < 2) {
-                  setShowLimitMessage(true);
-                  return;
-                }
-                handleSelectPlan(plan);
-              }}
+            <button onClick={() => handleSelectPlan(plan)}
               className="mt-6
               w-full
               max-w-[220px]
