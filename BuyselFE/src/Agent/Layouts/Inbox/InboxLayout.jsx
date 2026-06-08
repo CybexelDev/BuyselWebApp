@@ -8,7 +8,12 @@ const InboxLayout = () => {
   const [expandedId, setExpandedId] = useState(null);
   const[enquiry, setEnquiry]=useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+const [showFilter, setShowFilter] = useState(false);
 
+const [filters, setFilters] = useState({
+  date: "",
+  contact: "",
+});
 
   useEffect(()=>{
     const fetchMessages = async()=>{
@@ -53,9 +58,35 @@ const InboxLayout = () => {
     }
    }
 
-  const filteredEnquiries = enquiry.filter((item) =>
-    item.username.toLowerCase().includes(searchTerm.toLowerCase()),
+ const filteredEnquiries = enquiry.filter((item) => {
+
+  const matchesSearch =
+    item.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.message?.toLowerCase().includes(searchTerm.toLowerCase());
+
+  const matchesContact =
+    filters.contact === "" ||
+    item.contact?.includes(filters.contact);
+
+  const enquiryDate = new Date(item.date);
+
+  const formattedDate = `${enquiryDate.getFullYear()}-${String(
+    enquiryDate.getMonth() + 1
+  ).padStart(2, "0")}-${String(
+    enquiryDate.getDate()
+  ).padStart(2, "0")}`;
+
+  const matchesDate =
+    filters.date === "" ||
+    formattedDate === filters.date;
+
+  return (
+    matchesSearch &&
+    matchesContact &&
+    matchesDate
   );
+});
 
 
   return (
@@ -93,9 +124,94 @@ const InboxLayout = () => {
                 />
               </div>
 
-              <button className="p-2.5 bg-white border cursor-pointer border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition">
-                <Filter size={20} />
-              </button>
+             <div className="relative">
+
+  <button
+    onClick={() => setShowFilter(!showFilter)}
+    className="p-2.5 bg-white border cursor-pointer border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition"
+  >
+    <Filter size={20} />
+  </button>
+
+  {/* FILTER DROPDOWN */}
+  {showFilter && (
+    <div
+      className="absolute right-0 top-14 w-[320px]
+      bg-white border border-slate-200 rounded-2xl
+      shadow-2xl p-5 z-50"
+    >
+
+      {/* CONTACT */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2 host-grotesk">
+          Contact Number
+        </label>
+
+        <input
+          type="text"
+          placeholder="Search contact"
+          value={filters.contact}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              contact: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* DATE */}
+      <div className="mb-5">
+
+        <label className="block text-sm font-medium mb-2 host-grotesk">
+          Date
+        </label>
+
+        <input
+          type="date"
+          value={filters.date}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              date: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* BUTTONS */}
+      <div className="flex gap-2">
+
+        <button
+          onClick={() =>
+            setFilters({
+              date: "",
+              contact: "",
+            })
+          }
+          className="flex-1 border border-slate-200 py-2 rounded-xl text-sm host-grotesk"
+        >
+          Reset
+        </button>
+
+        <button
+          onClick={() => setShowFilter(false)}
+          className="flex-1 bg-[#6ABD11] text-white py-2 rounded-xl text-sm host-grotesk"
+        >
+          Apply
+        </button>
+
+      </div>
+
+    </div>
+  )}
+
+</div>
             </div>
           </header>
           {/* enqur */}

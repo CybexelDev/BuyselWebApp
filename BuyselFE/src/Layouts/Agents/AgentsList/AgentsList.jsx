@@ -57,11 +57,21 @@ useEffect(() => {
 
     }, [activeTab, searchedData]);
 
-    useEffect(() => {
-        if (locationDats.length > 0) {
-            setAgents(locationDats);
-        }
-    }, [locationDats]);
+useEffect(() => {
+    if (locationDats.length > 0) {
+        setAgents(locationDats);
+    } else {
+        const getAgent = async () => {
+            const data = await getAgents({ category: activeTab });
+
+            if (data) {
+                setAgents(data);
+            }
+        };
+
+        getAgent();
+    }
+}, [locationDats, activeTab]);
 
 
     return (

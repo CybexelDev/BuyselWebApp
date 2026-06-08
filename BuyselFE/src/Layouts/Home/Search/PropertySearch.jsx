@@ -49,7 +49,7 @@ const handleSearch = () => {
   nav(`/propertyListing?${params.toString()}`);
 };
 
-  const tabs = ["Rent", "Sale", "Agent", "Lease"];
+  const tabs = ["Sale","Rent", "Lease","Agent"];
 
   const nav = useNavigate();
 
