@@ -227,6 +227,8 @@ const toggleAmenity = (amenity) => {
             options={propertyData.categories.map((c) => c.name)}
             value={formData.category}
             onChange={handleCategoryChange}
+              error={errors?.category}
+
           />
           <SelectField
             label="Subcategory"
@@ -234,6 +236,7 @@ const toggleAmenity = (amenity) => {
             options={filteredSubcategories.map((s) => s.name)}
             value={formData.subcategory}
             onChange={handleSubcategoryChange}
+            error={errors?.subcategory}
           />
           <SelectField
             label="Purpose"
@@ -241,6 +244,7 @@ const toggleAmenity = (amenity) => {
             options={propertyData.purposes.map((p) => p.name)}
             value={formData.purpose}
             onChange={(val) => setFormData({ ...formData, purpose: val })}
+            error={errors?.purpose}
           />
         </div>
 

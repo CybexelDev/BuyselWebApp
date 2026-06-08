@@ -91,7 +91,7 @@ const HeaderProperty = ({ property }) => {
 
     if (!token) {
 
-      e.preventDefault(); // 🚫 stop redirect
+      e.preventDefault(); 
       toast.error("Please login to contact");
       return;
     }
