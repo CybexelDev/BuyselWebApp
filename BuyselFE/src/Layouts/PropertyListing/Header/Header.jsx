@@ -7,15 +7,24 @@ import { getNearbyProperties } from "../../../Api/userApi";
 import Navbar from "../../../Components/Navbar/Navbar";
 import { getFilterOptions } from "../../../Api/userApi";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Header = ({ setParentFilters, onchange, filters }) => {
-  const [activeTab, setActiveTab] = useState("Rent");
+  const [activeTab, setActiveTab] = useState("Sale");
   const [activeCategory, setActiveCategory] = useState("Residential");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const navigate=useNavigate()
 
-  const tabs = ["Rent", "Buy", "Agent", "Lease"];
+  const tabs = [ "Sale", "Rent","Lease","Agent", ];
+    const handleTabClick = (tab) => {
+    setActiveTab(tab);
+
+    if (tab === "Agent") {
+      navigate("/agents");
+    }
+  };
   const handleNearbyClick = () => {
     if (!navigator.geolocation) {
       toast.error("Geolocation not supported");
@@ -177,7 +186,7 @@ const Header = ({ setParentFilters, onchange, filters }) => {
               {tabs.map((tab) => (
                 <p
                   key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => handleTabClick(tab)}
                   className={`cursor-pointer transition px-1  ${activeTab === tab
                     ? "text-black font-bold"
                     : "hover:text-black text-[#938181]"

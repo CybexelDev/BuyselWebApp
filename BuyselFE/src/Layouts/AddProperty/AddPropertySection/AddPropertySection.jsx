@@ -239,12 +239,103 @@ useEffect(() => {
 
 }, [id, isAgent]);
 
-  // ✅ Submit
+const validateStep = () => {
+  let newErrors = {};
+
+  if (step === 1) {
+    if (!formData.category)
+      newErrors.category = "Category is required";
+
+    if (!formData.subcategory)
+      newErrors.subcategory = "Subcategory is required";
+
+    if (!formData.purpose)
+      newErrors.purpose = "Purpose is required";
+
+    if (!formData.title?.trim())
+      newErrors.title = "Title is required";
+
+
+
+    if (!formData.city?.trim())
+      newErrors.city = "City is required";
+
+    if (!formData.pincode?.trim())
+      newErrors.pincode = "Pincode is required";
+
+    if (!formData.district?.trim())
+      newErrors.district = "District is required";
+
+    if (!formData.description?.trim())
+      newErrors.description= "Description is required";
+
+    if (!formData.owner?.trim())
+      newErrors.owner = "Owner name is required";
+
+    if (!formData.phone?.trim())
+      newErrors.phone = "Phone is required";
+
+    if (!formData.whatsapp?.trim())
+      newErrors.whatsapp = "Whatsapp is required";
+  }
+    if (!formData.phone?.trim()) {
+  newErrors.phone = "Phone is required";
+} else if (!/^\d{10}$/.test(formData.phone)) {
+  newErrors.phone = "Phone number must be 10 digits";
+}
+
+if (!formData.whatsapp?.trim()) {
+  newErrors.whatsapp = "Whatsapp is required";
+} else if (!/^\d{10}$/.test(formData.whatsapp)) {
+  newErrors.whatsapp = "Whatsapp number must be 10 digits";
+}
+
+if (!formData.pincode?.trim()) {
+  newErrors.pincode = "Pincode is required";
+} else if (!/^\d{6}$/.test(formData.pincode)) {
+  newErrors.pincode = "Pincode must be 6 digits";
+}
+  if (step === 2) {
+    if (formData.purpose === "Rent") {
+      if (!formData.pricing.monthlyRent)
+        newErrors.monthlyRent = "Monthly rent is required";
+
+      if (!formData.pricing.deposit)
+        newErrors.deposit = "Deposit is required";
+    }
+
+    if (formData.purpose === "Sale") {
+      if (!formData.pricing.totalPrice)
+        newErrors.totalPrice = "Total price is required";
+
+      if (!formData.pricing.pricePerUnit)
+        newErrors.pricePerUnit = "Price per unit is required";
+
+      if (!formData.pricing.unit)
+        newErrors.unit = "Select a unit";
+    }
+
+    if (formData.purpose === "Lease") {
+      if (!formData.pricing.totalAmount)
+        newErrors.totalAmount = "Total amount is required";
+    }
+  }
+
+  if (step === 3) {
+    if (!formData.images || formData.images.length < 3) {
+      newErrors.images = "Minimum 3 images required";
+    }
+  }
+
+  setErrors(newErrors);
+
+  return Object.keys(newErrors).length === 0;
+};
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    // ✅ BUILD MAP HERE (only once, only here)
     const optionToFieldMap = {};
 
     propertyData.subcategories.forEach((sub) => {
@@ -255,7 +346,6 @@ const handleSubmit = async (e) => {
       });
     });
 
-    // ✅ TRANSFORM
     const transformedFeatures = (formData.features || []).map((f) => {
       if (typeof f.value === "number") {
         return {
@@ -299,6 +389,7 @@ if (id) {
   }
 }
 
+
     if (res) {
       setShowSuccess(true);
       setFormData(getInitialFormData());
@@ -307,7 +398,13 @@ if (id) {
     console.error("Submit error:", err);
   }
 };
+const handleNext = () => {
+  const valid = validateStep();
 
+  if (!valid) return;
+
+  setStep((prev) => prev + 1);
+};
   return (
     <div className="bg-white min-h-screen p-6">
       <div className="mx-auto flex flex-col lg:flex-row gap-2 sm:gap-4 md:gap-6 lg:gap-8">
@@ -362,13 +459,13 @@ if (id) {
             {!isAgent && step === 5 && (
               <Payment formData={formData} />
             )}  
-            <Button
-              step={step}
-              maxStep={maxStep}
-              next={() => setStep(step + 1)}
-              back={() => setStep(step - 1)}
-              handleSubmit={handleSubmit}
-            />
+           <Button
+  step={step}
+  maxStep={maxStep}
+  next={ handleNext}
+  back={() => setStep(step - 1)}
+  handleSubmit={handleSubmit}
+/>
           </form>
         </div>
       </div>

@@ -39,6 +39,7 @@ import { toast } from 'sonner'
 import Faqs from './Pages/Faqs/Faqs'
 import InvoicePage from './Pages/Invoice/Invoice'
 import AgentProtectedRoute from './Agent/Components/ProtectionRouteAgent/ProtectionRouteAgent'
+import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
 
 function App() {
 
@@ -59,20 +60,46 @@ function App() {
           <Route path="/agents" element={<Agents />} />
           <Route path="/propertyDetail/:id" element={<PropertyDetail />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/profile" element={
+            <UserProtectedRoute>
+              <Profile />
+            </UserProtectedRoute>
+          } />
+          <Route path="/wishlist" element={
+            <UserProtectedRoute>
+              <Wishlist />
+            </UserProtectedRoute>
+          } />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/agent-detail/:id" element={<AgentDetail />} />
-          <Route path='/addyourproperty' element={<AddProperty />} />
-          <Route path="/editproperty/:id" element={<AddProperty />} />
+          <Route path='/addyourproperty' element={
+            <UserProtectedRoute>
+              <AddProperty />
+            </UserProtectedRoute>
+          } />
+          <Route path="/editproperty/:id" element={
+            <UserProtectedRoute>
+              <AddProperty />
+            </UserProtectedRoute>
+          } />
           <Route path='/blogdetail' element={<BlogDetailPage />} />
           <Route path='/blog/:id' element={<BlogDetailPage />} />
           <Route path="/loginandsignup" element={<LoginAndSignuppage />} />
-          <Route path="/ownerdashboard" element={<OwnerDashboard />} />
-          <Route path="/dashboardpropertydetail/:id" element={<DashboardPropertyDetail />} />
+          <Route path="/ownerdashboard" element={
+            <UserProtectedRoute>
+              <OwnerDashboard />
+            </UserProtectedRoute>
+          } />
+          <Route path="/dashboardpropertydetail/:id" element={
+            <DashboardPropertyDetail />
+            } />
           <Route path='/plans' element={<PlansPage />} />
-          <Route path="/enquiry-detail/:id" element={<EnquiryDetailLayoutUser />} />
+          <Route path="/enquiry-detail/:id" element={
+            <UserProtectedRoute>
+            <EnquiryDetailLayoutUser />
+            </UserProtectedRoute>
+            } />
           <Route path="/helpcenter" element={<HelpCenter />} />
           <Route path='/termsandcondition' element={<TermsPage />} />
           <Route path='/privacy' element={<PrivacyPolicy />} />
@@ -85,7 +112,6 @@ function App() {
             <Route path='/agent/dashboard' element={
               <AgentProtectedRoute>
                 <AgentDashboard />
-
               </AgentProtectedRoute>
             }
             />
@@ -101,31 +127,31 @@ function App() {
             } />
             <Route path='/agent/inbox' element={
               <AgentProtectedRoute>
-              <Inbox />
+                <Inbox />
               </AgentProtectedRoute>
             }
-               />
+            />
             <Route path='/agent/enquiry' element={
               <AgentProtectedRoute>
-              <Enquiry />
+                <Enquiry />
               </AgentProtectedRoute>
-              } />
+            } />
             <Route path='/agent/user-enquiry' element={
               <AgentProtectedRoute>
-              <UserEnquiry />
+                <UserEnquiry />
               </AgentProtectedRoute>
-              } />
+            } />
             <Route path='/agent/enquiry/:id' element={
               <AgentProtectedRoute>
-              <EnquiryDetail />
+                <EnquiryDetail />
               </AgentProtectedRoute>
-              } />
+            } />
             <Route path="/agent/property" element={
               <AgentProtectedRoute>
-              <AgentPropertyListing />
+                <AgentPropertyListing />
               </AgentProtectedRoute>
-              
-              } />
+
+            } />
           </>
         </Routes>
       </Router>

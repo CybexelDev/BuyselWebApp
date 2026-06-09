@@ -57,7 +57,9 @@ function PlanCardUser({ title, Icon, price, savings, features=[], buttonText,dro
       hover:shadow-xl
       transition-all
       duration-300
+    
     "
+    disabled
   >
     {buttonText}
   </button>

@@ -39,8 +39,10 @@ useEffect(() => {
     try {
       const updatedUser = await updateProfile(formData);
 
-setParentProfileData(formData); 
-      setMode("");
+setParentProfileData((prev) => ({
+  ...prev,
+  ...formData,
+}));      setMode("");
     } catch (err) {
       console.log(err);
     }

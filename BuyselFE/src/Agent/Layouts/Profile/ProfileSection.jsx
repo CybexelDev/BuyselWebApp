@@ -4,7 +4,8 @@ import { updateAgentProfile } from '../../../Api/agentsApi';
 import {
     User, Lock, Save, Globe, MapPin, Phone,
     Mail, Share2, Briefcase, Building2,
-    CheckCircle2, ShieldCheck, Camera, FileText, Check, Type
+    CheckCircle2, ShieldCheck, Camera, FileText, Check, Type,BriefcaseBusiness,
+    Handshake
 } from 'lucide-react';
 import { FaFacebook } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
@@ -358,6 +359,13 @@ const handleChangePassword = async () => {
                                             })}
                                         </div>
                                     </div>
+                                               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                  <InputField label="Years Of Experience" name="experience" value={formData.experience} onChange={handleChange} icon={<BriefcaseBusiness size={18} />} disabled={!isEditing} />
+
+                                                 <InputField label="Total Deals Served" name="dealsclosed" value={formData.dealsClosed} onChange={handleChange} icon={<Handshake size={18} />} disabled={!isEditing} />
+
+
+</div>
 
                                     <InputField label="Operating Cities" name="operatingCities" value={formData.operatingCities} onChange={handleChange} icon={<Building2 size={18} />} />
                                 </div>

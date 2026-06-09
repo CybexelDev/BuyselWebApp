@@ -26,7 +26,14 @@ const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-s
   const [remainingProperty, setRemainingProperty] = useState(0);
   const[remainingEdit,setRemainingEdit] = useState(0)
   const [limitType, setLimitType] = useState("");
+const [showFilterModal, setShowFilterModal] = useState(false);
 
+const [filters, setFilters] = useState({
+  status: "",
+  city: "",
+  minPrice: "",
+  maxPrice: "",
+});
   const userRole = useSelector((state) => state.user.role);
 const agentRole = useSelector((state) => state.agent.role);
 
@@ -131,10 +138,43 @@ useEffect(() => {
      }
 
 
-  const filteredProperties = properties.filter((property) =>
-    property.title.toLowerCase().includes(searchTerm.toLowerCase())
+const filteredProperties = properties.filter((property) => {
+
+  const matchesSearch =
+    property.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+  const matchesStatus =
+    filters.status === "" ||
+    property.status === filters.status;
+
+  const matchesCity =
+    filters.city === "" ||
+    property.location
+      ?.toLowerCase()
+      .includes(filters.city.toLowerCase());
+
+  const numericPrice = Number(
+    property.price.replace(/[₹, ]/g, "")
   );
 
+  const matchesMinPrice =
+    filters.minPrice === "" ||
+    numericPrice >= Number(filters.minPrice);
+
+  const matchesMaxPrice =
+    filters.maxPrice === "" ||
+    numericPrice <= Number(filters.maxPrice);
+
+  return (
+    matchesSearch &&
+    matchesStatus &&
+    matchesCity &&
+    matchesMinPrice &&
+    matchesMaxPrice
+  );
+});
     return (
   <div className={`min-h-screen ${bg} flex overflow-x-hidden`}>
 
@@ -185,6 +225,7 @@ useEffect(() => {
   </div>
 </div>
     )}
+    
 
     {showSidebar && <Sidebar />}
 
@@ -242,11 +283,151 @@ useEffect(() => {
               />
             </div>
 
-            {/* Filter */}
-            <button className="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto">
-              <Filter size={16} />
-              Filter
-            </button>
+         {/* FILTER DROPDOWN */}
+<div className="relative">
+
+  <button
+    onClick={() =>
+      setShowFilterModal(!showFilterModal)
+    }
+    className="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto"
+  >
+    <Filter size={16} />
+    Filter
+  </button>
+
+  {/* DROPDOWN */}
+  {showFilterModal && (
+
+    <div
+      className="absolute right-0 mt-3 w-[320px]
+      bg-white border border-slate-200 rounded-2xl
+      shadow-2xl p-5 z-50"
+    >
+
+      {/* STATUS */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2">
+          Status
+        </label>
+
+        <select
+          value={filters.status}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              status: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        >
+          <option value="">All</option>
+          <option value="Active">Active</option>
+          <option value="Pending">Pending</option>
+        </select>
+
+      </div>
+
+      {/* CITY */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2">
+          City
+        </label>
+
+        <input
+          type="text"
+          placeholder="Enter city"
+          value={filters.city}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              city: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* MIN PRICE */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2">
+          Min Price
+        </label>
+
+        <input
+          type="number"
+          placeholder="Minimum price"
+          value={filters.minPrice}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              minPrice: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* MAX PRICE */}
+      <div className="mb-5">
+
+        <label className="block text-sm font-medium mb-2">
+          Max Price
+        </label>
+
+        <input
+          type="number"
+          placeholder="Maximum price"
+          value={filters.maxPrice}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              maxPrice: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* BUTTONS */}
+      <div className="flex gap-2">
+
+        <button
+          onClick={() =>
+            setFilters({
+              status: "",
+              city: "",
+              minPrice: "",
+              maxPrice: "",
+            })
+          }
+          className="flex-1 border border-slate-200 py-2 rounded-xl text-sm"
+        >
+          Reset
+        </button>
+
+        <button
+          onClick={() =>
+            setShowFilterModal(false)
+          }
+          className="flex-1 bg-[#6ABD11] text-white py-2 rounded-xl text-sm"
+        >
+          Apply
+        </button>
+
+      </div>
+
+    </div>
+
+  )}
+
+</div>
 
           </div>
           )}

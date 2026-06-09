@@ -57,12 +57,8 @@ useEffect(() => {
 
     }, [activeTab, searchedData]);
 
-    useEffect(() => {
-        if (locationDats.length > 0) {
-            setAgents(locationDats);
-        }
-    }, [locationDats]);
 
+     
 
     return (
         <div className="bg-white min-h-screen p-2 sm:p-10">

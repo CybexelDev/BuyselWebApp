@@ -68,6 +68,10 @@ function Header({ onchange, location, cityDataSend }) {
   useEffect(() => {
    
     const getCityDatas = async () => {
+       if (selecetdLocation === "All Locations") {
+  cityDataSend([]);
+      return;
+    }
       const city = await getCityData(selecetdLocation);
       if (city) {
         cityDataSend(city); 
@@ -234,6 +238,15 @@ function Header({ onchange, location, cityDataSend }) {
     {open && (
     <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl  z-50 p-1">
       <ul className="text-sm text-white host-grotesk">
+         <li
+    onClick={() => {
+      setOpen(false);
+      setSelectedLocation("All Locations");
+    }}
+    className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
+  >
+    All Locations
+  </li>
        {Array.isArray(location) &&
   location.map((loc, index) => (
     <li

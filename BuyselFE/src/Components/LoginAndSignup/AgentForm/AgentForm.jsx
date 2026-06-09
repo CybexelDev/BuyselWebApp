@@ -97,7 +97,7 @@ const AgentForm = ({onForgot}) => {
             <div className="text-center text-[#7c7373] text-sm mt-4 host-grotesk">
                 <p>
                     Don’t have credentials?{" "}
-                    <span className="text-[#6abd11] cursor-pointer">
+                    <span className="text-[#6abd11] cursor-pointer" onClick={()=>navigate("/agent-register")}>
                         Submit Request Form
                     </span>
                 </p>

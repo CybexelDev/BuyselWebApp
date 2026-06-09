@@ -11,21 +11,21 @@ import { useSearchParams } from 'react-router-dom'
 
 function PropertListing() {
   const [data, setData] = useState([])
-  const [filters, setFilters] = useState({ purpose: "Rent", category: "Residential", });
-  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({ purpose: "Sale", category: "Residential", });
+  const [searchQuery, setSearchQuery] = useState("");                                                      
   const [searchParams] = useSearchParams();
 const priceRange = searchParams.get("price_range");
 const purpose = searchParams.get("purpose");
 const category = searchParams.get("category");
-  
+  const location = searchParams.get("location");
 useEffect(() => {
   setFilters({
-    purpose: purpose || "Rent",
+    purpose: purpose || "Sale",
     category: category || "Residential",
       price_range: priceRange || "",
-
+          location: location || "",
   });
-}, [purpose, category,priceRange]);
+}, [purpose, category,priceRange,location]);
 
   const handleFilters = (data) => {
     setFilters(data);

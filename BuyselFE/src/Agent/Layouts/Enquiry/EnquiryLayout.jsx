@@ -14,6 +14,13 @@ import { useNavigate } from "react-router-dom";
 const EnquiryLayout = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [enquiries, setEnquiries] = useState([]);
+  const [showFilter, setShowFilter] = useState(false);
+
+const [filters, setFilters] = useState({
+  date: "",
+  minPrice: "",
+  maxPrice: "",
+});
   useEffect(() => {
     const fetchEnquiries = async () => {
       const res = await getAgentEnquiries();
@@ -32,6 +39,42 @@ const EnquiryLayout = () => {
     year: "numeric",
   });
 };
+const filteredEnquiries = enquiries.filter((item) => {
+
+  const matchesSearch =
+    item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.property?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.email?.toLowerCase().includes(searchTerm.toLowerCase());
+
+  const numericPrice = Number(item.price);
+
+  const matchesMinPrice =
+    filters.minPrice === "" ||
+    numericPrice >= Number(filters.minPrice);
+
+  const matchesMaxPrice =
+    filters.maxPrice === "" ||
+    numericPrice <= Number(filters.maxPrice);
+
+const enquiryDate = new Date(item.time);
+
+const formattedDate = `${enquiryDate.getFullYear()}-${String(
+  enquiryDate.getMonth() + 1
+).padStart(2, "0")}-${String(
+  enquiryDate.getDate()
+).padStart(2, "0")}`;
+
+  const matchesDate =
+    filters.date === "" ||
+formattedDate === filters.date;
+  return (
+    matchesSearch &&
+    matchesMinPrice &&
+    matchesMaxPrice &&
+    matchesDate
+  );
+});
+
 const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex overflow-x-hidden">
@@ -65,14 +108,122 @@ const navigate = useNavigate();
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <button className="p-2.5 bg-white border cursor-pointer border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition-all shadow-sm">
-                <Filter size={20} />
-              </button>
+           <div className="relative">
+
+  <button
+    onClick={() => setShowFilter(!showFilter)}
+    className="p-2.5 bg-white border cursor-pointer border-slate-200 rounded-xl text-slate-400 hover:text-[#74C122] hover:border-[#74C122] transition-all shadow-sm"
+  >
+    <Filter size={20} />
+  </button>
+
+  {/* FILTER DROPDOWN */}
+  {showFilter && (
+    <div
+      className="absolute right-0 top-14 w-[320px]
+      bg-white border border-slate-200 rounded-2xl
+      shadow-2xl p-5 z-50"
+    >
+
+      {/* DATE */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2 host-grotesk">
+          Date
+        </label>
+
+        <input
+          type="date"
+          value={filters.date}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              date: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* MIN PRICE */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2 host-grotesk">
+          Min Price
+        </label>
+
+        <input
+          type="number"
+          placeholder="Minimum price"
+          value={filters.minPrice}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              minPrice: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* MAX PRICE */}
+      <div className="mb-5">
+
+        <label className="block text-sm font-medium mb-2 host-grotesk">
+          Max Price
+        </label>
+
+        <input
+          type="number"
+          placeholder="Maximum price"
+          value={filters.maxPrice}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              maxPrice: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* BUTTONS */}
+      <div className="flex gap-2">
+
+        <button
+          onClick={() =>
+            setFilters({
+              date: "",
+              minPrice: "",
+              maxPrice: "",
+            })
+          }
+          className="flex-1 border border-slate-200 py-2 rounded-xl text-sm host-grotesk"
+        >
+          Reset
+        </button>
+
+        <button
+          onClick={() => setShowFilter(false)}
+          className="flex-1 bg-[#6ABD11] text-white py-2 rounded-xl text-sm host-grotesk"
+        >
+          Apply
+        </button>
+
+      </div>
+
+    </div>
+  )}
+
+</div>
             </div>
           </header>
           {/* enqur */}
           <div className="flex flex-col gap-3">
-            {enquiries.map((item, index) => (
+            {filteredEnquiries.map((item, index) => (
               <motion.div
                 key={item.enquiry_id}
                 initial={{ opacity: 0, x: -20 }}
@@ -183,7 +334,7 @@ const navigate = useNavigate();
               </motion.div>
             ))}
           </div>
-          {enquiries.length === 0 && (
+          {filteredEnquiries.length === 0 && (
             <div className="flex flex-col items-center justify-center py-24 text-slate-300 border-2 border-dashed border-slate-100 rounded-[32px]">
               <div className="p-4 bg-white rounded-full shadow-inner mb-4">
                 <Search size={48} className="opacity-20" />
