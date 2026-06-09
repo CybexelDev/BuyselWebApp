@@ -255,11 +255,7 @@ const validateStep = () => {
     if (!formData.title?.trim())
       newErrors.title = "Title is required";
 
-    if (!formData.landArea)
-      newErrors.landArea = "Land area is required";
 
-    if (!formData.squareFeet)
-      newErrors.squareFeet = "Square feet is required";
 
     if (!formData.city?.trim())
       newErrors.city = "City is required";
@@ -267,11 +263,11 @@ const validateStep = () => {
     if (!formData.pincode?.trim())
       newErrors.pincode = "Pincode is required";
 
-    if (!formData.state?.trim())
-      newErrors.state = "State is required";
+    if (!formData.district?.trim())
+      newErrors.district = "District is required";
 
-    if (!formData.googleLocation?.trim())
-      newErrors.googleLocation = "Location is required";
+    if (!formData.description?.trim())
+      newErrors.description= "Description is required";
 
     if (!formData.owner?.trim())
       newErrors.owner = "Owner name is required";
