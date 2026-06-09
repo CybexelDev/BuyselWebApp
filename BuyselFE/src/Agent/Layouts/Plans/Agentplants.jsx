@@ -11,21 +11,26 @@ import CurrentPlan from "../../Components/CurrentPlan/CurrentPlan";
 import { agentPlans } from "../../../Api/agentsApi";
 import { openRazorpay } from "../../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 
 function AgentPlans() {
 
   const [selectedPlan, setSelectedPlan] = useState({});
   const [upgradePlans, setUpgradePlans] = useState([]);
+  const [upgradePlanData, setUpgradePlanData] = useState(null);
   const [planData, setPlanData] = useState(null);
   const [adPackages, setAdPackages] = useState([]);
   const [reelPackages, setReelPackages] = useState([]);
   const [selectedAdType, setSelectedAdType] = useState({});
+  const { agent_type } = useSelector((state) => state.agent);
+
 
   console.log(adPackages, "[[[[[[[[[[[[[[[[");
   // console.log(selectedPlan, "?????????????????");
  
-  const nav = useNavigate()
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -33,20 +38,32 @@ function AgentPlans() {
       const res = await agentPlans();
       console.log("agentPlans response:", res); // 👈 HERE
 
+
+//validate is upgradeplan in there or not
       const data = res?.data || res;
+      if (data?.current_active_subscriptions?.upgrade_plan) {
+  setUpgradePlanData(
+    data.current_active_subscriptions.upgrade_plan
+  );
+}
 
       if (data?.plans) {
         // always set plans
-        const formattedPlans = data.plans.map((group) => ({
-          id: group.id,
-          name: group.name,
-          icon: group.name.toLowerCase().includes("premium") ? Zap : Crown,
-          plans: group.plans,
-        }));
+        const filteredPlans = data.plans.filter(
+  (group) => group.id === agent_type
+);
+
+const formattedPlans = filteredPlans.map((group) => ({
+  id: group.id,
+  name: group.name,
+  icon: group.id === "premium" ? Zap : Crown,
+  plans: group.plans,
+}));
 
         setUpgradePlans(formattedPlans);
 
-        const group = data.plans[0];
+
+        const group = filteredPlans[0];
 
 setSelectedPlan({
   [group.id]: group.plans?.[0]?.plan_id,
@@ -83,6 +100,11 @@ setSelectedPlan({
   }, []);
 
 
+  const isCurrentPlanExpired =
+  !planData?.expiresOn ||
+  new Date(planData.expiresOn) <= new Date();
+
+
 
   let showRenewButton = false;
   if (planData?.expiresOn) {
@@ -93,6 +115,15 @@ setSelectedPlan({
 
     showRenewButton = diffDays <= 10;
   }
+  const upgradeDiffDays = upgradePlanData?.end_date
+  ? Math.ceil(
+      (new Date(upgradePlanData.end_date) - new Date()) /
+      (1000 * 60 * 60 * 24)
+    )
+  : 0;
+
+
+
 
 
 
@@ -131,18 +162,22 @@ setSelectedPlan({
           <CurrentPlan
             plan={planData}
             showRenewButton={showRenewButton}
+            upgradePlan={upgradePlanData}
+            upgradeDiffDays={upgradeDiffDays}
           />
         )}
 
 
 
-        <h2 className="text-2xl font-bold mb-2 instrument-sans">
-      Upgrade Your Plan
-    </h2>
+<h2 className="text-2xl font-bold mb-2 instrument-sans">
+  {isCurrentPlanExpired ? "Renew Your Subscription" : "Upgrade Your Plan"}
+</h2>
 
-    <p className="text-gray-600 mb-8">
-      Get more listings and premium features.
-    </p>
+<p className="text-gray-600 mb-8">
+  {isCurrentPlanExpired
+    ? "Choose a plan to continue your subscription."
+    : "Get more listings and premium features."}
+</p>
         {/* Upgrade Plans */}
                 {upgradePlans?.length > 0 && (
        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -169,8 +204,16 @@ setSelectedPlan({
             selectedId={selectedPlan}
             savings={activePlan.savings}
             features={activePlan.features}
-            buttonText="Upgrade Now"
-              onClick={() =>
+              buttonText={
+               isCurrentPlanExpired
+               ? "Purchase Now"
+               : "Upgrade Now"
+              }
+              onClick={() =>{
+                if (upgradePlanData?.is_active) {
+  toast.error(`You already have an active upgrade plan (${upgradePlanData.plan_name}).`);
+  return;
+}
               openRazorpay({
              name: "BuySel",
              description: agent.name,
@@ -183,6 +226,7 @@ setSelectedPlan({
         });
       },
     })
+  }
   }
             dropdown={
               <Dropdown
@@ -377,7 +421,7 @@ setSelectedPlan({
     </div>
 
     <div>
-      <button onClick={()=>nav('/agent/property')}
+      <button onClick={()=>navigate('/agent/property')}
       className="cta-button">
         Start Listing Now →
       </button>
