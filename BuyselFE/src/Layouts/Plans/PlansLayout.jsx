@@ -21,6 +21,14 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
 const handleSelectPlan = (plan) => {
 
+    if (plansData?.is_upgrade_plan) {
+    toast.error(
+      "You already have an active upgrade plan. Please wait until it expires."
+    );
+    return;
+  }
+
+
   // Agent plans
   if (active !== "Owner") {
     setShowAgentModal(true);

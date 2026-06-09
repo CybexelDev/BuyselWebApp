@@ -1,7 +1,7 @@
-import { Check, TrendingUp } from "lucide-react";
+import { ArrowUpRight, Check, TrendingUp } from "lucide-react";
 import React from "react";
 
-function CurrentPlan({ plan, showRenewButton }) {
+function CurrentPlan({ plan, showRenewButton,upgradePlan,upgradeDiffDays, }) {
   const listingFeature = plan.features?.find((f) =>
     f.toLowerCase().includes("property listings"),
   );
@@ -86,7 +86,83 @@ function CurrentPlan({ plan, showRenewButton }) {
             ))}
           </div>
         </div>
+            {upgradePlan && (
+                <div className=" bg-gradient-to-r from-[#6ABD11]/10 to-transparent pt-1 border-t px-2 border-gray-200">
+
+
+
+
+   <div className=" p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+              <ArrowUpRight className="w-4 h-4 text-amber-600" />
+            </div>
+
+            <div>
+              <h5 className="font-semibold text-gray-900">
+                Upgrade Plan
+              </h5>
+              <p className="text-xs text-gray-500">
+                Additional Subscription
+              </p>
+            </div>
+          </div>
+
+         <div className="mt-4 rounded-xl border border-[#6ABD11]/20  bg-gradient-to-r from-[#6ABD11]/10 to-transparent p-4">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-xs font-medium uppercase tracking-wider text-amber-600">
+        Additional Active Plan
+      </p>
+
+      <h4 className="text-lg font-bold text-gray-900 mt-1">
+            {upgradePlan.plan_name}
+      </h4>
+    </div>
+
+    <span className="px-3 py-1 rounded-full bg-amber-100  text-amber-700 text-xs font-semibold">
+      Upgrade
+    </span>
+  </div>
+
+  <div className="grid grid-cols-3 gap-4 mt-4">
+    <div>
+      <p className="text-xs text-gray-500">Extra Listings</p>
+      <p className="text-base font-bold text-gray-900">
+                    {upgradePlan.property_limit}
+      </p>
+    </div>
+
+    <div>
+      <p className="text-xs text-gray-500">Valid Until</p>
+      <p className="text-base font-bold text-gray-900">
+         {new Date(
+              upgradePlan.end_date
+            ).toLocaleDateString()}
+      </p>
+    </div>
+
+    <div>
+      <p className="text-xs text-gray-500">Days Left</p>
+      <p className="text-base font-bold text-amber-600">
+        {upgradeDiffDays > 0
+              ? `${upgradeDiffDays} Days`
+              : "Expired"}
+      </p>
+    </div>
+  </div>
+
+ 
+</div>
+        </div>
+        </div>
+)}
       </div>
+
+
+  
+
+
     </div>
   );
 }
