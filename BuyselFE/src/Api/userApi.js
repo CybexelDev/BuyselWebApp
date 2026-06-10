@@ -1065,12 +1065,17 @@ formData.append(
         "Content-Type": "multipart/form-data",
       },
     });
+    
 
     return res.data;
   } catch (error) {
     console.error("Property error:", error.response?.data || error.message);
-    return false;
-  }
+  return (
+    error.response?.data || {
+      status: false,
+      message: "Something went wrong",
+    }
+  );  }
 };
 
 export const deleteUserPropertyListing = async(id)=>{

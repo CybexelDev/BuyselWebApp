@@ -9,6 +9,7 @@ import SuccessModal from "../../../Components/AddProperty/SuccessModal";
 import Payment from "../../../Components/AddProperty/Payment";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import {
   getPropertyById,
   postProperty,
@@ -255,11 +256,7 @@ const validateStep = () => {
     if (!formData.title?.trim())
       newErrors.title = "Title is required";
 
-    if (!formData.landArea)
-      newErrors.landArea = "Land area is required";
 
-    if (!formData.squareFeet)
-      newErrors.squareFeet = "Square feet is required";
 
     if (!formData.city?.trim())
       newErrors.city = "City is required";
@@ -267,11 +264,11 @@ const validateStep = () => {
     if (!formData.pincode?.trim())
       newErrors.pincode = "Pincode is required";
 
-    if (!formData.state?.trim())
-      newErrors.state = "State is required";
+    if (!formData.district?.trim())
+      newErrors.district = "District is required";
 
-    if (!formData.googleLocation?.trim())
-      newErrors.googleLocation = "Location is required";
+    if (!formData.description?.trim())
+      newErrors.description= "Description is required";
 
     if (!formData.owner?.trim())
       newErrors.owner = "Owner name is required";
@@ -392,7 +389,12 @@ if (id) {
     res = await userPostProperty(payload);
   }
 }
+console.log("API RESPONSE:", res);
 
+if (!res?.status) {
+  toast.error(res.message);
+  return;
+}
 
     if (res) {
       setShowSuccess(true);

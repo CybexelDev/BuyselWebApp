@@ -90,7 +90,11 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
       pin_code: formData.pincode,
       agent_type: formData.agent_type,
       plan_id: formData.plan_id,
-      address: formData.address
+      address: formData.address,
+
+        years_of_experience: formData.yearsofexperience || "",
+  total_deals_served: formData.TotalDealsServed || "",
+
     };
 
     const res = await registerAgent(payload);
@@ -158,6 +162,7 @@ if (res?.status) {
             value={formData.username}
             onChange={handleChange}
               error={errors.username}
+              required
           />
 
           <Input
@@ -166,6 +171,7 @@ if (res?.status) {
             value={formData.email}
             onChange={handleChange}
             error={errors.email}
+            required
           />
 
           <Input
@@ -174,6 +180,7 @@ if (res?.status) {
             value={formData.phone}
             onChange={handleChange}
             error={errors.phone}
+            required
           />
 
           <Input
@@ -182,6 +189,7 @@ if (res?.status) {
             value={formData.password}
             onChange={handleChange}
             error={errors.password}
+            required
           />
 
           <Input
@@ -190,6 +198,7 @@ if (res?.status) {
             value={formData.city}
             onChange={handleChange}
             error={errors.city}
+            required
           />
 
           <Input
@@ -198,8 +207,8 @@ if (res?.status) {
             value={formData.pincode}
             onChange={handleChange}
             error={errors.pincode}
+            required
           />
-
         </div>
 
         {/* Select Fields */}  <div className="mt-6 sm:mt-8">
@@ -209,8 +218,25 @@ if (res?.status) {
             value={formData.address}
             onChange={handleChange}
             error={errors.address}
+            required
           />
         </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
+                    <Input
+  label="Years of Experience"
+  name="yearsofexperience"
+  value={formData.yearsofexperience}
+  onChange={handleChange}
+/>
+
+<Input
+  label="Total Deals Served"
+  name="TotalDealsServed"
+  value={formData.TotalDealsServed}
+  onChange={handleChange}
+/>
+                  </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
 
           <SelectField
@@ -223,6 +249,7 @@ if (res?.status) {
             value={formData.agent_type}
             onChange={handleAgentTypeChange}
               error={errors.agent_type}
+              required
 
           />
           <SelectField
@@ -235,6 +262,7 @@ if (res?.status) {
             registeration="true"
             onChange={handlePlanChange}
               error={errors.plan_id}
+              required
 
           />
         </div>
@@ -292,7 +320,7 @@ if (res?.status) {
   );
 };
 
-const Input = ({ label, name, value, onChange,error }) => {
+const Input = ({ label, name, value, onChange,error,required=false }) => {
 
   const handleInputChange = (e) => {
     let val = e.target.value;
@@ -319,6 +347,8 @@ const Input = ({ label, name, value, onChange,error }) => {
       <label className="flex items-center gap-2 font-semibold mb-2 lexend text-[13px] sm:text-[14px] lg:text-[16px]">
         <Layers size={16} className="text-lime-500 shrink-0" />
         {label}
+                        {required && <span className="text-red-500">*</span>}
+
       </label>
 
       <input
@@ -360,12 +390,14 @@ border ${error ? "border-red-500" : "border-[#E4E3E3]"}          text-[13px] md:
   );
 };
 
-const Textarea = ({ label, name, value, onChange,  error,}) => (
+const Textarea = ({ label, name, value, onChange,  error,required=false}) => (
   <div>
 
     <label className="flex items-center gap-2 lexend text-[14px] sm:text-[15px] lg:text-[16px] font-semibold mb-2">
       <Layers size={16} className="text-lime-500" />
       {label}
+                      {required && <span className="text-red-500">*</span>}
+
     </label>
 
     <textarea

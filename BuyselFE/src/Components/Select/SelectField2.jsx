@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-export default function SelectField({ label, icon, options, value, onChange,registeration,  error,}) {
+export default function SelectField({ label, icon, options, value, onChange,registeration,  error,required=false}) {
   const [open, setOpen] = useState(false);
 
   const selectedLabel = options.find(
@@ -15,6 +15,8 @@ const change=registeration=="true"
     } flex items-center gap-2 font-semibold mb-2`}
 >        {icon}
         {label}
+                        {required && <span className="text-red-500">*</span>}
+
       </label>
 
       <div

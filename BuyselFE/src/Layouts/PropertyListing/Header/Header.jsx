@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const Header = ({ setParentFilters, onchange, filters }) => {
-  const [activeTab, setActiveTab] = useState("Rent");
+  const [activeTab, setActiveTab] = useState("Sale");
   const [activeCategory, setActiveCategory] = useState("Residential");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const navigate=useNavigate()

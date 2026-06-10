@@ -5,7 +5,7 @@ import Chatbutton from "../Chatbox/Chatbutton";
 import { useNavigate } from "react-router-dom";
 
 function PropertySearch() {
-  const [activeTab, setActiveTab] = useState("Rent");
+  const [activeTab, setActiveTab] = useState("Sale");
   const [open, setOpen] = useState(false);
   const [budget, setBudget] = useState("");
 const [propertyTypeOpen, setPropertyTypeOpen] = useState(false);

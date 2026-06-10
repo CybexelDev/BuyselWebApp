@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-function SelectField({ label, icon, options, value, onChange ,error}) {
+function SelectField({ label, icon, options, value, onChange ,error,required=false}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -12,6 +12,7 @@ function SelectField({ label, icon, options, value, onChange ,error}) {
       text-sm md:text-base lexend">
         {icon}
         {label}
+          {required && <span className="text-red-500">*</span>}
       </label>
 
       {/* INPUT */}
