@@ -9,6 +9,7 @@ import SuccessModal from "../../../Components/AddProperty/SuccessModal";
 import Payment from "../../../Components/AddProperty/Payment";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import {
   getPropertyById,
   postProperty,
@@ -388,7 +389,12 @@ if (id) {
     res = await userPostProperty(payload);
   }
 }
+console.log("API RESPONSE:", res);
 
+if (!res?.status) {
+  toast.error(res.message);
+  return;
+}
 
     if (res) {
       setShowSuccess(true);
