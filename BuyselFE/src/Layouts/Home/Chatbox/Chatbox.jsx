@@ -107,8 +107,8 @@ if (type === "admin") {
                   </label>
 
                   <input
-                    type="text"
-                    placeholder="Email or Phone"
+                    type="number"
+                    placeholder="Phone"
                     value={formData.contact}
                     onChange={(e) =>
                       setFormData({

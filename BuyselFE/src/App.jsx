@@ -93,13 +93,13 @@ function App() {
           } />
           <Route path="/dashboardpropertydetail/:id" element={
             <DashboardPropertyDetail />
-            } />
+          } />
           <Route path='/plans' element={<PlansPage />} />
           <Route path="/enquiry-detail/:id" element={
             <UserProtectedRoute>
-            <EnquiryDetailLayoutUser />
+              <EnquiryDetailLayoutUser />
             </UserProtectedRoute>
-            } />
+          } />
           <Route path="/helpcenter" element={<HelpCenter />} />
           <Route path='/termsandcondition' element={<TermsPage />} />
           <Route path='/privacy' element={<PrivacyPolicy />} />

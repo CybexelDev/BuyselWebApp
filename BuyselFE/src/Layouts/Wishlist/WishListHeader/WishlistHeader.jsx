@@ -10,7 +10,7 @@ const WishlistHeader= () => {
    
 
     return (
-        <div className='p-5 pb-0 relative'>
+        <div className='md:p-5 p-2 pb-0 relative'>
             <Navbar />
             <div className="wishlist-cta-container">
                 <div class="wishlist-cta-logo-container ">
