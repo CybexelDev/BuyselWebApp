@@ -15,7 +15,7 @@ const AddPropertyHeader = ({title="Post Your Property",subtitle="List your prope
   
 //sss
   return (
-    <div className='p-5 relative'>
+    <div className='p-5 md:p-5  relative'>
        <Navbar />
       <div className="addproperty-container">
         <div class="addproperty-logo-container ">

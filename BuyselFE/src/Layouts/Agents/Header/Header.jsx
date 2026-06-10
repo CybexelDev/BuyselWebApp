@@ -25,7 +25,7 @@ function Header({ onchange, location, cityDataSend }) {
   const cornerRadius = 40;
   const topNotchWidth = 230;
   const bottomNotchWidth = 900;
-  const notchDepth = 70;
+  const notchDepth = 75;
   const notchDepth2 = 110;
   const notchRadius = 38;
   const notchRadius2 = 58;

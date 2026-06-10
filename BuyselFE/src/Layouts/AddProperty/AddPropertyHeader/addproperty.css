@@ -22,6 +22,21 @@
 }
 
 
+@media screen  and (max-width:768px){
+
+  .addproperty-logo-container {
+    width: 20%;
+     padding: 15px 8px;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    background: #ffffff;
+    border-radius: 0 0 25px 25px;
+}
+
+
+}
+
 .addproperty-logo-container::before {
     content: "";
     position: absolute;
