@@ -47,6 +47,7 @@
 // };
 
 
+import { toast } from "sonner";
 import api from "../Api/axiosInstance";
 
 export const openRazorpay = async ({
@@ -73,7 +74,7 @@ export const openRazorpay = async ({
   const isLoaded = await loadScript();
 
   if (!isLoaded) {
-    alert("Razorpay SDK Failed to load");
+    toast("Razorpay SDK Failed to load");
     return;
   }
 
@@ -92,9 +93,7 @@ export const openRazorpay = async ({
 
     // ✅ CHECK RESPONSE
     if (!order?.payment?.razorpay_order_id) {
-
-      alert("Order creation failed");
-
+      toast("Order creation failed");
       return;
     }
 
@@ -167,7 +166,7 @@ export const openRazorpay = async ({
             "VERIFY PAYMENT RESPONSE"
           );
 
-          alert("Payment Successful ✅");
+          toast("Payment Successful ✅");
 
           // ✅ CALLBACK
           onSuccess && onSuccess(verifyRes.data);
@@ -180,7 +179,8 @@ export const openRazorpay = async ({
             "VERIFY ERROR"
           );
 
-          alert("Payment Verification Failed ❌ - " + (error?.response?.data?.detail || "Something went wrong 111111111111111"));
+          toast("Payment Verification Failed ❌");
+
         }
       },
 
@@ -210,7 +210,8 @@ export const openRazorpay = async ({
         "PAYMENT FAILED"
       );
 
-      alert("Payment Failed ❌ - " + (response.error.description || "Something went wrong 22222222222"));
+      toast(response.error.description);
+
     });
 
   } catch (error) {
@@ -220,6 +221,6 @@ export const openRazorpay = async ({
       "CREATE PAYMENT ERROR"
     );
 
-    alert("Something went wrong");
+    toast("Something went wrong");
   }
 };

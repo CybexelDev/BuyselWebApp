@@ -141,7 +141,7 @@ const upgradeDiffDays = Math.ceil(upgradeDiffTime / (1000 * 60 * 60 * 24));
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
        {Currentplan ? (
   <div className="lg:col-span-2 host-grotesk">
     <h2 className="text-xl font-bold mb-4 instrument-sans">
@@ -219,7 +219,7 @@ const upgradeDiffDays = Math.ceil(upgradeDiffTime / (1000 * 60 * 60 * 24));
                 key={idx}
                 className="flex items-start gap-2 text-xs sm:text-[13px] text-gray-700"
               >
-                <Check className="w-4 h-4 text-[#6ABD11] mt-1" />
+                <Check className="w-4 h-4 text-[#6ABD11] mt-1 flex-shrink-0" />
 
                 <div>
                   <span className="font-semibold capitalize">
@@ -346,12 +346,17 @@ const upgradeDiffDays = Math.ceil(upgradeDiffTime / (1000 * 60 * 60 * 24));
   </div>
 )}
 
-        <div className="bg-white flex flex-col items-center px-3 sm:px-1 py-1 overflow-hidden">
+        <div className={`bg-white flex flex-col items-center px-3 sm:px-1 py-1 overflow-hidden 
+         ${
+    Currentplan?.is_upgrade_plan
+      ? "lg:h-[70%]"
+      : "lg:h-full"
+  }`}>
           <h2 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 instrument-sans w-full text-left">
             Enquiries by Month
           </h2>
 
-          <div className="w-full flex-1 flex items-stretch">
+          <div className="w-full flex-1">
 <DietChart data={dashboardData?.data?.monthly_enquiries || []}/></div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useLocation } from "react-router-dom";
+import { toast } from "sonner";
 
 function InvoicePage() {
   const invoiceRef = useRef(null);
@@ -55,7 +56,7 @@ function InvoicePage() {
       pdf.save(`${invoiceData.invoiceNo}.pdf`);
     } catch (error) {
       console.log(error);
-      alert("PDF generation failed");
+      toast("PDF generation failed");
     }
   };
 
