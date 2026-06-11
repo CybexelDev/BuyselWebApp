@@ -142,9 +142,7 @@ function App() {
               </AgentProtectedRoute>
             } />
             <Route path='/agent/enquiry/:id' element={
-              <AgentProtectedRoute>
                 <EnquiryDetail />
-              </AgentProtectedRoute>
             } />
             <Route path="/agent/property" element={
               <AgentProtectedRoute>
