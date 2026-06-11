@@ -15,16 +15,21 @@ const Navbar = ({
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
+const [mobileDropdown, setMobileDropdown] = useState(false);
   const menuItems = [
-    { name: "Home ", path: "/" },
-    // { name: "About Us", path: "/about" },
-    { name: "Properties", path: "/propertyListing" },
-    { name: "Agent", path: "/agents" },
-    { name: "Blogs", path: "/blog" },
-    { name: "Contact", path: "/contact" },
-  ];
-
+  { name: "Home", path: "/" },
+  { name: "Properties", path: "/propertyListing" },
+  { name: "Agent", path: "/agents" },
+  { name: "Plans", path: "/plans" },
+  {
+    name: "Company",
+    dropdown: [
+      { name: "About Us", path: "/about" },
+      { name: "Blogs", path: "/blog" },
+      { name: "Contact Us", path: "/contact" },
+    ],
+  },
+];
   const handleNavigate = (path) => {
     navigate(path); 
     setOpen(false); 
@@ -42,20 +47,65 @@ const Navbar = ({
     <header className={`absolute ${top} left-0 w-full z-40 px-6 ${padding}`}>
       <div className="flex items-center justify-between py-3">
 
-        <nav className={`hidden lg:flex ${gap} poppins ${text} font-[500]`}>
-          {menuItems.map((item) => (
-            <p
-              key={item.name}
-              onClick={() => handleNavigate(item.path)}
-              className={`cursor-pointer transition-all duration-200 ${isActive(item.path)
-                ? "text-[#6fba19] font-semibold"
-                : `${color} hover:text-[#6fba19]`
-                }`}
-            >
-              {item.name}
-            </p>
-          ))}
-        </nav>
+     <nav className={`hidden lg:flex ${gap} poppins ${text} font-[500]`}>
+  {menuItems.map((item) => (
+    <div key={item.name} className="relative group">
+     <div
+  onClick={() => item.path && handleNavigate(item.path)}
+  className={`flex items-center gap-1 cursor-pointer transition-all duration-200 ${
+    item.path && isActive(item.path)
+      ? "text-[#6fba19] font-semibold"
+      : `${color} hover:text-[#6fba19]`
+  }`}
+>
+  <span>{item.name}</span>
+
+  {item.dropdown && (
+    <svg
+      className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
+  )}
+</div>
+
+      {item.dropdown && (
+        <div className="absolute top-full left-0 pt-3 w-52 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+<div className="
+  bg-gradient-to-br
+  from-white/20
+  to-white/2
+  backdrop-blur-2xl
+  border
+  border-white/30
+  rounded-2xl
+  shadow-[0_8px_40px_rgba(0,0,0,0.2)]
+  overflow-hidden
+  min-w-[220px]
+">    {item.dropdown.map((subItem) => (
+              <div
+                key={subItem.name}
+                onClick={() => handleNavigate(subItem.path)}
+                className="px-4 py-3 text-sm text-gray-800 hover:bg-[#f5f5f5] hover:text-[#6fba19] cursor-pointer"
+              >
+                {subItem.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  ))}
+</nav>
 
         <div className="hidden lg:block">
           <div className="flex items-center gap-2">
@@ -95,18 +145,62 @@ const Navbar = ({
           }`}
       >
         <div className="flex flex-col items-center justify-center h-full gap-8 text-[18px] poppins font-[500]">
-          {menuItems.map((item) => (
-            <p
-              key={item.name}
-              onClick={() => handleNavigate(item.path)}
-              className={`cursor-pointer transition-all duration-200 ${isActive(item.path)
-                ? "text-[#6fba19] font-semibold"
-                : "text-[#676767] hover:text-[#6fba19]"
-                }`}
-            >
-              {item.name}
-            </p>
-          ))}
+         {menuItems.map((item) => (
+  <div key={item.name} className="flex flex-col items-center">
+    {item.dropdown ? (
+      <>
+        <div
+          onClick={() => setMobileDropdown(!mobileDropdown)}
+          className="flex items-center gap-2 cursor-pointer text-[#676767]"
+        >
+          <span>{item.name}</span>
+
+          <svg
+            className={`w-4 h-4 transition-transform duration-300 ${
+              mobileDropdown ? "rotate-180" : ""
+            }`}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+
+        {mobileDropdown && (
+          <div className="mt-3 flex flex-col gap-3">
+            {item.dropdown.map((subItem) => (
+              <div
+                key={subItem.name}
+                onClick={() => handleNavigate(subItem.path)}
+                className="text-center text-[16px] text-[#676767] hover:text-[#6fba19] cursor-pointer"
+              >
+                {subItem.name}
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    ) : (
+      <p
+        onClick={() => handleNavigate(item.path)}
+        className={`cursor-pointer transition-all duration-200 ${
+          isActive(item.path)
+            ? "text-[#6fba19] font-semibold"
+            : "text-[#676767] hover:text-[#6fba19]"
+        }`}
+      >
+        {item.name}
+      </p>
+    )}
+  </div>
+))}
             <button onClick={() => navigate('/addyourproperty')} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
               <img src={add} alt="add" className="w-[20px]" />
             </button>

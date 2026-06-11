@@ -350,7 +350,7 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
 
         {/* CTA Button */}
         <button
-          onClick={() => handleNavigate("/properties")}
+          onClick={() => handleNavigate("/propertyListing")}
           className="
             mt-5
             px-5 py-2.5
