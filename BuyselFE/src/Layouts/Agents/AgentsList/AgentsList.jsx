@@ -25,21 +25,21 @@ export default function AgentTabs({ searchedData, query, locationDats }) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentAgents = filteredAgents.slice(startIndex, endIndex);
-useEffect(() => {
-    if (type) {
+    useEffect(() => {
+        if (type) {
 
-        const formattedType =
-            type === "Agent"
-                ? "basic"
-                : type === "Premium Agent"
-                    ? "premium"
-                    : type === "Elite Agent"
-                        ? "elite"
-                        : "All";
+            const formattedType =
+                type === "Agent"
+                    ? "basic"
+                    : type === "Premium Agent"
+                        ? "premium"
+                        : type === "Elite Agent"
+                            ? "elite"
+                            : "All";
 
-        setActiveTab(formattedType);
-    }
-}, [type]);
+            setActiveTab(formattedType);
+        }
+    }, [type]);
 
     useEffect(() => {
         if (query.length > 0) {
@@ -58,7 +58,6 @@ useEffect(() => {
     }, [activeTab, searchedData]);
 
 
-     
 
     return (
         <div className="bg-white min-h-screen p-2 sm:p-10">
@@ -72,7 +71,7 @@ useEffect(() => {
                             setCurrentPage(1);
                         }}
                         className={`px-3 sm:px-5 py-2 rounded-[9px] text-sm host-grotesk font-medium transition-all duration-300 cursor-pointer
-              ${activeTab === (tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite")
+                                    ${activeTab === (tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite")
                                 ? "bg-black text-[#75c222] shadow-md"
                                 : "text-black hover:bg-gray-200"
                             }`}
@@ -82,7 +81,7 @@ useEffect(() => {
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                 {currentAgents.map((agent) => (
                     <div
                         key={agent?.id}

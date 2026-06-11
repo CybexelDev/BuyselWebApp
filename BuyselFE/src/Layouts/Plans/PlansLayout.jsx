@@ -19,31 +19,31 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [showAgentModal, setShowAgentModal] = useState(false);
   const navigate = useNavigate()
 
-const handleSelectPlan = (plan) => {
+  const handleSelectPlan = (plan) => {
 
     if (plansData?.is_upgrade_plan) {
-    toast.error(
-      "You already have an active upgrade plan. Please wait until it expires."
-    );
-    return;
-  }
+      toast.error(
+        "You already have an active upgrade plan. Please wait until it expires."
+      );
+      return;
+    }
 
 
-  // Agent plans
-  if (active !== "Owner") {
-    setShowAgentModal(true);
-    return;
-  }
+    // Agent plans
+    if (active !== "Owner") {
+      setShowAgentModal(true);
+      return;
+    }
 
-  // Owner plans
-  if (propertyCount < 2) {
-    setShowLimitMessage(true);
-    return;
-  }
+    // Owner plans
+    if (propertyCount < 2) {
+      setShowLimitMessage(true);
+      return;
+    }
 
-  setSelectedPlan(plan);
-  setOpenModal(true);
-};
+    setSelectedPlan(plan);
+    setOpenModal(true);
+  };
   const handleCheckout = async () => {
 
     try {
@@ -431,12 +431,12 @@ const handleSelectPlan = (plan) => {
   text-white py-3 rounded-2xl font-semibold transition cursor-pointer
   shadow-lg
   flex items-center justify-center gap-2"
->
-  <UserPlus size={18} />
-  Register as an Agent
-</button>
-              
-              
+              >
+                <UserPlus size={18} />
+                Register as an Agent
+              </button>
+
+
 
             </div>
 

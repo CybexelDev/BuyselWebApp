@@ -6,64 +6,72 @@ import { getAgentPlanDetailss } from "../../Api/userApi";
 import { registerAgent } from "../../Api/agentsApi";
 import { toast } from "sonner";
 import PlanCardUser from "../../Components/PlanCardUser/PlanCardUser";
+import { openRazorpay } from "../../utils/razorpay";
+import { useNavigate } from "react-router-dom";
+
+
 const AgentRegistration = ({ formData, handleChange, setFormData }) => {
   const [agentPlans, setAgentPlans] = useState([]);
   const [selectedPlans, setSelectedPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  console.log(selectedPlan, "selected pln>>>>>>>>>>>>>>>>>");
+  
+
   const validateForm = () => {
-  const newErrors = {};
+    const newErrors = {};
 
-  if (!formData.username?.trim()) {
-    newErrors.username = "Full name is required";
-  }
+    if (!formData.username?.trim()) {
+      newErrors.username = "Full name is required";
+    }
 
-  if (!formData.email?.trim()) {
-    newErrors.email = "Email is required";
-  } else if (
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-  ) {
-    newErrors.email = "Invalid email address";
-  }
+    if (!formData.email?.trim()) {
+      newErrors.email = "Email is required";
+    } else if (
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+    ) {
+      newErrors.email = "Invalid email address";
+    }
 
-  if (!formData.phone) {
-    newErrors.phone = "Phone number is required";
-  } else if (formData.phone.length !== 10) {
-    newErrors.phone = "Phone number must be 10 digits";
-  }
+    if (!formData.phone) {
+      newErrors.phone = "Phone number is required";
+    } else if (formData.phone.length !== 10) {
+      newErrors.phone = "Phone number must be 10 digits";
+    }
 
-  if (!formData.password) {
-    newErrors.password = "Password is required";
-  } else if (formData.password.length < 6) {
-    newErrors.password = "Minimum 6 characters";
-  }
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Minimum 6 characters";
+    }
 
-  if (!formData.city?.trim()) {
-    newErrors.city = "City is required";
-  }
+    if (!formData.city?.trim()) {
+      newErrors.city = "City is required";
+    }
 
-  if (!formData.pincode) {
-    newErrors.pincode = "Pincode is required";
-  } else if (formData.pincode.length !== 6) {
-    newErrors.pincode = "Pincode must be 6 digits";
-  }
+    if (!formData.pincode) {
+      newErrors.pincode = "Pincode is required";
+    } else if (formData.pincode.length !== 6) {
+      newErrors.pincode = "Pincode must be 6 digits";
+    }
 
-  if (!formData.address?.trim()) {
-    newErrors.address = "Address is required";
-  }
+    if (!formData.address?.trim()) {
+      newErrors.address = "Address is required";
+    }
 
-  if (!formData.agent_type) {
-    newErrors.agent_type = "Select an agent type";
-  }
+    if (!formData.agent_type) {
+      newErrors.agent_type = "Select an agent type";
+    }
 
-  if (!formData.plan_id) {
-    newErrors.plan_id = "Select a plan";
-  }
+    if (!formData.plan_id) {
+      newErrors.plan_id = "Select a plan";
+    }
 
-  setErrors(newErrors);
+    setErrors(newErrors);
 
-  return Object.keys(newErrors).length === 0;
-};
+    return Object.keys(newErrors).length === 0;
+  };
   useEffect(() => {
     const fetchMeta = async () => {
       const res = await getAgentPlanDetailss();
@@ -79,7 +87,7 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  if (!validateForm()) return;
+    if (!validateForm()) return;
 
     const payload = {
       full_name: formData.username,
@@ -92,22 +100,38 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
       plan_id: formData.plan_id,
       address: formData.address,
 
-        years_of_experience: formData.yearsofexperience || "",
-  total_deals_served: formData.TotalDealsServed || "",
+      years_of_experience: formData.yearsofexperience || "",
+      total_deals_served: formData.TotalDealsServed || "",
 
     };
 
+    openRazorpay({
+      name: "BuySel",
+      description: selectedPlan?.label,
+      plan_type: selectedPlan?.plan_type,
+      plan_id: selectedPlan?.plan_id,
+      // ✅ success callback
+      onSuccess: (res) => {
+        console.log("Property Payment", res);
+        navigate("/invoice", {
+          state: {
+            paymentData: res,
+          },
+        });
+      },
+    })
+
     const res = await registerAgent(payload);
 
-if (res?.status) {
-  toast.success(res.message || "Registered");
+    if (res?.status) {
+      toast.success(res.message || "Registered");
 
-  setFormData({});
-  setSelectedPlans([]);
-  setSelectedPlan(null);
-} else {
-  toast.error(res?.message || "Registration Failed");
-}
+      setFormData({});
+      setSelectedPlans([]);
+      setSelectedPlan(null);
+    } else {
+      toast.error(res?.message || "Registration Failed");
+    }
   };
 
   const handleAgentTypeChange = (val) => {
@@ -161,8 +185,8 @@ if (res?.status) {
             name="username"
             value={formData.username}
             onChange={handleChange}
-              error={errors.username}
-              required
+            error={errors.username}
+            required
           />
 
           <Input
@@ -221,21 +245,21 @@ if (res?.status) {
             required
           />
         </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
-                    <Input
-  label="Years of Experience"
-  name="yearsofexperience"
-  value={formData.yearsofexperience}
-  onChange={handleChange}
-/>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
+          <Input
+            label="Years of Experience"
+            name="yearsofexperience"
+            value={formData.yearsofexperience}
+            onChange={handleChange}
+          />
 
-<Input
-  label="Total Deals Served"
-  name="TotalDealsServed"
-  value={formData.TotalDealsServed}
-  onChange={handleChange}
-/>
-                  </div>
+          <Input
+            label="Total Deals Served"
+            name="TotalDealsServed"
+            value={formData.TotalDealsServed}
+            onChange={handleChange}
+          />
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
 
@@ -248,8 +272,8 @@ if (res?.status) {
             registeration="true"
             value={formData.agent_type}
             onChange={handleAgentTypeChange}
-              error={errors.agent_type}
-              required
+            error={errors.agent_type}
+            required
 
           />
           <SelectField
@@ -261,8 +285,8 @@ if (res?.status) {
             value={formData.plan_id}
             registeration="true"
             onChange={handlePlanChange}
-              error={errors.plan_id}
-              required
+            error={errors.plan_id}
+            required
 
           />
         </div>
@@ -312,7 +336,7 @@ if (res?.status) {
             shadow-md
           "
           >
-            Submit Registration
+            Submit Registrations
           </button>
         </div>
       </form>
@@ -320,7 +344,7 @@ if (res?.status) {
   );
 };
 
-const Input = ({ label, name, value, onChange,error,required=false }) => {
+const Input = ({ label, name, value, onChange, error, required = false }) => {
 
   const handleInputChange = (e) => {
     let val = e.target.value;
@@ -347,7 +371,7 @@ const Input = ({ label, name, value, onChange,error,required=false }) => {
       <label className="flex items-center gap-2 font-semibold mb-2 lexend text-[13px] sm:text-[14px] lg:text-[16px]">
         <Layers size={16} className="text-lime-500 shrink-0" />
         {label}
-                        {required && <span className="text-red-500">*</span>}
+        {required && <span className="text-red-500">*</span>}
 
       </label>
 
@@ -373,7 +397,7 @@ const Input = ({ label, name, value, onChange,error,required=false }) => {
           px-3 sm:px-4 md:px-5
           rounded-full
           bg-[#F3F3F3]
-border ${error ? "border-red-500" : "border-[#E4E3E3]"}          text-[13px] md:text-[14px]
+          border ${error ? "border-red-500" : "border-[#E4E3E3]"}          text-[13px] md:text-[14px]
           text-black lexend
           shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
           outline-none
@@ -381,22 +405,22 @@ border ${error ? "border-red-500" : "border-[#E4E3E3]"}          text-[13px] md:
           transition
         `}
       />
-{error && (
-  <p className="text-red-500 text-xs mt-1 ml-2 host-grotesk">
-    {error}
-  </p>
-)}
+      {error && (
+        <p className="text-red-500 text-xs mt-1 ml-2 host-grotesk">
+          {error}
+        </p>
+      )}
     </div>
   );
 };
 
-const Textarea = ({ label, name, value, onChange,  error,required=false}) => (
+const Textarea = ({ label, name, value, onChange, error, required = false }) => (
   <div>
 
     <label className="flex items-center gap-2 lexend text-[14px] sm:text-[15px] lg:text-[16px] font-semibold mb-2">
       <Layers size={16} className="text-lime-500" />
       {label}
-                      {required && <span className="text-red-500">*</span>}
+      {required && <span className="text-red-500">*</span>}
 
     </label>
 
@@ -406,12 +430,12 @@ const Textarea = ({ label, name, value, onChange,  error,required=false}) => (
       value={value}
       onChange={onChange}
       className={
-       ` w-full
+        ` w-full
         px-4 sm:px-5
         py-3 sm:py-4
         rounded-2xl
         bg-[#F3F3F3]
-border ${error ? "border-red-500" : "border-[#E4E3E3]"}  
+        border ${error ? "border-red-500" : "border-[#E4E3E3]"}  
         text-[13px] sm:text-[14px]
         text-black
         shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
@@ -420,11 +444,11 @@ border ${error ? "border-red-500" : "border-[#E4E3E3]"}
       }
     />
 
-{error && (
-  <p className="text-red-500 text-xs mt-1 ml-2 host-grotesk">
-    {error}
-  </p>
-)}
+    {error && (
+      <p className="text-red-500 text-xs mt-1 ml-2 host-grotesk">
+        {error}
+      </p>
+    )}
   </div>
 );
 
