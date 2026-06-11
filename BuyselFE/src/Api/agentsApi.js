@@ -27,8 +27,9 @@ export const premiumAgentLogin = async (email, password) => {
     return false;
 
   } catch (error) {
-    console.error("agent API error:", error);
-    return false;
+    return error.response?.data || {
+    error: "Something went wrong",
+  };
   }
 };
 

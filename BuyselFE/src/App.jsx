@@ -93,13 +93,13 @@ function App() {
           } />
           <Route path="/dashboardpropertydetail/:id" element={
             <DashboardPropertyDetail />
-            } />
+          } />
           <Route path='/plans' element={<PlansPage />} />
           <Route path="/enquiry-detail/:id" element={
             <UserProtectedRoute>
-            <EnquiryDetailLayoutUser />
+              <EnquiryDetailLayoutUser />
             </UserProtectedRoute>
-            } />
+          } />
           <Route path="/helpcenter" element={<HelpCenter />} />
           <Route path='/termsandcondition' element={<TermsPage />} />
           <Route path='/privacy' element={<PrivacyPolicy />} />
@@ -142,9 +142,7 @@ function App() {
               </AgentProtectedRoute>
             } />
             <Route path='/agent/enquiry/:id' element={
-              <AgentProtectedRoute>
                 <EnquiryDetail />
-              </AgentProtectedRoute>
             } />
             <Route path="/agent/property" element={
               <AgentProtectedRoute>

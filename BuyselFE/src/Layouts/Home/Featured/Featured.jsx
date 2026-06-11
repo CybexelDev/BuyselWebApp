@@ -6,11 +6,14 @@ import { properties } from "../../../Constance/constance";
 import { addToWishlist, getFeatured, removeToWishlist } from "../../../Api/userApi";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properties from trusted owners and agents.", data = null }) => {
   const [featured, setFeatured] = useState([]);
 
+  const navigate = useNavigate();
   const sliderRef = useRef(null);
+
   useEffect(() => {
   if (data && data.length > 0) {
     setFeatured(data);
@@ -98,7 +101,6 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
           </div>
         </div>
 
-
         <div className="overflow-hidden mt-8 w-full">
           <div
             ref={sliderRef}
@@ -131,8 +133,7 @@ const Featured = ({ title = "Featured Listings", subTitle = "Handpicked properti
 
 
         <div className="flex items-center justify-between w-full px-4 sm:px-0 sm:pl-4 pt-4 sm:pt-6">
-
-          <button className="instrument-sans flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black pl-1">
+          <button onClick={() => navigate('/propertyListing')} className="instrument-sans flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black pl-1">
             Explore More
             <span className="flex items-center justify-center w-[22px] md:w-[25px] h-[22px] md:h-[25px] rounded-full bg-black text-white">
               <ArrowRight className="w-[13px] h-[13px] sm:w-4 sm:h-4" />

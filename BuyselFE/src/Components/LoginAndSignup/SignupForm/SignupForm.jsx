@@ -11,34 +11,85 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
     const [register, setRegister] = useState({ name: '', email: '', mobail: '', password: '', confirm_password: '' })
     const [checked, setChecked] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate=useNavigate()
-    const handleRegister = async () => {
+    const validateForm = () => {
+  const newErrors = {};
 
-        if (!checked) {
-            toast.info("Please accept Terms and Conditions");
-            return;
-        }
+  if (!register.name.trim()) {
+    newErrors.name = "Name is required";
+  }
 
-        try {
-            const response = await userRegister(
-                register.name,
-                register.email,
-                register.mobail,
-                register.password,
-                register.confirm_password,
-            )
+  if (!register.email.trim()) {
+    newErrors.email = "Email is required";
+  } else if (!/\S+@\S+\.\S+/.test(register.email)) {
+    newErrors.email = "Enter a valid email";
+  }
 
-            if (response) {
-                setEmail(response.email)
-                SetOtpSent(true)
-            } else {
-                console.log("Invalid credentials");
-            }
-        } catch (error) {
+  if (!register.mobail.trim()) {
+    newErrors.mobail = "Phone number is required";
+  } else if (!/^\d{10}$/.test(register.mobail)) {
+    newErrors.mobail = "Enter a valid 10-digit phone number";
+  }
 
-            console.log(error);
-        }
+  if (!register.password) {
+    newErrors.password = "Password is required";
+  } else if (register.password.length < 6) {
+    newErrors.password = "Password must be at least 6 characters";
+  }
+
+  if (!register.confirm_password) {
+    newErrors.confirm_password = "Confirm password is required";
+  } else if (register.password !== register.confirm_password) {
+    newErrors.confirm_password = "Passwords do not match";
+  }
+
+  setErrors(newErrors);
+
+  return Object.keys(newErrors).length === 0;
+};
+
+  const handleRegister = async () => {
+  if (!validateForm()) return;
+
+  if (!checked) {
+    toast.info("Please accept Terms and Conditions");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const response = await userRegister(
+      register.name,
+      register.email,
+      register.mobail,
+      register.password,
+      register.confirm_password
+    );
+
+    if (response?.error) {
+      toast.error(
+        Array.isArray(response.error)
+          ? response.error.join(", ")
+          : response.error
+      );
+      return;
     }
+
+    if (response?.message === "OTP sent to email") {
+      setEmail(response.email);
+      SetOtpSent(true);
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
+    
 
     return (
         <>
@@ -58,10 +109,23 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
                 <input
                     type="text"
                     value={register.name}
-                    onChange={(e) => setRegister({ ...register, name: e.target.value })}
-                    placeholder="Name"
+  onChange={(e) => {
+    setRegister({ ...register, name: e.target.value });
+
+    if (errors.name) {
+      setErrors((prev) => ({
+        ...prev,
+        name: "",
+      }));
+    }
+  }}                    placeholder="Name"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
+                {errors.name && (
+  <p className="text-red-500 text-sm mt-1">
+    {errors.name}
+  </p>
+)}
             </div>
 
             <div className="relative mb-2">
@@ -69,40 +133,94 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
                 <input
                     type="email"
                     value={register.email}
-                    onChange={(e) => setRegister({ ...register, email: e.target.value })}
-                    placeholder="email"
+  onChange={(e) => {
+    setRegister({ ...register, email: e.target.value });
+
+    if (errors.email) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "",
+      }));
+    }
+  }}                    placeholder="email"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
+                {errors.email && (
+  <p className="text-red-500 text-sm mt-1 host-grotesk">
+    {errors.email}
+  </p>
+)}
             </div>
             <div className="relative mb-2">
                 <Phone className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="number"
                     value={register.mobail}
-                    onChange={(e) => setRegister({ ...register, mobail: e.target.value })}
-                    placeholder="Phone"
+ onChange={(e) => {
+    setRegister({ ...register, mobail: e.target.value });
+
+    if (errors.mobail) {
+      setErrors((prev) => ({
+        ...prev,
+        mobail: "",
+      }));
+    }
+  }}                       placeholder="Phone"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
+                {errors.mobail && (
+  <p className="text-red-500 text-sm mt-1 host-grotesk">
+    {errors.mobail}
+  </p>
+)}
             </div>
             <div className="relative mb-2">
                 <Lock className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="password"
                     value={register.password}
-                    onChange={(e) => setRegister({ ...register, password: e.target.value })}
-                    placeholder="Create Password"
+ onChange={(e) => {
+    setRegister({ ...register, password: e.target.value });
+
+    if (errors.password) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "",
+      }));
+    }
+  }}                       placeholder="Create Password"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
+                       {errors.password && (
+  <p className="text-red-500 text-sm mt-1 host-grotesk">
+    {errors.password}
+  </p>
+)}
+     
+                
             </div>
             <div className="relative mb-2">
                 <Phone className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="password"
                     value={register.confirm_password}
-                    onChange={(e) => setRegister({ ...register, confirm_password: e.target.value })}
-                    placeholder="Re-enter Password"
+ onChange={(e) => {
+    setRegister({ ...register, confirm_password: e.target.value });
+
+    if (errors.confirm_password) {
+      setErrors((prev) => ({
+        ...prev,
+        confirm_password: "",
+      }));
+    }
+  }}                       placeholder="Re-enter Password"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
+                {errors.confirm_password && (
+  <p className="text-red-500 text-sm mt-1 host-grotesk">
+    {errors.confirm_password}
+  </p>
+)}
             </div>
 
             <div className="flex items-start gap-2 mt-4 text-sm mb-2" >
@@ -114,9 +232,30 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
                 </p>
             </div>
 
-            <button onClick={handleRegister} className="w-full bg-[#2f332f] text-white py-3 rounded-lg font-medium hover:bg-black transition">
-                Create Account
-            </button>
+           <button
+  onClick={handleRegister}
+  disabled={loading}
+  className="w-full bg-[#2f332f] text-white py-3 rounded-lg font-medium hover:bg-black transition disabled:opacity-50 flex items-center justify-center gap-2"
+>
+  {loading ? (
+    <>
+      <span>Creating Account...</span>
+
+      <div className="dot-spinner">
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+      </div>
+    </>
+  ) : (
+    "Create Account"
+  )}
+</button>
 
             <p className="text-center text-sm mt-4">
                 Already have an account?{" "}

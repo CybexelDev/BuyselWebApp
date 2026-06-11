@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import GuideModal from "./GuideModal";
   
-function GuideLines() {
+function GuideLines({ searchQuery = "" }) {
   const guidelines = [
     {
       id: 1,
@@ -157,7 +157,17 @@ function GuideLines() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectCard, setSelectcard] = useState(null);
+const filteredGuidelines = guidelines.filter((item) => {
+  const searchableText = [
+    item.head,
+    item.desc,
+    ...item.modalData.map((data) => `${data.title} ${data.desc}`),
+  ]
+    .join(" ")
+    .toLowerCase();
 
+  return searchableText.includes(searchQuery.toLowerCase());
+});
   return (
 <div className="bg-white 
                 px-4 sm:px-6 md:px-10 lg:px-14 xl:px-[104px] 
@@ -170,7 +180,7 @@ function GuideLines() {
                   lg:grid-cols-3 
                   gap-4 sm:gap-6 md:gap-8">
 
-    {guidelines.map((item) => (
+    {filteredGuidelines.map((item) => (
       <div
         key={item.id}
         className="border-2 border-[#84CC16] rounded-[12px] 

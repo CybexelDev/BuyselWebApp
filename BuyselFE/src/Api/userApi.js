@@ -26,10 +26,15 @@ export const userRegister = async (name, email, mobail, password, confirm_passwo
       return false;
     }
 
-  } catch (error) {
-    console.error("API error:", error);
-    return false;
-  }
+  }catch (error) {
+  console.error("API error:", error);
+
+  return (
+    error.response?.data || {
+      error: "Something went wrong",
+    }
+  );
+}
 };
 
 export const forgotPassword = async (email) => {
@@ -155,32 +160,30 @@ export const reSentOtp = async (email) => {
 
   }
 }
-
-
 export const userLogin = async (username, password) => {
+  const formData = new FormData();
+  formData.append("email", username);
+  formData.append("password", password);
 
-    const formData = new FormData();
-    formData.append("email", username);
-    formData.append("password", password);
+  try {
+    const result = await axios.post(
+      `${BASE_URL}userlogin/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-    try {
-        const result = await axios.post(`${BASE_URL}userlogin/`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-
-        if (
-            result.data.access &&
-            result.data.user.name &&
-            result.data.user.image
-        ) {
-            return result.data;
-        }
-        return false;
+    return result.data;
   } catch (error) {
-    console.error("API error:", error);
-    return false;
+    return {
+      error:
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Invalid credentials",
+    };
   }
 };
 
@@ -1065,12 +1068,17 @@ formData.append(
         "Content-Type": "multipart/form-data",
       },
     });
+    
 
     return res.data;
   } catch (error) {
     console.error("Property error:", error.response?.data || error.message);
-    return false;
-  }
+  return (
+    error.response?.data || {
+      status: false,
+      message: "Something went wrong",
+    }
+  );  }
 };
 
 export const deleteUserPropertyListing = async(id)=>{

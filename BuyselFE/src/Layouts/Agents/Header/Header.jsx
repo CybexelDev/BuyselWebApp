@@ -25,7 +25,7 @@ function Header({ onchange, location, cityDataSend }) {
   const cornerRadius = 40;
   const topNotchWidth = 230;
   const bottomNotchWidth = 900;
-  const notchDepth = 70;
+  const notchDepth = 75;
   const notchDepth2 = 110;
   const notchRadius = 38;
   const notchRadius2 = 58;
@@ -121,16 +121,16 @@ function Header({ onchange, location, cityDataSend }) {
             {/* Main Content */}
             <div
               className="
-    relative 
-    flex flex-row max-[900px]:flex-col
-    items-start
-    max-[900px]:items-center
-    max-[900px]:text-center
-    justify-between items-start
-    px-4 sm:px-8 lg:pl-[29px]
-    pt-[90px] sm:pt-[110px]   
-    h-full
-    md:pr-0"
+                  relative 
+                  flex flex-row max-[900px]:flex-col
+                  items-start
+                  max-[900px]:items-center
+                  max-[900px]:text-center
+                  justify-between items-start
+                  px-4 sm:px-8 lg:pl-[29px]
+                  pt-[90px] sm:pt-[110px]   
+                  h-full
+                  md:pr-0"
             >
               {/* Left Text */}
               <div className="w-full min-[900px]:max-w-[390px] z-10">
@@ -219,7 +219,7 @@ function Header({ onchange, location, cityDataSend }) {
   <button
     onClick={() => setOpen(!open)}
     className="
-      host-grotesk cursor-pointer
+      host-grotesk cursor-pointer mb-1 md:mb-0
       flex items-center gap-0.5
       bg-black text-white
       px-2 xl:px-3

@@ -172,8 +172,6 @@ export const openRazorpay = async ({
           onSuccess && onSuccess(verifyRes.data);
 
 
-          
-
         } catch (error) {
 
           console.log(
@@ -182,6 +180,7 @@ export const openRazorpay = async ({
           );
 
           toast("Payment Verification Failed ❌");
+
         }
       },
 
@@ -212,6 +211,7 @@ export const openRazorpay = async ({
       );
 
       toast(response.error.description);
+
     });
 
   } catch (error) {
