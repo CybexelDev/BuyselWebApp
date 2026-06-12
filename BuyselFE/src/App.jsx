@@ -74,9 +74,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/agent-detail/:id" element={<AgentDetail />} />
           <Route path='/addyourproperty' element={
-            <UserProtectedRoute>
               <AddProperty />
-            </UserProtectedRoute>
           } />
           <Route path="/editproperty/:id" element={
             <UserProtectedRoute>

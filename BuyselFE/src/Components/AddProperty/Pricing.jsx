@@ -27,12 +27,11 @@ function Pricing({ formData, setFormData, errors }) {
 
               <input
                 type="text"
-                inputMode="numeric"
-                maxLength={10}
-                placeholder="e.g., 25000"
+               
+                placeholder="e.g., 25 thousand"
                 value={formData.pricing.monthlyRent}
                 onChange={(e) =>
-                  updateField("monthlyRent", e.target.value.replace(/\D/g, ""))
+                  updateField("monthlyRent", e.target.value)
                 }
                 className={`w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3] 
          border ${errors.monthlyRent ? "border-red-500" : "border-[#E4E3E3]"}
@@ -58,10 +57,10 @@ function Pricing({ formData, setFormData, errors }) {
 
               <input
                 type="text"
-                placeholder="e.g., 30000"
+                placeholder="e.g., 30 thousand"
                 value={formData.pricing.deposit}
                 onChange={(e) =>
-                  updateField("deposit", e.target.value.replace(/\D/g, ""))
+                  updateField("deposit", e.target.value)
                 }
                 className={`w-1/2 py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
          border ${errors.deposit ? "border-red-500" : "border-[#E4E3E3]"}
@@ -91,10 +90,10 @@ function Pricing({ formData, setFormData, errors }) {
 
               <input
                 type="text"
-                placeholder="e.g., 5000000"
+                placeholder="e.g., 5 Lakh"
                 value={formData.pricing.totalPrice}
                 onChange={(e) =>
-                  updateField("totalPrice", e.target.value.replace(/\D/g, ""))
+                  updateField("totalPrice", e.target.value)
                 }
                 className={`w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
                   border
@@ -124,13 +123,13 @@ function Pricing({ formData, setFormData, errors }) {
   {/* INPUT */}
   <input
     type="text"
-    placeholder="e.g., 2000000"
+    placeholder="e.g., 2 lakhs"
     value={
       formData.pricing.pricePerUnit }
     onChange={(e) =>
       updateField(
         "pricePerUnit",
-        e.target.value.replace(/\D/g, "")
+        e.target.value
       )
     }
     className="w-full py-[10px] pl-[20px] pr-[100px] rounded-[30px]
@@ -178,10 +177,10 @@ function Pricing({ formData, setFormData, errors }) {
 
               <input
                 type="text"
-                placeholder="e.g., 5000000"
+                placeholder="e.g., 50 lakhs"
                 value={formData.pricing?.totalAmount}
                 onChange={(e) =>
-                  updateField("totalAmount", e.target.value.replace(/\D/g, ""))
+                  updateField("totalAmount", e.target.value)
                 }
                 className={`w-full py-[10px] px-[30px] rounded-[30px] bg-[#f3f3f3]
     border

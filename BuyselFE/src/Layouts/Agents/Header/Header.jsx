@@ -10,6 +10,7 @@ function Header({ onchange, location, cityDataSend }) {
   const [open, setOpen] = useState(false);
   const [selecetdLocation, setSelectedLocation] = useState("Location");
   
+  
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -76,6 +77,8 @@ function Header({ onchange, location, cityDataSend }) {
       if (city) {
         cityDataSend(city); 
       }
+      console.log("Selected city:", selecetdLocation);
+console.log("City API response:", city);
     };
     getCityDatas();
   }, [selecetdLocation]);
