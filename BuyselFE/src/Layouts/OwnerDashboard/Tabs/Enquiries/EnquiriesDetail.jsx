@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import { getEnquiryDetail } from '../../../../Api/userApi';
+import { useSelector } from 'react-redux';
 
 const EnquiryDetailLayoutUser = () => {
     const navigate=useNavigate()
@@ -15,6 +16,10 @@ const [detail, setDetail] = useState(null);
 const [loading, setLoading] = useState(false);
 
 const { id } = useParams();
+
+ const user = useSelector((state) => state.user);
+  const agent = useSelector((state) => state.agent);
+  const role = user?.role || agent?.role;
 
 useEffect(() => {
   fetchDetail();
@@ -60,8 +65,11 @@ if (!detail) {
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex overflow-x-hidden">
 
       <main className="flex-1 w-full transition-all duration-300">
-        <div className="max-w-6xl mx-auto p-4 md:p-10">
-          
+<div
+  className={`mx-auto p-4 md:p-10 ${
+    role === "agent" ? "max-w-6xl" : "w-full"
+  }`}
+>      
           <header className="mb-8 flex items-center justify-between">
             <button className="group flex items-center gap-2 text-slate-500 hover:text-[#74C122] transition-colors font-bold text-sm uppercase tracking-widest instrument-sans" onClick={()=>navigate("/ownerdashboard?tab=enquiries")}>
               <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform"  />

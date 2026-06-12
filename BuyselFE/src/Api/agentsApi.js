@@ -66,7 +66,7 @@ export const changeAgentPassword = async (currentPassword, newPassword, confirmP
       confirm_password: confirmPassword,
     };
 
-    const result = await api.post("/agent/change-password/", data);
+    const result = await api.post("/agent/change_password/", data);
 
     return result.data;
 

@@ -70,6 +70,7 @@ function AddPropertySection() {
     categories: [],
     subcategories: [],
   });
+  const [loading, setLoading] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -244,57 +245,80 @@ const validateStep = () => {
   let newErrors = {};
 
   if (step === 1) {
-    if (!formData.category)
-      newErrors.category = "Category is required";
+  // Common validation
 
-    if (!formData.subcategory)
-      newErrors.subcategory = "Subcategory is required";
+  if (!formData.category)
+    newErrors.category = "Category is required";
 
-    if (!formData.purpose)
-      newErrors.purpose = "Purpose is required";
+  if (!formData.subcategory)
+    newErrors.subcategory = "Subcategory is required";
 
-    if (!formData.title?.trim())
-      newErrors.title = "Title is required";
+  if (!formData.purpose)
+    newErrors.purpose = "Purpose is required";
 
+  if (!formData.title?.trim())
+    newErrors.title = "Title is required";
 
+  if (!formData.city?.trim())
+    newErrors.city = "City is required";
 
-    if (!formData.city?.trim())
-      newErrors.city = "City is required";
+  if (!formData.pincode?.trim())
+    newErrors.pincode = "Pincode is required";
 
-    if (!formData.pincode?.trim())
-      newErrors.pincode = "Pincode is required";
+  if (!formData.description?.trim())
+    newErrors.description = "Description is required";
+
+  if (!formData.owner?.trim())
+    newErrors.owner = "Owner name is required";
+
+  if (!formData.phone?.trim())
+    newErrors.phone = "Phone is required";
+
+  if (!formData.whatsapp?.trim())
+    newErrors.whatsapp = "Whatsapp is required";
+if (!formData.phone?.trim())
+   { newErrors.phone = "Phone is required"; } else if
+ (!/^\d{10}$/.test(formData.phone)) { newErrors.phone = "Phone number must be 10 digits"; }
+  if (!formData.whatsapp?.trim()) 
+    { newErrors.whatsapp = "Whatsapp is required"; } 
+  else if
+   (!/^\d{10}$/.test(formData.whatsapp))
+    { newErrors.whatsapp = "Whatsapp number must be 10 digits"; } 
+    if (!formData.pincode?.trim()) 
+      { newErrors.pincode = "Pincode is required"; } 
+    else if 
+    (!/^\d{6}$/.test(formData.pincode)) 
+    { newErrors.pincode = "Pincode must be 6 digits"; }
+  // Agent-only validation
+  if (isAgent) {
+    if (!formData.landArea?.trim())
+      newErrors.landArea = "Land area is required";
+
+    if (!formData.squareFeet?.trim())
+      newErrors.squareFeet = "Square feet is required";
 
     if (!formData.district?.trim())
       newErrors.district = "District is required";
 
-    if (!formData.description?.trim())
-      newErrors.description= "Description is required";
+    if (!formData.state?.trim())
+      newErrors.state = "State is required";
 
-    if (!formData.owner?.trim())
-      newErrors.owner = "Owner name is required";
+    if (!formData.googleLocation?.trim())
+      newErrors.googleLocation = "Google location is required";
 
-    if (!formData.phone?.trim())
-      newErrors.phone = "Phone is required";
+    if (!formData.features?.length)
+      newErrors.features = "Select property features";
 
-    if (!formData.whatsapp?.trim())
-      newErrors.whatsapp = "Whatsapp is required";
+    if (!formData.amenities?.length)
+      newErrors.amenities = "Select at least one amenity";
+
+    if (
+      !formData.keyPoints?.length ||
+      formData.keyPoints.every((item) => !item.trim())
+    ) {
+      newErrors.keyPoints = "Add at least one key selling point";
+    }
   }
-    if (!formData.phone?.trim()) {
-  newErrors.phone = "Phone is required";
-} else if (!/^\d{10}$/.test(formData.phone)) {
-  newErrors.phone = "Phone number must be 10 digits";
-}
-
-if (!formData.whatsapp?.trim()) {
-  newErrors.whatsapp = "Whatsapp is required";
-} else if (!/^\d{10}$/.test(formData.whatsapp)) {
-  newErrors.whatsapp = "Whatsapp number must be 10 digits";
-}
-
-if (!formData.pincode?.trim()) {
-  newErrors.pincode = "Pincode is required";
-} else if (!/^\d{6}$/.test(formData.pincode)) {
-  newErrors.pincode = "Pincode must be 6 digits";
 }
   if (step === 2) {
     if (formData.purpose === "Rent") {
@@ -337,6 +361,8 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
+        setLoading(true);
+
     const optionToFieldMap = {};
 
     propertyData.subcategories.forEach((sub) => {
@@ -402,7 +428,10 @@ if (!res?.status) {
     }
   } catch (err) {
     console.error("Submit error:", err);
+  }finally {
+    setLoading(false);
   }
+
 };
 const handleNext = () => {
   const valid = validateStep();
@@ -443,6 +472,7 @@ const handleNext = () => {
                 formData={formData}
                 setFormData={setFormData}
                 errors={errors}
+                isAgent={isAgent}
               />
             )}
             {step === 2 && (
@@ -471,6 +501,8 @@ const handleNext = () => {
   next={ handleNext}
   back={() => setStep(step - 1)}
   handleSubmit={handleSubmit}
+    loading={loading}
+
 />
           </form>
         </div>

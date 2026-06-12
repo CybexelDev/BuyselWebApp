@@ -200,7 +200,7 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
                 
             </div>
             <div className="relative mb-2">
-                <Phone className="absolute left-4 top-4 text-gray-500" size={18} />
+                <Lock className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="password"
                     value={register.confirm_password}

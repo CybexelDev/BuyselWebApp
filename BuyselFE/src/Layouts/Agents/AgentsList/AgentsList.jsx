@@ -41,22 +41,28 @@ export default function AgentTabs({ searchedData, query, locationDats }) {
         }
     }, [type]);
 
-    useEffect(() => {
-        if (query.length > 0) {
-            setAgents(searchedData);
-        }
-        else {
-            const getAgent = async () => {
-                const data = await getAgents({ category: activeTab });
-                if (data) {
-                    setAgents(data);
-                }
-            };
-            getAgent();
-        }
+useEffect(() => {
+  if (locationDats?.length > 0) {
+    setAgents(locationDats);
+    return;
+  }
 
-    }, [activeTab, searchedData]);
+  if (query.length > 0) {
+    setAgents(searchedData);
+    return;
+  }
 
+  const getAgent = async () => {
+    const data = await getAgents({ category: activeTab });
+
+    if (data) {
+      setAgents(data);
+    }
+  };
+
+  getAgent();
+}, [activeTab, searchedData, locationDats, query]);
+ 
 
 
     return (

@@ -4,7 +4,7 @@ import { Layers, List, Target } from "lucide-react";
 import SelectField from "../Select/CustomSelect";
 import { getPropertyData } from "../../Api/agentsApi";
 
-function  PropertyInfo({ formData, setFormData, errors }) {
+function  PropertyInfo({ formData, setFormData, errors,isAgent }) {
   const [propertyData, setPropertyData] = useState({
     categories: [],
     subcategories: [],
@@ -231,7 +231,7 @@ const toggleAmenity = (amenity) => {
             value={formData.category}
             onChange={handleCategoryChange}
               error={errors?.category}
-            required
+            required={!isAgent}
           />
           <SelectField
             label="Subcategory"
@@ -240,7 +240,7 @@ const toggleAmenity = (amenity) => {
             value={formData.subcategory}
             onChange={handleSubcategoryChange}
             error={errors?.subcategory}
-            required
+            required={!isAgent}
           />
           <SelectField
             label="Purpose"
@@ -249,7 +249,7 @@ const toggleAmenity = (amenity) => {
             value={formData.purpose}
             onChange={(val) => setFormData({ ...formData, purpose: val })}
             error={errors?.purpose}
-            required
+            required={!isAgent}
           />
         </div>
 
@@ -423,7 +423,7 @@ updated.push({
             value={formData.title}
             onChange={handleChange}
             error={errors?.title}
-            required
+            required={!isAgent}
           />
 
           <Input
@@ -452,7 +452,7 @@ updated.push({
             value={formData.city}
             onChange={handleChange}
             error={errors?.city}
-            required
+            required={!isAgent}
           />
           <Input
             label="Village"
@@ -473,7 +473,7 @@ updated.push({
             value={formData.pincode}
             onChange={handleChange}
             error={errors?.pincode}
-            required
+            required={!isAgent}
           />
           <Input
             label="District"
@@ -601,7 +601,7 @@ updated.push({
             value={formData.description}
             onChange={handleChange}
               error={errors?.description}
-required
+required={!isAgent}
           />
         </div>
         <div className="mt-8">
@@ -732,7 +732,7 @@ required
             value={formData.owner}
             onChange={handleChange}
             error={errors?.owner}
-            required
+            required={!isAgent}
           />
 
           <Input
@@ -741,7 +741,7 @@ required
             value={formData.phone}
             onChange={handleChange}
             error={errors?.phone}
-            required
+            required={!isAgent}
           />
 
           <Input
@@ -750,7 +750,7 @@ required
             value={formData.whatsapp}
             onChange={handleChange}
             error={errors?.whatsapp}
-            required
+            required={!isAgent}
           />
         </div>
         {isAmenitiesOpen && (
