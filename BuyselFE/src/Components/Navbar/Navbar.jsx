@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import add from '../../assets/images/nav/add.png'
 
 const Navbar = ({
-  gap = "lg:gap-[31px]",
+  gap = "xl:gap-[31px]",
   top = "top-9",
   text = "text-[14px]",
   color = "text-[#676767]",
@@ -47,7 +47,7 @@ const [mobileDropdown, setMobileDropdown] = useState(false);
     <header className={`absolute ${top} left-0 w-full z-40 px-6 ${padding}`}>
       <div className="flex items-center justify-between py-3">
 
-     <nav className={`hidden lg:flex ${gap} poppins ${text} font-[500]`}>
+     <nav className={`hidden lg:flex ${gap} gap-[20px] poppins ${text} font-[500]`}>
   {menuItems.map((item) => (
     <div key={item.name} className="relative group">
      <div
