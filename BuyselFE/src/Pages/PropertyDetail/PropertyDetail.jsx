@@ -8,26 +8,28 @@ import Footer from '../../Components/Footer/Footer'
 import { DescriptionAndAminities } from '../../Layouts/PropertyDetail/DescriptionAndAminities/DescriptionAndAminities'
 import { getPropertyDetail } from '../../Api/userApi'
 import { getRelatedProperties } from '../../Api/userApi'
+import './PropertyDetail.css'
 function PropertyDetail() {
 
-  const { id,type } = useParams()
+  const { id, type } = useParams()
 
   const [productDetail, setProductDetail] = useState(null)
   const [similarProperties, setSimilarProperties] = useState([]);
   const [loading, setLoading] = useState(true)
 
-const extractLatLng = (url) => {
-  const match = url.match(/@([-.\d]+),([-.\d]+)/);
+  const extractLatLng = (url) => {
+    const match = url.match(/@([-.\d]+),([-.\d]+)/);
 
-  if (match) {
-    return {
-      lat: parseFloat(match[1]),
-      lng: parseFloat(match[2])
-    };
-  }
+    if (match) {
+      return {
+        lat: parseFloat(match[1]),
+        lng: parseFloat(match[2])
+      };
+    }
 
-  return null;
-};
+    return null;
+  };
+
 const transformProperty = (data) => {
   const coords = extractLatLng(data.location);
   return {
@@ -62,53 +64,58 @@ const transformProperty = (data) => {
     amenities: data.amenities || []
   }
 }
+  useEffect(() => {
+    const fetchRelated = async () => {
+      const res = await getRelatedProperties(id);
 
-useEffect(() => {
-  const fetchRelated = async () => {
-    const res = await getRelatedProperties(id);
+      if (res) {
+        setSimilarProperties(res.data);
+      }
+    };
 
-    if (res) {
-      setSimilarProperties(res.data);
+    fetchRelated();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getPropertyDetail(id, type)
+
+      if (res) {
+        const formatted = transformProperty(res)
+        setProductDetail(formatted)
+      }
+
+      setLoading(false)
     }
-  };
 
-  fetchRelated();
-}, [id]);
-
-useEffect(() => {
-  const fetchData = async () => {
-    const res = await getPropertyDetail(id,type)
-
-    if (res) {
-      const formatted = transformProperty(res)
-      setProductDetail(formatted)
-    }
-
-    setLoading(false)
-  }
-
-  fetchData()
-}, [id])
-  if (loading) return <div>Loading...</div>
+    fetchData()
+  }, [id])
+  if (loading) return <div className="flex items-center justify-center h-screen">
+    <div className="three-body">
+      <div className="three-body__dot"></div>
+      <div className="three-body__dot"></div>
+      <div className="three-body__dot"></div>
+    </div>
+  </div>
   if (!productDetail) return <div>No Property Found</div>
 
   return (
     <div>
-      <HeaderProperty property={productDetail}/>
+      <HeaderProperty property={productDetail} />
       <DescriptionAndAminities data={productDetail} />
-      <MapSection 
+      <MapSection
         address={productDetail.addressfully}
         latitude={productDetail.latitude}
         longitude={productDetail.longitude}
         landmarks={productDetail.landmarks}
       />
-      <Featured  
-        title="Similar Properties" 
+      <Featured
+        title="Similar Properties"
         subTitle="Explore our latest listings for sale, rent and lease across"
         data={similarProperties}
       />
-      <AppPromoBanner/>
-      <Footer/>
+      <AppPromoBanner />
+      <Footer />
     </div>
   )
 }
