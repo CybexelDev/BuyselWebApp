@@ -39,6 +39,7 @@ const transformProperty = (data) => {
     area: `${data.price_details.sq_ft} sq.ft`,
     postedOn: data.created_at,
     fullAddress: data.location,
+        is_wishlist: data.is_wishlist,
     latitude: coords?.lat,
     longitude: coords?.lng,
     landmarks: data.land_mark.map(item => ({
