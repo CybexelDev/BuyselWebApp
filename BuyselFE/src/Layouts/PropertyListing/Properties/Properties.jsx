@@ -15,19 +15,10 @@ function PropertiesSection({ propertiesData }) {
 
   console.log(properties, "propertiesData in properties section ???????????????");
 
-  // useEffect(() => {
-
-  //   if (propertiesData && propertiesData.length > 0) {
-  //     setProperties(propertiesData);
-  //     setLoading(false);
-  //   }
-
-  // }, [propertiesData]);
 
 useEffect(() => {
-  if (propertiesData) {
-    setProperties(propertiesData);
-  }
+  setProperties(propertiesData || []);
+
 
   setLoading(false);
 }, [propertiesData]);

@@ -394,7 +394,7 @@ export const sendEnquiry = async (formData) => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await axios.get(`${BASE_URL}property-detail/${id}/`,          
+        const result = await api.get(`${BASE_URL}property-detail/${id}/`,          
       );
 
     return result.data;
@@ -569,7 +569,7 @@ export const removeToWishlist = async ({ id }) => {
 
 export const getFeatured = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}featured/`);
+    const res = await api.get(`${BASE_URL}featured/`);
     return res.data;
 
   } catch (err) {

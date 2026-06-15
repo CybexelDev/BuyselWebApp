@@ -39,7 +39,7 @@ const handleSearch = () => {
   params.append("category", propertyType);
 
   if (locationValue) {
-    params.append("location", locationValue);
+    params.append("city", locationValue);
   }
 
   if (budget) {

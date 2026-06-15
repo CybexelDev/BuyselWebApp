@@ -58,7 +58,7 @@ if (type === "admin") {
             <img
               src={enquiryImg}
               alt="Property Enquiry"
-              className="w-full max-w-md object-contain"
+              className="w-full max-w-md  object-contain"
             />
           </div>
         </div>
@@ -96,7 +96,7 @@ if (type === "admin") {
                       name: e.target.value,
                     })
                   }
-                  className="w-full h-[48px] border border-[#D6D6D6] rounded-full px-5 outline-none focus:border-[#75C222]"
+                  className="w-full h-[48px] border border-[#D6D6D6] rounded-full text-black  px-5 outline-none focus:border-[#75C222]"
                 />
               </div>
 
@@ -159,7 +159,7 @@ if (type === "admin") {
                     message: e.target.value,
                   })
                 }
-                className="w-full h-[120px] border border-[#D6D6D6] rounded-[24px] p-5 resize-none outline-none focus:border-[#75C222]"
+                className="w-full h-[120px] border text-black border-[#D6D6D6] rounded-[24px] p-5 resize-none outline-none focus:border-[#75C222]"
               />
             </div>
 
