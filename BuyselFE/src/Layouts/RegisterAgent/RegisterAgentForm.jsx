@@ -17,7 +17,7 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   console.log(selectedPlan, "selected pln>>>>>>>>>>>>>>>>>");
-  
+
 
   const validateForm = () => {
     const newErrors = {};
@@ -105,23 +105,27 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
 
     };
 
-    openRazorpay({
-      name: "BuySel",
-      description: selectedPlan?.label,
-      plan_type: selectedPlan?.plan_type,
-      plan_id: selectedPlan?.plan_id,
-      // ✅ success callback
-      onSuccess: (res) => {
-        console.log("Property Payment", res);
-        navigate("/invoice", {
-          state: {
-            paymentData: res,
-          },
-        });
-      },
-    })
+
 
     const res = await registerAgent(payload);
+
+    if (res?.message === "Registration submitted. Waiting for admin approval.") {
+      openRazorpay({
+        name: "BuySel",
+        description: selectedPlan?.label,
+        plan_type: selectedPlan?.plan_type,
+        plan_id: selectedPlan?.plan_id,
+        // ✅ success callback
+        onSuccess: (res) => {
+          console.log("Property Payment", res);
+          navigate("/invoice", {
+            state: {
+              paymentData: res,
+            },
+          });
+        },
+      })
+    }
 
     if (res?.status) {
       toast.success(res.message || "Registered");

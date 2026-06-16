@@ -45,7 +45,7 @@ import CommonProtectedRoute from './Components/CommonProtectionRoute/commonProte
 function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
-  const { image, userName, userId, accessToken, role, listedCount } = useSelector((state) => state.user);
+  const { image, userName, userId, accessToken, role, listedCount,remainingProperty } = useSelector((state) => state.user);
 
   console.log(listedCount, "ppppppppppppppppp");
 
@@ -76,11 +76,12 @@ function App() {
           <Route path="/agent-detail/:id" element={<AgentDetail />} />
           {/* <Route path='/addyourproperty' element={
             <UserProtectedRoute>
+          <Route path='/addyourproperty' element={
               <AddProperty />
-            </UserProtectedRoute>
           } />
           <Route path="/editproperty/:id" element={
             <UserProtectedRoute>
+              
               <AddProperty />
             </UserProtectedRoute>
           } /> */}

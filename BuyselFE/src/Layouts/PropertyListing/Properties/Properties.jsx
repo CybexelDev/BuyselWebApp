@@ -2,18 +2,27 @@ import React, { useEffect, useState } from 'react'
 import Propertycard from '../../../Components/PropertyCard/Propertycard'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
-import {  Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { toast } from 'sonner';
-
+import SkeletonCard from '../../../Components/SkeletonCard/SkeletonCard';
+import noimage from "../../../assets/images/propertDetail/noimage.png"
 function PropertiesSection({ propertiesData }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [page, setPage] = useState(1);
   const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setProperties(propertiesData);
-  }, [propertiesData]);
+  console.log(properties, "propertiesData in properties section ???????????????");
+
+
+useEffect(() => {
+  setProperties(propertiesData || []);
+
+
+  setLoading(false);
+}, [propertiesData]);
+
 
   useEffect(() => {
     function handleResize() {
@@ -56,62 +65,127 @@ function PropertiesSection({ propertiesData }) {
   const currentProperties = properties?.slice(firstIndex, lastIndex);
   const totalPages = Math.ceil(properties?.length / itemsPerPage);
 
-const addWishlist = (id) => {
+  const addWishlist = (id) => {
     const token = localStorage.getItem("accessToken");
-  
+
     if (!token) {
       toast.error("Please login to use wishlist");
       return;
     }
-  addToWishlist({ id });
+    addToWishlist({ id });
     toast.success("Added to wishlist")
 
-  setProperties((prev) =>
-    prev.map((item) =>
-      item.id === id
-        ? { ...item, is_wishlisted: true }
-        : item
-    )
-  );
-};
+    setProperties((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, is_wishlisted: true }
+          : item
+      )
+    );
+  };
 
- const removeWishlist = (id) => {
-  removeToWishlist({ id });
-  toast.error("Removed from wishlist ");
+  const removeWishlist = (id) => {
+    removeToWishlist({ id });
+    toast.error("Removed from wishlist ");
 
-  setProperties((prev) =>
-    prev.map((item) =>
-      item.id === id
-        ? { ...item, is_wishlisted: false }
-        : item
-    )
-  );
-};
-
+    setProperties((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, is_wishlisted: false }
+          : item
+      )
+    );
+  };
+const isFiltered = propertiesData?.length > 0 && properties?.length === 0;
   return (
     <div className='py-8 px-1 md:px-6 lg:px-8 mb-2 -mt-20'>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-4">
-        {currentProperties.map((property) => (
-          <Propertycard
-            click={() =>
-              property.is_wishlisted
-                ? removeWishlist(property.id)
-                : addWishlist(property.id)
-            }
-            wishlistIcon={property.is_wishlisted ? (
-                             <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
-                            <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
-                          </svg>
-                        ) : (
-                           <Heart size={13} fill="none" stroke="black" className="scale-100" />
-                        )}
-            key={property.id}
-            property={property}
-            color="bg-[#fbfbfb]"
-            shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
-          />
-        ))}
+        {/* {loading
+          ? Array.from({ length: 8 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))
+          : currentProperties.map((property) => (
+            <Propertycard
+              click={() =>
+                property.is_wishlisted
+                  ? removeWishlist(property.id)
+                  : addWishlist(property.id)
+              }
+              wishlistIcon={property.is_wishlisted ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
+                  <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
+                </svg>
+              ) : (
+                <Heart size={13} fill="none" stroke="black" className="scale-100" />
+              )}
+              key={property.id}
+              property={property}
+              color="bg-[#fbfbfb]"
+              shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
+            />
+          ))} */}
+
+        {loading ? (
+          Array.from({ length: 8 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))
+        ) : currentProperties?.length > 0 ? (
+          currentProperties.map((property) => (
+            <Propertycard
+              key={property.id}
+              click={() =>
+                property.is_wishlisted
+                  ? removeWishlist(property.id)
+                  : addWishlist(property.id)
+              }
+              wishlistIcon={
+                property.is_wishlisted ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15px"
+                    height="15px"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="#e11a1a"
+                      d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"
+                    />
+                  </svg>
+                ) : (
+                  <Heart
+                    size={13}
+                    fill="none"
+                    stroke="black"
+                    className="scale-100"
+                  />
+                )
+              }
+              property={property}
+              color="bg-[#fbfbfb]"
+              shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
+            />
+          ))
+        ) : (
+          <div className="col-span-2 md:col-span-2 lg:col-span-3 xl:col-span-4 flex flex-col items-center justify-center py-20">
+            <img
+              src={noimage}
+              alt="No Properties"
+              className="w-40 mb-4 opacity-80"
+            />
+           <h3 className="text-xl font-semibold text-gray-700">
+  {isFiltered
+    ? "No Matching Properties Found"
+    : "No Properties Available"}
+</h3>
+
+<p className="text-gray-500 mt-2 text-center max-w-md">
+  {isFiltered
+    ? "We couldn't find any properties matching your search criteria. Try adjusting your filters."
+    : "There are currently no properties available in this category. Check back later for new listings."}
+</p>
+          </div>
+        )}
       </div>
 
 
@@ -144,7 +218,7 @@ const addWishlist = (id) => {
             addPage(page + 1);
             pages.sort((a, b) => a - b);
 
-            
+
             return pages.map((p, i) => {
               if (i > 0 && p - pages[i - 1] > 1) {
                 return (

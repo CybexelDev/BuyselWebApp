@@ -10,7 +10,7 @@ function PropertySearch() {
   const [budget, setBudget] = useState("");
 const [propertyTypeOpen, setPropertyTypeOpen] = useState(false);
 const [locationValue, setLocationValue] = useState("");
-const [propertyType, setPropertyType] = useState("");
+const [propertyType, setPropertyType] = useState("Residential");
   const options = [
     "Below ₹5 Lakhs",
     "₹5 – 10 Lakhs",
@@ -39,7 +39,7 @@ const handleSearch = () => {
   params.append("category", propertyType);
 
   if (locationValue) {
-    params.append("location", locationValue);
+    params.append("city", locationValue);
   }
 
   if (budget) {

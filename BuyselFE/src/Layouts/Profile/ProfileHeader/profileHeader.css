@@ -86,4 +86,14 @@
     var(--_g) 0 calc(-1*var(--_d) - var(--y));
   mask-repeat: no-repeat;
 }
+
+.profile-cta-logo-container {
+    width: 18%;
+    padding: 13px 15px;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    background: #ffffff;
+    border-radius: 0 0 25px 25px;
+}
 }

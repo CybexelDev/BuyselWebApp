@@ -155,7 +155,7 @@ if (response?.error) {
 </div>
 
                 <button   disabled={loading}
- onClick={handleLogin} className="w-full bg-[#74c222] hover:bg-[#5f9d1c] instrument-sans cursor-pointer text-white py-3 rounded-lg font-medium transition flex items-center justify-center">
+                     onClick={handleLogin} className="w-full bg-[#74c222] hover:bg-[#5f9d1c] instrument-sans cursor-pointer text-white py-3 rounded-lg font-medium transition flex items-center justify-center">
                     <div>Login </div>  {loading && <div class="dot-spinner">
                         <div class="dot-spinner__dot"></div>
                         <div class="dot-spinner__dot"></div>
