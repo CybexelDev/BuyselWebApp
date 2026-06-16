@@ -101,7 +101,6 @@ useEffect(() => {
 
   setRemainingProperty(res.remaining_property);
   setRemainingEdit(res.remaining_edit_count)
-  console.log("remain:",remainingProperty);
   
 
 

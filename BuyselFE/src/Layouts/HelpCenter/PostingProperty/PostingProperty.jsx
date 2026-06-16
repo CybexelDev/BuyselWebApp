@@ -2,7 +2,7 @@ import React from "react";
 
 export default function PostingProperty() {
   return (
-    <div className="bg-white min-h-screen py-12 px-4 sm:px-6 md:px-10 lg:px-[104px]">
+    <div className="bg-white  py-12 px-4 sm:px-6 md:px-10 lg:px-[104px]">
 
       <p className="text-[11px] inter tracking-[2px] text-[#6A9F00] font-semibold uppercase mb-2">
         Popular in Category

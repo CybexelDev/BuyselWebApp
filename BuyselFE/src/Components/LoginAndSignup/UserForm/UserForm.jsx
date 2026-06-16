@@ -50,6 +50,7 @@ if (response?.error) {
 }
       if (response) {
         console.log("user Login success page:", response);
+        
         dispatch({
           type: 'SET_USER',
           payload: {
@@ -60,6 +61,7 @@ if (response?.error) {
             verificationStatus: response?.user?.auth_provider,
             listedCount: response?.user?.total_properties,
             role:response?.login_as,
+            remainingProperty:response?.user?.remaining_property
           }
         })
 
@@ -101,6 +103,8 @@ if (response?.error) {
             verificationStatus: response?.user?.auth_provider,
             listedCount: response?.user?.total_properties,
             role:response?.login_as,
+                        remainingProperty:response?.user?.remaining_property
+
           }
         })
 

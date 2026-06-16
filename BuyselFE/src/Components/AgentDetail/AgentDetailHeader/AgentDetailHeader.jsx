@@ -66,7 +66,10 @@ useEffect(() => {
     window.open(url, "_self");
 
   }
-
+const hasSocialLinks =
+  agentData?.facebook ||
+  agentData?.instagram ||
+  agentData?.website;
   return (
     <div className="p-5 relative">
       <Navbar />
@@ -271,11 +274,12 @@ useEffect(() => {
     </div>
 
     <span className="text-black font-medium host-grotesk">
-      Social Media & Website
+      {hasSocialLinks?
+      "Social Media & Website":"No social media or website information available."}
     </span>
   </div>
 
-{showLinks && (
+{showLinks&&hasSocialLinks && (
   <div className="absolute top-full left-0  z-50 w-72 overflow-hidden rounded-2xl border border-[#D6FF98] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] backdrop-blur-md host-grotesk">
 
     <div className="bg-gradient-to-r from-[#84CC16] to-[#A3E635] px-4 py-3">
