@@ -191,10 +191,10 @@ export const getAgentEnquiries = async () => {
 };
 export const registerAgent = async (data) => {
   try {
-    const res = await axios.post(
-      `${BASE_URL}agent/register-request/`,
-      data
-    );
+    const res = await api.post(
+  "/agent/register-request/",
+  data
+);
 
     return res.data;
   } catch (err) {

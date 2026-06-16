@@ -11,6 +11,7 @@ import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import empty from "../../../assets/images/wishlist/empty.gif"
 import emptySvg from "../../../assets/images/icons/empty.svg";
+import { useNavigate } from "react-router-dom";
 
 
 function WishlistListingSection() {
@@ -20,6 +21,8 @@ function WishlistListingSection() {
   const [sortType, setSortType] = useState("latest");
   const [showSort, setShowSort] = useState(false);
   const cardsPerPage = 8;
+
+  const navigate = useNavigate()
 
   const addWishlist = (id) => {
     const token = localStorage.getItem("accessToken");
@@ -202,7 +205,8 @@ function WishlistListingSection() {
               Start exploring and save properties you like.
             </p>
 
-            <button className="bg-[#7BC21F] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition cursor-pointer">
+            <button onClick={()=>navigate("/propertyListing")}
+            className="bg-[#7BC21F] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition cursor-pointer">
               Browse Properties
             </button>
           </div>

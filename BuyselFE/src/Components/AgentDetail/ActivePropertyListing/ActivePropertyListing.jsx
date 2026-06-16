@@ -335,28 +335,31 @@ if (res?.properties) {
             className="flex  lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8 px-4 lg:px-15 overflow-x-auto lg:overflow-visible no-scrollbar lg:mt-12 xl:mt-8 pb-6"
             ref={scrollRef}
           >
-            {currentProperties.map((property, index) => (
-              <div key={index} className="min-w-[280px] lg:min-w-0 ">
-                <Propertycard
-                  click={() =>
-                    property.is_wishlisted
-                      ? removeWishlist(property.id)
-                      : addWishlist(property.id)
-                  }
-                  wishlistIcon={property.is_wishlisted ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
-                      <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
-                    </svg>
-                  ) : (
-                    <Heart size={13} fill="none" stroke="black" className="scale-100" />
-                  )}
-                  property={property}
-                  shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
-                />
-              </div>
-            ))}
+            {currentProperties.length > 0 ? (
+  currentProperties.map((property, index) => (
+    <div key={index} className="min-w-[280px] lg:min-w-0">
+      <Propertycard property={property} />
+    </div>
+  ))
+) : (
+  <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
+    <div className="w-20 h-20 rounded-full bg-lime-100 flex items-center justify-center mb-4">
+      <Search size={32} className="text-lime-600" />
+    </div>
+
+    <h3 className="text-2xl font-semibold instrument-sans text-gray-800 mb-2">
+      No Properties Available
+    </h3>
+
+    <p className="text-gray-500 poppins max-w-md">
+      We're currently updating our listings. Check back soon for
+      exclusive and active properties.
+    </p>
+  </div>
+)}
           </div>
 
+{currentProperties.length > 0 && (
           <div className="flex items-center justify-between w-full px-4 lg:px-15 pb-10 mt-3">
             <button className="instrument-sans flex items-center gap-2 font-semibold text-[13px] lg:text-[15px] text-black cursor-pointer">
               Explore More
@@ -374,6 +377,7 @@ if (res?.properties) {
               </button>
             </div>
           </div>
+)}
         </div>
       </div>
     </div>

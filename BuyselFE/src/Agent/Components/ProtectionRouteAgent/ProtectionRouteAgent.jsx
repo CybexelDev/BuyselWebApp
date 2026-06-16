@@ -7,6 +7,8 @@ const AgentProtectedRoute = ({ children }) => {
   );
 
   const agent = JSON.parse(persistRoot?.agent || "{}");
+    console.log("Agent State:", agent);
+  console.log("isLoggedIn:", agent?.isLoggedIn);
 
   if (!agent?.isLoggedIn) {
     return <Navigate to="/loginandsignup" replace />;
