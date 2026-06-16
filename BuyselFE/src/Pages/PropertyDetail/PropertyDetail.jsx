@@ -8,7 +8,7 @@ import Footer from '../../Components/Footer/Footer'
 import { DescriptionAndAminities } from '../../Layouts/PropertyDetail/DescriptionAndAminities/DescriptionAndAminities'
 import { getPropertyDetail } from '../../Api/userApi'
 import { getRelatedProperties } from '../../Api/userApi'
-import './PropertyDetail.css'
+import Loading from '../../Components/Loading/Loading'
 function PropertyDetail() {
 
   const { id, type } = useParams()
@@ -90,13 +90,7 @@ const transformProperty = (data) => {
 
     fetchData()
   }, [id])
-  if (loading) return <div className="flex items-center justify-center h-screen">
-    <div className="three-body">
-      <div className="three-body__dot"></div>
-      <div className="three-body__dot"></div>
-      <div className="three-body__dot"></div>
-    </div>
-  </div>
+  if (loading) return <Loading />
   if (!productDetail) return <div>No Property Found</div>
 
   return (
