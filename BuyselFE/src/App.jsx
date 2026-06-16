@@ -119,7 +119,12 @@ function App() {
   path="/addyourproperty"
   element={
     <CommonProtectedRoute>
-      <AddProperty />
+      {remainingProperty>0?(
+              <AddProperty />
+      )
+      : (
+      <PlansPage/>
+      )}
     </CommonProtectedRoute>
   }
 />
