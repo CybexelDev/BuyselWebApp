@@ -5,10 +5,8 @@ import { ArrowRight, ChevronLeft, ChevronRight, LogIn, Search } from 'lucide-rea
 import "./activePropertylisting.css";
 import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
 import {  Heart } from "lucide-react";
-import "../../../assets/images/propertDetail/noimage.png"
 import { searchAgentProperties,getAgentPropertyCities,filterAgentPropertyByCity} from '../../../Api/userApi';
 import { toast } from 'sonner';
-import noimage from "../../../assets/images/propertDetail/noimage.png"
 function ActivePropertyListing({ agentData, role,id }) {
   const pp = properties.slice(0, 8);
   const [activeCategory, setActiveCategory] = useState("Residential");
@@ -200,10 +198,7 @@ if (res?.properties) {
   };
 
 
-const isFiltered =
-  searchQuery ||
-  selectedCity ||
-  activeCategory !== "Residential";
+
   return (
     <div className='relative mt-10 xl:mt-20 px-4 md:px-10 xl:px-0'>
       <div className='flex justify-center items-center bg-white flex-col text-center mb-8'>
@@ -336,14 +331,14 @@ const isFiltered =
             </div> 
           </div>
 
-   <div
-  className="flex lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8 px-4 lg:px-15 overflow-x-auto lg:overflow-visible no-scrollbar lg:mt-12 xl:mt-8 pb-6"
-  ref={scrollRef}
->
-  {currentProperties.length > 0 ? (
-    currentProperties.map((property, index) => (
-      <div key={index} className="min-w-[280px] lg:min-w-0">
-        <Propertycard
+          <div
+            className="flex  lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8 px-4 lg:px-15 overflow-x-auto lg:overflow-visible no-scrollbar lg:mt-12 xl:mt-8 pb-6"
+            ref={scrollRef}
+          >
+            {currentProperties.length > 0 ? (
+  currentProperties.map((property, index) => (
+    <div key={index} className="min-w-[280px] lg:min-w-0">
+ <Propertycard
           property={property}
           click={() =>
             property.is_wishlisted
@@ -373,46 +368,27 @@ const isFiltered =
                           )
                         }
         />
-      </div>
-    ))
-  ) : (
-    <div className="col-span-full w-full py-16 flex flex-col items-center justify-center text-center">
-      <div className="w-20 h-20 rounded-full bg-[#F3FFE2] flex items-center justify-center mb-4">
-          <img
-                      src={noimage}
-                      alt="No Properties"
-                      className="w-40 mb-4 opacity-80"
-                    />
-      </div>
-
-     <h3 className="text-2xl font-semibold instrument-sans">
-  {isFiltered
-    ? "No Matching Properties Found"
-    : "No Active Listings Yet"}
-</h3>
-
-<p className="text-[#8B8B8B] mt-2 max-w-md">
-  {isFiltered
-    ? "We couldn't find any properties matching your search or selected filters. Try changing the location, category, or search term."
-    : "This agent hasn't published any properties yet. New listings will appear here once they become available."}
-</p>
-
-      {isFiltered && (
-  <button
-    onClick={() => {
-      setSearchQuery("");
-      setSelectedCity("");
-      setActiveCategory("Residential");
-    }}
-    className="mt-6 bg-[#6fba19] text-white px-6 py-3 rounded-full"
-  >
-    Clear Filters
-  </button>
-)}
+            </div>
+  ))
+) : (
+  <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
+    <div className="w-20 h-20 rounded-full bg-lime-100 flex items-center justify-center mb-4">
+      <Search size={32} className="text-lime-600" />
     </div>
-  )}
-</div>
 
+    <h3 className="text-2xl font-semibold instrument-sans text-gray-800 mb-2">
+      No Properties Available
+    </h3>
+
+    <p className="text-gray-500 poppins max-w-md">
+      We're currently updating our listings. Check back soon for
+      exclusive and active properties.
+    </p>
+  </div>
+)}
+          </div>
+
+{currentProperties.length > 0 && (
           <div className="flex items-center justify-between w-full px-4 lg:px-15 pb-10 mt-3">
             <button className="instrument-sans flex items-center gap-2 font-semibold text-[13px] lg:text-[15px] text-black cursor-pointer">
               Explore More
@@ -430,6 +406,7 @@ const isFiltered =
               </button>
             </div>
           </div>
+)}
         </div>
       </div>
     </div>
