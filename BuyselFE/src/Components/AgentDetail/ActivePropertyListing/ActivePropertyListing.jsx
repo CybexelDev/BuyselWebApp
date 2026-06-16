@@ -5,8 +5,10 @@ import { ArrowRight, ChevronLeft, ChevronRight, LogIn, Search } from 'lucide-rea
 import "./activePropertylisting.css";
 import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
 import {  Heart } from "lucide-react";
+import "../../../assets/images/propertDetail/noimage.png"
 import { searchAgentProperties,getAgentPropertyCities,filterAgentPropertyByCity} from '../../../Api/userApi';
 import { toast } from 'sonner';
+import noimage from "../../../assets/images/propertDetail/noimage.png"
 function ActivePropertyListing({ agentData, role,id }) {
   const pp = properties.slice(0, 8);
   const [activeCategory, setActiveCategory] = useState("Residential");
@@ -198,7 +200,10 @@ if (res?.properties) {
   };
 
 
-
+const isFiltered =
+  searchQuery ||
+  selectedCity ||
+  activeCategory !== "Residential";
   return (
     <div className='relative mt-10 xl:mt-20 px-4 md:px-10 xl:px-0'>
       <div className='flex justify-center items-center bg-white flex-col text-center mb-8'>
@@ -331,31 +336,60 @@ if (res?.properties) {
             </div> 
           </div>
 
-          <div
-            className="flex  lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8 px-4 lg:px-15 overflow-x-auto lg:overflow-visible no-scrollbar lg:mt-12 xl:mt-8 pb-6"
-            ref={scrollRef}
-          >
-            {currentProperties.map((property, index) => (
-              <div key={index} className="min-w-[280px] lg:min-w-0 ">
-                <Propertycard
-                  click={() =>
-                    property.is_wishlisted
-                      ? removeWishlist(property.id)
-                      : addWishlist(property.id)
-                  }
-                  wishlistIcon={property.is_wishlisted ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
-                      <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
-                    </svg>
-                  ) : (
-                    <Heart size={13} fill="none" stroke="black" className="scale-100" />
-                  )}
-                  property={property}
-                  shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
-                />
-              </div>
-            ))}
-          </div>
+   <div
+  className="flex lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8 px-4 lg:px-15 overflow-x-auto lg:overflow-visible no-scrollbar lg:mt-12 xl:mt-8 pb-6"
+  ref={scrollRef}
+>
+  {currentProperties.length > 0 ? (
+    currentProperties.map((property, index) => (
+      <div key={index} className="min-w-[280px] lg:min-w-0">
+        <Propertycard
+          property={property}
+          click={() =>
+            property.is_wishlisted
+              ? removeWishlist(property.id)
+              : addWishlist(property.id)
+          }
+        />
+      </div>
+    ))
+  ) : (
+    <div className="col-span-full w-full py-16 flex flex-col items-center justify-center text-center">
+      <div className="w-20 h-20 rounded-full bg-[#F3FFE2] flex items-center justify-center mb-4">
+          <img
+                      src={noimage}
+                      alt="No Properties"
+                      className="w-40 mb-4 opacity-80"
+                    />
+      </div>
+
+     <h3 className="text-2xl font-semibold instrument-sans">
+  {isFiltered
+    ? "No Matching Properties Found"
+    : "No Active Listings Yet"}
+</h3>
+
+<p className="text-[#8B8B8B] mt-2 max-w-md">
+  {isFiltered
+    ? "We couldn't find any properties matching your search or selected filters. Try changing the location, category, or search term."
+    : "This agent hasn't published any properties yet. New listings will appear here once they become available."}
+</p>
+
+      {isFiltered && (
+  <button
+    onClick={() => {
+      setSearchQuery("");
+      setSelectedCity("");
+      setActiveCategory("Residential");
+    }}
+    className="mt-6 bg-[#6fba19] text-white px-6 py-3 rounded-full"
+  >
+    Clear Filters
+  </button>
+)}
+    </div>
+  )}
+</div>
 
           <div className="flex items-center justify-between w-full px-4 lg:px-15 pb-10 mt-3">
             <button className="instrument-sans flex items-center gap-2 font-semibold text-[13px] lg:text-[15px] text-black cursor-pointer">
