@@ -44,7 +44,7 @@ import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
 function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
-  const { image, userName, userId, accessToken, role, listedCount } = useSelector((state) => state.user);
+  const { image, userName, userId, accessToken, role, listedCount,remainingProperty } = useSelector((state) => state.user);
 
   console.log(listedCount, "ppppppppppppppppp");
 
@@ -78,6 +78,7 @@ function App() {
           } />
           <Route path="/editproperty/:id" element={
             <UserProtectedRoute>
+              
               <AddProperty />
             </UserProtectedRoute>
           } />

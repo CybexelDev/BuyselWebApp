@@ -13,6 +13,8 @@ const initialUserState = {
   role:null,
   listedCount: null,
   isLoggedIn: false,
+          remainingProperty:null
+
 };
 
 function userReducer(state = initialUserState, action) {
@@ -27,6 +29,7 @@ function userReducer(state = initialUserState, action) {
         verificationStatus: action.payload.auth_provider,
         role:action.payload.role,
         listedCount: action.payload.listedCount,
+        remainingProperty:action.payload.remainingProperty,
         isLoggedIn: true,
       };
     case 'LOGOUT':

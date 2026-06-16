@@ -16,6 +16,16 @@ const Navbar = ({
   const navigate = useNavigate();
   const location = useLocation();
 const [mobileDropdown, setMobileDropdown] = useState(false);
+const [showLimitMessage, setShowLimitMessage] = useState(false);
+
+const handleAddProperty = () => {
+  if (remainingProperty === 0) {
+    setShowLimitMessage(true);
+    return;
+  }
+
+  navigate("/addyourproperty");
+};
   const menuItems = [
   { name: "Home", path: "/" },
   { name: "Properties", path: "/propertyListing" },
@@ -41,7 +51,8 @@ const [mobileDropdown, setMobileDropdown] = useState(false);
       : location.pathname.startsWith(path);
   };
 
-  const { image, userName, userId, accessToken } = useSelector((state) => state.user);
+  const { image, userName, userId, accessToken,remainingProperty } = useSelector((state) => state.user);
+  
 
   return (
     <header className={`absolute ${top} left-0 w-full z-40 px-6 ${padding}`}>
@@ -109,7 +120,7 @@ const [mobileDropdown, setMobileDropdown] = useState(false);
 
         <div className="hidden lg:block">
           <div className="flex items-center gap-2">
-            <button onClick={() => navigate('/addyourproperty')} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
+            <button onClick={handleAddProperty} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
               <img src={add} alt="add" className="w-[20px]" />
             </button>
             {accessToken ? <div onClick={() => navigate("/wishlist")} className="p-2 rounded-full bg-white shadow-md w-fit cursor-pointer">
@@ -221,6 +232,45 @@ const [mobileDropdown, setMobileDropdown] = useState(false);
           </button>
         </div>
       </div>
+      {showLimitMessage && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div className="bg-white rounded-2xl shadow-xl p-8 w-[90%] max-w-md text-center">
+
+      <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-5">
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+            d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+          />
+        </svg>
+      </div>
+
+      <h2 className="text-xl font-medium host-grotesk text-[#111111] mb-2">
+        Property limit reached
+      </h2>
+
+      <p className="text-sm host-grotesk text-[#111111] leading-relaxed mb-7">
+        You've used all available property slots on your current plan. Upgrade to add more properties.
+      </p>
+
+      <div className="flex flex-col gap-2.5">
+        <button
+          onClick={() => navigate("/plans")}
+          className="w-full py-3 bg-[#6ABD11] hover:bg-[#5aa30e] text-white text-sm font-medium rounded-lg"
+        >
+          Upgrade plan
+        </button>
+
+        <button
+          onClick={() => setShowLimitMessage(false)}
+          className="w-full py-3 border border-gray-300 text-black text-sm rounded-lg"
+        >
+          Maybe later
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
     </header>
   );
 };
