@@ -40,6 +40,7 @@ import Faqs from './Pages/Faqs/Faqs'
 import InvoicePage from './Pages/Invoice/Invoice'
 import AgentProtectedRoute from './Agent/Components/ProtectionRouteAgent/ProtectionRouteAgent'
 import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
+import CommonProtectedRoute from './Components/CommonProtectionRoute/commonProtectedRoute'
 
 function App() {
 
@@ -73,6 +74,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/agent-detail/:id" element={<AgentDetail />} />
+          {/* <Route path='/addyourproperty' element={
+            <UserProtectedRoute>
           <Route path='/addyourproperty' element={
               <AddProperty />
           } />
@@ -81,7 +84,7 @@ function App() {
               
               <AddProperty />
             </UserProtectedRoute>
-          } />
+          } /> */}
           <Route path='/blogdetail' element={<BlogDetailPage />} />
           <Route path='/blog/:id' element={<BlogDetailPage />} />
           <Route path="/loginandsignup" element={<LoginAndSignuppage />} />
@@ -102,9 +105,35 @@ function App() {
           <Route path="/helpcenter" element={<HelpCenter />} />
           <Route path='/termsandcondition' element={<TermsPage />} />
           <Route path='/privacy' element={<PrivacyPolicy />} />
-          <Route path='/agent-register' element={<RegisterAgent />} />
+          <Route path='/agent-register' element={
+            <UserProtectedRoute>
+              <RegisterAgent />
+            </UserProtectedRoute>} />
           <Route path='/faqs' element={<Faqs />} />
           <Route path='/invoice' element={<InvoicePage />} />
+
+
+          {/* common routeprotected */}
+          <>
+          <Route
+  path="/addyourproperty"
+  element={
+    <CommonProtectedRoute>
+      <AddProperty />
+    </CommonProtectedRoute>
+  }
+/>
+
+<Route
+  path="/editproperty/:id"
+  element={
+    <CommonProtectedRoute>
+      <AddProperty />
+    </CommonProtectedRoute>
+  }
+/>
+          
+          </>
 
           {/* //agent side */}
           <>
