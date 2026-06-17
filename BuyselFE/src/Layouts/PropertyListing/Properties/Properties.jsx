@@ -17,10 +17,9 @@ function PropertiesSection({ propertiesData }) {
 
 useEffect(() => {
 
-  if (propertiesData && propertiesData.length > 0) {
     setProperties(propertiesData);
     setLoading(false);
-  }
+  
 
 }, [propertiesData]);
 
