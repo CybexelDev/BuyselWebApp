@@ -46,8 +46,13 @@ function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
   const { image, userName, userId, accessToken, role, listedCount,remainingProperty } = useSelector((state) => state.user);
+ const {remainingPropertyAgent}=useSelector((state)=>state.agent)
+const persistRoot = JSON.parse(localStorage.getItem("persist:root"));
 
-  console.log(listedCount, "ppppppppppppppppp");
+const user = JSON.parse(persistRoot?.user || "{}");
+const agent = JSON.parse(persistRoot?.agent || "{}");
+
+const currentRole = user?.role || agent?.role;
 
 
   return (
@@ -115,7 +120,7 @@ function App() {
 
           {/* common routeprotected */}
           <>
-          <Route
+<Route
   path="/addyourproperty"
   element={
     <CommonProtectedRoute>
@@ -123,7 +128,6 @@ function App() {
     </CommonProtectedRoute>
   }
 />
-
 <Route
   path="/editproperty/:id"
   element={

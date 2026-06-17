@@ -118,7 +118,6 @@ export const getNearbyProperties = async (lat, lng) => {
     };
   }
 };
-
 export const otpSent = async (otpValue, email) => {
     const formData = new FormData();
     formData.append("otp", otpValue);
@@ -901,7 +900,7 @@ export const searchProperties = async (query) => {
   try {
     const res = await api.get(`properties/search/?label=${query}`);
     if (res) {
-      return res.data.data;
+      return res.data;
       
     }   
     

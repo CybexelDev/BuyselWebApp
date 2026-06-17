@@ -42,10 +42,13 @@ const Header = ({ setParentFilters, onchange, filters }) => {
           lat,
           lng,
         });
+        console.log("nearby data",data)
       },
+      
       () => {
         toast.warning("Please allow location access");
       }
+      
     );
   };
   useEffect(() => {

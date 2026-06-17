@@ -9,6 +9,7 @@ import { s } from "framer-motion/m";
 import { openRazorpay } from "../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 import add from '../../assets/images/nav/add.png'
+import Loading from "../../Components/Loading/Loading";
 
 
 const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
@@ -17,6 +18,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showLimitMessage, setShowLimitMessage] = useState(false)
   const [showAgentModal, setShowAgentModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
 
   const handleSelectPlan = (plan) => {
@@ -61,18 +63,38 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const data = await getAllPlans();
-        setPlansData(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
 
-    fetchPlans();
-  }, []);
+  // useEffect(() => {
+  //   const fetchPlans = async () => {
+  //     try {
+  //       const data = await getAllPlans();
+  //       setPlansData(data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+
+  //   fetchPlans();
+  // }, []);
+
+  useEffect(() => {
+  const fetchPlans = async () => {
+    try {
+      setLoading(true);
+
+      const data = await getAllPlans();
+      setPlansData(data);
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchPlans();
+}, []);
+
 
   const getPlansByRole = () => {
     if (!plansData) return [];
@@ -313,6 +335,14 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
     return <span className="text-[#000000b7] text-[12px] lg:text-[11px] xl:text-[12px] 3xl:text-sm font-medium text-center">{type}</span>;
   };
+
+  if (loading) {
+    return (
+      <Loading />
+    );
+  }
+
+
 
   return (
     <div className={` ${padding} bg-white  px-4 lg:px-6 xl:px-8 2xl:px-16`}>

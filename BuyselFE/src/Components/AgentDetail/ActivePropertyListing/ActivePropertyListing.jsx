@@ -172,7 +172,7 @@ if (res?.properties) {
     setPropertyData((prev) =>
       prev.map((item) =>
         item.id === id
-          ? { ...item, is_wishlisted: true }
+          ? { ...item, is_wishlist: true }
           : item
       )
     );
@@ -191,7 +191,7 @@ if (res?.properties) {
     setPropertyData((prev) =>
       prev.map((item) =>
         item.id === id
-          ? { ...item, is_wishlisted: false }
+          ? { ...item, is_wishlist: false }
           : item
       )
     );
@@ -341,12 +341,12 @@ if (res?.properties) {
  <Propertycard
           property={property}
           click={() =>
-            property.is_wishlisted
+            property.is_wishlist
               ? removeWishlist(property.id)
               : addWishlist(property.id)
           }
              wishlistIcon={
-                          property.is_wishlisted ? (
+                          property.is_wishlist ? (
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="15px"

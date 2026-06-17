@@ -13,8 +13,7 @@ const initialUserState = {
   role:null,
   listedCount: null,
   isLoggedIn: false,
-          remainingProperty:null
-
+  remainingProperty:null
 };
 
 function userReducer(state = initialUserState, action) {
@@ -43,6 +42,7 @@ function userReducer(state = initialUserState, action) {
         role:null,
         listedCount: null,
         isLoggedIn: false,
+        remainingProperty:null
       };
     default:
       return state;
@@ -57,6 +57,7 @@ const initialAgentState = {
   agent_type: null,
   role:null,
   isLoggedIn: false,
+  remainingPropertyAgent:null
 };
 
 function agentReducer(state = initialAgentState, action) {
@@ -70,6 +71,7 @@ function agentReducer(state = initialAgentState, action) {
         image: action.payload.image,
         agent_type: action.payload.agent_type,
         role:action.payload.role,
+        remainingPropertyAgent:action.payload.remainingPropertyAgent,
         isLoggedIn: true,
       };
     case 'AGENT_LOGOUT':                                                                    
@@ -82,6 +84,7 @@ function agentReducer(state = initialAgentState, action) {
         agent_type: null,
         role:null,
         isLoggedIn: false,
+        remainingPropertyAgent:null
       };
     default:
       return state;
