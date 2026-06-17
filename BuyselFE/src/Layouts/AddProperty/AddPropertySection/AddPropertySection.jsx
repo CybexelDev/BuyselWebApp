@@ -294,7 +294,7 @@ if (!formData.phone?.trim())
     if (!formData.landArea?.trim())
       newErrors.landArea = "Land area is required";
 
-    if (!formData.squareFeet?.trim())
+    if (!formData.squareFeet)
       newErrors.squareFeet = "Square feet is required";
 
     if (!formData.district?.trim())

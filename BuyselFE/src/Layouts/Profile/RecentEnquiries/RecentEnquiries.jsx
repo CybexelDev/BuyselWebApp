@@ -8,7 +8,7 @@ import i4 from "../../../assets/images/profile/i4.png"
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { getRecentEnquiries } from "../../../Api/userApi";
-
+import { persistor } from "../../../Redux/app/store";
 export default function RecentEnquiries() {
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -20,11 +20,14 @@ export default function RecentEnquiries() {
     behavior: "instant", 
   });
 };
-    const logout = () => {
+    const logout = async() => {
         dispatch({ type: "LOGOUT" });
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("id");
+          localStorage.clear();
+
+         await persistor.purge()
         navigate('/')
     }
 
