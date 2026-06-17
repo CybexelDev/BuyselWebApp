@@ -93,6 +93,7 @@ export const verifyForgotOtp = async (otpValue, email) => {
 };
 
 
+
 export const getNearbyProperties = async (lat, lng) => {
   try {
     const res = await axios.get(
