@@ -18,15 +18,15 @@ function PropertListing() {
 const priceRange = searchParams.get("price_range");
 const purpose = searchParams.get("purpose");
 const category = searchParams.get("category");
-  const location = searchParams.get("location");
+  const city= searchParams.get("city");
 useEffect(() => {
   setFilters({
     purpose: purpose || "Sale",
     category: category || "Residential",
       price_range: priceRange || "",
-          location: location || "",
+          city: city|| "",
   });
-}, [purpose, category,priceRange,location]);
+}, [purpose, category,priceRange,city]);
 
   const handleFilters = (data) => {
     setFilters(data);

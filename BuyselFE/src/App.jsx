@@ -124,21 +124,7 @@ const currentRole = user?.role || agent?.role;
   path="/addyourproperty"
   element={
     <CommonProtectedRoute>
-      {currentRole === "agent" ? (
-        remainingPropertyAgent > 0 ? (
-          <AddProperty />
-        ) : (
-          <AgentPlans />
-        )
-      ) : currentRole === "user" ? (
-        remainingProperty > 0 ? (
-          <AddProperty />
-        ) : (
-          <PlansPage />
-        )
-      ) : (
-        <PlansPage />
-      )}
+      <AddProperty />
     </CommonProtectedRoute>
   }
 />
