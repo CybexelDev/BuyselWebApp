@@ -6,22 +6,35 @@ import { Heart } from "lucide-react";
 import { toast } from 'sonner';
 import SkeletonCard from '../../../Components/SkeletonCard/SkeletonCard';
 import noimage from "../../../assets/images/propertDetail/noimage.png"
-function PropertiesSection({ propertiesData }) {
+function PropertiesSection({ propertiesData, dataCount }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [page, setPage] = useState(1);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(properties, "propertiesData in properties section ???????????????");
+  console.log(propertiesData, "propertiesData in properties section ???????????????");
 
-useEffect(() => {
+  console.log(dataCount, "%%%%%%%%%%%%%%%%%%%%%%%%");
 
-    setProperties(propertiesData);
+
+  // useEffect(() => {
+
+  //   setProperties(propertiesData);
+  //   setLoading(false);
+
+
+  // }, [propertiesData]);
+
+  useEffect(() => {
+    if (dataCount === undefined) {
+      setLoading(true);
+      return;
+    }
+
     setLoading(false);
-  
-
-}, [propertiesData]);
+    setProperties(propertiesData || []);
+  }, [propertiesData, dataCount]);
 
 
   useEffect(() => {
@@ -96,20 +109,37 @@ useEffect(() => {
       )
     );
   };
-const isFiltered = propertiesData?.length > 0 && properties?.length === 0;
+  const isFiltered = propertiesData?.length > 0 && properties?.length === 0;
   return (
     <div className='py-8 px-1 md:px-6 lg:px-8 mb-2 -mt-20'>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-4">
-       
+
         {loading ? (
           Array.from({ length: 8 }).map((_, index) => (
             <SkeletonCard key={index} />
           ))
-        ) : currentProperties?.length > 0 ? (
+        ) : dataCount === 0 ? (
+          <div className="col-span-2 md:col-span-2 lg:col-span-3 xl:col-span-4 flex flex-col items-center justify-center py-20">
+            <img
+              src={noimage}
+              alt="No Properties"
+              className="w-40 mb-4 opacity-80"
+            />
+
+            <h3 className="text-xl font-semibold text-gray-700">
+              No Properties Available
+            </h3>
+
+            <p className="text-gray-500 mt-2 text-center max-w-md">
+              There are currently no properties available in this category.
+            </p>
+          </div>
+        ) : (
           currentProperties.map((property) => (
             <Propertycard
               key={property.id}
+              property={property}
               click={() =>
                 property.is_wishlisted
                   ? removeWishlist(property.id)
@@ -129,38 +159,13 @@ const isFiltered = propertiesData?.length > 0 && properties?.length === 0;
                     />
                   </svg>
                 ) : (
-                  <Heart
-                    size={13}
-                    fill="none"
-                    stroke="black"
-                    className="scale-100"
-                  />
+                  <Heart size={13} fill="none" stroke="black" />
                 )
               }
-              property={property}
               color="bg-[#fbfbfb]"
               shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
             />
           ))
-        ) : (
-          <div className="col-span-2 md:col-span-2 lg:col-span-3 xl:col-span-4 flex flex-col items-center justify-center py-20">
-            <img
-              src={noimage}
-              alt="No Properties"
-              className="w-40 mb-4 opacity-80"
-            />
-           <h3 className="text-xl font-semibold text-gray-700">
-  {isFiltered
-    ? "No Matching Properties Found"
-    : "No Properties Available"}
-</h3>
-
-<p className="text-gray-500 mt-2 text-center max-w-md">
-  {isFiltered
-    ? "We couldn't find any properties matching your search criteria. Try adjusting your filters."
-    : "There are currently no properties available in this category. Check back later for new listings."}
-</p>
-          </div>
         )}
 
       </div>
