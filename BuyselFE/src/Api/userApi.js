@@ -93,22 +93,29 @@ export const verifyForgotOtp = async (otpValue, email) => {
 };
 
 
+
 export const getNearbyProperties = async (lat, lng) => {
   try {
-    const res = await axios.get(`${BASE_URL}filter/nearby-properties/`, {
-      params: {
-        lat,
-        lng,
-      },
-    });
+    const res = await axios.get(
+      `${BASE_URL}filter/nearby-properties/`,
+      {
+        params: { lat, lng },
+      }
+    );
 
-    return res.data.data.map((item) => ({
-      ...item,
-      images: item.images, 
-    }));  } catch (error) {
-
+    return {
+      count: res.data.count,
+      data: res.data.data.map((item) => ({
+        ...item,
+        images: item.images,
+      })),
+    };
+  } catch (error) {
     console.log("Nearby properties error:", error);
-    return [];
+    return {
+      count: 0,
+      data: [],
+    };
   }
 };
 
