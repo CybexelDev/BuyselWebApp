@@ -196,7 +196,8 @@ useEffect(() => {
 
   return (
     <>
-      <Header setParentFilters={handleFilters} onchange={(e) => setSearchQuery(e.target.value)}   filters={filters}/>
+      <Header setParentFilters={handleFilters} onchange={(e) => setSearchQuery(e.target.value)}   filters={filters}   searchCity={city}
+  count={count}/>
       <PropertiesSection propertiesData={data} dataCount={count} />
       <Footer />
     </>
