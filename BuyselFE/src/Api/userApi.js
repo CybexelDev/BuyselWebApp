@@ -899,7 +899,7 @@ export const searchProperties = async (query) => {
   try {
     const res = await api.get(`properties/search/?label=${query}`);
     if (res) {
-      return res.data.data;
+      return res.data;
       
     }   
     
