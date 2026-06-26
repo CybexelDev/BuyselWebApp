@@ -13,9 +13,20 @@ function PropertiesSection({ propertiesData, dataCount }) {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(properties, "propertiesData in properties section ???????????????");
+  console.log(propertiesData, "propertiesData in properties section ???????????????");
 
-useEffect(() => {
+
+
+
+  // useEffect(() => {
+
+  //   setProperties(propertiesData);
+  //   setLoading(false);
+
+
+  // }, [propertiesData]);
+
+  useEffect(() => {
     if (dataCount === undefined) {
       setLoading(true);
       return;
@@ -98,13 +109,14 @@ useEffect(() => {
       )
     );
   };
-const isFiltered = propertiesData?.length > 0 && properties?.length === 0;
+  const isFiltered = propertiesData?.length > 0 && properties?.length === 0;
   return (
     <div className='py-8 px-1 md:px-6 lg:px-8 mb-2 -mt-20'>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-4">
-       
-  {loading ? (
+
+
+        {loading ? (
           Array.from({ length: 8 }).map((_, index) => (
             <SkeletonCard key={index} />
           ))
