@@ -13,12 +13,15 @@ const initialUserState = {
   role:null,
   listedCount: null,
   isLoggedIn: false,
-  remainingProperty:null
+  remainingProperty:null,
+  is_plan:false
 };
 
 function userReducer(state = initialUserState, action) {
   switch (action.type) {
     case 'SET_USER':
+        console.log("SET_USER payload:", action.payload);
+
       return {
          ...state,
         userName: action.payload.userName, 
@@ -30,7 +33,20 @@ function userReducer(state = initialUserState, action) {
         listedCount: action.payload.listedCount,
         remainingProperty:action.payload.remainingProperty,
         isLoggedIn: true,
+        is_plan:action.payload.is_plan
       };
+
+  //    case "UPDATE_REMAINING_PROPERTY":
+  // console.log(
+  //   "Reducer UPDATE_REMAINING_PROPERTY:",
+  //   action.payload
+  // );
+
+  // return {
+  //   ...state,
+  //   remainingProperty: action.payload,
+  // };
+
     case 'LOGOUT':
       return {
         ...state,
@@ -42,7 +58,8 @@ function userReducer(state = initialUserState, action) {
         role:null,
         listedCount: null,
         isLoggedIn: false,
-        remainingProperty:null
+        remainingProperty:null,
+        is_plan:null
       };
     default:
       return state;
@@ -62,6 +79,12 @@ const initialAgentState = {
 
 function agentReducer(state = initialAgentState, action) {
   switch (action.type) {
+      // case "UPDATE_AGENT_IMAGE":
+      // return {
+      //   ...state,
+      //   image: action.payload.image,
+      // };
+
     case 'SET_AGENT':
       return {
         ...state,

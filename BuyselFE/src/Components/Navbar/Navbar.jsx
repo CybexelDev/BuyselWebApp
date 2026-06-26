@@ -52,7 +52,7 @@ const handleAddProperty = () => {
   };
 
   const { image, userName, userId, accessToken,remainingProperty } = useSelector((state) => state.user);
-  
+  console.log("navbar remain",remainingProperty)
 
   return (
     <header className={`absolute ${top} left-0 w-full z-40 px-6 ${padding}`}>
@@ -212,7 +212,7 @@ const handleAddProperty = () => {
     )}
   </div>
 ))}
-            <button onClick={() => navigate('/addyourproperty')} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
+            <button onClick={handleAddProperty} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
               <img src={add} alt="add" className="w-[20px]" />
             </button>
           {accessToken ? <div onClick={() => navigate("/wishlist")} className="p-2 rounded-full bg-white shadow-md w-fit cursor-pointer">

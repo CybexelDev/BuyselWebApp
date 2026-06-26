@@ -12,7 +12,8 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'sonner';
 
-const UserForm = ({ setSignup,onForgot }) => {
+const 
+UserForm = ({ setSignup,onForgot }) => {
   const [login, setLogin] = useState({ username: '', password: '' })
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ if (response?.error) {
             verificationStatus: response?.user?.auth_provider,
             listedCount: response?.user?.total_properties,
             role:response?.login_as,
+            is_plan:response?.is_plan,
             remainingProperty:response?.user?.remaining_property
           }
         })
@@ -103,7 +105,8 @@ if (response?.error) {
             verificationStatus: response?.user?.auth_provider,
             listedCount: response?.user?.total_properties,
             role:response?.login_as,
-                        remainingProperty:response?.user?.remaining_property
+            is_plan:response?.is_plan,
+            remainingProperty:response?.user?.remaining_property
 
           }
         })
