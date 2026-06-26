@@ -45,7 +45,7 @@ import CommonProtectedRoute from './Components/CommonProtectionRoute/commonProte
 function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
-  const { image, userName, userId, accessToken, role, listedCount,remainingProperty } = useSelector((state) => state.user);
+  const { image, userName, userId, accessToken, role, listedCount,remainingProperty, } = useSelector((state) => state.user);
  const {remainingPropertyAgent}=useSelector((state)=>state.agent)
 const persistRoot = JSON.parse(localStorage.getItem("persist:root"));
 
