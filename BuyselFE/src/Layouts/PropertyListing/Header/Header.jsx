@@ -29,6 +29,7 @@ const handleClearLocation = () => {
     district: "",
   });
 };
+
 console.log("filters city",filters.city);
 console.log("searchCity",searchCity);
   const tabs = [ "Sale", "Rent","Lease","Agent", ];
@@ -65,7 +66,7 @@ console.log("searchCity",searchCity);
       
     );
   };
-  
+  1
   const displayLocation =
   filters?.district && filters?.city
     ? ` ${filters.city},${filters.district},`

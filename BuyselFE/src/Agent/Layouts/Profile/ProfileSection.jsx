@@ -213,7 +213,7 @@ const handleChangePassword = async () => {
                         </motion.div>
 
                         {/* RIGHT SIDE */}
-                        <div className="flex items-center gap-4">
+                        <div className="flex md:items-center justify-between items-center   md:gap-4">
 
                             {/* EDIT BUTTON */}
                             {!isEditing && (
@@ -226,23 +226,23 @@ const handleChangePassword = async () => {
                             )}
 
                             {/* BUYSEL ID CARD */}
-                            <div className="bg-white border border-slate-200 px-6 py-3 rounded-2xl shadow-sm flex items-center gap-4">
-                                <div className="text-right border-r border-slate-100 pr-4">
-                                    <span className="block text-[10px] font-bold text-[#6ABD11] uppercase tracking-widest host-grotesk">
-                                        Buysel ID
-                                    </span>
-                                    <span className="text-sm host-grotesk font-bold text-slate-700">
-                                        {formData.buySelId}
-                                    </span>
-                                </div>
+            <div className="bg-white border border-slate-200 px-3 sm:px-4 lg:px-6 py-3 rounded-2xl shadow-sm flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+  <div className="text-center sm:text-right sm:border-r border-slate-100 sm:pr-4">
+    <span className="block text-[10px] font-bold text-[#6ABD11] uppercase tracking-widest host-grotesk">
+      Buysel ID
+    </span>
+    <span className="text-sm host-grotesk font-bold text-slate-700 break-all">
+      {formData.buySelId}
+    </span>
+  </div>
 
-                                <div className="flex items-center gap-2 text-[#6ABD11]">
-                                    <ShieldCheck size={20} />
-                                    <span className="text-xs font-bold uppercase instrument-sans">
-                                        Verified
-                                    </span>
-                                </div>
-                            </div>
+  <div className="flex items-center gap-2 text-[#6ABD11]">
+    <ShieldCheck size={20} />
+    <span className="text-xs font-bold uppercase instrument-sans">
+      Verified
+    </span>
+  </div>
+</div>
 
                         </div>
                     </header>
