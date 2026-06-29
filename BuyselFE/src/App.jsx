@@ -45,7 +45,7 @@ import CommonProtectedRoute from './Components/CommonProtectionRoute/commonProte
 function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
-  const { image, userName, userId, accessToken, role, listedCount,remainingProperty } = useSelector((state) => state.user);
+  const { image, userName, userId, accessToken, role, listedCount,remainingProperty, } = useSelector((state) => state.user);
  const {remainingPropertyAgent}=useSelector((state)=>state.agent)
 const persistRoot = JSON.parse(localStorage.getItem("persist:root"));
 
@@ -124,21 +124,7 @@ const currentRole = user?.role || agent?.role;
   path="/addyourproperty"
   element={
     <CommonProtectedRoute>
-      {currentRole === "agent" ? (
-        remainingPropertyAgent > 0 ? (
-          <AddProperty />
-        ) : (
-          <AgentPlans />
-        )
-      ) : currentRole === "user" ? (
-        remainingProperty > 0 ? (
-          <AddProperty />
-        ) : (
-          <PlansPage />
-        )
-      ) : (
-        <PlansPage />
-      )}
+      <AddProperty />
     </CommonProtectedRoute>
   }
 />

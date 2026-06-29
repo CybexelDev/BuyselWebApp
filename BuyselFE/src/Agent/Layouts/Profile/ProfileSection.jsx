@@ -13,6 +13,7 @@ import { getAgentProfile } from '../../../Api/agentsApi';
 import { motion } from 'framer-motion';
 import { changeAgentPassword } from '../../../Api/agentsApi';
 import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
 const AgentProfileLayout = () => {
     const fileInputRef = useRef(null);
 const [profileImageFile, setProfileImageFile] = useState(null);   
@@ -24,6 +25,8 @@ const [passwordData, setPasswordData] = useState({
  const [isEditing, setIsEditing] = useState(false);
  const [profileImage, setProfileImage] = useState(null);
     const [isDirty, setIsDirty] = useState(false);
+    const { image } = useSelector((state) => state.agent);
+    const dispatch = useDispatch();
    const [formData, setFormData] = useState({
   name: '',
   title: '',
@@ -153,12 +156,18 @@ const handleSave = async () => {
     ...formData,
     profileImageFile,
   });
-
   if (res) {
     setOriginalData(formData);
     setIsEditing(false);
     setIsDirty(false);
-  }
+
+      dispatch({
+      type: "SET_AGENT",
+       payload: {
+      image: res.data.profile_image,
+      },
+    });
+}
 };
 
 const handleChangePassword = async () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getAllPlans } from "../../Api/userApi";
+import { getAllPlans, userDashboard } from "../../Api/userApi";
 import { MessageCircle, Phone, UserPlus } from "lucide-react";
 import { activateUserPlan } from "../../Api/userApi";
 import { toast } from "sonner";
@@ -10,6 +10,7 @@ import { openRazorpay } from "../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 import add from '../../assets/images/nav/add.png'
 import Loading from "../../Components/Loading/Loading";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
@@ -20,6 +21,13 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [showAgentModal, setShowAgentModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+
+  const user = useSelector((state) => state.user);
+  const isPlan = useSelector((state) => state.user.is_plan);
+
+  console.log("is_plan:", isPlan);
 
   const handleSelectPlan = (plan) => {
 
@@ -798,31 +806,45 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                 ))}
               </div>
 
-              <button
-                onClick={() =>
-                  openRazorpay({
-                    name: "BuySel",
-                    description: selectedPlan?.name,
-                    // ✅ required
-                    plan_type: selectedPlan?.plan_type,
-                    plan_id: selectedPlan?.plan_id,
-                    // ✅ success callback
-                    onSuccess: (res) => {
-                      console.log("Property Payment", res);
-                      navigate("/invoice", {
-                        state: {
-                          paymentData: res,
-                        },
-                      });
-                    },
-                  })
-                }
-                className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white
-              text-black py-4 rounded-2xl font-semibold text-lg transition flex gap-2 justify-center cursor-pointer "
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M2 4.5h6.757a3 3 0 0 1 2.122.879L14 8.5m-9 5H2m6.5-6l2 2a1.414 1.414 0 1 1-2 2L7 10c-.86.86-2.223.957-3.197.227L3.5 10" /><path d="M5 11v4.5c0 1.886 0 2.828.586 3.414S7.114 19.5 9 19.5h9c1.886 0 2.828 0 3.414-.586S22 17.386 22 15.5v-3c0-1.886 0-2.828-.586-3.414S19.886 8.5 18 8.5H9.5" /><path d="M15.25 14a1.75 1.75 0 1 1-3.5 0a1.75 1.75 0 0 1 3.5 0" /></g></svg>
-                CHECKOUT
-              </button>
+<button
+  onClick={() =>
+    openRazorpay({
+      name: "BuySel",
+      description: selectedPlan?.name,
+      plan_type: selectedPlan?.plan_type,
+      plan_id: selectedPlan?.plan_id,
+      onSuccess: async (res) => {
+        // ✅ ADD THIS HERE TOO remaining property set to add plans
+        const dashboard = await userDashboard();
+        console.log("Remaining:", dashboard.data.remaining_property);
+ 
+        dispatch({
+        type: "SET_USER",
+        payload: {
+          ...user,
+          remainingProperty: dashboard.data.remaining_property,
+          is_plan: true,
+
+        }
+        });
+
+       
+
+
+        navigate("/invoice", {
+          state: {
+            paymentData: res,
+          },
+        });
+      },
+    })
+  }
+  className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white
+  text-black py-4 rounded-2xl font-semibold text-lg transition flex gap-2 justify-center cursor-pointer "
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M2 4.5h6.757a3 3 0 0 1 2.122.879L14 8.5m-9 5H2m6.5-6l2 2a1.414 1.414 0 1 1-2 2L7 10c-.86.86-2.223.957-3.197.227L3.5 10" /><path d="M5 11v4.5c0 1.886 0 2.828.586 3.414S7.114 19.5 9 19.5h9c1.886 0 2.828 0 3.414-.586S22 17.386 22 15.5v-3c0-1.886 0-2.828-.586-3.414S19.886 8.5 18 8.5H9.5" /><path d="M15.25 14a1.75 1.75 0 1 1-3.5 0a1.75 1.75 0 0 1 3.5 0" /></g></svg>
+  CHECKOUT
+</button>
 
             </div>
           </div>

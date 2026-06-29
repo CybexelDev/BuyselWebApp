@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import SkeletonCard from '../../../Components/SkeletonCard/SkeletonCard';
 import noimage from "../../../assets/images/propertDetail/noimage.png"
 import Chatbox from '../../Home/Chatbox/Chatbox';
+
 function PropertiesSection({ propertiesData, dataCount }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -32,6 +33,7 @@ function PropertiesSection({ propertiesData, dataCount }) {
       setLoading(true);
       return;
     }
+
 
     setLoading(false);
     setProperties(propertiesData || []);
@@ -117,6 +119,7 @@ function PropertiesSection({ propertiesData, dataCount }) {
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-4">
 
         {loading ? (
+
           Array.from({ length: 8 }).map((_, index) => (
             <SkeletonCard key={index} />
           ))
@@ -169,6 +172,7 @@ function PropertiesSection({ propertiesData, dataCount }) {
             />
           ))
         )}
+
 
       </div>
 
