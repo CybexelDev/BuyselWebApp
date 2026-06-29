@@ -6,6 +6,7 @@ import { Heart } from "lucide-react";
 import { toast } from 'sonner';
 import SkeletonCard from '../../../Components/SkeletonCard/SkeletonCard';
 import noimage from "../../../assets/images/propertDetail/noimage.png"
+import Chatbox from '../../Home/Chatbox/Chatbox';
 function PropertiesSection({ propertiesData, dataCount }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -124,16 +125,17 @@ function PropertiesSection({ propertiesData, dataCount }) {
             <img
               src={noimage}
               alt="No Properties"
-              className="w-40 mb-4 opacity-80"
+              className="w-15 mb-4 opacity-80"
             />
 
-            <h3 className="text-xl font-semibold text-gray-700">
+            <h3 className="text-lg font-semibold text-gray-700">
               No Properties Available
             </h3>
 
-            <p className="text-gray-500 mt-2 text-center max-w-md">
+            <p className="text-gray-500 text-sm mt-2 text-center max-w-md">
               There are currently no properties available in this category.
             </p>
+
           </div>
         ) : (
           currentProperties.map((property) => (

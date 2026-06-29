@@ -206,7 +206,7 @@ function WishlistListingSection() {
             </p>
 
             <button onClick={()=>navigate("/propertyListing")}
-            className="bg-[#7BC21F] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition cursor-pointer">
+              className="bg-[#7BC21F] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition cursor-pointer">
               Browse Properties
             </button>
           </div>
