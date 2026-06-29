@@ -149,15 +149,24 @@ const toggleAmenity = (amenity) => {
     });
   };
 
-  const handleCategoryChange = (val) => {
-    const selected = propertyData.categories.find((c) => c.name === val);
-    setFormData((prev) => ({
-      ...prev,
-      category: val,
-      category_id: selected?.id || null,
-      subcategory: "",
-    }));
-  };
+ const handleCategoryChange = (val) => {
+  console.log("Selected category value:", val);
+
+  const selected = propertyData.categories.find(
+    (c) => c.name === val
+  );
+
+  console.log("Matched category:", selected);
+
+  setFormData((prev) => ({
+    ...prev,
+    category: val,
+    category_id: selected?.id || null,
+    subcategory: "",
+    features: [],
+    amenities: [],
+  }));
+};
 
   const handleSubcategoryChange = (val) => {
     const selected = propertyData.subcategories.find((s) => s.name === val);
@@ -167,6 +176,10 @@ const toggleAmenity = (amenity) => {
       ...prev,
       subcategory: val,
       subcategory_fields: selected?.fields || [], // ✅ IMPORTANT
+      features: [],
+      amenities: [],
+
+
     }));
   };
 
@@ -214,7 +227,8 @@ const toggleAmenity = (amenity) => {
 }, [formData.amenities]);
 
 
-
+console.log("Category ID:", formData.category_id);
+console.log("Filtered:", filteredSubcategories);
 
   return (
     <div className="flex gap-8">
@@ -408,6 +422,9 @@ updated.push({
                   </div>
                 );
               }
+
+
+              
 
               return null;
             })}

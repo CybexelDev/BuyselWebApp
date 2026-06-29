@@ -184,36 +184,40 @@ const Navbar = ({
                     </svg>
                   </div>
 
-                  {mobileDropdown && (
-                    <div className="mt-3 flex flex-col gap-3">
-                      {item.dropdown.map((subItem) => (
-                        <div
-                          key={subItem.name}
-                          onClick={() => handleNavigate(subItem.path)}
-                          className="text-center text-[16px] text-[#676767] hover:text-[#6fba19] cursor-pointer"
-                        >
-                          {subItem.name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <p
-                  onClick={() => handleNavigate(item.path)}
-                  className={`cursor-pointer transition-all duration-200 ${isActive(item.path)
-                      ? "text-[#6fba19] font-semibold"
-                      : "text-[#676767] hover:text-[#6fba19]"
-                    }`}
-                >
-                  {item.name}
-                </p>
-              )}
-            </div>
-          ))}
-          <button onClick={() => navigate('/addyourproperty')} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
-            <img src={add} alt="add" className="w-[20px]" />
-          </button> 
+
+
+        {mobileDropdown && (
+          <div className="mt-3 flex flex-col gap-3">
+            {item.dropdown.map((subItem) => (
+              <div
+                key={subItem.name}
+                onClick={() => handleNavigate(subItem.path)}
+                className="text-center text-[16px] text-[#676767] hover:text-[#6fba19] cursor-pointer"
+              >
+                {subItem.name}
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    ) : (
+      <p
+        onClick={() => handleNavigate(item.path)}
+        className={`cursor-pointer transition-all duration-200 ${
+          isActive(item.path)
+            ? "text-[#6fba19] font-semibold"
+            : "text-[#676767] hover:text-[#6fba19]"
+        }`}
+      >
+        {item.name}
+      </p>
+    )}
+  </div>
+))}
+            <button onClick={handleAddProperty} className="bg-[#ffffff] hover:bg-[#adec80] text-[#6fba19] px-4 py-2 transition-all duration-200 shadow-md hover:shadow-lg rounded-[11px] flex items-center gap-2 cursor-pointer">
+              <img src={add} alt="add" className="w-[20px]" />
+            </button>
+>>>>>>> d1d1e982641b1858c7161df35547a0a5a1aabafd
           {accessToken ? <div onClick={() => navigate("/wishlist")} className="p-2 rounded-full bg-white shadow-md w-fit cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
               <path fill="#6fba19" d="M12 4.595a5.9 5.9 0 0 0-3.996-1.558a5.94 5.94 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412l7.332 7.332c.17.299.498.492.875.492a.99.99 0 0 0 .792-.409l7.415-7.415c2.354-2.354 2.354-6.049-.002-8.416a5.94 5.94 0 0 0-4.209-1.754A5.9 5.9 0 0 0 12 4.595m6.791 1.61c1.563 1.571 1.564 4.025.002 5.588L12 18.586l-6.793-6.793c-1.562-1.563-1.561-4.017-.002-5.584c.76-.756 1.754-1.172 2.799-1.172s2.035.416 2.789 1.17l.5.5a1 1 0 0 0 1.414 0l.5-.5c1.512-1.509 4.074-1.505 5.584-.002" />

@@ -36,7 +36,7 @@ function Button({ next, back, step, maxStep, handleSubmit,loading }) {
           type="button"
           onClick={handleClick}
           disabled={loading}
-          className="w-full sm:w-auto px-16 sm:px-28 py-[13px] rounded-[100px] bg-[#84CC16] text-white flex items-center justify-center gap-2 disabled:opacity-50"
+          className="w-full sm:w-auto px-16 sm:px-28 py-[13px] cursor-pointer rounded-[100px] bg-[#84CC16] text-white flex items-center inter justify-center gap-2 disabled:opacity-50"
         >
  {loading ? (
             <>

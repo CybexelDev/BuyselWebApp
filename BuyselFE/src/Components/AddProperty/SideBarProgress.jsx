@@ -1,7 +1,7 @@
 import React from "react";
 import { Home, Tag, Image, Calendar, Eye } from "lucide-react";
 
-function SidebarProgress({ step,isAgent }) {
+function SidebarProgress({ step,isAgent,isPlan }) {
 const allSteps = [
   {
     name: "Property Info",
@@ -48,7 +48,7 @@ const allSteps = [
     )
   }
 ];
-  const steps = isAgent ? allSteps.slice(0, 4) : allSteps;
+  const steps = isAgent || isPlan ? allSteps.slice(0, 4) : allSteps;
 
 
   const progress = Math.round((step / steps.length) * 100);

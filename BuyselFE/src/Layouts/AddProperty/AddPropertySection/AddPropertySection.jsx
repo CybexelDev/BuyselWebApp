@@ -7,7 +7,7 @@ import Button from "../../../Components/AddProperty/Button";
 import PreviewProperty from "../../../Components/AddProperty/Preview";
 import SuccessModal from "../../../Components/AddProperty/SuccessModal";
 import Payment from "../../../Components/AddProperty/Payment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import {
@@ -18,7 +18,7 @@ import {
   getAgentProfile,
 } from "../../../Api/agentsApi";
 import { useParams } from "react-router-dom";
-import { userGetPropertyById, userPostProperty, updateUserPropertyListing, getProfile } from "../../../Api/userApi";
+import { userGetPropertyById, userPostProperty, updateUserPropertyListing, getProfile, userDashboard } from "../../../Api/userApi";
 
 const getInitialFormData = () => ({
   landArea: "",
@@ -63,6 +63,7 @@ const getInitialFormData = () => ({
 function AddPropertySection() {
   const [step, setStep] = useState(1);
   const [showSuccess, setShowSuccess] = useState(false);
+  const dispatch = useDispatch()
 
   const [formData, setFormData] = useState(getInitialFormData());
   const [categories, setCategories] = useState([]);
@@ -74,12 +75,14 @@ function AddPropertySection() {
 
   const [errors, setErrors] = useState({});
 
+ const{is_plan}=useSelector((state)=>state.user)
   const user = useSelector((state) => state.user);
 const agent = useSelector((state) => state.agent);
+
 const role = agent?.role || user?.role;
 const isAgent = role === "agent";
 
-  const maxStep = isAgent ? 4 : 5;
+const maxStep = isAgent ? 4 : (is_plan ? 4 : 5);
 
   const { id } = useParams();
 
@@ -422,10 +425,25 @@ if (!res?.status) {
   return;
 }
 
-    if (res) {
-      setShowSuccess(true);
-      setFormData(getInitialFormData());
-    }
+
+
+     if (res) {
+  // Only for new property
+  if (!id && !isAgent) {
+    const dashboard = await userDashboard();
+
+    dispatch({
+        type: "SET_USER",
+        payload: {
+          ...user,
+          remainingProperty: dashboard.data.remaining_property,
+        }
+        });
+      }
+
+  setShowSuccess(true);
+  setFormData(getInitialFormData());
+}
   } catch (err) {
     console.error("Submit error:", err);
   }finally {
@@ -433,6 +451,8 @@ if (!res?.status) {
   }
 
 };
+
+
 const handleNext = () => {
   const valid = validateStep();
 
@@ -444,7 +464,7 @@ const handleNext = () => {
     <div className="bg-white min-h-screen p-6">
       <div className="mx-auto flex flex-col lg:flex-row gap-2 sm:gap-4 md:gap-6 lg:gap-8">
         <div className="w-full lg:w-[320px]">
-          <SidebarProgress step={step} isAgent={isAgent} />
+          <SidebarProgress step={step} isAgent={isAgent} isPlan={is_plan} />
         </div>
         <div className="flex-1">
           {/* ✅ HEADING (RIGHT SIDE TOP) */}
@@ -492,14 +512,14 @@ const handleNext = () => {
             {step === 4 && (
               <PreviewProperty formData={formData} />
             )}
-            {!isAgent && step === 5 && (
-              <Payment formData={formData} />
-            )}  
+            {!isAgent && !is_plan && step === 5 && (
+            <Payment formData={formData} />
+             )}
            <Button
   step={step}
   maxStep={maxStep}
   next={ handleNext}
-  back={() => setStep(step - 1)}
+  back={() => setStep(step - 1)}                 
   handleSubmit={handleSubmit}
     loading={loading}
 
