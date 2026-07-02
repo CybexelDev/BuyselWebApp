@@ -9,6 +9,7 @@ import SuccessModal from "../../../Components/AddProperty/SuccessModal";
 import Payment from "../../../Components/AddProperty/Payment";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { openRazorpay } from "../../../utils/razorpay";
 import { toast } from "sonner";
 import {
   getPropertyById,
@@ -428,21 +429,49 @@ if (!res?.status) {
 
 
      if (res) {
-  // Only for new property
-  if (!id && !isAgent) {
-    const dashboard = await userDashboard();
+ // Owner without plan -> Payment required
+if (!id && !isAgent && !is_plan && res.payment_required) {
+  openRazorpay({
+    name: "BuySel",
+    description: res.plan_name,
+    plan_type: "owner",
+    plan_id: res.plan_id,
+    cache_key: res.cache_key,
 
-    dispatch({
+    onSuccess: async () => {
+      const dashboard = await userDashboard();
+
+      dispatch({
         type: "SET_USER",
         payload: {
           ...user,
           remainingProperty: dashboard.data.remaining_property,
-        }
-        });
-      }
+        },
+      });
 
-  setShowSuccess(true);
-  setFormData(getInitialFormData());
+      setShowSuccess(true);
+      setFormData(getInitialFormData());
+    },
+  });
+
+  return;
+}
+
+// Agent OR Owner with active plan OR Edit Property
+if (!id && !isAgent) {
+  const dashboard = await userDashboard();
+
+  dispatch({
+    type: "SET_USER",
+    payload: {
+      ...user,
+      remainingProperty: dashboard.data.remaining_property,
+    },
+  });
+}
+
+setShowSuccess(true);
+setFormData(getInitialFormData());
 }
   } catch (err) {
     console.error("Submit error:", err);

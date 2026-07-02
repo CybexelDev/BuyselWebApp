@@ -618,6 +618,19 @@ export const agentPlans = async () => {
   }
 };
 
+export const advertisementRequest = async (planId) => {
+  try {
+    const res = await api.post("/agent/advertisement-request/", {
+      plan_id: planId,
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Advertisement request error:", error);
+    return false;
+  }
+};
+
 export const getAgentNotifications = async () => {
   try {
     const res = await api.get("/agent/notifications/");

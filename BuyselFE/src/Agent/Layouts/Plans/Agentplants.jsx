@@ -13,6 +13,7 @@ import { openRazorpay } from "../../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import { advertisementRequest } from "../../../Api/agentsApi";
 
 
 function AgentPlans() {
@@ -122,6 +123,22 @@ setSelectedPlan({
     )
   : 0;
 
+  const handleAdvertisementRequest = async (planId) => {
+  const result = await advertisementRequest(planId);
+
+if (result) {
+  toast.success("Request submitted successfully!", {
+    description:
+      "Your advertisement request has been sent to our admin team. They will contact you shortly.",
+    duration: 5000,
+  });
+  console.log(result);
+}    
+    
+  else {
+    console.log("Request failed");
+  }
+};
 
 
 
