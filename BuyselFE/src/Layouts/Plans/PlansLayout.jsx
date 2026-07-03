@@ -814,7 +814,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       plan_type: selectedPlan?.plan_type,
       plan_id: selectedPlan?.plan_id,
       onSuccess: async (res) => {
-        // ✅ ADD THIS HERE TOO remaining property set to add plans
         const dashboard = await userDashboard();
         console.log("Remaining:", dashboard.data.remaining_property);
  
@@ -824,7 +823,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
           ...user,
           remainingProperty: dashboard.data.remaining_property,
           is_plan: true,
-
         }
         });
 

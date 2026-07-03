@@ -473,7 +473,7 @@ export const getPropertyListing = async () => {
 
 export const getDashboard = async () => {
   try {
-    const result = await api.get("/agent/dashboard/");
+    const result = await api.get("/agent/dashboard/");                
 
     if (result.data?.data) {
       return result.data.data;
@@ -615,6 +615,19 @@ export const agentPlans = async () => {
   } catch (error) {
     console.error("plans couldn't get:", error);
     return [];
+  }
+};
+
+export const advertisementRequest = async (planId) => {
+  try {
+    const res = await api.post("/agent/advertisement-request/", {
+      plan_id: planId,
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Advertisement request error:", error);
+    return false;
   }
 };
 

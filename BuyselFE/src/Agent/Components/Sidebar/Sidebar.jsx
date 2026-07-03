@@ -36,7 +36,14 @@ const Sidebar = () => {
       navigate('/loginandsignup')
     }
     
+const persistRoot = JSON.parse(localStorage.getItem("persist:root"));
+const agent = JSON.parse(persistRoot?.agent || "{}");
 
+const isBasicAgent = agent?.agent_type === "basic";const filteredNavItems = isBasicAgent
+  ? navItems.filter((item) =>
+      ["profile", "inbox", "userenquiry"].includes(item.id)
+    )
+  : navItems;
   return (
     <div className="relative  ">
       <nav className="fixed left-2 top-2 backdrop-blur-md hidden bottom-4 w-64 flex-col border-r border-white/10 bg-white rounded-[40px] lg:flex z-50 shadow-2xl  mx-2 my-4">
@@ -51,7 +58,7 @@ const Sidebar = () => {
         </div>
 
         <div className="flex-1 px-4 space-y-3 py-4">
-          {navItems.map((item) => (
+          {filteredNavItems.map((item) => (
             <button
               key={item.id}
               onClick={() => navigate(item.path)}
@@ -98,9 +105,12 @@ const Sidebar = () => {
       </nav>
 
 
-<nav className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl">
-
-  {navItems.map((item) => {
+<nav
+  className={`fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl ${
+    isBasicAgent ? "gap-6 px-6" : "gap-2"
+  }`}
+>
+  {filteredNavItems.map((item) => {
     const isActive = location.pathname === item.path;
 
     return (  

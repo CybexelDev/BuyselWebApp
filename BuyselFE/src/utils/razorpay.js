@@ -56,6 +56,7 @@ export const openRazorpay = async ({
   user,
   plan_type,
   plan_id,
+  cache_key,
   onSuccess,
 }) => {
 
@@ -140,6 +141,7 @@ export const openRazorpay = async ({
             "razorpay_payment_id",
             response?.razorpay_payment_id
           );
+          formData.append("cache_key", cache_key);
 
           formData.append(
             "razorpay_signature",

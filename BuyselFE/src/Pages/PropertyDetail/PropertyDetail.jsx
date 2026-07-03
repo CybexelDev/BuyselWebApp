@@ -37,7 +37,7 @@ const transformProperty = (data) => {
     title: data.label, 
     location: `${data.city}, ${data.state}`,
     status: data.purpose,
-    price: `₹${Number(data.price_details.price).toLocaleString()}`,
+    price: `₹${(data.price_details.price)}`,
     area: `${data.price_details.sq_ft} sq.ft`,
     postedOn: data.created_at,
     fullAddress: data.location,

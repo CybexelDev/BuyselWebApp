@@ -44,10 +44,8 @@ function WishlistListingSection() {
   };
   const removeWishlist = (id) => {
     removeToWishlist({ id });
-    toast.error("Removed from wishlist ");
-
     setData((prev) => prev.filter((item) => item.id !== id));
-    toast.success("remove unliked")
+    toast.error("Removed from wishlist ");
 
   };
 
