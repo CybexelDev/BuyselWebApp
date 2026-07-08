@@ -179,9 +179,7 @@ function PropertiesSection({ propertiesData, dataCount }) {
           ))
         )}
 
-
       </div>
-
 
       <div className="host-grotesk flex justify-center mt-12">
         <div className="flex items-center gap-2 sm:gap-4 bg-[#fbfbfb] shadow-lg rounded-xl px-4 py-2">
@@ -193,7 +191,7 @@ function PropertiesSection({ propertiesData, dataCount }) {
               flex items-center justify-center rounded-full bg-black text-white
               ">
             <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button>
+          </button >
 
 
           {(() => {

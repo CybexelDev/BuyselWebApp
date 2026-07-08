@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import empty from "../../../assets/images/wishlist/empty.gif"
 import emptySvg from "../../../assets/images/icons/empty.svg";
 import { useNavigate } from "react-router-dom";
+import SkeletonCard from "../../../Components/SkeletonCard/SkeletonCard";
 
 
 function WishlistListingSection() {
@@ -20,6 +21,8 @@ function WishlistListingSection() {
   const [data, setData] = useState([]);
   const [sortType, setSortType] = useState("latest");
   const [showSort, setShowSort] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const cardsPerPage = 8;
 
   const navigate = useNavigate()
@@ -75,17 +78,36 @@ function WishlistListingSection() {
     startIndex,
     startIndex + cardsPerPage
   );
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeCategory]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getWishlist();
-      if (res) setData(res);
-    };
+  
+  // useEffect(() => {
+  //   setCurrentPage(1);
+  // }, [activeCategory]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await getWishlist();
+  //     if (res) setData(res);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
+
+
+  useEffect(() => {
+  const fetchData = async () => {
+    setLoading(true);
+
+    const res = await getWishlist();
+
+    if (res) {
+      setData(res);
+    }
+
+    setLoading(false);
+  };
+
+  fetchData();
+}, []);
+  
   return (
     <div className="bg-white rounded-lg px-8 py-6 host-grotesk">
 
@@ -184,139 +206,152 @@ function WishlistListingSection() {
         </div>
 
       </div>
-      {filteredProperties.length === 0 ? (
+      
+     {loading ? (
 
-        // if theres no data 
-        <div className="px-0 md:px-40 md:mb-50">
-          <div className="mt-10   bg-[#F3F3F3] rounded-3xl py-20 flex flex-col items-center justify-center text-center host-grotesk" >
-        
-            <img
-              src={emptySvg}
-              alt="Empty"
-              className="w-[250px] h-[250px]"
-            />
-            <h2 className="text-xl font-semibold mb-2">
-              No properties saved yet
-            </h2>
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+    {Array.from({ length: 8 }).map((_, index) => (
+      <SkeletonCard key={index} />
+    ))}
+  </div>
+) : filteredProperties.length === 0 ? (
 
-            <p className="text-gray-500 mb-6 px-4">
-              Start exploring and save properties you like.
-            </p>
+  <div className="px-0 md:px-40 md:mb-50">
+    <div className="mt-10 bg-[#F3F3F3] rounded-3xl py-20 flex flex-col items-center justify-center text-center host-grotesk">
 
-            <button onClick={()=>navigate("/propertyListing")}
-              className="bg-[#7BC21F] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition cursor-pointer">
-              Browse Properties
-            </button>
-          </div>
-        </div>
+      <img
+        src={emptySvg}
+        alt="Empty"
+        className="w-[250px] h-[250px]"
+      />
 
-      ) : (
+      <h2 className="text-xl font-semibold mb-2">
+        No properties saved yet
+      </h2>
 
-        <>
-          {/* proprtylsiting */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-            {currentProperties.map((property, index) => (
-              <Propertycard
-                key={index}
-                property={property}
-                shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
-                wishlistIcon={property.is_wishlisted ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
-                    <path fill="#e11a1a" d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z" />
-                  </svg>
-                ) : (
-                  <Heart size={13} fill="none" stroke="black" className="scale-100" />
-                )}
-                click={() =>
-                  property.is_wishlisted
-                    ? removeWishlist(property.id)
-                    : addWishlist(property.id)
-                }
+      <p className="text-gray-500 mb-6 px-4">
+        Start exploring and save properties you like.
+      </p>
+
+      <button
+        onClick={() => navigate("/propertyListing")}
+        className="bg-[#7BC21F] text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition cursor-pointer"
+      >
+        Browse Properties
+      </button>
+    </div>
+  </div>
+) : (
+  
+  <>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+      {currentProperties.map((property, index) => (
+        <Propertycard
+          key={index}
+          property={property}
+          shadow="shadow-[0px_4px_13.5px_0px_rgba(129,105,105,0.25)]"
+          wishlistIcon={
+            property.is_wishlisted ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#e11a1a"
+                  d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"
+                />
+              </svg>
+            ) : (
+              <Heart
+                size={13}
+                fill="none"
+                stroke="black"
+                className="scale-100"
               />
-            ))}
-          </div>
+            )
+          }
+          click={() =>
+            property.is_wishlisted
+              ? removeWishlist(property.id)
+              : addWishlist(property.id)
+          }
+        />
+      ))}
+    </div>
 
+    {totalPages > 1 && (
+      <div className="flex justify-center mt-14 mb-20 px-2">
+        <div
+          className="flex items-center
+          gap-3 sm:gap-5 lg:gap-7
+          bg-[#7BC21F]
+          px-3 sm:px-4 lg:px-6
+          py-2 sm:py-3
+          rounded-full
+          shadow-[0_6px_15px_rgba(0,0,0,0.15)]
+          manrope
+          overflow-x-auto scrollbar-hide"
+        >
+          <button
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+            className="px-3 sm:px-4 lg:px-5 py-1.5 sm:py-2 text-xs sm:text-sm bg-white rounded-full font-medium disabled:opacity-50 cursor-pointer"
+          >
+            First
+          </button>
 
-          <div className="flex justify-center mt-14 mb-20 px-2">
-            <div className="flex items-center 
-                      gap-3 sm:gap-5 lg:gap-7
-                      bg-[#7BC21F]
-                      px-3 sm:px-4 lg:px-6
-                      py-2 sm:py-3
-                      rounded-full
-                      shadow-[0_6px_15px_rgba(0,0,0,0.15)]
-                      manrope
-                      overflow-x-auto scrollbar-hide">
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.max(prev - 1, 1))
+            }
+            disabled={currentPage === 1}
+            className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 flex items-center justify-center bg-white rounded-full shadow disabled:opacity-50 cursor-pointer"
+          >
+            ←
+          </button>
 
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+            (page) => (
               <button
-                onClick={() => setCurrentPage(1)}
-                disabled={currentPage === 1}
-                className="px-3 sm:px-4 lg:px-5 
-                     py-1.5 sm:py-2 
-                     text-xs sm:text-sm
-                     bg-white rounded-full font-medium 
-                     disabled:opacity-50 whitespace-nowrap cursor-pointer"
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 flex items-center justify-center rounded-full font-medium transition ${
+                  currentPage === page
+                    ? "bg-white shadow"
+                    : "text-white hover:bg-white/20"
+                }`}
               >
-                First
+                {page}
               </button>
+            )
+          )}
 
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10
-                     flex items-center justify-center
-                     bg-white rounded-full shadow
-                     disabled:opacity-50 cursor-pointer"
-              >
-                ←
-              </button>
+          <button
+            onClick={() =>
+              setCurrentPage((prev) =>
+                Math.min(prev + 1, totalPages)
+              )
+            }
+            disabled={currentPage === totalPages}
+            className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 flex items-center justify-center bg-white rounded-full shadow disabled:opacity-50 cursor-pointer"
+          >
+            →
+          </button>
 
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className={`w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10
-                        flex items-center justify-center
-                        rounded-full font-medium transition
-                        ${currentPage === page
-                      ? "bg-white shadow"
-                      : "text-white hover:bg-white/20"
-                    }`}
-                >
-                  {page}
-                </button>
-              ))}
-
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-                className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10
-                     flex items-center justify-center
-                     bg-white rounded-full shadow
-                     disabled:opacity-50 cursor-pointer"
-              >
-                →
-              </button>
-
-              <button
-                onClick={() => setCurrentPage(totalPages)}
-                disabled={currentPage === totalPages}
-                className="px-3 sm:px-4 lg:px-5 
-                     py-1.5 sm:py-2 
-                     text-xs sm:text-sm
-                     bg-lime-200 rounded-full font-medium 
-                     disabled:opacity-50 whitespace-nowrap cursor-pointer"
-              >
-                Last
-              </button>
-
-            </div>
-          </div>
-        </>
-      )}
-
+          <button
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+            className="px-3 sm:px-4 lg:px-5 py-1.5 sm:py-2 text-xs sm:text-sm bg-lime-200 rounded-full font-medium disabled:opacity-50 cursor-pointer"
+          >
+            Last
+          </button>
+        </div>
+      </div>
+    )}
+  </>
+)}
 
       {/* imge */}
       <div className="w-full px-4 mt-[140px] sm:mt-[120px] md:mt-[100px] lg:mt-[140px]">
@@ -331,7 +366,7 @@ function WishlistListingSection() {
                object-cover 
                rounded-[14px] 
                sm:rounded-[16px] 
-               lg:rounded-[20px]"
+               lg:rounded-[20px]" 
         />
       </div>
     </div>
