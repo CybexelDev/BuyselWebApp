@@ -7,15 +7,39 @@ import { getNearbyProperties } from "../../../Api/userApi";
 import Navbar from "../../../Components/Navbar/Navbar";
 import { getFilterOptions } from "../../../Api/userApi";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { Trash2 } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 
 
-
-const Header = ({ setParentFilters, onchange, filters }) => {
-  const [activeTab, setActiveTab] = useState("Rent");
+const Header = ({ setParentFilters, onchange, filters,searchCity, count }) => {
+  const [activeTab, setActiveTab] = useState("Sale");
   const [activeCategory, setActiveCategory] = useState("Residential");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const navigate=useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const tabs = ["Rent", "Buy", "Agent", "Lease"];
+const handleClearLocation = () => {
+  searchParams.delete("city");
+  setSearchParams(searchParams);
+
+  setParentFilters({
+    ...filters,
+    city: "",
+    district: "",
+  });
+};
+
+console.log("filters city",filters.city);
+console.log("searchCity",searchCity);
+  const tabs = [ "Sale", "Rent","Lease","Agent", ];
+    const handleTabClick = (tab) => {
+    setActiveTab(tab);
+
+    if (tab === "Agent") {
+      navigate("/agents");
+    }
+  };
   const handleNearbyClick = () => {
     if (!navigator.geolocation) {
       toast.error("Geolocation not supported");
@@ -33,12 +57,26 @@ const Header = ({ setParentFilters, onchange, filters }) => {
           lat,
           lng,
         });
+        console.log("nearby data",data)
       },
+      
       () => {
         toast.warning("Please allow location access");
       }
+      
     );
   };
+  1
+  const displayLocation =
+  filters?.district && filters?.city
+    ? ` ${filters.city},${filters.district},`
+    : filters?.city ||
+      searchCity ||
+      "";
+      const displayLocationText =
+  displayLocation.length > 15
+    ? `${displayLocation.slice(0, 14)}...`
+    : displayLocation;
   useEffect(() => {
     if (filters?.purpose) {
       setActiveTab(filters.purpose);
@@ -177,7 +215,7 @@ const Header = ({ setParentFilters, onchange, filters }) => {
               {tabs.map((tab) => (
                 <p
                   key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => handleTabClick(tab)}
                   className={`cursor-pointer transition px-1  ${activeTab === tab
                     ? "text-black font-bold"
                     : "hover:text-black text-[#938181]"
@@ -233,14 +271,26 @@ const Header = ({ setParentFilters, onchange, filters }) => {
 
       {/* Floating Location Card */}
       <div className="absolute left-3 md:bottom-18 bottom-13 z-0 p-6">
-        <div className="flex flex-col gap-1">
-          <h3 className="text-[14px] xl:text-[20px] font-bold text-black instrument-sans leading-tight host-grotesk ">
-            Ernakulam, Kochi
-          </h3>
-          <p className=" text-[8px] xl:text-[12px] text-black host-grotesk font-medium">
-            1000+ Properties found
-          </p>
-        </div>
+      <div className="flex flex-col gap-1">
+  <h3 className="text-[14px] xl:text-[20px] font-bold text-black host-grotesk">
+    {displayLocationText || "Explore Listings"}
+  </h3>
+
+  <div className="flex items-center gap-2">
+    <p className="text-[8px] xl:text-[14px] text-black host-grotesk font-medium">
+      {count ?? 0} Properties Found
+    </p>
+
+    {displayLocationText && (
+      <button
+  onClick={handleClearLocation}
+  className="w-5 h-5 xl:w-6 xl:h-6 rounded-full bg-gray-100 text-red-600 hover:bg-red-100 flex items-center justify-center"
+>
+  <Trash2 size={12}  />
+</button>
+    )}
+  </div>
+</div>
       </div>
 
       {isFilterOpen && <FilterModal onClose={() => setIsFilterOpen(false)} setParentFilters={setParentFilters}

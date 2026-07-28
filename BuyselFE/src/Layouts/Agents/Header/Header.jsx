@@ -10,6 +10,7 @@ function Header({ onchange, location, cityDataSend }) {
   const [open, setOpen] = useState(false);
   const [selecetdLocation, setSelectedLocation] = useState("Location");
   
+  
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -25,7 +26,7 @@ function Header({ onchange, location, cityDataSend }) {
   const cornerRadius = 40;
   const topNotchWidth = 230;
   const bottomNotchWidth = 900;
-  const notchDepth = 70;
+  const notchDepth = 75;
   const notchDepth2 = 110;
   const notchRadius = 38;
   const notchRadius2 = 58;
@@ -68,10 +69,16 @@ function Header({ onchange, location, cityDataSend }) {
   useEffect(() => {
    
     const getCityDatas = async () => {
+       if (selecetdLocation === "All Locations") {
+  cityDataSend([]);
+      return;
+    }
       const city = await getCityData(selecetdLocation);
       if (city) {
         cityDataSend(city); 
       }
+      console.log("Selected city:", selecetdLocation);
+console.log("City API response:", city);
     };
     getCityDatas();
   }, [selecetdLocation]);
@@ -117,16 +124,16 @@ function Header({ onchange, location, cityDataSend }) {
             {/* Main Content */}
             <div
               className="
-    relative 
-    flex flex-row max-[900px]:flex-col
-    items-start
-    max-[900px]:items-center
-    max-[900px]:text-center
-    justify-between items-start
-    px-4 sm:px-8 lg:pl-[29px]
-    pt-[90px] sm:pt-[110px]   
-    h-full
-    md:pr-0"
+                  relative 
+                  flex flex-row max-[900px]:flex-col
+                  items-start
+                  max-[900px]:items-center
+                  max-[900px]:text-center
+                  justify-between items-start
+                  px-4 sm:px-8 lg:pl-[29px]
+                  pt-[90px] sm:pt-[110px]   
+                  h-full
+                  md:pr-0"
             >
               {/* Left Text */}
               <div className="w-full min-[900px]:max-w-[390px] z-10">
@@ -215,7 +222,7 @@ function Header({ onchange, location, cityDataSend }) {
   <button
     onClick={() => setOpen(!open)}
     className="
-      host-grotesk cursor-pointer
+      host-grotesk cursor-pointer mb-1 md:mb-0
       flex items-center gap-0.5
       bg-black text-white
       px-2 xl:px-3
@@ -234,6 +241,15 @@ function Header({ onchange, location, cityDataSend }) {
     {open && (
     <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl  z-50 p-1">
       <ul className="text-sm text-white host-grotesk">
+         <li
+    onClick={() => {
+      setOpen(false);
+      setSelectedLocation("All Locations");
+    }}
+    className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
+  >
+    All Locations
+  </li>
        {Array.isArray(location) &&
   location.map((loc, index) => (
     <li

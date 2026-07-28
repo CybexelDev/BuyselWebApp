@@ -12,15 +12,19 @@ import phone from "../../../assets/images/propertDetail/phone.png"
 import seller from "../../../assets/images/propertDetail/seller.jpg"
 import { X } from "lucide-react";
 import { toast } from "sonner";
-
+import { Heart } from "lucide-react";
+import { addToWishlist,removeToWishlist } from "../../../Api/userApi";
 const HeaderProperty = ({ property }) => {
-
   const [showGallery, setShowGallery] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
 
+const [isWishlisted, setIsWishlisted] = useState(false);
 
+useEffect(() => {
+  setIsWishlisted(property?.is_wishlist || false);
+}, [property]);
   const nextImage = () => {
     setCurrentIndex((prev) =>
       prev === property.images.length - 1 ? 0 : prev + 1
@@ -54,7 +58,30 @@ const HeaderProperty = ({ property }) => {
       prevImage();
     }
   };
+const handleWishlist = async (e) => {
+  e.stopPropagation();
 
+  const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    toast.error("Please login to use wishlist");
+    return;
+  }
+
+  try {
+    if (isWishlisted) {
+      await removeToWishlist({ id: property.id });
+      setIsWishlisted(false);
+      toast.success("Removed from wishlist");
+    } else {
+      await addToWishlist({ id: property.id });
+      setIsWishlisted(true);
+      toast.success("Added to wishlist");
+    }
+  } catch (error) {
+    toast.error("Something went wrong");
+  }
+};
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -91,7 +118,7 @@ const HeaderProperty = ({ property }) => {
 
     if (!token) {
 
-      e.preventDefault(); // 🚫 stop redirect
+      e.preventDefault(); 
       toast.error("Please login to contact");
       return;
     }
@@ -99,7 +126,7 @@ const HeaderProperty = ({ property }) => {
   }
 
   return (
-    <div className='px-2 md:px-5 py-3 relative'>
+    <div className='px-2 md:px-7 py-3 relative'>
       <Navbar />
       <div className="detail-cta-container">
         <div className="detail-cta-logo-container ">
@@ -114,7 +141,7 @@ const HeaderProperty = ({ property }) => {
           <div className="lg:col-span-2 grid grid-cols-2 lg:grid-cols-[1.7fr_1fr] gap-3 lg:gap-[12px]">
 
             {/* main image */}
-            <div className="col-span-2 lg:col-span-1 lg:row-span-2">
+            <div className="col-span-2 lg:col-span-1 lg:row-span-2 relative">
               <img
                 src={property.images[0]}
                  onClick={() => {
@@ -124,9 +151,30 @@ const HeaderProperty = ({ property }) => {
                 alt="property"
                 className="w-full h-[240px] md:h-[300px] lg:w-full lg:h-[365px] object-cover rounded-2xl lg:rounded-3xl cursor-pointer"
               />
+                         <div
+  onClick={handleWishlist}
+  className="absolute top-2 right-3 w-8 h-8 lg:hidden rounded-full bg-white backdrop-blur-md border border-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 z-20"
+>
+  {isWishlisted ? (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="#e11a1a"
+        d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"
+      />
+    </svg>
+  ) : (
+ <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#6fba19" d="M12 4.595a5.9 5.9 0 0 0-3.996-1.558a5.94 5.94 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412l7.332 7.332c.17.299.498.492.875.492a.99.99 0 0 0 .792-.409l7.415-7.415c2.354-2.354 2.354-6.049-.002-8.416a5.94 5.94 0 0 0-4.209-1.754A5.9 5.9 0 0 0 12 4.595m6.791 1.61c1.563 1.571 1.564 4.025.002 5.588L12 18.586l-6.793-6.793c-1.562-1.563-1.561-4.017-.002-5.584c.76-.756 1.754-1.172 2.799-1.172s2.035.416 2.789 1.17l.5.5a1 1 0 0 0 1.414 0l.5-.5c1.512-1.509 4.074-1.505 5.584-.002" />
+              </svg>  )}
+</div>
             </div>
             {/* left side images */}
-            <div className="col-span-1 lg:col-span-1">
+            <div className="col-span-1 lg:col-span-1 relative">
               <img
                 src={property.images[1]}
                 alt=""
@@ -136,6 +184,27 @@ const HeaderProperty = ({ property }) => {
   }}
                 className="w-full h-[120px] md:h-[160px] lg:h-[176.5px] object-cover rounded-xl lg:rounded-3xl cursor-pointer"
               />
+              <div
+  onClick={handleWishlist}
+  className="absolute top-2 right-3 w-8 h-8 lg:flex rounded-full bg-white backdrop-blur-md border border-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] hidden items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 z-20"
+>
+  {isWishlisted ? (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="#e11a1a"
+        d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"
+      />
+    </svg>
+  ) : (
+ <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#6fba19" d="M12 4.595a5.9 5.9 0 0 0-3.996-1.558a5.94 5.94 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412l7.332 7.332c.17.299.498.492.875.492a.99.99 0 0 0 .792-.409l7.415-7.415c2.354-2.354 2.354-6.049-.002-8.416a5.94 5.94 0 0 0-4.209-1.754A5.9 5.9 0 0 0 12 4.595m6.791 1.61c1.563 1.571 1.564 4.025.002 5.588L12 18.586l-6.793-6.793c-1.562-1.563-1.561-4.017-.002-5.584c.76-.756 1.754-1.172 2.799-1.172s2.035.416 2.789 1.17l.5.5a1 1 0 0 0 1.414 0l.5-.5c1.512-1.509 4.074-1.505 5.584-.002" />
+              </svg>  )}
+</div>
             </div>
 
 
@@ -239,10 +308,10 @@ const HeaderProperty = ({ property }) => {
               <div className="flex items-center gap-3 lg:gap-4 mb-5 lg:mb-6">
 
                 <img
-                  src={property?.sowner_profile_image|| seller}
-                  alt="seller"
-                  className="w-14 h-14 lg:w-20 lg:h-20 rounded-full object-cover"
-                />
+  src={property?.seller?.image || seller}
+  alt="seller"
+  className="w-14 h-14 lg:w-20 lg:h-20 rounded-full object-cover"
+/>
                 <div>
 
                   <div className="flex items-center gap-2">

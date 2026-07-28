@@ -77,6 +77,9 @@ const handleNotificationClick = async (id) => {
 
       const logout = ()=>{
       dispatch({ type: "AGENT_LOGOUT" });
+       localStorage.removeItem("agentId");
+       localStorage.removeItem("accessToken");
+       localStorage.removeItem("refreshToken");
       navigate('/loginandsignup')
     }
     

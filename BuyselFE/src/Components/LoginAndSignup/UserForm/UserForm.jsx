@@ -12,18 +12,46 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'sonner';
 
-const UserForm = ({ setSignup,onForgot }) => {
+const 
+UserForm = ({ setSignup,onForgot }) => {
   const [login, setLogin] = useState({ username: '', password: '' })
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+const [errors, setErrors] = useState({});
+const validateForm = () => {
+  const newErrors = {};
 
+  if (!login.username.trim()) {
+    newErrors.username = "Email is required";
+  } else if (!/\S+@\S+\.\S+/.test(login.username)) {
+    newErrors.username = "Enter a valid email";
+  }
+
+  if (!login.password.trim()) {
+    newErrors.password = "Password is required";
+  } else if (login.password.length < 6) {
+    newErrors.password = "Password must be at least 6 characters";
+  }
+
+  setErrors(newErrors);
+
+  return Object.keys(newErrors).length === 0;
+};
 
   const handleLogin = async () => {
     try {
-      const response = await userLogin(login.username, login.password);
+        if (!validateForm()) return;
+  setLoading(true);
 
+      const response = await userLogin(login.username, login.password);
+if (response?.error) {
+  toast.error(response.error);
+  return;
+}
       if (response) {
         console.log("user Login success page:", response);
+        
         dispatch({
           type: 'SET_USER',
           payload: {
@@ -32,7 +60,10 @@ const UserForm = ({ setSignup,onForgot }) => {
             userId: response?.user?.id,
             image: response?.user.image,
             verificationStatus: response?.user?.auth_provider,
+            listedCount: response?.user?.total_properties,
             role:response?.login_as,
+            is_plan:response?.is_plan,
+            remainingProperty:response?.user?.remaining_property
           }
         })
 
@@ -51,6 +82,9 @@ const UserForm = ({ setSignup,onForgot }) => {
     } catch (error) {
       console.error("Login error:", error);
     }
+    finally {
+    setLoading(false);
+  }
   };
 
 
@@ -69,7 +103,11 @@ const UserForm = ({ setSignup,onForgot }) => {
             userId: response?.user?.id,
             image: response?.user?.image,
             verificationStatus: response?.user?.auth_provider,
+            listedCount: response?.user?.total_properties,
             role:response?.login_as,
+            is_plan:response?.is_plan,
+            remainingProperty:response?.user?.remaining_property
+
           }
         })
 
@@ -139,33 +177,88 @@ const UserForm = ({ setSignup,onForgot }) => {
 
       <div className="relative mb-4">
         <Mail className="absolute left-4 top-4 text-gray-500" size={18} />
-        <input
-          value={login.username}
-          onChange={(e) => setLogin({ ...login, username: e.target.value })}
-          type="email"
-          placeholder="Email"
-          className="w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none"
-        />
+         <input
+    value={login.username}
+  onChange={(e) => {
+  setLogin({ ...login, username: e.target.value });
+
+  if (errors.username) {
+    setErrors((prev) => ({
+      ...prev,
+      username: "",
+    }));
+  }
+}}
+    type="email"
+    placeholder="Email"
+    className={`w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none ${
+      errors.username ? "border border-red-500" : ""
+    }`}
+  />
+          {errors.username && (
+    <p className="text-red-500 text-sm mt-1 host-grotesk">
+      {errors.username}
+    </p>
+  )}
       </div>
 
-      <div className="relative mb-2">
-        <Lock className="absolute left-4 top-4 text-gray-500" size={18} />
-        <input
-          value={login.password}
-          onChange={(e) => setLogin({ ...login, password: e.target.value })}
-          type="password"
-          placeholder="Password"
-          className="w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none"
-        />
-      </div>
+     <div className="relative mb-2">
+  <Lock className="absolute left-4 top-4 text-gray-500" size={18} />
+
+  <input
+    value={login.password}
+  onChange={(e) => {
+  setLogin({ ...login, password: e.target.value });
+
+  if (errors.password) {
+    setErrors((prev) => ({
+      ...prev,
+      password: "",
+    }));
+  }
+}}
+    type="password"
+    placeholder="Password"
+    className={`w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none ${
+      errors.password ? "border border-red-500" : ""
+    }`}
+  />
+
+  {errors.password && (
+    <p className="text-red-500 text-sm mt-1 host-grotesk">
+      {errors.password}
+    </p>
+  )}
+</div>
 
       <div className="text-right text-sm text-gray-500 mb-5 cursor-pointer hover:text-gray-900" onClick={onForgot}>
         Forgot Password?
       </div>
 
-      <button onClick={handleLogin} className="w-full bg-[#2f332f] text-white py-3 rounded-lg font-medium hover:bg-black transition">
-        Get Started
-      </button>
+     <button
+  onClick={handleLogin}
+  disabled={loading}
+  className="w-full bg-[#2f332f] text-white py-3 rounded-lg font-medium hover:bg-black transition disabled:opacity-50 flex items-center justify-center gap-2"
+>
+  {loading ? (
+    <>
+      <span>Logging in...</span>
+
+      <div className="dot-spinner">
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+        <div className="dot-spinner__dot"></div>
+      </div>
+    </>
+  ) : (
+    "Get Started"
+  )}
+</button>
 
       <p className="text-center text-sm mt-4">
         Don’t have an account?{" "}

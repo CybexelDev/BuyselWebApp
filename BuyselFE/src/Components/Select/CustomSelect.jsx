@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-function SelectField({ label, icon, options, value, onChange }) {
+function SelectField({ label, icon, options, value, onChange ,error,required=false}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -12,23 +12,25 @@ function SelectField({ label, icon, options, value, onChange }) {
       text-sm md:text-base lexend">
         {icon}
         {label}
+          {required && <span className="text-red-500">*</span>}
       </label>
 
       {/* INPUT */}
       <div
         onClick={() => setOpen(!open)}
-        className="
-        w-full
-        h-[42px] md:h-[46px]
-        px-4 md:px-5
-        rounded-full
-        bg-[#F3F3F3]
-        border border-[#E4E3E3]
-        shadow-[inset_0px_1px_4px_rgba(0,0,0,0.15)]
-        flex items-center justify-between
-        text-sm md:text-[16px]
-        cursor-pointer
-      "
+        className={`
+w-full
+h-[42px] md:h-[46px]
+px-4 md:px-5
+rounded-full
+bg-[#F3F3F3]
+border
+${error ? "border-red-500" : "border-[#E4E3E3]"}
+shadow-[inset_0px_1px_4px_rgba(0,0,0,0.15)]
+flex items-center justify-between
+text-sm md:text-[16px]
+cursor-pointer
+`}
       >
         <span className="text-[#555] truncate">
           {value || `Select ${label}`}
@@ -76,9 +78,16 @@ function SelectField({ label, icon, options, value, onChange }) {
               {option}
             </div>
           ))}
+          
         </div>
       )}
+      {error && (
+  <p className="text-red-500 text-xs mt-1 ml-2">
+    {error}
+  </p>
+)}
     </div>
+    
   );
 }
 

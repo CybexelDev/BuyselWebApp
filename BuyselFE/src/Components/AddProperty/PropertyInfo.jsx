@@ -4,7 +4,7 @@ import { Layers, List, Target } from "lucide-react";
 import SelectField from "../Select/CustomSelect";
 import { getPropertyData } from "../../Api/agentsApi";
 
-function  PropertyInfo({ formData, setFormData, errors }) {
+function  PropertyInfo({ formData, setFormData, errors,isAgent }) {
   const [propertyData, setPropertyData] = useState({
     categories: [],
     subcategories: [],
@@ -13,7 +13,7 @@ function  PropertyInfo({ formData, setFormData, errors }) {
     fields: [],
   });
   const [isAmenitiesOpen, setIsAmenitiesOpen] = useState(false);
-
+const [tempAmenities, setTempAmenities] = useState([]);
   const handlePointChange = (index, value) => {
     
   const updated = [...(formData.keyPoints || [])];
@@ -44,7 +44,10 @@ const removePoint = (index) => {
   });
 };
 
-
+const openAmenitiesModal = () => {
+  setTempAmenities([...formData.amenities]);
+  setIsAmenitiesOpen(true);
+};
 
 const updateFeatureCount = (fieldName, optionName, type) => {
   setFormData((prev) => {
@@ -146,15 +149,24 @@ const toggleAmenity = (amenity) => {
     });
   };
 
-  const handleCategoryChange = (val) => {
-    const selected = propertyData.categories.find((c) => c.name === val);
-    setFormData((prev) => ({
-      ...prev,
-      category: val,
-      category_id: selected?.id || null,
-      subcategory: "",
-    }));
-  };
+ const handleCategoryChange = (val) => {
+  console.log("Selected category value:", val);
+
+  const selected = propertyData.categories.find(
+    (c) => c.name === val
+  );
+
+  console.log("Matched category:", selected);
+
+  setFormData((prev) => ({
+    ...prev,
+    category: val,
+    category_id: selected?.id || null,
+    subcategory: "",
+    features: [],
+    amenities: [],
+  }));
+};
 
   const handleSubcategoryChange = (val) => {
     const selected = propertyData.subcategories.find((s) => s.name === val);
@@ -164,6 +176,10 @@ const toggleAmenity = (amenity) => {
       ...prev,
       subcategory: val,
       subcategory_fields: selected?.fields || [], // ✅ IMPORTANT
+      features: [],
+      amenities: [],
+
+
     }));
   };
 
@@ -211,7 +227,8 @@ const toggleAmenity = (amenity) => {
 }, [formData.amenities]);
 
 
-
+console.log("Category ID:", formData.category_id);
+console.log("Filtered:", filteredSubcategories);
 
   return (
     <div className="flex gap-8">
@@ -227,6 +244,8 @@ const toggleAmenity = (amenity) => {
             options={propertyData.categories.map((c) => c.name)}
             value={formData.category}
             onChange={handleCategoryChange}
+              error={errors?.category}
+            required={!isAgent}
           />
           <SelectField
             label="Subcategory"
@@ -234,6 +253,8 @@ const toggleAmenity = (amenity) => {
             options={filteredSubcategories.map((s) => s.name)}
             value={formData.subcategory}
             onChange={handleSubcategoryChange}
+            error={errors?.subcategory}
+            required={!isAgent}
           />
           <SelectField
             label="Purpose"
@@ -241,6 +262,8 @@ const toggleAmenity = (amenity) => {
             options={propertyData.purposes.map((p) => p.name)}
             value={formData.purpose}
             onChange={(val) => setFormData({ ...formData, purpose: val })}
+            error={errors?.purpose}
+            required={!isAgent}
           />
         </div>
 
@@ -400,6 +423,9 @@ updated.push({
                 );
               }
 
+
+              
+
               return null;
             })}
           </div>
@@ -414,6 +440,7 @@ updated.push({
             value={formData.title}
             onChange={handleChange}
             error={errors?.title}
+            required={!isAgent}
           />
 
           <Input
@@ -442,6 +469,7 @@ updated.push({
             value={formData.city}
             onChange={handleChange}
             error={errors?.city}
+            required={!isAgent}
           />
           <Input
             label="Village"
@@ -462,12 +490,14 @@ updated.push({
             value={formData.pincode}
             onChange={handleChange}
             error={errors?.pincode}
+            required={!isAgent}
           />
           <Input
             label="District"
             name="district"
             value={formData.district}
             onChange={handleChange}
+            error={errors?.district}
           />
           <Input
             label="State"
@@ -587,6 +617,8 @@ updated.push({
             name="description"
             value={formData.description}
             onChange={handleChange}
+              error={errors?.description}
+required={!isAgent}
           />
         </div>
         <div className="mt-8">
@@ -694,7 +726,7 @@ updated.push({
 
                 <button
                   type="button"
-                  onClick={() => setIsAmenitiesOpen(true)}
+                  onClick={openAmenitiesModal}
                   className="text-blue-600 text-sm font-medium hover:underline"
                 >
                   + Add more
@@ -703,7 +735,7 @@ updated.push({
             ) : (
               <button
                 type="button"
-                onClick={() => setIsAmenitiesOpen(true)}
+                onClick={openAmenitiesModal}
                 className="text-[#6ABD11ED] text-sm font-medium hover:underline"
               >
                 + Add Amenities
@@ -717,6 +749,7 @@ updated.push({
             value={formData.owner}
             onChange={handleChange}
             error={errors?.owner}
+            required={!isAgent}
           />
 
           <Input
@@ -725,6 +758,7 @@ updated.push({
             value={formData.phone}
             onChange={handleChange}
             error={errors?.phone}
+            required={!isAgent}
           />
 
           <Input
@@ -733,6 +767,7 @@ updated.push({
             value={formData.whatsapp}
             onChange={handleChange}
             error={errors?.whatsapp}
+            required={!isAgent}
           />
         </div>
         {isAmenitiesOpen && (
@@ -753,14 +788,14 @@ updated.push({
                 w-[80px] h-[70px] rounded-xl border transition
                 ${
                   isSelected
-                    ? "border-lime-500 bg-lime-50 text-lime-600"
-                    : "border-gray-300 text-gray-500 hover:border-lime-400"
+                    ? "border-lime-500 bg-lime-300  text-lime-600"
+                    : "border-gray-300 text-gray-500 bg-lime-100 hover:border-lime-400"
                 }`}
                     >
                       <img
                         src={item.icon}
                         alt={item.name}
-                        className="w-6 h-6 object-contain"
+                        className="w-6 h-6 object-contain host-grotesk"
                       />
 
                       <span className="text-[12px] mt-1">{item.name}</span>
@@ -771,15 +806,21 @@ updated.push({
 
               <div className="flex justify-end gap-3">
                 <button
-                  onClick={() => setIsAmenitiesOpen(false)}
-                  className="px-4 py-2 rounded-lg border"
+onClick={() => {
+  setFormData(prev => ({
+    ...prev,
+    amenities: tempAmenities,
+  }));
+  setIsAmenitiesOpen(false);
+}}                  className="px-4 py-2 rounded-lg border"
                 >
                   Cancel
                 </button>
 
                 <button
-                  onClick={() => setIsAmenitiesOpen(false)}
-                  className="px-4 py-2 rounded-lg bg-lime-500 text-white"
+onClick={() => {
+  setIsAmenitiesOpen(false);
+}}                  className="px-4 py-2 rounded-lg bg-lime-500 text-white"
                 >
                   Save
                 </button>
@@ -793,7 +834,8 @@ updated.push({
 }
 
 export default PropertyInfo;
-const Input = ({ label, name, value, onChange, error, placeholder }) => {
+const Input = ({ label, name, value, onChange, error, placeholder ,  required = false,
+}) => {
   const handleInputChange = (e) => {
     let val = e.target.value;
 
@@ -843,6 +885,8 @@ const Input = ({ label, name, value, onChange, error, placeholder }) => {
       >
         <Layers size={16} className="text-lime-500 shrink-0" />
         {label}
+          {required && <span className="text-red-500">*</span>}
+
       </label>
 
       {/* Input */}
@@ -885,11 +929,13 @@ const Input = ({ label, name, value, onChange, error, placeholder }) => {
     </div>
   );
 };
-const Textarea = ({ label, name, value, onChange }) => (
+const Textarea = ({ label, name, value, onChange,error ,required=false}) => (
   <div>
     <label className="flex items-center gap-2 lexend text-[16px]  font-semibold mb-2">
       <Layers size={16} className="text-lime-500" />
       {label}
+                {required && <span className="text-red-500">*</span>}
+
     </label>
 
     <textarea
@@ -897,13 +943,19 @@ const Textarea = ({ label, name, value, onChange }) => (
       name={name}
       value={value}
       onChange={onChange}
-      className="w-full px-5 py-4 rounded-2xl
+      className={`w-full px-5 py-4 rounded-2xl
         bg-[#F3F3F3]
-        border border-[#E4E3E3]
+  ${error ? "border-red-500" : "border-[#E4E3E3]"}
         text-[14px] text-black
         shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
         lexend
-        outline-none"
+        outline-none`}
     />
+    {error && (
+  <p className="text-red-500 text-xs mt-1 ml-2">
+    {error}
+  </p>
+)}
   </div>
+  
 );

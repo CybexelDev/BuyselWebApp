@@ -1,32 +1,59 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getAllPlans } from "../../Api/userApi";
-import { MessageCircle, Phone,UserPlus } from "lucide-react";
+import { getAllPlans, userDashboard } from "../../Api/userApi";
+import { MessageCircle, Phone, UserPlus } from "lucide-react";
 import { activateUserPlan } from "../../Api/userApi";
 import { toast } from "sonner";
 import { s } from "framer-motion/m";
 import { openRazorpay } from "../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
+import add from '../../assets/images/nav/add.png'
+import Loading from "../../Components/Loading/Loading";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const [plansData, setPlansData] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [showLimitMessage, setShowLimitMessage] = useState(false)
   const [showAgentModal, setShowAgentModal] = useState(false);
-  const navigate=useNavigate()
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
+
+  const user = useSelector((state) => state.user);
+  const isPlan = useSelector((state) => state.user.is_plan);
+
+  console.log("is_plan:", isPlan);
 
   const handleSelectPlan = (plan) => {
 
-  if (active !== "Owner") {
-    setShowAgentModal(true);
-    return;
-  }
+    if (plansData?.is_upgrade_plan) {
+      toast.error(
+        "You already have an active upgrade plan. Please wait until it expires."
+      );
+      return;
+    }
 
-  setSelectedPlan(plan);
-  setOpenModal(true);
-};
+
+    // Agent plans
+    if (active !== "Owner") {
+      setShowAgentModal(true);
+      return;
+    }
+
+    // Owner plans
+    if (propertyCount < 2) {
+      setShowLimitMessage(true);
+      return;
+    }
+
+    setSelectedPlan(plan);
+    setOpenModal(true);
+  };
   const handleCheckout = async () => {
 
     try {
@@ -44,18 +71,38 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const data = await getAllPlans();
-        setPlansData(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
 
-    fetchPlans();
-  }, []);
+  // useEffect(() => {
+  //   const fetchPlans = async () => {
+  //     try {
+  //       const data = await getAllPlans();
+  //       setPlansData(data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+
+  //   fetchPlans();
+  // }, []);
+
+  useEffect(() => {
+  const fetchPlans = async () => {
+    try {
+      setLoading(true);
+
+      const data = await getAllPlans();
+      setPlansData(data);
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchPlans();
+}, []);
+
 
   const getPlansByRole = () => {
     if (!plansData) return [];
@@ -258,6 +305,9 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const roles = ["Owner", "Agent", "Premium Agent", "Elite Agent"];
   const rawPlans = getPlansByRole();
   const features = planConfig[active].features;
+  const propertyCount = plansData?.property_count || 0;
+  console.log("count:", propertyCount);
+
 
   const plans = rawPlans.map((plan) => ({
     id: plan.id,
@@ -294,72 +344,144 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
     return <span className="text-[#000000b7] text-[12px] lg:text-[11px] xl:text-[12px] 3xl:text-sm font-medium text-center">{type}</span>;
   };
 
+  if (loading) {
+    return (
+      <Loading />
+    );
+  }
+
+
+
   return (
-    <div className={` ${padding} bg-white  px-4 lg:px-12 xl:px-16`}>
-{
-  showAgentModal && (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 host-grotesk"
-      onClick={() => setShowAgentModal(false)}
-    >
+    <div className={` ${padding} bg-white  px-4 lg:px-6 xl:px-8 2xl:px-16`}>
 
-      <div
-        className="bg-white w-full max-w-md rounded-3xl p-8 relative text-center"
-        onClick={(e) => e.stopPropagation()}
-      >
+      {showLimitMessage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
 
-        <button
-          onClick={() => setShowAgentModal(false)}
-          className="absolute top-4 right-4 text-2xl"
-        >
-          ✕
-        </button>
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-[90%] max-w-md text-center">
 
-        <div className="flex justify-center mb-5">
-          <div className="w-20 h-20 rounded-full bg-[#F1FDDA] flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              height="38"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#8AD32E"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 12a5 5 0 1 0-5-5a5 5 0 0 0 5 5" />
-              <path d="M20 21a8 8 0 1 0-16 0" />
-            </svg>
+            {/* Icon Badge */}
+            <div className="w-14 h-14 rounded-full bg-[#EEF8DF] flex items-center justify-center mx-auto mb-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-7 h-7 text-[#6ABD11]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.8}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+            </div>
+
+            {/* Title */}
+            <h2 className="text-xl font-semibold host-grotesk text-[#111111] mb-2">
+              Add Properties First
+            </h2>
+
+            {/* Description */}
+            <p className="text-sm host-grotesk text-[#555] leading-relaxed mb-7">
+              If you want to choose any plan, first you need to add 2 properties.
+              After adding 2 properties, you can select a plan.
+            </p>
+
+            {/* Buttons */}
+            <div className="flex flex-col gap-3">
+
+              <button
+                onClick={() => {
+                  setShowLimitMessage(false);
+                  navigate("/addyourproperty");
+                }}
+                className="w-full cursor-pointer py-3 bg-[#6ABD11] hover:bg-[#5aa30e] text-white text-sm font-medium rounded-lg transition"
+              >
+                Add Property
+              </button>
+
+              <button
+                onClick={() => setShowLimitMessage(false)}
+                className="w-full cursor-pointer py-3 border border-gray-300 text-black text-sm rounded-lg hover:bg-gray-50 transition"
+              >
+                Maybe Later
+              </button>
+
+            </div>
+
           </div>
         </div>
+      )}
 
-        <h2 className="text-2xl font-semibold text-black">
-          Become an Agent
-        </h2>
 
-        <p className="text-gray-500 mt-3 leading-relaxed">
-          You need to complete the agent-registration form to become an agent
-          and access these plans.
-        </p>
+      {
+        showAgentModal && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 host-grotesk"
+            onClick={() => setShowAgentModal(false)}
+          >
 
-        <button
-  onClick={() => navigate("/agent-register")}
-  className="w-full mt-6 bg-[#8AD32E] hover:bg-[#7fc127]
-  text-white py-3 rounded-2xl font-semibold transition
+            <div
+              className="bg-white w-full max-w-md rounded-3xl p-8 relative text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+
+              <button
+                onClick={() => setShowAgentModal(false)}
+                className="absolute top-4 right-4 text-2xl cursor-pointer"
+              >
+                ✕
+              </button>
+
+              <div className="flex justify-center mb-5">
+                <div className="w-20 h-20 rounded-full bg-[#F1FDDA] flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="38"
+                    height="38"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#8AD32E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 12a5 5 0 1 0-5-5a5 5 0 0 0 5 5" />
+                    <path d="M20 21a8 8 0 1 0-16 0" />
+                  </svg>
+                </div>
+              </div>
+
+              <h2 className="text-2xl font-semibold text-black">
+                Become an Agent
+              </h2>
+
+              <p className="text-gray-500 mt-3 leading-relaxed">
+                You need to complete the agent-registration form to become an agent
+                and access these plans.
+              </p>
+
+              <button
+                onClick={() => navigate("/agent-register")}
+                className="w-full mt-6 bg-[#8AD32E] hover:bg-[#7fc127]
+  text-white py-3 rounded-2xl font-semibold transition cursor-pointer
   shadow-lg
   flex items-center justify-center gap-2"
->
-  <UserPlus size={18} />
-  Complete Registration
-</button>
+              >
+                <UserPlus size={18} />
+                Register as an Agent
+              </button>
 
-      </div>
 
-    </div>
-  )
-}
 
+            </div>
+
+          </div>
+        )
+      }
+      {showtabs && (
         <div className="flex justify-center mb-10 md:mb-15 px-2">
 
           <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">
@@ -392,7 +514,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
             key={planIndex}
             className={`bg-white rounded-3xl p-6 shadow-lg border border-[#E6F4D7]
       ${planIndex === 2 && plans.length !== 4 ? "md:col-span-2" : ""}`}
-
           >
             <div className="text-center mb-6">
               <h2 className="text-[23px] font-semibold text-[#1F1F1F]">
@@ -422,6 +543,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
             </div>
 
             <button className="mt-6 w-full bg-[#8AD32E] cursor-pointer text-white py-3 rounded-full font-semibold hover:bg-[#73b412] transition cursor-pointer"
+
               onClick={() => handleSelectPlan(plan)}
             >
               Select Plan
@@ -434,22 +556,20 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
 
 
-{/* desktop */}
+      {/* desktop */}
 
-<div
-  className={`hidden lg:grid
-  ${
-    plans.length === 4
-      ? "grid-cols-[240px_repeat(4,1fr)]"
-      : "grid-cols-[240px_repeat(3,1fr)]"
-  }
+      <div
+        className={`hidden lg:grid
+  ${plans.length === 4
+            ? "grid-cols-[240px_repeat(4,1fr)]"
+            : "grid-cols-[240px_repeat(3,1fr)]"
+          }
   gap-2 xl:gap-4 items-start w-full`}
->
+      >
 
-  {/* LEFT TEXT */}
-  <div className="flex flex-col justify-center h-[120px]">
+        {/* LEFT TEXT */}
+        <div className="flex flex-col justify-center h-[120px]">
           <h1 className="text-2xl lg:text-2xl font-semibold mb-2 lexend">
-
             Hey there,
           </h1>
 
@@ -458,12 +578,12 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
           </p>
         </div>
 
-  {/* TOP PLAN CARDS */}
-  {plans.map((plan) => (
-    
-    <div
-      key={plan.name}
-      className="bg-[#F1FDDA]
+        {/* TOP PLAN CARDS */}
+        {plans.map((plan) => (
+
+          <div
+            key={plan.name}
+            className="bg-[#F1FDDA]
       h-[120px]
       w-full
       rounded-3xl
@@ -472,134 +592,125 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       items-center
       mx-auto
       shadow-lg"
-    >
+          >
 
-      <h2 className="text-lg xl:text-xl font-semibold mb-2 lexend text-center">
-        {plan.name}
-      </h2>
+            <h2 className="text-lg xl:text-xl font-semibold mb-2 lexend text-center">
+              {plan.name}
+            </h2>
 
-      <div
-        className="bg-[#8AD32E]
+            <div
+              className="bg-[#8AD32E]
         text-white
         px-6 py-1
         rounded-full
         font-semibold
         lexend"
-      >
-        {plan.price}
-      </div>
+            >
+              {plan.price}
+            </div>
 
-    </div>
-  ))}
+          </div>
+        ))}
 
-  {/* FEATURE COLUMN */}
-  <div
-    className="bg-[#8AD32E]
+        {/* FEATURE COLUMN */}
+        <div
+          className="bg-[#8AD32E]
     rounded-3xl
     p-3
     mt-4
     w-full
     max-w-[240px]"
-  >
+        >
 
-    {features.map((feat, i) => (
-      
-      <div
-        key={feat}
-        className={`h-[65px]
+          {features.map((feat, i) => (
+
+            <div
+              key={feat}
+              className={`h-[65px]
         flex items-center
         px-4
         rounded-2xl
         text-white
         lexend
         text-[14px]
-        ${
-          i % 2 === 0
-            ? "bg-black/10 font-semibold"
-            : "font-medium"
-        }`}
-      >
-        {feat}
-      </div>
+        ${i % 2 === 0
+                  ? "bg-black/10 font-semibold"
+                  : "font-medium"
+                }`}
+            >
+              {feat}
+            </div>
 
 
-    ))}
+          ))}
 
-  </div>
-
-
-  {/* PLAN DATA COLUMNS */}
-  {plans.map((plan) => (
-
-    <div
-      key={plan.name}
-      className="mt-2 flex flex-col items-center"
-    >
+        </div>
 
 
-      <div
-        className="bg-white
-        w-full
-        rounded-3xl
-        p-2
-        border-2
-        shadow-lg
-        border-[#F1FDDA]"
-      >
+        {/* PLAN DATA COLUMNS */}
+        {plans.map((plan) => (
 
-        {features.map((_, i) => (
-          
           <div
-            key={i}
-            className={`h-[65px]
+            key={plan.name}
+            className="mt-2 flex flex-col items-center"
+          >
+            <div
+              className="bg-white
+                 w-full
+                 rounded-3xl
+                 p-2
+                 border-2
+                 shadow-lg
+                 border-[#F1FDDA]"
+            >
+
+              {features.map((_, i) => (
+
+                <div
+                  key={i}
+                  className={`h-[65px]
             flex items-center
             justify-center
             rounded-2xl
             lexend
             text-center
             px-2
-            ${
-              i % 2 === 0
-                ? "bg-[#7bbe1624]"
-                : "bg-white"
-            }`}
-          >
-            {renderIcon(plan.data[i])}
+            ${i % 2 === 0
+                      ? "bg-[#7bbe1624]"
+                      : "bg-white"
+                    }`}
+                >
+                  {renderIcon(plan.data[i])}
+                </div>
+
+              ))}
+
+
+            </div>
+
+            {/* BUTTON */}
+            <button onClick={() => handleSelectPlan(plan)}
+              className="mt-6
+              w-full
+              max-w-[220px]
+              bg-[#8AD32E]
+              hover:bg-[#7ABF28]
+              text-white
+              font-bold
+              py-3
+              rounded-xl
+              lexend
+              transition
+              cursor-pointer"
+            >
+              Select Plan
+            </button>
           </div>
 
         ))}
-
-
       </div>
 
-      {/* BUTTON */}
-      <button
-        onClick={() => handleSelectPlan(plan)}
-        className="mt-6
-        w-full
-        max-w-[220px]
-        bg-[#8AD32E]
-        hover:bg-[#7ABF28]
-        text-white
-        font-bold
-        py-3
-        rounded-xl
-        lexend
-        transition
-        cursor-pointer"
-      >
-        Select Plan
-      </button>
-
-
-    </div>
-
-  ))}
-
-</div>
-
       <div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 host-grotesk mt-10">
-
 
         {/* LEFT SIDE */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
@@ -687,49 +798,53 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                       {feature}
                     </span>
 
-
                     <div>
                       {renderIcon(selectedPlan?.data[index])}
                     </div>
 
                   </div>
-
                 ))}
-
               </div>
 
-              <button
+<button
+  onClick={() =>
+    openRazorpay({
+      name: "BuySel",
+      description: selectedPlan?.name,
+      plan_type: selectedPlan?.plan_type,
+      plan_id: selectedPlan?.plan_id,
+      onSuccess: async (res) => {
+        const dashboard = await userDashboard();
+        console.log("Remaining:", dashboard.data.remaining_property);
+ 
+        dispatch({
+        type: "SET_USER",
+        payload: {
+          ...user,
+          remainingProperty: dashboard.data.remaining_property,
+          is_plan: true,
+        }
+        });
 
-                onClick={() =>
-                  openRazorpay({
-                    name: "BuySel",
-                    description: selectedPlan?.name,
+       
 
-                    // ✅ required
-                    plan_type: selectedPlan?.plan_type,
-                    plan_id: selectedPlan?.plan_id,
 
-                    // ✅ success callback
-                    onSuccess: (res) => {
-                      console.log("Property Payment", res);
-                      navigate("/invoice", {
-                        state: {
-                          paymentData: res,
-                        },
-                      });
-                    },
-                  })
-                }
-
-                className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white
-              text-black py-4 rounded-2xl font-semibold text-lg transition flex gap-2 justify-center cursor-pointer "
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M2 4.5h6.757a3 3 0 0 1 2.122.879L14 8.5m-9 5H2m6.5-6l2 2a1.414 1.414 0 1 1-2 2L7 10c-.86.86-2.223.957-3.197.227L3.5 10" /><path d="M5 11v4.5c0 1.886 0 2.828.586 3.414S7.114 19.5 9 19.5h9c1.886 0 2.828 0 3.414-.586S22 17.386 22 15.5v-3c0-1.886 0-2.828-.586-3.414S19.886 8.5 18 8.5H9.5" /><path d="M15.25 14a1.75 1.75 0 1 1-3.5 0a1.75 1.75 0 0 1 3.5 0" /></g></svg>
-                CHECKOUT
-              </button>
+        navigate("/invoice", {
+          state: {
+            paymentData: res,
+          },
+        });
+      },
+    })
+  }
+  className="w-full mt-8 bg-[#a8f82a] hover:bg-[#83c829] hover:text-white
+  text-black py-4 rounded-2xl font-semibold text-lg transition flex gap-2 justify-center cursor-pointer "
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M2 4.5h6.757a3 3 0 0 1 2.122.879L14 8.5m-9 5H2m6.5-6l2 2a1.414 1.414 0 1 1-2 2L7 10c-.86.86-2.223.957-3.197.227L3.5 10" /><path d="M5 11v4.5c0 1.886 0 2.828.586 3.414S7.114 19.5 9 19.5h9c1.886 0 2.828 0 3.414-.586S22 17.386 22 15.5v-3c0-1.886 0-2.828-.586-3.414S19.886 8.5 18 8.5H9.5" /><path d="M15.25 14a1.75 1.75 0 1 1-3.5 0a1.75 1.75 0 0 1 3.5 0" /></g></svg>
+  CHECKOUT
+</button>
 
             </div>
-
           </div>
         )
       }

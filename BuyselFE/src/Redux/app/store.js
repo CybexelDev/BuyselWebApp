@@ -11,12 +11,17 @@ const initialUserState = {
   image: null,
   verificationStatus: null,
   role:null,
+  listedCount: null,
   isLoggedIn: false,
+  remainingProperty:null,
+  is_plan:false
 };
 
 function userReducer(state = initialUserState, action) {
   switch (action.type) {
     case 'SET_USER':
+        console.log("SET_USER payload:", action.payload);
+
       return {
          ...state,
         userName: action.payload.userName, 
@@ -25,8 +30,23 @@ function userReducer(state = initialUserState, action) {
         image: action.payload.image,
         verificationStatus: action.payload.auth_provider,
         role:action.payload.role,
+        listedCount: action.payload.listedCount,
+        remainingProperty:action.payload.remainingProperty,
         isLoggedIn: true,
+        is_plan:action.payload.is_plan
       };
+
+  //    case "UPDATE_REMAINING_PROPERTY":
+  // console.log(
+  //   "Reducer UPDATE_REMAINING_PROPERTY:",
+  //   action.payload
+  // );
+
+  // return {
+  //   ...state,
+  //   remainingProperty: action.payload,
+  // };
+
     case 'LOGOUT':
       return {
         ...state,
@@ -36,7 +56,10 @@ function userReducer(state = initialUserState, action) {
         image:null,
         verificationStatus: null,
         role:null,
+        listedCount: null,
         isLoggedIn: false,
+        remainingProperty:null,
+        is_plan:null
       };
     default:
       return state;
@@ -51,10 +74,17 @@ const initialAgentState = {
   agent_type: null,
   role:null,
   isLoggedIn: false,
+  remainingPropertyAgent:null
 };
 
 function agentReducer(state = initialAgentState, action) {
   switch (action.type) {
+      // case "UPDATE_AGENT_IMAGE":
+      // return {
+      //   ...state,
+      //   image: action.payload.image,
+      // };
+
     case 'SET_AGENT':
       return {
         ...state,
@@ -64,6 +94,7 @@ function agentReducer(state = initialAgentState, action) {
         image: action.payload.image,
         agent_type: action.payload.agent_type,
         role:action.payload.role,
+        remainingPropertyAgent:action.payload.remainingPropertyAgent,
         isLoggedIn: true,
       };
     case 'AGENT_LOGOUT':                                                                    
@@ -76,6 +107,7 @@ function agentReducer(state = initialAgentState, action) {
         agent_type: null,
         role:null,
         isLoggedIn: false,
+        remainingPropertyAgent:null
       };
     default:
       return state;

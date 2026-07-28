@@ -25,43 +25,44 @@ export default function AgentTabs({ searchedData, query, locationDats }) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentAgents = filteredAgents.slice(startIndex, endIndex);
+    useEffect(() => {
+        if (type) {
+
+            const formattedType =
+                type === "Agent"
+                    ? "basic"
+                    : type === "Premium Agent"
+                        ? "premium"
+                        : type === "Elite Agent"
+                            ? "elite"
+                            : "All";
+
+            setActiveTab(formattedType);
+        }
+    }, [type]);
+
 useEffect(() => {
-    if (type) {
+  if (locationDats?.length > 0) {
+    setAgents(locationDats);
+    return;
+  }
 
-        const formattedType =
-            type === "Agent"
-                ? "basic"
-                : type === "Premium Agent"
-                    ? "premium"
-                    : type === "Elite Agent"
-                        ? "elite"
-                        : "All";
+  if (query.length > 0) {
+    setAgents(searchedData);
+    return;
+  }
 
-        setActiveTab(formattedType);
+  const getAgent = async () => {
+    const data = await getAgents({ category: activeTab });
+
+    if (data) {
+      setAgents(data);
     }
-}, [type]);
+  };
 
-    useEffect(() => {
-        if (query.length > 0) {
-            setAgents(searchedData);
-        }
-        else {
-            const getAgent = async () => {
-                const data = await getAgents({ category: activeTab });
-                if (data) {
-                    setAgents(data);
-                }
-            };
-            getAgent();
-        }
-
-    }, [activeTab, searchedData]);
-
-    useEffect(() => {
-        if (locationDats.length > 0) {
-            setAgents(locationDats);
-        }
-    }, [locationDats]);
+  getAgent();
+}, [activeTab, searchedData, locationDats, query]);
+ 
 
 
     return (
@@ -76,7 +77,7 @@ useEffect(() => {
                             setCurrentPage(1);
                         }}
                         className={`px-3 sm:px-5 py-2 rounded-[9px] text-sm host-grotesk font-medium transition-all duration-300 cursor-pointer
-              ${activeTab === (tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite")
+                                    ${activeTab === (tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite")
                                 ? "bg-black text-[#75c222] shadow-md"
                                 : "text-black hover:bg-gray-200"
                             }`}
@@ -86,7 +87,7 @@ useEffect(() => {
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                 {currentAgents.map((agent) => (
                     <div
                         key={agent?.id}

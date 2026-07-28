@@ -5,12 +5,12 @@ import Chatbutton from "../Chatbox/Chatbutton";
 import { useNavigate } from "react-router-dom";
 
 function PropertySearch() {
-  const [activeTab, setActiveTab] = useState("Rent");
+  const [activeTab, setActiveTab] = useState("Sale");
   const [open, setOpen] = useState(false);
   const [budget, setBudget] = useState("");
 const [propertyTypeOpen, setPropertyTypeOpen] = useState(false);
 const [locationValue, setLocationValue] = useState("");
-const [propertyType, setPropertyType] = useState("");
+const [propertyType, setPropertyType] = useState("Residential");
   const options = [
     "Below ₹5 Lakhs",
     "₹5 – 10 Lakhs",
@@ -24,6 +24,13 @@ const [propertyType, setPropertyType] = useState("");
   "Land / Plot",
   "Industrial",
 ];
+   const handleNavigate = (path) => {
+  nav(path);
+  window.scrollTo({
+    top: 0,
+    behavior: "instant", 
+  });
+};
 const handleSearch = () => {
 
   const params = new URLSearchParams();
@@ -32,7 +39,7 @@ const handleSearch = () => {
   params.append("category", propertyType);
 
   if (locationValue) {
-    params.append("location", locationValue);
+    params.append("city", locationValue);
   }
 
   if (budget) {
@@ -42,7 +49,7 @@ const handleSearch = () => {
   nav(`/propertyListing?${params.toString()}`);
 };
 
-  const tabs = ["Rent", "Buy", "Agent", "Lease"];
+  const tabs = ["Sale","Rent", "Lease","Agent"];
 
   const nav = useNavigate();
 
@@ -61,7 +68,7 @@ const handleSearch = () => {
                 onClick={() => {
                   setActiveTab(tab);
                   if (tab === "Agent") {
-                    nav("/agents");
+                    handleNavigate("/agents");
                   }
                 }}
                 className={`flex items-center justify-center w-[50px] sm:w-[73px] h-[30px] rounded-[9px] text-sm sm:text-[17px] cursor-pointer ${

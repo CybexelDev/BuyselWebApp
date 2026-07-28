@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-export default function SelectField({ label, icon, options, value, onChange,registeration}) {
+export default function SelectField({ label, icon, options, value, onChange,registeration,  error,required=false}) {
   const [open, setOpen] = useState(false);
 
   const selectedLabel = options.find(
@@ -15,11 +15,14 @@ const change=registeration=="true"
     } flex items-center gap-2 font-semibold mb-2`}
 >        {icon}
         {label}
+                        {required && <span className="text-red-500">*</span>}
+
       </label>
 
       <div
         onClick={() => setOpen(!open)}
-        className="w-full h-[42px] px-4 rounded-full bg-[#F3F3F3] flex items-center justify-between cursor-pointer"
+        className={`w-full h-[42px] px-4 rounded-full bg-[#F3F3F3] flex items-center justify-between cursor-pointer   border
+    ${error ? "border-red-500" : "border-transparent"}`}
       >
         <span>
           {selectedLabel || `Select ${label}`}
@@ -46,6 +49,11 @@ const change=registeration=="true"
 
         </div>
       )}
+      {error && (
+  <p className="text-red-500 text-xs mt-1 ml-2 host-grotesk">
+    {error}
+  </p>
+)}
     </div>
   );
 }

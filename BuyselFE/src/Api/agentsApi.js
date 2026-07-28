@@ -27,8 +27,9 @@ export const premiumAgentLogin = async (email, password) => {
     return false;
 
   } catch (error) {
-    console.error("agent API error:", error);
-    return false;
+    return error.response?.data || {
+    error: "Something went wrong",
+  };
   }
 };
 
@@ -65,7 +66,7 @@ export const changeAgentPassword = async (currentPassword, newPassword, confirmP
       confirm_password: confirmPassword,
     };
 
-    const result = await api.post("/agent/change-password/", data);
+    const result = await api.post("/agent/change_password/", data);
 
     return result.data;
 
@@ -188,20 +189,25 @@ export const getAgentEnquiries = async () => {
     return null;
   }
 };
-
 export const registerAgent = async (data) => {
   try {
-    const res = await axios.post(
-      `${BASE_URL}agent/register-request/`,
-      data
-    );
+    const res = await api.post(
+  "/agent/register-request/",
+  data
+);
+
     return res.data;
   } catch (err) {
     console.log(err);
-    return false;
+
+    return (
+      err.response?.data || {
+        status: false,
+        message: "Something went wrong",
+      }
+    );
   }
 };
-
 export const getContactMessage = async()=>{
   try{
     const result = await api.get("/agent/contacts/");
@@ -467,7 +473,7 @@ export const getPropertyListing = async () => {
 
 export const getDashboard = async () => {
   try {
-    const result = await api.get("/agent/dashboard/");
+    const result = await api.get("/agent/dashboard/");                
 
     if (result.data?.data) {
       return result.data.data;
@@ -609,6 +615,19 @@ export const agentPlans = async () => {
   } catch (error) {
     console.error("plans couldn't get:", error);
     return [];
+  }
+};
+
+export const advertisementRequest = async (planId) => {
+  try {
+    const res = await api.post("/agent/advertisement-request/", {
+      plan_id: planId,
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Advertisement request error:", error);
+    return false;
   }
 };
 

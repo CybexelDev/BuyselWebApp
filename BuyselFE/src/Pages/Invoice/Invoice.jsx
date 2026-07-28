@@ -2,10 +2,15 @@ import { useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useLocation } from "react-router-dom";
-
+import { toast } from "sonner";
+import { useSelector } from "react-redux";
 function InvoicePage() {
   const invoiceRef = useRef(null);
+const user = useSelector((state) => state.user);
+const agent = useSelector((state) => state.agent);
 
+const role = agent?.role || user?.role;
+const isAgent = role === "agent";
 
   const location = useLocation();
 
@@ -18,7 +23,7 @@ function InvoicePage() {
     invoiceNo: "INV-1001",
     customer: paymentData?.payment?.paid_by,
     plan: paymentData?.payment?.plan_type,
-    paymentId: paymentData?.payment?.razorpay_payment_id,
+    paymentId: paymentData?.payment?.payment_db_id,
     amount: paymentData?.payment?.amount_paid,
     date: paymentData?.payment?.paid_at?.split("T")[0],
     paidDate: paymentData?.payment?.paid_at?.split("T")[0],
@@ -55,7 +60,7 @@ function InvoicePage() {
       pdf.save(`${invoiceData.invoiceNo}.pdf`);
     } catch (error) {
       console.log(error);
-      alert("PDF generation failed");
+      toast("PDF generation failed");
     }
   };
 
@@ -320,8 +325,11 @@ function InvoicePage() {
           Print Invoice
         </button>
            <button
-          onClick={() => window.location.href = "/"}
-          style={{
+onClick={() =>
+  window.location.href = isAgent
+    ? "/agent/dashboard"
+    : "/"
+}          style={{
             
             color: "#000",
             border: "2px solid #000",
@@ -331,7 +339,7 @@ function InvoicePage() {
             fontWeight: "bold",
           }}
         >
-          Back to Home
+  {isAgent ? "Go to Dashboard" : "Back to Home"}
         </button>
       </div>
     </div>

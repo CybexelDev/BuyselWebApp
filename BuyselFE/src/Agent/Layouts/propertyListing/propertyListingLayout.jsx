@@ -15,24 +15,42 @@ import { TfiRulerAlt2 } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
 import { deletePropertyListing, getPropertyListing } from "../../../Api/agentsApi";
 import { toast } from "sonner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteUserPropertyListing, userPropertyList } from "../../../Api/userApi";
 
 const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-slate-50", lg = "lg:py-12", onClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [properties, setProperties] = useState([]);
+  const dispatch=useDispatch()
+  
     const [loading, setLoading] = useState(false);
+  const [showLimitMessage,setShowLimitMessage] = useState(false);
   const [remainingProperty, setRemainingProperty] = useState(0);
-  const [showLimitMessage, setShowLimitMessage] = useState(false);
+  const[remainingEdit,setRemainingEdit] = useState(0)
+  const [limitType, setLimitType] = useState("");
+const [showFilterModal, setShowFilterModal] = useState(false);
 
+const [filters, setFilters] = useState({
+  status: "",
+  city: "",
+  minPrice: "",
+  maxPrice: "",
+});
   const userRole = useSelector((state) => state.user.role);
 const agentRole = useSelector((state) => state.agent.role);
 
 const role = userRole || agentRole;
+// const property_count = useSelector((state) =>
+//   role === "agent"
+//     ? state.agent.listedCount
+//     : state.user.listedCount
+// );
+
+// console.log("property_count :", property_count);
 console.log("role :",role);
 
   const navigate = useNavigate();
-
+const agent = useSelector((state) => state.agent);
 useEffect(() => {
   const fetchProperties = async () => {
     try {
@@ -48,13 +66,16 @@ useEffect(() => {
 
       console.log("API Response :", res);
 
-      // remaining property
-      setRemainingProperty(res?.remaining_property || 0);
-      console.log(
-        "Remaining Property :",
-        res?.remaining_property
-      );
-
+    
+      if(res){
+        dispatch({
+          type:'SET_AGENT',
+          payload:{
+            ...agent,
+            remainingPropertyAgent:res.remaining_property
+          }
+        })
+      }
       // data array
       if (Array.isArray(res?.data)) {
 
@@ -87,6 +108,11 @@ useEffect(() => {
 
         setProperties(mapped);
       }
+
+  setRemainingProperty(res.remaining_property);
+  setRemainingEdit(res.remaining_edit_count)
+  
+
 
     } catch (err) {
       console.error("Property fetch error:", err);
@@ -121,10 +147,43 @@ useEffect(() => {
      }
 
 
-  const filteredProperties = properties.filter((property) =>
-    property.title.toLowerCase().includes(searchTerm.toLowerCase())
+const filteredProperties = properties.filter((property) => {
+
+  const matchesSearch =
+    property.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+  const matchesStatus =
+    filters.status === "" ||
+    property.status === filters.status;
+
+  const matchesCity =
+    filters.city === "" ||
+    property.location
+      ?.toLowerCase()
+      .includes(filters.city.toLowerCase());
+
+  const numericPrice = Number(
+    property.price.replace(/[₹, ]/g, "")
   );
 
+  const matchesMinPrice =
+    filters.minPrice === "" ||
+    numericPrice >= Number(filters.minPrice);
+
+  const matchesMaxPrice =
+    filters.maxPrice === "" ||
+    numericPrice <= Number(filters.maxPrice);
+
+  return (
+    matchesSearch &&
+    matchesStatus &&
+    matchesCity &&
+    matchesMinPrice &&
+    matchesMaxPrice
+  );
+});
     return (
   <div className={`min-h-screen ${bg} flex overflow-x-hidden`}>
 
@@ -143,17 +202,26 @@ useEffect(() => {
 
     {/* Title */}
     <h2 className="text-xl font-medium host-grotesk text-[#111111] mb-2">
-      Property limit reached
+       {limitType === "property"
+    ? "Property limit reached"
+    : "Edit limit reached"}
     </h2>
 
     {/* Description */}
     <p className="text-sm host-grotesk text-[#111111] leading-relaxed mb-7">
-      You've used all available property slots on your current plan. Upgrade to add more.
-    </p>
+       {limitType === "property"
+       ? "You've used all available property slots on your current plan. Upgrade to add more."
+       : "You've used all available property edits on your current plan. Upgrade to continue editing properties."}    </p>
 
     {/* Buttons */}
     <div className="flex flex-col host-grotesk gap-2.5">
-      <button onClick={()=>navigate("/plans")}
+      <button onClick={() => {
+  if (role === "agent") {
+    navigate("/agent/plans");
+  } else {
+    navigate("/plans");
+  }
+}}
        className="w-full cursor-pointer py-3 bg-[#6ABD11] hover:bg-[#5aa30e] text-white text-sm font-medium rounded-lg flex items-center justify-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.82m5.84-2.56a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.819m2.562-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
@@ -172,6 +240,7 @@ useEffect(() => {
   </div>
 </div>
     )}
+    
 
     {showSidebar && <Sidebar />}
 
@@ -195,6 +264,7 @@ useEffect(() => {
             <button
            onClick={() => {
   if (remainingProperty <= 0) {
+    setLimitType("property");
     setShowLimitMessage(true);
     return;
   }
@@ -228,11 +298,151 @@ useEffect(() => {
               />
             </div>
 
-            {/* Filter */}
-            <button className="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto">
-              <Filter size={16} />
-              Filter
-            </button>
+         {/* FILTER DROPDOWN */}
+<div className="relative">
+
+  <button
+    onClick={() =>
+      setShowFilterModal(!showFilterModal)
+    }
+    className="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto"
+  >
+    <Filter size={16} />
+    Filter
+  </button>
+
+  {/* DROPDOWN */}
+  {showFilterModal && (
+
+    <div
+      className="absolute right-0 mt-3 w-[320px]
+      bg-white border border-slate-200 rounded-2xl
+      shadow-2xl p-5 z-50"
+    >
+
+      {/* STATUS */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2">
+          Status
+        </label>
+
+        <select
+          value={filters.status}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              status: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        >
+          <option value="">All</option>
+          <option value="Active">Active</option>
+          <option value="Pending">Pending</option>
+        </select>
+
+      </div>
+
+      {/* CITY */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2">
+          City
+        </label>
+
+        <input
+          type="text"
+          placeholder="Enter city"
+          value={filters.city}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              city: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* MIN PRICE */}
+      <div className="mb-4">
+
+        <label className="block text-sm font-medium mb-2">
+          Min Price
+        </label>
+
+        <input
+          type="number"
+          placeholder="Minimum price"
+          value={filters.minPrice}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              minPrice: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* MAX PRICE */}
+      <div className="mb-5">
+
+        <label className="block text-sm font-medium mb-2">
+          Max Price
+        </label>
+
+        <input
+          type="number"
+          placeholder="Maximum price"
+          value={filters.maxPrice}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              maxPrice: e.target.value,
+            })
+          }
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+        />
+
+      </div>
+
+      {/* BUTTONS */}
+      <div className="flex gap-2">
+
+        <button
+          onClick={() =>
+            setFilters({
+              status: "",
+              city: "",
+              minPrice: "",
+              maxPrice: "",
+            })
+          }
+          className="flex-1 border border-slate-200 py-2 rounded-xl text-sm"
+        >
+          Reset
+        </button>
+
+        <button
+          onClick={() =>
+            setShowFilterModal(false)
+          }
+          className="flex-1 bg-[#6ABD11] text-white py-2 rounded-xl text-sm"
+        >
+          Apply
+        </button>
+
+      </div>
+
+    </div>
+
+  )}
+
+</div>
 
           </div>
           )}
@@ -254,7 +464,15 @@ useEffect(() => {
       </p>
 
        <button
-            onClick={()=>navigate("/addyourproperty")}
+            onClick={() => {
+  if (remainingProperty <= 0) {
+    setLimitType("property");
+    setShowLimitMessage(true);
+    return;
+  }
+
+  navigate("/addyourproperty");
+}}
              className="flex items-center justify-center cursor-pointer gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
               Add NewProperty
             </button>
@@ -324,28 +542,23 @@ useEffect(() => {
                       {property.price}
                     </div>
 
-                    {/* Status */}
-                    <div
-                      className={`px-3 py-1 rounded-full text-xs font-medium
-                      ${
-                        property.status === "Active"
-                          ? "bg-green-100 text-green-700"
-                          : property.status === "Pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {property.status}
-                    </div>
+                    
 
                     {/* Edit */}  
                           {showEdit && (
   <div className="flex items-center gap-2">
     <button
   onClick={(e) => {
-    e.stopPropagation();
-    navigate(`/editproperty/${property.id}`);
-  }}
+  e.stopPropagation();
+
+  if (remainingEdit <= 0) {
+    setLimitType("edit");
+    setShowLimitMessage(true);
+    return;
+  }
+
+  navigate(`/editproperty/${property.id}`);
+}}
   className="flex items-center gap-1 text-sm border border-slate-200 cursor-pointer px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
 >
   <Pencil size={14} />

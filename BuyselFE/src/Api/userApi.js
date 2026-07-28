@@ -26,10 +26,15 @@ export const userRegister = async (name, email, mobail, password, confirm_passwo
       return false;
     }
 
-  } catch (error) {
-    console.error("API error:", error);
-    return false;
-  }
+  }catch (error) {
+  console.error("API error:", error);
+
+  return (
+    error.response?.data || {
+      error: "Something went wrong",
+    }
+  );
+}
 };
 
 export const forgotPassword = async (email) => {
@@ -88,25 +93,31 @@ export const verifyForgotOtp = async (otpValue, email) => {
 };
 
 
+
 export const getNearbyProperties = async (lat, lng) => {
   try {
-    const res = await axios.get(`${BASE_URL}filter/nearby-properties/`, {
-      params: {
-        lat,
-        lng,
-      },
-    });
+    const res = await axios.get(
+      `${BASE_URL}filter/nearby-properties/`,
+      {
+        params: { lat, lng },
+      }
+    );
 
-    return res.data.data.map((item) => ({
-      ...item,
-      images: item.images, 
-    }));  } catch (error) {
-
+    return {
+      count: res.data.count,
+      data: res.data.data.map((item) => ({
+        ...item,
+        images: item.images,
+      })),
+    };
+  } catch (error) {
     console.log("Nearby properties error:", error);
-    return [];
+    return {
+      count: 0,
+      data: [],
+    };
   }
 };
-
 export const otpSent = async (otpValue, email) => {
     const formData = new FormData();
     formData.append("otp", otpValue);
@@ -155,32 +166,30 @@ export const reSentOtp = async (email) => {
 
   }
 }
-
-
 export const userLogin = async (username, password) => {
+  const formData = new FormData();
+  formData.append("email", username);
+  formData.append("password", password);
 
-    const formData = new FormData();
-    formData.append("email", username);
-    formData.append("password", password);
+  try {
+    const result = await axios.post(
+      `${BASE_URL}userlogin/`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-    try {
-        const result = await axios.post(`${BASE_URL}userlogin/`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-
-        if (
-            result.data.access &&
-            result.data.user.name &&
-            result.data.user.image
-        ) {
-            return result.data;
-        }
-        return false;
+    return result.data;
   } catch (error) {
-    console.error("API error:", error);
-    return false;
+    return {
+      error:
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Invalid credentials",
+    };
   }
 };
 
@@ -391,7 +400,7 @@ export const sendEnquiry = async (formData) => {
 
 export const getPropertyDetail = async (id) => { 
     try {
-        const result = await axios.get(`${BASE_URL}property-detail/${id}/`,          
+        const result = await api.get(`${BASE_URL}property-detail/${id}/`,          
       );
 
     return result.data;
@@ -566,7 +575,7 @@ export const removeToWishlist = async ({ id }) => {
 
 export const getFeatured = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}featured/`);
+    const res = await api.get(`${BASE_URL}featured/`);
     return res.data;
 
   } catch (err) {
@@ -891,7 +900,7 @@ export const searchProperties = async (query) => {
   try {
     const res = await api.get(`properties/search/?label=${query}`);
     if (res) {
-      return res.data.data;
+      return res.data;
       
     }   
     
@@ -1051,7 +1060,6 @@ formData.append(
     formData.append("selling_points", JSON.stringify(data.keyPoints || []));
     formData.append("landmarks", JSON.stringify(data.landmarks || []));
 
-  
     if (data.images?.length > 0) {
       data.images.forEach((img) => {
         formData.append("images", img.file || img);
@@ -1066,12 +1074,17 @@ formData.append(
         "Content-Type": "multipart/form-data",
       },
     });
+    
 
     return res.data;
   } catch (error) {
     console.error("Property error:", error.response?.data || error.message);
-    return false;
-  }
+  return (
+    error.response?.data || {
+      status: false,
+      message: "Something went wrong",
+    }
+  );  }
 };
 
 export const deleteUserPropertyListing = async(id)=>{

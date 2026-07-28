@@ -4,7 +4,8 @@ import { updateAgentProfile } from '../../../Api/agentsApi';
 import {
     User, Lock, Save, Globe, MapPin, Phone,
     Mail, Share2, Briefcase, Building2,
-    CheckCircle2, ShieldCheck, Camera, FileText, Check, Type
+    CheckCircle2, ShieldCheck, Camera, FileText, Check, Type,BriefcaseBusiness,
+    Handshake
 } from 'lucide-react';
 import { FaFacebook } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
@@ -12,6 +13,7 @@ import { getAgentProfile } from '../../../Api/agentsApi';
 import { motion } from 'framer-motion';
 import { changeAgentPassword } from '../../../Api/agentsApi';
 import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
 const AgentProfileLayout = () => {
     const fileInputRef = useRef(null);
 const [profileImageFile, setProfileImageFile] = useState(null);   
@@ -23,6 +25,8 @@ const [passwordData, setPasswordData] = useState({
  const [isEditing, setIsEditing] = useState(false);
  const [profileImage, setProfileImage] = useState(null);
     const [isDirty, setIsDirty] = useState(false);
+    const { image } = useSelector((state) => state.agent);
+    const dispatch = useDispatch();
    const [formData, setFormData] = useState({
   name: '',
   title: '',
@@ -152,12 +156,18 @@ const handleSave = async () => {
     ...formData,
     profileImageFile,
   });
-
   if (res) {
     setOriginalData(formData);
     setIsEditing(false);
     setIsDirty(false);
-  }
+
+      dispatch({
+      type: "SET_AGENT",
+       payload: {
+      image: res.data.profile_image,
+      },
+    });
+}
 };
 
 const handleChangePassword = async () => {
@@ -212,7 +222,7 @@ const handleChangePassword = async () => {
                         </motion.div>
 
                         {/* RIGHT SIDE */}
-                        <div className="flex items-center gap-4">
+                        <div className="flex md:items-center justify-between items-center   md:gap-4">
 
                             {/* EDIT BUTTON */}
                             {!isEditing && (
@@ -225,23 +235,23 @@ const handleChangePassword = async () => {
                             )}
 
                             {/* BUYSEL ID CARD */}
-                            <div className="bg-white border border-slate-200 px-6 py-3 rounded-2xl shadow-sm flex items-center gap-4">
-                                <div className="text-right border-r border-slate-100 pr-4">
-                                    <span className="block text-[10px] font-bold text-[#6ABD11] uppercase tracking-widest host-grotesk">
-                                        Buysel ID
-                                    </span>
-                                    <span className="text-sm host-grotesk font-bold text-slate-700">
-                                        {formData.buySelId}
-                                    </span>
-                                </div>
+            <div className="bg-white border border-slate-200 px-3 sm:px-4 lg:px-6 py-3 rounded-2xl shadow-sm flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+  <div className="text-center sm:text-right sm:border-r border-slate-100 sm:pr-4">
+    <span className="block text-[10px] font-bold text-[#6ABD11] uppercase tracking-widest host-grotesk">
+      Buysel ID
+    </span>
+    <span className="text-sm host-grotesk font-bold text-slate-700 break-all">
+      {formData.buySelId}
+    </span>
+  </div>
 
-                                <div className="flex items-center gap-2 text-[#6ABD11]">
-                                    <ShieldCheck size={20} />
-                                    <span className="text-xs font-bold uppercase instrument-sans">
-                                        Verified
-                                    </span>
-                                </div>
-                            </div>
+  <div className="flex items-center gap-2 text-[#6ABD11]">
+    <ShieldCheck size={20} />
+    <span className="text-xs font-bold uppercase instrument-sans">
+      Verified
+    </span>
+  </div>
+</div>
 
                         </div>
                     </header>
@@ -358,6 +368,13 @@ const handleChangePassword = async () => {
                                             })}
                                         </div>
                                     </div>
+                                               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                  <InputField label="Years Of Experience" name="experience" value={formData.experience} onChange={handleChange} icon={<BriefcaseBusiness size={18} />} disabled={!isEditing} />
+
+                                                 <InputField label="Total Deals Served" name="dealsclosed" value={formData.dealsClosed} onChange={handleChange} icon={<Handshake size={18} />} disabled={!isEditing} />
+
+
+</div>
 
                                     <InputField label="Operating Cities" name="operatingCities" value={formData.operatingCities} onChange={handleChange} icon={<Building2 size={18} />} />
                                 </div>

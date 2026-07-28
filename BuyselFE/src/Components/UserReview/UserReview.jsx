@@ -40,7 +40,7 @@ const handleEdit = (review) => {
   const token = localStorage.getItem("accessToken");
 
   if (!token) {
-    toast.error("Please login to use wishlist");
+    toast.error("Please login to write review");
     return;
   }      addReviewToServer({ rating, review: reviewss, id }).then((response) => {
         if (response) {
