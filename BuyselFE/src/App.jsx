@@ -41,6 +41,7 @@ import InvoicePage from './Pages/Invoice/Invoice'
 import AgentProtectedRoute from './Agent/Components/ProtectionRouteAgent/ProtectionRouteAgent'
 import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
 import CommonProtectedRoute from './Components/CommonProtectionRoute/commonProtectedRoute'
+import Orders from './Agent/Pages/Orders/Orders'
 
 function App() {
 
@@ -182,6 +183,11 @@ const currentRole = user?.role || agent?.role;
               </AgentProtectedRoute>
 
             } />
+            <Route path='/agent/orders' element={
+              <AgentProtectedRoute>
+                   <Orders/>
+              </AgentProtectedRoute>
+            }/>
           </>
         </Routes>
       </Router>

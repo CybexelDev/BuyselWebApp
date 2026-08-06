@@ -8,12 +8,11 @@ import { motion } from "framer-motion";
 import Advertisment from "../../Components/Advertisment/Advertisment";
 import PlanCard from "../../Components/PlanCard/PlanCard";
 import CurrentPlan from "../../Components/CurrentPlan/CurrentPlan";
-import { agentPlans } from "../../../Api/agentsApi";
+import { agentPlans,advertisementRequest,getAgentNotifications } from "../../../Api/agentsApi";
 import { openRazorpay } from "../../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
-import { advertisementRequest } from "../../../Api/agentsApi";
 
 
 function AgentPlans() {
@@ -99,7 +98,17 @@ setSelectedPlan({
 
     fetchPlan();
   }, []);
+useEffect(() => {
+  const fetchReelNotifications = async () => {
+    const data = await getAgentReelNotifications();
 
+    if (data) {
+      setReelNotifications(data);
+    }
+  };
+
+  fetchReelNotifications();
+}, []);
 
   const isCurrentPlanExpired =
   !planData?.expiresOn ||

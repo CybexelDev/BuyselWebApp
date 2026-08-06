@@ -116,7 +116,6 @@ const maxStep = isAgent ? 4 : (is_plan ? 4 : 5);
   ? await getPropertyById(id)
   : await userGetPropertyById(id);
 
-        // 🔥 BUILD OPTION → FIELD MAP (NO HARDCODING)
         const optionToFieldMap = {};
 
 propertyData.subcategories.forEach((sub) => {
@@ -490,7 +489,7 @@ const handleNext = () => {
   setStep((prev) => prev + 1);
 };
   return (
-    <div className="bg-white min-h-screen p-6">
+    <div className="bg-white min-h-screen p-6 mt-">
       <div className="mx-auto flex flex-col lg:flex-row gap-2 sm:gap-4 md:gap-6 lg:gap-8">
         <div className="w-full lg:w-[320px]">
           <SidebarProgress step={step} isAgent={isAgent} />

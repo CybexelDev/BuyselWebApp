@@ -618,6 +618,20 @@ export const agentPlans = async () => {
   }
 };
 
+
+export const getPurchaseHistory = async () => {
+  try {
+    const res = await api.get("/agent/purchase-history/");
+    return res.data;
+  } catch (error) {
+    console.error("Purchase history error:", error);
+    return {
+      status: false,
+      plans: [],
+    };
+  }
+};
+
 export const advertisementRequest = async (planId) => {
   try {
     const res = await api.post("/agent/advertisement-request/", {
@@ -638,6 +652,16 @@ export const getAgentNotifications = async () => {
   } catch (error) {
     console.error("notification error:", error);
     return [];
+  }
+};
+
+export const getAgentReelNotifications = async () => {
+  try {
+    const res = await api.get("/agent/reel-notifications/");
+    return res.data;
+  } catch (error) {
+    console.error("Reel notification error:", error);
+    return null; 
   }
 };
 

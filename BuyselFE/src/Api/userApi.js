@@ -982,7 +982,6 @@ export const userDashboard = async () => {
 };
 
 
-
 export const userPropertyList = async () => {
   try {
     const res = await api.get("/owner/property/list/");

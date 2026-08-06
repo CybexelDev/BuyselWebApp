@@ -8,21 +8,61 @@ import { RiDashboardFill } from "react-icons/ri";
 import { RiAccountPinBoxFill } from "react-icons/ri";
 import { FaEnvelope } from "react-icons/fa";
 import { FaUserCog } from "react-icons/fa";
+import { FaShoppingBag } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 
-
 const navItems = [
-  {id: "dashboard",icon: RiDashboardFill,label: "Dashboard",path: "/agent/dashboard",},
-  {id: "property",icon: FaLandmarkDome,label: "Property Listing",path: "/agent/property",},
-  { id: "plans", icon: FaClipboardList, label: "Plans", path: "/agent/plans" },
-  { id: "profile", icon: FaUserCog, label: "Profile", path: "/agent/profile" },
-    { id: "inbox",   icon: FaEnvelope,label: "inbox", path: "/agent/inbox" },
-  {id: "enquiry",icon: SiGooglemessages,label: "Property Enquiry",path: "/agent/enquiry"},
-    {id: "userenquiry",icon: RiAccountPinBoxFill,label: "User Enquiry",path: "/agent/user-enquiry"},
-
+  {
+    id: "dashboard",
+    icon: RiDashboardFill,
+    label: "Dashboard",
+    path: "/agent/dashboard",
+  },
+  {
+    id: "property",
+    icon: FaLandmarkDome,
+    label: "Property Listing",
+    path: "/agent/property",
+  },
+  {
+    id: "plans",
+    icon: FaClipboardList,
+    label: "Plans",
+    path: "/agent/plans",
+  },
+  {
+    id: "orders",
+    icon: FaShoppingBag,
+    label: "Orders",
+    path: "/agent/orders",
+  },
+  {
+    id: "profile",
+    icon: FaUserCog,
+    label: "Profile",
+    path: "/agent/profile",
+  },
+  {
+    id: "inbox",
+    icon: FaEnvelope,
+    label: "Inbox",
+    path: "/agent/inbox",
+  },
+  {
+    id: "enquiry",
+    icon: SiGooglemessages,
+    label: "Property Enquiry",
+    path: "/agent/enquiry",
+  },
+  {
+    id: "userenquiry",
+    icon: RiAccountPinBoxFill,
+    label: "User Enquiry",
+    path: "/agent/user-enquiry",
+  },
 ];
 
 const Sidebar = () => {

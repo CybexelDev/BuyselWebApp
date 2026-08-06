@@ -165,7 +165,8 @@ const nearbyPlaces =
       Property Description
     </p>
 
-    <p className="text-[#181818] font-[400] text-[16px] host-grotesk mt-4 leading-relaxed">
+    <p   className="text-[#181818] font-[400] text-[16px] host-grotesk mt-4 leading-relaxed max-w-full whitespace-pre-wrap break-words overflow-wrap-anywhere"
+>
       {detail.description}
     </p>
 
