@@ -91,7 +91,7 @@ const [orders, setOrders] = useState([]);
 
       {/* STATS */}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-10">
 
         <div className="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm hover:shadow-xl transition">
 
@@ -117,31 +117,6 @@ const [orders, setOrders] = useState([]);
 
         </div>
 
-        <div className="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm hover:shadow-xl transition">
-
-          <div className="flex justify-between">
-
-            <div>
-
-              <p className="text-gray-500 text-sm">
-                Total Spent
-              </p>
-
-              <h2 className="text-3xl font-black mt-2">
-                ₹{stats.totalSpent.toLocaleString()}
-              </h2>
-
-            </div>
-
-            <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center">
-
-              <CircleDollarSign className="text-emerald-600"/>
-
-            </div>
-
-          </div>
-
-        </div>
 
         <div className="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm hover:shadow-xl transition">
 
@@ -271,7 +246,7 @@ const badge =
       <div className="absolute inset-0 bg-gradient-to-r from-[#6ABD11]/5 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
 
       {/* Left Accent */}
-      <div className={`absolute left-0 top-0 h-full w-2 ${statusColor}`} />
+      <div className={`absolute left-0 top-0 h-full w-2 bg-[#6ABD117A]`} />
 
       <div className="relative p-8">
         {/* ================= TOP ================= */}
@@ -287,7 +262,7 @@ const badge =
                 {order.plan_type}
               </p>
 
-              <h2 className="mt-2 text-2xl font-black text-slate-900">
+              <h2 className="mt-2 text-xl font-black text-slate-900">
                 {order.plan_name.toUpperCase()}
               </h2>
 

@@ -86,7 +86,7 @@ const isBasicAgent = agent?.agent_type === "basic";const filteredNavItems = isBa
   : navItems;
   return (
     <div className="relative  ">
-      <nav className="fixed left-2 top-2 backdrop-blur-md hidden bottom-4 w-64 flex-col border-r border-white/10 bg-white rounded-[40px] lg:flex z-50 shadow-2xl  mx-2 my-4">
+      <nav className="fixed left-2 top-2 backdrop-blur-md hidden h-[calc(100dvh-2rem)] w-64 flex-col border-r border-white/10 bg-white rounded-[40px] lg:flex z-50 shadow-2xl  mx-2 my-4">
         <div className="flex h-28 items-center px-12">
           <motion.div
             initial={{ opacity: 0 }}
@@ -129,7 +129,7 @@ const isBasicAgent = agent?.agent_type === "basic";const filteredNavItems = isBa
           ))}
         </div>
 
-        <div className="p-8 mt-auto">
+        <div className="px-7 py-2 ">
           <button
           onClick={logout}
            className="flex w-full items-center gap-3 cursor-pointer rounded-2xl p-3 text-black/60 font-bold transition-all hover:bg-red-500 hover:text-white group">
