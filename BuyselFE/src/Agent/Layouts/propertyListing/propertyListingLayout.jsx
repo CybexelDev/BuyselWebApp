@@ -259,6 +259,7 @@ const filteredProperties = properties.filter((property) => {
               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight instrument-sans">
                 Property <span className="text-[#6ABD11]">Listings</span>
               </h1>
+             <p className="text-sm text-slate-400 mt-2 host-grotesk">Manage your property listings by adding, updating, or removing properties with ease.</p> 
             </div>
 
             <button

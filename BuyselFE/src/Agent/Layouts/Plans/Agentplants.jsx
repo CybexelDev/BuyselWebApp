@@ -8,7 +8,8 @@ import { motion } from "framer-motion";
 import Advertisment from "../../Components/Advertisment/Advertisment";
 import PlanCard from "../../Components/PlanCard/PlanCard";
 import CurrentPlan from "../../Components/CurrentPlan/CurrentPlan";
-import { AdvertisementRequest, agentPlans } from "../../../Api/agentsApi";
+import { AdvertisementRequest } from "../../../Api/agentsApi";
+import { agentPlans,advertisementRequest,getAgentNotifications } from "../../../Api/agentsApi";
 import { openRazorpay } from "../../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -100,7 +101,17 @@ setSelectedPlan({
 
     fetchPlan();
   }, []);
+useEffect(() => {
+  const fetchReelNotifications = async () => {
+    const data = await getAgentReelNotifications();
 
+    if (data) {
+      setReelNotifications(data);
+    }
+  };
+
+  fetchReelNotifications();
+}, []);
 
   const isCurrentPlanExpired =
   !planData?.expiresOn ||
@@ -124,6 +135,22 @@ setSelectedPlan({
     )
   : 0;
 
+  const handleAdvertisementRequest = async (planId) => {
+  const result = await advertisementRequest(planId);
+
+if (result) {
+  toast.success("Request submitted successfully!", {
+    description:
+      "Your advertisement request has been sent to our admin team. They will contact you shortly.",
+    duration: 5000,
+  });
+  console.log(result);
+}    
+    
+  else {
+    console.log("Request failed");
+  }
+};
 
 
   const confirmAdvertisementRequest = async (planId) => {

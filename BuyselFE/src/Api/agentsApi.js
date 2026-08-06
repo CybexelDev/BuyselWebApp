@@ -473,7 +473,7 @@ export const getPropertyListing = async () => {
 
 export const getDashboard = async () => {
   try {
-    const result = await api.get("/agent/dashboard/");
+    const result = await api.get("/agent/dashboard/");                
 
     if (result.data?.data) {
       return result.data.data;
@@ -618,6 +618,33 @@ export const agentPlans = async () => {
   }
 };
 
+
+export const getPurchaseHistory = async () => {
+  try {
+    const res = await api.get("/agent/purchase-history/");
+    return res.data;
+  } catch (error) {
+    console.error("Purchase history error:", error);
+    return {
+      status: false,
+      plans: [],
+    };
+  }
+};
+
+export const advertisementRequest = async (planId) => {
+  try {
+    const res = await api.post("/agent/advertisement-request/", {
+      plan_id: planId,
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Advertisement request error:", error);
+    return false;
+  }
+};
+
 export const getAgentNotifications = async () => {
   try {
     const res = await api.get("/agent/notifications/");
@@ -625,6 +652,16 @@ export const getAgentNotifications = async () => {
   } catch (error) {
     console.error("notification error:", error);
     return [];
+  }
+};
+
+export const getAgentReelNotifications = async () => {
+  try {
+    const res = await api.get("/agent/reel-notifications/");
+    return res.data;
+  } catch (error) {
+    console.error("Reel notification error:", error);
+    return null; 
   }
 };
 
