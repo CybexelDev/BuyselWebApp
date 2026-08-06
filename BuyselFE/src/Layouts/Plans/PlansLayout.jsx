@@ -233,7 +233,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       getData: (plan) => [
         plan.validity,
         plan.priority_search,
-        plan.enquiries,
+        "N/A",
         plan.edit,
         plan.meta_ads,
         plan.bulk_whatsapp,

@@ -659,3 +659,17 @@ export const ConnectWithAdmin = async (formData) => {
     return false;
   }
 };
+
+
+export const AdvertisementRequest = async (formData) => {
+  try {
+    const res = await api.post(
+      "agent/advertisement-request/",
+      formData
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Advertisement Request error:", error);
+    return false;
+  }
+};

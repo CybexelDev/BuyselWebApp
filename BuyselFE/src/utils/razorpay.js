@@ -56,6 +56,7 @@ export const openRazorpay = async ({
   user,
   plan_type,
   plan_id,
+  cache_key,
   onSuccess,
 }) => {
 
@@ -64,7 +65,6 @@ export const openRazorpay = async ({
     new Promise((resolve) => {
 
       const script = document.createElement("script");
-
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => resolve(true);
       script.onerror = () => resolve(false);
@@ -140,6 +140,7 @@ export const openRazorpay = async ({
             "razorpay_payment_id",
             response?.razorpay_payment_id
           );
+          formData.append("cache_key", cache_key);
 
           formData.append(
             "razorpay_signature",
