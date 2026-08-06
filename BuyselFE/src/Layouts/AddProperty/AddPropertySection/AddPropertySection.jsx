@@ -492,7 +492,7 @@ const handleNext = () => {
     <div className="bg-white min-h-screen p-6 mt-">
       <div className="mx-auto flex flex-col lg:flex-row gap-2 sm:gap-4 md:gap-6 lg:gap-8">
         <div className="w-full lg:w-[320px]">
-          <SidebarProgress step={step} isAgent={isAgent} />
+          <SidebarProgress step={step} isAgent={isAgent} isPlan={is_plan} />
         </div>
         <div className="flex-1">
           {/* ✅ HEADING (RIGHT SIDE TOP) */}
