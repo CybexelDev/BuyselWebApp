@@ -121,10 +121,15 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
     }
   };
   const convert = (val) => {
-    if (val === "yes") return "check";
-    if (val === "no") return "cross";
-    return val || "N/A";
-  };
+  if (!val) return "N/A";
+
+  const value = String(val).trim().toLowerCase();
+
+  if (value === "yes") return "check";
+  if (value === "no") return "cross";
+
+  return val;
+};
 
   const getPlanData = (plan) => {
     switch (active) {
@@ -189,116 +194,109 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
     }
   }; const planConfig = {
     Owner: {
-      features: [
-        "Plan Validity",
-        "Priority Search",
-        "Enquiry Limit",
-        "Property Edit Option",
-        "Meta Ads Promotion",
-        "Bulk WhatsApp Message",
-        "Listing Type",
-        "Poster Creation",
-        "Social Media Marketing",
-        "Lead Follow Support",
-      ],
-
-      getData: (plan) => [
-        plan.validity,
-        convert(plan.priority_search),
-        plan.enquiry_limit,
-        plan.property_edit_option,
-        plan.meta_ads_promotion,
-        plan.bulk_whatsapp_message,
-        plan.listing_type,
-        plan.poster_creation,
-        plan.social_media_marketing,
-        convert(plan.lead_follow_support),
-      ],
+     features: [
+  "Plan Validity",
+  "Listing Type",
+  "Priority Search",
+  "Enquiry Limit",
+  "Property Edit Option",
+  "Meta Ads Promotion",
+  "Bulk WhatsApp Message",
+  "Poster Creation",
+  "Social Media Marketing",
+  "Lead Follow Support",
+],
+    getData: (plan) => [
+  plan.validity,
+  plan.listing_type,
+  convert(plan.priority_search),
+  plan.enquiry_limit,
+  convert(plan.property_edit_option),
+  plan.meta_ads_promotion,
+  plan.bulk_whatsapp_message,
+  plan.poster_creation,
+  plan.social_media_marketing,
+  convert(plan.lead_follow_support),
+],
     },
 
-    Agent: {
-      features: [
-        "Plan Validity",
-        "Priority Search",
-        "No of Enquiries",
-        "Edit Option",
-        "Meta Ads",
-        "Bulk WhatsApp",
-        "Offline Share",
-        "Poster Creation",
-        "Social Media",
-        "Verified Badge",
-      ],
+   Agent: {
+  features: [
+    "Plan Validity",
+    "Agent Badge",
+    "Priority Search",
+    "Meta Ads",
+    "Bulk WhatsApp",
+    "Poster Creation",
+    "Social Media Marketing",
+  ],
 
-      getData: (plan) => [
-        plan.validity,
-        plan.priority_search,
-        "N/A",
-        plan.edit,
-        plan.meta_ads,
-        plan.bulk_whatsapp,
-        "N/A",
-        plan.poster,
-        plan.social_media,
-        "N/A",
-      ],
-    },
+  getData: (plan) => [
+    plan.validity,
+    plan.agent_badge,
+    plan.priority_search,
+    plan.meta_ads,
+    plan.bulk_whatsapp,
+    plan.poster,
+    plan.social_media,
+  ],
+},
 
-    "Premium Agent": {
-      features: [
-        "Plan Validity",
-        "Priority Search",
-        "Enquiries",
-        "Edit Option",
-        "Meta Ads",
-        "Bulk WhatsApp",
-        "Residential Limit",
-        "Poster Creation",
-        "Social Media",
-        "Lead Follow",
-      ],
+  "Premium Agent": {
+  features: [
+    "Plan Validity",
+    "Total Listings",
+    "Residential Limit",
+    "Commercial Limit",
+    "Edit Option",
+    "Enquiries",
+    "Priority Search",
+    "Meta Ads",
+    "Bulk WhatsApp",
+    "Lead Management",
+  ],
 
-      getData: (plan) => [
-        plan.validity,
-        plan.priority_search,
-        plan.enquiries,
-        plan.edit,
-        plan.meta_ads,
-        plan.bulk_whatsapp,
-        plan.residential_limit,
-        plan.poster,
-        plan.social_media,
-        convert(plan.lead_follow),
-      ],
-    },
+  getData: (plan) => [
+    plan.validity,
+    plan.total_listing,
+    plan.residential_limit,
+    plan.commercial_limit,
+    plan.edit,
+    plan.enquiries,
+    plan.priority_search,
+    plan.meta_ads,
+    plan.bulk_whatsapp,
+    plan.lead_management,
+  ],
+},
 
     "Elite Agent": {
-      features: [
-        "Plan Validity",
-        "Priority Search",
-        "Total Listings",
-        "Sale Listings",
-        "Meta Ads Promotion",
-        "Bulk WhatsApp",
-        "Lead Management",
-        "Poster Creation",
-        "Social Media",
-        "Lead Support",
-      ],
+  features: [
+    "Plan Validity",
+    "Total Property Listings",
+    "Featured Listings",
+    "Edit Option",
+    "Priority Search",
+    "Meta Ads Promotion",
+    "Bulk WhatsApp",
+    "Poster Creation",
+    "Social Media Marketing",
+    "Lead Management",
+  ],
 
-      getData: (plan) => [
-        plan.plan_validity_days,
-        plan.priority_search,
-        plan.total_property_listings,
-        plan.sale_listings_limit,
-        plan.meta_ads_promotion,
-        plan.bulk_whatsapp_messages,
-        plan.lead_management,
-        plan.poster_creation,
-        plan.social_media_marketing,
-        plan.lead_followup_support,
-      ],
-    },
+  getData: (plan) => [
+    plan.plan_validity_days,
+    plan.total_property_listings,
+    plan.featured_listings_limit,
+    plan.edit,
+    plan.priority_search,
+    plan.meta_ads_promotion,
+    plan.bulk_whatsapp_messages,
+    plan.poster_creation,
+    plan.social_media_marketing,
+    plan.lead_management,
+  ],
+},
   };
 
   const [active, setActive] = useState("Owner");
