@@ -40,7 +40,7 @@ import Faqs from './Pages/Faqs/Faqs'
 import InvoicePage from './Pages/Invoice/Invoice'
 import AgentProtectedRoute from './Agent/Components/ProtectionRouteAgent/ProtectionRouteAgent'
 import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
-import CommonProtectedRoute from './Components/CommonProtectionRoute/commonProtectedRoute'
+import CommonProtectedRoute from './Components/CommonProtectionRoute/CommonProtectedRoute'
 import Orders from './Agent/Pages/Orders/Orders'
 
 function App() {
