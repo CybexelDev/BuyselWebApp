@@ -46,14 +46,14 @@ import Orders from './Agent/Pages/Orders/Orders'
 function App() {
 
   // const { image, agentName, agentId, accessToken } = useSelector((state) => state.agent);
-  const { image, userName, userId, accessToken, role, listedCount,remainingProperty, } = useSelector((state) => state.user);
- const {remainingPropertyAgent}=useSelector((state)=>state.agent)
-const persistRoot = JSON.parse(localStorage.getItem("persist:root"));
+  const { image, userName, userId, accessToken, role, listedCount, remainingProperty, } = useSelector((state) => state.user);
+  const { remainingPropertyAgent } = useSelector((state) => state.agent)
+  const persistRoot = JSON.parse(localStorage.getItem("persist:root"));
 
-const user = JSON.parse(persistRoot?.user || "{}");
-const agent = JSON.parse(persistRoot?.agent || "{}");
+  const user = JSON.parse(persistRoot?.user || "{}");
+  const agent = JSON.parse(persistRoot?.agent || "{}");
 
-const currentRole = user?.role || agent?.role;
+  const currentRole = user?.role || agent?.role;
 
 
   return (
@@ -121,23 +121,23 @@ const currentRole = user?.role || agent?.role;
 
           {/* common routeprotected */}
           <>
-<Route
-  path="/addyourproperty"
-  element={
-    <CommonProtectedRoute>
-      <AddProperty />
-    </CommonProtectedRoute>
-  }
-/>
-<Route
-  path="/editproperty/:id"
-  element={
-    <CommonProtectedRoute>
-      <AddProperty />
-    </CommonProtectedRoute>
-  }
-/>
-          
+            <Route
+              path="/addyourproperty"
+              element={
+                <CommonProtectedRoute>
+                  <AddProperty />
+                </CommonProtectedRoute>
+              }
+            />
+            <Route
+              path="/editproperty/:id"
+              element={
+                <CommonProtectedRoute>
+                  <AddProperty />
+                </CommonProtectedRoute>
+              }
+            />
+
           </>
 
           {/* //agent side */}
@@ -175,7 +175,7 @@ const currentRole = user?.role || agent?.role;
               </AgentProtectedRoute>
             } />
             <Route path='/agent/enquiry/:id' element={
-                <EnquiryDetail />
+              <EnquiryDetail />
             } />
             <Route path="/agent/property" element={
               <AgentProtectedRoute>

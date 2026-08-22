@@ -204,7 +204,6 @@ return (
         </div>
       </div>
 
-
       <div className="flex items-center justify-between w-full px-4 sm:px-0 sm:pl-4 pt-4 sm:pt-6">
         <button onClick={() => navigate('/propertyListing')} className="instrument-sans flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black pl-1">
           Explore More
@@ -212,7 +211,6 @@ return (
             <ArrowRight className="w-[13px] h-[13px] sm:w-4 sm:h-4" />
           </span>
         </button>
-
 
         <div className="flex gap-3">
 
