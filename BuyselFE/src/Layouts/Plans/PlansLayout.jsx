@@ -708,9 +708,8 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
         ))}
       </div>
 
-      <div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 host-grotesk mt-10">
+      {/* <div className="bg-[#f3f6ed] rounded-3xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 host-grotesk mt-10">
 
-        {/* LEFT SIDE */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
 
           <img
@@ -728,7 +727,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
               Consult with our property expert
             </p>
 
-            {/* BUTTONS */}
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-3 w-full">
 
               <button className="flex items-center justify-center gap-2 border border-[#8AD32E] text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-[#eef7dd] transition w-full sm:w-auto">
@@ -742,7 +740,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-3 w-full md:w-auto">
 
           <div className="bg-[#8AD32E] text-white px-5 py-1 rounded-full text-sm font-semibold">
@@ -755,7 +752,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
         </div>
 
-      </div>
+      </div> */}
 
       {
         openModal && (
