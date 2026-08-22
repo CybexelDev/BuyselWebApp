@@ -1,16 +1,12 @@
 
 import React, { useState, useEffect } from "react";
-import imgs from "../../../assets/images/ad/ad2.png"
-import img2 from "../../../assets/images/ad/ad3.png"
 import './ad.css'
+import { getSliderAdd } from "../../../Api/userApi";
 
 export default function ad() {
 
-    const images = [
-        `${imgs}`,
-        `${img2}`,
-        // "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1400",
-    ];
+
+    const [images, setSliderImages] = useState([]);
 
     const [current, setCurrent] = useState(0);
 
@@ -90,6 +86,20 @@ export default function ad() {
             </div>
         );
     };
+
+
+
+
+    useEffect(() => {
+        const fetchSliderImages = async () => {
+            const images = await getSliderAdd();
+            images.map((image) => {
+                setSliderImages((prevImages) => [...prevImages, image.image]);
+            });
+           
+        };
+        fetchSliderImages();
+    }, []);
 
     return (
         <div className=" bg-white p-1 md:p-8">
