@@ -1204,3 +1204,15 @@ export const userGetPropertyById = async (id) => {
 };
 
 
+
+export const getSliderAdd = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}sliderads/`);
+
+    return res.data;
+
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

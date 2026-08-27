@@ -6,6 +6,8 @@ import { Heart } from "lucide-react";
 import { toast } from 'sonner';
 import SkeletonCard from '../../../Components/SkeletonCard/SkeletonCard';
 import noimage from "../../../assets/images/propertDetail/noimage.png"
+import Chatbox from '../../Home/Chatbox/Chatbox';
+
 function PropertiesSection({ propertiesData, dataCount }) {
 
   const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -16,6 +18,9 @@ function PropertiesSection({ propertiesData, dataCount }) {
   console.log(propertiesData, "propertiesData in properties section ???????????????");
 
 
+  // console.log(propertiesData, "propertiesData in properties section ???????????????");
+
+  // console.log(dataCount, "%%%%%%%%%%%%%%%%%%%%%%%%");
 
 
   // useEffect(() => {
@@ -25,12 +30,13 @@ function PropertiesSection({ propertiesData, dataCount }) {
 
 
   // }, [propertiesData]);
-
+  
   useEffect(() => {
     if (dataCount === undefined) {
       setLoading(true);
       return;
     }
+
 
     setLoading(false);
     setProperties(propertiesData || []);
@@ -109,7 +115,10 @@ function PropertiesSection({ propertiesData, dataCount }) {
       )
     );
   };
+
+
   const isFiltered = propertiesData?.length > 0 && properties?.length === 0;
+
   return (
     <div className='py-8 px-1 md:px-6 lg:px-8 mb-2 -mt-20'>
 
@@ -125,16 +134,17 @@ function PropertiesSection({ propertiesData, dataCount }) {
             <img
               src={noimage}
               alt="No Properties"
-              className="w-40 mb-4 opacity-80"
+              className="w-15 mb-4 opacity-80"
             />
 
-            <h3 className="text-xl font-semibold text-gray-700">
+            <h3 className="text-lg font-semibold text-gray-700">
               No Properties Available
             </h3>
 
-            <p className="text-gray-500 mt-2 text-center max-w-md">
+            <p className="text-gray-500 text-sm mt-2 text-center max-w-md">
               There are currently no properties available in this category.
             </p>
+
           </div>
         ) : (
           currentProperties.map((property) => (
@@ -169,9 +179,7 @@ function PropertiesSection({ propertiesData, dataCount }) {
           ))
         )}
 
-
       </div>
-
 
       <div className="host-grotesk flex justify-center mt-12">
         <div className="flex items-center gap-2 sm:gap-4 bg-[#fbfbfb] shadow-lg rounded-xl px-4 py-2">
@@ -183,7 +191,7 @@ function PropertiesSection({ propertiesData, dataCount }) {
               flex items-center justify-center rounded-full bg-black text-white
               ">
             <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button>
+          </button >
 
 
           {(() => {
