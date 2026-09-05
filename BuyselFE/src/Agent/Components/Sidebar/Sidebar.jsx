@@ -8,21 +8,61 @@ import { RiDashboardFill } from "react-icons/ri";
 import { RiAccountPinBoxFill } from "react-icons/ri";
 import { FaEnvelope } from "react-icons/fa";
 import { FaUserCog } from "react-icons/fa";
+import { FaShoppingBag } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 
-
 const navItems = [
-  {id: "dashboard",icon: RiDashboardFill,label: "Dashboard",path: "/agent/dashboard",},
-  {id: "property",icon: FaLandmarkDome,label: "Property Listing",path: "/agent/property",},
-  { id: "plans", icon: FaClipboardList, label: "Plans", path: "/agent/plans" },
-  { id: "profile", icon: FaUserCog, label: "Profile", path: "/agent/profile" },
-    { id: "inbox",   icon: FaEnvelope,label: "inbox", path: "/agent/inbox" },
-  {id: "enquiry",icon: SiGooglemessages,label: "Property Enquiry",path: "/agent/enquiry"},
-    {id: "userenquiry",icon: RiAccountPinBoxFill,label: "User Enquiry",path: "/agent/user-enquiry"},
-
+  {
+    id: "dashboard",
+    icon: RiDashboardFill,
+    label: "Dashboard",
+    path: "/agent/dashboard",
+  },
+  {
+    id: "property",
+    icon: FaLandmarkDome,
+    label: "Property Listing",
+    path: "/agent/property",
+  },
+  {
+    id: "plans",
+    icon: FaClipboardList,
+    label: "Plans",
+    path: "/agent/plans",
+  },
+  {
+    id: "orders",
+    icon: FaShoppingBag,
+    label: "Orders",
+    path: "/agent/orders",
+  },
+  {
+    id: "profile",
+    icon: FaUserCog,
+    label: "Profile",
+    path: "/agent/profile",
+  },
+  {
+    id: "inbox",
+    icon: FaEnvelope,
+    label: "Inbox",
+    path: "/agent/inbox",
+  },
+  {
+    id: "enquiry",
+    icon: SiGooglemessages,
+    label: "Property Enquiry",
+    path: "/agent/enquiry",
+  },
+  {
+    id: "userenquiry",
+    icon: RiAccountPinBoxFill,
+    label: "User Enquiry",
+    path: "/agent/user-enquiry",
+  },
 ];
 
 const Sidebar = () => {
@@ -46,7 +86,7 @@ const isBasicAgent = agent?.agent_type === "basic";const filteredNavItems = isBa
   : navItems;
   return (
     <div className="relative  ">
-      <nav className="fixed left-2 top-2 backdrop-blur-md hidden bottom-4 w-64 flex-col border-r border-white/10 bg-white rounded-[40px] lg:flex z-50 shadow-2xl  mx-2 my-4">
+      <nav className="fixed left-2 top-2 backdrop-blur-md hidden h-[calc(100dvh-2rem)] w-64 flex-col border-r border-white/10 bg-white rounded-[40px] lg:flex z-50 shadow-2xl  mx-2 my-4">
         <div className="flex h-28 items-center px-12">
           <motion.div
             initial={{ opacity: 0 }}
@@ -89,7 +129,7 @@ const isBasicAgent = agent?.agent_type === "basic";const filteredNavItems = isBa
           ))}
         </div>
 
-        <div className="p-8 mt-auto">
+        <div className="px-7 py-2 ">
           <button
           onClick={logout}
            className="flex w-full items-center gap-3 cursor-pointer rounded-2xl p-3 text-black/60 font-bold transition-all hover:bg-red-500 hover:text-white group">

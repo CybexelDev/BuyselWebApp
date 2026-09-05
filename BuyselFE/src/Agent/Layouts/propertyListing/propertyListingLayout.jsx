@@ -259,6 +259,7 @@ const filteredProperties = properties.filter((property) => {
               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight instrument-sans">
                 Property <span className="text-[#6ABD11]">Listings</span>
               </h1>
+             <p className="text-sm text-slate-400 mt-2 host-grotesk">Manage your property listings by adding, updating, or removing properties with ease.</p> 
             </div>
 
             <button
@@ -321,28 +322,7 @@ const filteredProperties = properties.filter((property) => {
     >
 
       {/* STATUS */}
-      <div className="mb-4">
-
-        <label className="block text-sm font-medium mb-2">
-          Status
-        </label>
-
-        <select
-          value={filters.status}
-          onChange={(e) =>
-            setFilters({
-              ...filters,
-              status: e.target.value,
-            })
-          }
-          className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
-        >
-          <option value="">All</option>
-          <option value="Active">Active</option>
-          <option value="Pending">Pending</option>
-        </select>
-
-      </div>
+    
 
       {/* CITY */}
       <div className="mb-4">

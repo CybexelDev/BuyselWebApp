@@ -219,6 +219,7 @@ const handleChangePassword = async () => {
                             <h1 className="text-3xl  font-black text-slate-900 tracking-tight instrument-sans">
                                 Profile <span className="text-[#6ABD11]">Settings</span>
                             </h1>
+                            <p className="text-sm text-slate-400 mt-2 host-grotesk">Manage your professional profile and account information.</p>
                         </motion.div>
 
                         {/* RIGHT SIDE */}
@@ -228,7 +229,7 @@ const handleChangePassword = async () => {
                             {!isEditing && (
                                 <button
                                     onClick={() => setIsEditing(true)}
-                                    className="px-6 py-3 bg-[#6ABD11] text-white rounded-xl cursor-pointer text-sm font-bold shadow hover:bg-[#5aa30e] transition"
+                                    className="px-6 py-3 bg-[#6ABD11] text-white rounded-xl cursor-pointer text-sm font-bold shadow host-grotesk hover:bg-[#5aa30e] transition"
                                 >
                                     Edit Profile
                                 </button>

@@ -8,18 +8,20 @@ import { motion } from "framer-motion";
 import Advertisment from "../../Components/Advertisment/Advertisment";
 import PlanCard from "../../Components/PlanCard/PlanCard";
 import CurrentPlan from "../../Components/CurrentPlan/CurrentPlan";
-import { agentPlans } from "../../../Api/agentsApi";
+import { AdvertisementRequest } from "../../../Api/agentsApi";
+import { agentPlans,advertisementRequest,getAgentNotifications } from "../../../Api/agentsApi";
 import { openRazorpay } from "../../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
-import { advertisementRequest } from "../../../Api/agentsApi";
 
 
 function AgentPlans() {
 
   const [selectedPlan, setSelectedPlan] = useState({});
   const [upgradePlans, setUpgradePlans] = useState([]);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [upgradePlanData, setUpgradePlanData] = useState(null);
   const [planData, setPlanData] = useState(null);
   const [adPackages, setAdPackages] = useState([]);
@@ -99,7 +101,17 @@ setSelectedPlan({
 
     fetchPlan();
   }, []);
+useEffect(() => {
+  const fetchReelNotifications = async () => {
+    const data = await getAgentReelNotifications();
 
+    if (data) {
+      setReelNotifications(data);
+    }
+  };
+
+  fetchReelNotifications();
+}, []);
 
   const isCurrentPlanExpired =
   !planData?.expiresOn ||
@@ -140,6 +152,19 @@ if (result) {
   }
 };
 
+
+  const confirmAdvertisementRequest = async (planId) => {
+  const response = await AdvertisementRequest({
+    plan_id: selectedPlanId,
+  });
+
+   if (response) {
+    toast.success("Ad request sent successfully!");
+        setShowConfirmModal(false);
+  } else {
+    toast.error("Failed to send advertisement request.");
+  }
+};
 
 
 
@@ -475,8 +500,10 @@ if (result) {
                   price={activePlan.price_per_day}
                   features={activePlan.features}
                   buttonText="Advertise Now"
-                    onClick={() =>
-                 handleAdvertisementRequest(activePlan.plan_id)}
+                   onClick={() => {
+  setSelectedPlanId(activePlan.plan_id);
+  setShowConfirmModal(true);
+}}
                   dropdown={
                     <Dropdown
                       value={selectedType}
@@ -497,6 +524,59 @@ if (result) {
             })}
           </div>
         </div>
+
+{showConfirmModal && (
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl text-center">
+      
+      {/* Icon badge */}
+      <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+        <svg
+          className="w-8 h-8 text-green-600"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 9v3m0 0v3m0-3h3m-3 0H9m3-9a9 9 0 110 18 9 9 0 010-18z"
+          />
+        </svg>
+      </div>
+
+      {/* Title */}
+      <h2 className="text-xl font-bold mb-3 text-gray-900">
+        Confirm Advertisement Request
+      </h2>
+
+      {/* Description */}
+      <p className="text-gray-500 mb-6 text-[14px] leading-relaxed">
+         This
+        request will be sent to the customer support team. Our team will review it and
+        contact you manually to complete the advertisement process.
+      </p>
+
+      {/* Buttons */}
+      <div className="flex gap-3">
+  <button
+    onClick={confirmAdvertisementRequest}
+    className="flex-1 cursor-pointer bg-gradient-to-r from-[#6ABD11] to-[#5ca60f] hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition"
+  >
+    Yes, Send Request
+  </button>
+
+  <button
+    onClick={() => setShowConfirmModal(false)}
+    className="flex-1 cursor-pointer border border-gray-300 text-gray-800 font-medium py-3 rounded-xl hover:bg-gray-50 transition"
+  >
+    Maybe Later
+  </button>
+</div>
+    </div>
+  </div>
+)}
 
         <div className="mt-12">
           <h2 className="text-2xl font-bold mb-2">Reel Packages</h2>
