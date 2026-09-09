@@ -292,6 +292,8 @@ if (!formData.phone?.trim())
     else if 
     (!/^\d{6}$/.test(formData.pincode)) 
     { newErrors.pincode = "Pincode must be 6 digits"; }
+
+    
   // Agent-only validation
   if (isAgent) {
     if (!formData.landArea?.trim())
@@ -321,6 +323,14 @@ if (!formData.phone?.trim())
     ) {
       newErrors.keyPoints = "Add at least one key selling point";
     }
+    if (
+  !formData.landmarks?.length ||
+  formData.landmarks.every(
+    (item) => !item.name?.trim() || !item.distance?.trim()
+  )
+) {
+  newErrors.landmarks = "Add at least one landmark";
+}
   }
 }
   if (step === 2) {
@@ -481,7 +491,7 @@ setFormData(getInitialFormData());
 };
 
 
-const handleNext = () => {
+const handleNext = () => { 
   const valid = validateStep();
 
   if (!valid) return;
