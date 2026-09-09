@@ -20,6 +20,8 @@ const Navbar = ({
 
   const handleAddProperty = () => {
     if (remainingProperty === 0) {
+      console.log(remainingProperty);
+      
       setShowLimitMessage(true);
       return;
     }
