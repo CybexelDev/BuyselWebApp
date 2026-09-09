@@ -9,8 +9,8 @@ function Header({ onchange, location, cityDataSend }) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [open, setOpen] = useState(false);
   const [selecetdLocation, setSelectedLocation] = useState("Location");
-  
-  
+
+
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -67,18 +67,18 @@ function Header({ onchange, location, cityDataSend }) {
 
 
   useEffect(() => {
-   
+
     const getCityDatas = async () => {
-       if (selecetdLocation === "All Locations") {
-  cityDataSend([]);
-      return;
-    }
+      if (selecetdLocation === "All Locations") {
+        cityDataSend([]);
+        return;
+      }
       const city = await getCityData(selecetdLocation);
       if (city) {
-        cityDataSend(city); 
+        cityDataSend(city);
       }
       console.log("Selected city:", selecetdLocation);
-console.log("City API response:", city);
+      console.log("City API response:", city);
     };
     getCityDatas();
   }, [selecetdLocation]);
@@ -218,57 +218,57 @@ console.log("City API response:", city);
     mt-3
     mx-auto"
       >
-       <div className="relative inline-block">
-  <button
-    onClick={() => setOpen(!open)}
-    className="
-      host-grotesk cursor-pointer mb-1 md:mb-0
-      flex items-center gap-0.5
-      bg-black text-white
-      px-2 xl:px-3
-      h-[30px] sm:h-[32px] lg:h-[35px] xl:h-[42px]
-      rounded-[11px] md:rounded-[13px]
-      text-[12px] xl:text-[14px]
-      font-[500]
-    "
-  >
-    {selecetdLocation}
-    <Icon
-      icon="iconamoon:arrow-down-2-light"
-      className="w-[20px] h-[20px]"
-    />
-  </button>
-    {open && (
-    <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl  z-50 p-1">
-      <ul className="text-sm text-white host-grotesk">
-         <li
-    onClick={() => {
-      setOpen(false);
-      setSelectedLocation("All Locations");
-    }}
-    className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
-  >
-    All Locations
-  </li>
-       {Array.isArray(location) &&
-  location.map((loc, index) => (
-    <li
-      key={index}
-      onClick={() => {
-        setOpen(false);
-        setSelectedLocation(loc);
-      }}
-      className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
-    >
-      {loc}
-    </li>
-))}
-      
+        <div className="relative inline-block">
+          <button
+            onClick={() => setOpen(!open)}
+            className="
+             host-grotesk cursor-pointer mb-1 md:mb-0
+             flex items-center gap-0.5
+           bg-black text-white
+             px-2 xl:px-3
+             h-[30px] sm:h-[32px] lg:h-[35px] xl:h-[42px]
+             rounded-[11px] md:rounded-[13px]
+             text-[12px] xl:text-[14px]
+             font-[500]
+                      "
+          >
+            {selecetdLocation}
+            <Icon
+              icon="iconamoon:arrow-down-2-light"
+              className="w-[20px] h-[20px]"
+            />
+          </button>
+          {open && (
+            <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl  z-50 p-1">
+              <ul className="text-sm text-white host-grotesk">
+                <li
+                  onClick={() => {
+                    setOpen(false);
+                    setSelectedLocation("All Locations");
+                  }}
+                  className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
+                >
+                  All Locations
+                </li>
+                {Array.isArray(location) &&
+                  location.map((loc, index) => (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        setOpen(false);
+                        setSelectedLocation(loc);
+                      }}
+                      className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
+                    >
+                      {loc}
+                    </li>
+                  ))}
 
-      </ul>
-    </div>
-  )}
-</div>
+
+              </ul>
+            </div>
+          )}
+        </div>
 
         <div
           className="flex flex-row items-end gap-[10px]  min-[900px]:max-[1023px]:gap-[7px]   lg:gap-[12px]

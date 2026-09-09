@@ -169,19 +169,25 @@ const toggleAmenity = (amenity) => {
 };
 
   const handleSubcategoryChange = (val) => {
-    const selected = propertyData.subcategories.find((s) => s.name === val);
-    console.log("selected subcategory:", selected);
+  const selected = propertyData.subcategories.find(
+    (s) => s.name === val
+  );
 
-    setFormData((prev) => ({
+  console.log("SELECTED SUBCATEGORY:", val);
+  console.log("SELECTED SUBCATEGORY DATA:", selected);
+
+  setFormData((prev) => {
+    console.log("FEATURES BEFORE CLEAR:", prev.features);
+
+    return {
       ...prev,
       subcategory: val,
-      subcategory_fields: selected?.fields || [], // ✅ IMPORTANT
+      subcategory_fields: selected?.fields || [],
       features: [],
       amenities: [],
-
-
-    }));
-  };
+    };
+  });
+};
 
   const filteredSubcategories = propertyData.subcategories.filter(
     (sub) => sub.category_id === formData.category_id,
@@ -245,7 +251,7 @@ console.log("Filtered:", filteredSubcategories);
             value={formData.category}
             onChange={handleCategoryChange}
               error={errors?.category}
-            required={!isAgent}
+            required={true}
           />
           <SelectField
             label="Subcategory"
@@ -254,7 +260,7 @@ console.log("Filtered:", filteredSubcategories);
             value={formData.subcategory}
             onChange={handleSubcategoryChange}
             error={errors?.subcategory}
-            required={!isAgent}
+            required={true}
           />
           <SelectField
             label="Purpose"
@@ -263,7 +269,7 @@ console.log("Filtered:", filteredSubcategories);
             value={formData.purpose}
             onChange={(val) => setFormData({ ...formData, purpose: val })}
             error={errors?.purpose}
-            required={!isAgent}
+            required={true}
           />
         </div>
 
@@ -440,7 +446,7 @@ updated.push({
             value={formData.title}
             onChange={handleChange}
             error={errors?.title}
-            required={!isAgent}
+            required={true}
           />
 
           <Input
@@ -469,7 +475,7 @@ updated.push({
             value={formData.city}
             onChange={handleChange}
             error={errors?.city}
-            required={!isAgent}
+            required={true}
           />
           <Input
             label="Village"
@@ -490,7 +496,6 @@ updated.push({
             value={formData.pincode}
             onChange={handleChange}
             error={errors?.pincode}
-            required={!isAgent}
           />
           <Input
             label="District"
@@ -498,6 +503,8 @@ updated.push({
             value={formData.district}
             onChange={handleChange}
             error={errors?.district}
+                        required={true}
+
           />
           <Input
             label="State"
@@ -618,7 +625,7 @@ updated.push({
             value={formData.description}
             onChange={handleChange}
               error={errors?.description}
-required={!isAgent}
+            required={true}
           />
         </div>
         <div className="mt-8">
@@ -749,7 +756,7 @@ required={!isAgent}
             value={formData.owner}
             onChange={handleChange}
             error={errors?.owner}
-            required={!isAgent}
+            required={true}
           />
 
           <Input
@@ -758,7 +765,7 @@ required={!isAgent}
             value={formData.phone}
             onChange={handleChange}
             error={errors?.phone}
-            required={!isAgent}
+            required={true}
           />
 
           <Input
@@ -767,7 +774,7 @@ required={!isAgent}
             value={formData.whatsapp}
             onChange={handleChange}
             error={errors?.whatsapp}
-            required={!isAgent}
+            required={true}
           />
         </div>
         {isAmenitiesOpen && (
@@ -789,7 +796,7 @@ required={!isAgent}
                 ${
                   isSelected
                     ? "border-lime-500 bg-lime-300  text-lime-600"
-                    : "border-gray-300 text-gray-500 bg-lime-100 hover:border-lime-400"
+                    : "border-gray-300 text-white bg-gray-500 hover:border-lime-400"
                 }`}
                     >
                       <img
