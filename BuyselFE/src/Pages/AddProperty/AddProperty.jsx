@@ -16,24 +16,24 @@ function AddProperty() {
   const remainingPropertyAgent = agent?.remainingPropertyAgent;
 
   console.log("ROLE:", role);
-console.log("remainingProperty:", remainingProperty);
-console.log("remainingPropertyAgent:", remainingPropertyAgent);
+  console.log("remainingProperty:", remainingProperty);
+  console.log("remainingPropertyAgent:", remainingPropertyAgent);
 
-console.log("USER LOADING CONDITION:", 
-  role === "user" && remainingProperty == null
-);
+  console.log("USER LOADING CONDITION:",
+    role === "user" && remainingProperty == null
+  );
 
-console.log("AGENT LOADING CONDITION:",
-  role === "agent" && remainingPropertyAgent == null
-);
+  console.log("AGENT LOADING CONDITION:",
+    role === "agent" && remainingPropertyAgent == null
+  );
 
-if (
-  (role === "user" && remainingProperty == null) ||
-  (role === "agent" && remainingPropertyAgent == null)
-) {
-  console.log("🔥 RETURNING LOADING");
-  return <Loading />;
-}
+  if (
+    (role === "user" && remainingProperty == null) ||
+    (role === "agent" && remainingPropertyAgent == null)
+  ) {
+    console.log("🔥 RETURNING LOADING");
+    return <Loading />;
+  }
   if (role === "user" && remainingProperty <= 0) {
     return <Navigate to="/plans" replace />;
   }
