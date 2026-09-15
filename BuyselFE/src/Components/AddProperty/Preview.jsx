@@ -123,22 +123,20 @@ const nearbyPlaces =
 
         <div className="space-y-4 p-0" >
 
-          <div className="bg-white rounded-2xl border border-[#7BC21F] p-6 shadow-sm host-grotesk">
+ <div className="rounded-2xl border border-[#7BC21F] bg-white p-6 shadow-sm host-grotesk">
 
-  <h3 className="font-semibold text-gray-800 mb-4 text-[20px]">
+  <h3 className="mb-4 text-[20px] font-semibold text-gray-800">
     Property Features
   </h3>
 
-  <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-
+  <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 lg:grid-cols-2 xl:grid-cols-4">
     {(formData.features || []).map((item, index) => (
-  <DetailItem
-    key={index}
-    title={item.name}
-    value={item.value}
-  />
-))}
-
+      <DetailItem
+        key={index}
+        title={item.name}
+        value={item.value}
+      />
+    ))}
   </div>
 
 </div>
@@ -301,9 +299,14 @@ const nearbyPlaces =
 };
 
 const DetailItem = ({ title, value }) => (
-  <div>
-    <p className="font-semibold text-[20px]">{title}</p>
-    <p className="text-gray-500 mt-1 text-[16px]">{value}</p>
+  <div className="min-w-0">
+    <p className="font-semibold text-[20px] lg:text-[15px] xl:text-[20px] break-words">
+      {title}
+    </p>
+
+    <p className="mt-1 text-[16px] text-gray-500">
+      {value}
+    </p>
   </div>
 );
 
