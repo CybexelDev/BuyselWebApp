@@ -67,15 +67,17 @@ useEffect(() => {
       console.log("API Response :", res);
 
     
-      if(res){
-        dispatch({
-          type:'SET_AGENT',
-          payload:{
-            ...agent,
-            remainingPropertyAgent:res.remaining_property
-          }
-        })
+      if (res) {
+  if (role === "agent") {
+    dispatch({
+      type: "SET_AGENT",
+      payload: {
+        ...agent,
+        remainingPropertyAgent: res.remaining_property
       }
+    });
+  }
+}
       // data array
       if (Array.isArray(res?.data)) {
 
