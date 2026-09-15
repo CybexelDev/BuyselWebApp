@@ -503,7 +503,7 @@ updated.push({
             value={formData.district}
             onChange={handleChange}
             error={errors?.district}
-                        required={true}
+            required={true}
 
           />
           <Input
@@ -512,6 +512,7 @@ updated.push({
             value={formData.state}
             onChange={handleChange}
             error={errors?.state}
+            required={true}
           />
 
           <Input

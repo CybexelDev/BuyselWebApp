@@ -64,9 +64,19 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
       newErrors.agent_type = "Select an agent type";
     }
 
+      if (!formData.yearsofexperience) {
+      newErrors.agent_type = "Years of Experience is required";
+    }
+
+    if (!formData.TotalDealsServed) {
+      newErrors.agent_type = "Number of Total deals served is required";
+    }
+
     if (!formData.plan_id) {
       newErrors.plan_id = "Select a plan";
     }
+
+
 
     setErrors(newErrors);
 
@@ -271,6 +281,7 @@ if (
             name="yearsofexperience"
             value={formData.yearsofexperience}
             onChange={handleChange}
+            required
           />
 
           <Input
@@ -278,6 +289,7 @@ if (
             name="TotalDealsServed"
             value={formData.TotalDealsServed}
             onChange={handleChange}
+            required
           />
         </div>
 

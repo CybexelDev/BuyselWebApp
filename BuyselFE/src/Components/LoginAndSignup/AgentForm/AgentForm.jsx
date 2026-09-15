@@ -4,12 +4,14 @@ import { premiumAgentLogin } from '../../../Api/agentsApi';
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from 'sonner';
+import { Eye,EyeOff } from 'lucide-react';
 
 
 const AgentForm = ({ onForgot }) => {
   const [login, setLogin] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [showPassword,setShowPassword]=useState(false)
 
   const validateForm = () => {
     const newErrors = {};
@@ -32,7 +34,6 @@ const AgentForm = ({ onForgot }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(login, "hahaaaa");
 
   const handleLogin = async () => {
     if (!validateForm()) return;
@@ -124,37 +125,51 @@ const AgentForm = ({ onForgot }) => {
         </div>
 
 
-        <div>
-          <label className="text-[16px] text-[#525252] host-grotesk">
-            Password
-          </label>
+      <div>
+  <label className="text-[16px] text-[#525252] host-grotesk">
+    Password
+  </label>
 
-          <input
-            value={login.password}
-            onChange={(e) => {
-              setLogin({ ...login, password: e.target.value });
+  <div className="relative">
+    <input
+      value={login.password}
+      onChange={(e) => {
+        setLogin({ ...login, password: e.target.value });
 
-              if (errors.password) {
-                setErrors((prev) => ({
-                  ...prev,
-                  password: "",
-                }));
-              }
-            }}
-            type="password"
-            className={`w-full rounded-[10px] p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-green-400 ${errors.password
-              ? "border border-red-500"
-              : "border border-[#cbc8c8]"
-              }`}
-          />
+        if (errors.password) {
+          setErrors((prev) => ({
+            ...prev,
+            password: "",
+          }));
+        }
+      }}
+      type={showPassword ? "text" : "password"}
+      className={`w-full rounded-[10px] p-3 pr-12 mt-1 focus:outline-none focus:ring-2 focus:ring-green-400 ${
+        errors.password
+          ? "border border-red-500"
+          : "border border-[#cbc8c8]"
+      }`}
+    />
 
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-1 host-grotesk">
-              {errors.password}
-            </p>
-          )}
-        </div>
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+    >
+      {showPassword ? (
+        <EyeOff size={20} />
+      ) : (
+        <Eye size={20} />
+      )}
+    </button>
+  </div>
 
+  {errors.password && (
+    <p className="text-red-500 text-sm mt-1 host-grotesk">
+      {errors.password}
+    </p>
+  )}
+</div>
         <button disabled={loading}
           onClick={handleLogin} className="w-full bg-[#74c222] hover:bg-[#5f9d1c] instrument-sans cursor-pointer text-white py-3 rounded-lg font-medium transition flex items-center justify-center">
           <div>Login </div>  {loading && <div class="dot-spinner">

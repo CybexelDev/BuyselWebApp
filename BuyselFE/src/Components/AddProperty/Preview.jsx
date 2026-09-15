@@ -12,14 +12,14 @@ const features = [
     "Property Verification",
     "Poster Creation",
   ];
-
+  
 
 
 const PreviewProperty = ({formData,setFormData}) => {
 
 const property = {
-  label: formData.title, // ✅ FIX
-  city: formData.city,   // ✅ FIX
+  label: formData.title,
+  city: formData.city,  
   location: `${formData.city}, ${formData.state}`,
   price:
     formData.purpose === "Sale"
