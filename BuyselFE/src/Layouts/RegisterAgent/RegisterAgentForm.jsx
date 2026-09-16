@@ -10,7 +10,9 @@ import { openRazorpay } from "../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 
 
-const AgentRegistration = ({ formData, handleChange, setFormData }) => {
+
+
+ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
   const [agentPlans, setAgentPlans] = useState([]);
   const [selectedPlans, setSelectedPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -64,9 +66,19 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
       newErrors.agent_type = "Select an agent type";
     }
 
+      if (!formData.yearsofexperience) {
+      newErrors.agent_type = "Years of Experience is required";
+    }
+
+    if (!formData.TotalDealsServed) {
+      newErrors.agent_type = "Number of Total deals served is required";
+    }
+
     if (!formData.plan_id) {
       newErrors.plan_id = "Select a plan";
     }
+
+
 
     setErrors(newErrors);
 
@@ -85,59 +97,75 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
   }, []);
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const payload = {
-      full_name: formData.username,
-      email: formData.email,
-      phone_number: formData.phone,
-      password: formData.password,
-      city: formData.city,
-      pin_code: formData.pincode,
-      agent_type: formData.agent_type,
-      plan_id: formData.plan_id,
-      address: formData.address,
+  if (!validateForm()) return;
 
-      years_of_experience: formData.yearsofexperience || "",
-      total_deals_served: formData.TotalDealsServed || "",
+  const payload = {
+    full_name: formData.username,
+    email: formData.email,
+    phone_number: formData.phone,
+    password: formData.password,
+    city: formData.city,
+    pin_code: formData.pincode,
+    agent_type: formData.agent_type,
+    plan_id: formData.plan_id,
+    address: formData.address,
+    years_of_experience: formData.yearsofexperience || "",
+    total_deals_served: formData.TotalDealsServed || "",
+  };
 
-    };
+  try {
+ const res = await registerAgent(payload);
 
+// Registration failed
+if (!res?.status) {
+  toast.error(res?.message || "Registration failed.");
+  return;
+}
 
+// Registration successful → open payment
+if (
+  res?.message ===
+  "Registration submitted. Waiting for admin approval."
+) {
+  openRazorpay({
+    name: "BuySel",
+    description: selectedPlan?.label,
+    plan_type: selectedPlan?.plan_type,
+    plan_id: selectedPlan?.plan_id,
 
-    const res = await registerAgent(payload);
-
-    if (res?.message === "Registration submitted. Waiting for admin approval.") {
-      openRazorpay({
-        name: "BuySel",
-        description: selectedPlan?.label,
-        plan_type: selectedPlan?.plan_type,
-        plan_id: selectedPlan?.plan_id,
-        // ✅ success callback
-        onSuccess: (res) => {
-          console.log("Property Payment", res);
-          navigate("/invoice", {
-            state: {
-              paymentData: res,
-            },
-          });
-        },
-      })
-    }
-
-    if (res?.status) {
-      toast.success(res.message || "Registered");
+    onSuccess: (paymentRes) => {
+      toast.success(
+        "Registration and payment successful. "
+      );
 
       setFormData({});
       setSelectedPlans([]);
       setSelectedPlan(null);
-    } else {
-      toast.error(res?.message || "Registration Failed");
-    }
-  };
 
+      navigate("/invoice", {
+        state: {
+          paymentData: paymentRes,
+        },
+      });
+    },
+
+    onFailure: (error) => {
+      console.log("Payment Failed:", error);
+      toast.error("Payment failed. Registration was not completed.");
+    },
+  });
+
+  return;
+}
+
+  } catch (error) {
+    console.error("Registration error:", error);
+    toast.error("Registration failed. Please try again.");
+  }
+};
   const handleAgentTypeChange = (val) => {
 
     setFormData({
@@ -255,6 +283,7 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
             name="yearsofexperience"
             value={formData.yearsofexperience}
             onChange={handleChange}
+            required
           />
 
           <Input
@@ -262,6 +291,7 @@ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
             name="TotalDealsServed"
             value={formData.TotalDealsServed}
             onChange={handleChange}
+            required
           />
         </div>
 

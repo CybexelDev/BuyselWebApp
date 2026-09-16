@@ -66,7 +66,7 @@ function App() {
           <Route path="/propertyListing" element={<PropertListing />} />
           <Route path="/agents" element={<Agents />} />
           <Route path="/propertyDetail/:id" element={<PropertyDetail />} />
-          <Route path="/blog" element={<Blog  />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/profile" element={
             <UserProtectedRoute>
               <Profile />
@@ -185,9 +185,9 @@ function App() {
             } />
             <Route path='/agent/orders' element={
               <AgentProtectedRoute>
-                   <Orders/>
+                <Orders />
               </AgentProtectedRoute>
-            }/>
+            } />
           </>
         </Routes>
       </Router>
