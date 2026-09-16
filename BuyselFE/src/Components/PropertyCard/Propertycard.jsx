@@ -53,7 +53,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: property.label,
-          text: `${property.city} - ₹${property.price}`,
+          text: `${property.label}, ${property.description}, ${property.amenities}, ${property.land_area}, ${property.sq_ft}, ${property.perprice},  ${property.city} - ₹${property.price}`,
           files: [file],
         });
       } else {
