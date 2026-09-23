@@ -17,18 +17,22 @@ function PropertyDetail() {
   const [similarProperties, setSimilarProperties] = useState([]);
   const [loading, setLoading] = useState(true)
 
-  const extractLatLng = (url) => {
-    const match = url.match(/@([-.\d]+),([-.\d]+)/);
-
-    if (match) {
-      return {
-        lat: parseFloat(match[1]),
-        lng: parseFloat(match[2])
-      };
-    }
-
+ const extractLatLng = (url) => {
+  if (!url || typeof url !== "string") {
     return null;
-  };
+  }
+
+  const match = url.match(/@([-.\d]+),([-.\d]+)/);
+
+  if (match) {
+    return {
+      lat: parseFloat(match[1]),
+      lng: parseFloat(match[2])
+    };
+  }
+
+  return null;
+};
 
 const transformProperty = (data) => {
   const coords = extractLatLng(data.location);
