@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
-    const [register, setRegister] = useState({ name: '', email: '', mobail: '', password: '', confirm_password: '' })
+    const [register, setRegister] = useState({ name: '', email: '', mobile: '', password: '', confirm_password: '' })
     const [checked, setChecked] = useState(false);
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
@@ -27,10 +27,10 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
     newErrors.email = "Enter a valid email";
   }
 
-  if (!register.mobail.trim()) {
-    newErrors.mobail = "Phone number is required";
-  } else if (!/^\d{10}$/.test(register.mobail)) {
-    newErrors.mobail = "Enter a valid 10-digit phone number";
+  if (!register.mobile.trim()) {
+    newErrors.mobile = "Phone number is required";
+  } else if (!/^\d{10}$/.test(register.mobile)) {
+    newErrors.mobile = "Enter a valid 10-digit phone number";
   }
 
   if (!register.password) {
@@ -64,7 +64,7 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
     const response = await userRegister(
       register.name,
       register.email,
-      register.mobail,
+      register.mobile,
       register.password,
       register.confirm_password
     );
@@ -155,22 +155,22 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
                 <Phone className="absolute left-4 top-4 text-gray-500" size={18} />
                 <input
                     type="number"
-                    value={register.mobail}
+                    value={register.mobile}
  onChange={(e) => {
-    setRegister({ ...register, mobail: e.target.value });
+    setRegister({ ...register, mobile: e.target.value });
 
-    if (errors.mobail) {
+    if (errors.mobile) {
       setErrors((prev) => ({
         ...prev,
-        mobail: "",
+        mobile: "",
       }));
     }
   }}                       placeholder="Phone"
                     className="w-full pl-10 pr-4 py-3 rounded-lg bg-[#ddf1be] focus:outline-none"
                 />
-                {errors.mobail && (
+                {errors.mobile && (
   <p className="text-red-500 text-sm mt-1 host-grotesk">
-    {errors.mobail}
+    {errors.mobile}
   </p>
 )}
             </div>

@@ -5,11 +5,11 @@ import { toast } from "sonner";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
-export const userRegister = async (name, email, mobail, password, confirm_password) => {
+export const userRegister = async (name, email, mobile, password, confirm_password) => {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("email", email);
-  formData.append("mobail", mobail);
+  formData.append("mobile", mobile);
   formData.append("password", password);
   formData.append("confirm_password", confirm_password);
   try {
