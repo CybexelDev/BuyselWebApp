@@ -67,7 +67,6 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
   try {
     const imageUrl = property.images?.[0];
 
-    // Property detail page URL
     const propertyLink = `${window.location.origin}/propertyDetail/${property.id}`;
 
     const shareText = `
