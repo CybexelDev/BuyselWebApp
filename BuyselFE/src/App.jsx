@@ -40,7 +40,8 @@ import Faqs from './Pages/Faqs/Faqs'
 import InvoicePage from './Pages/Invoice/Invoice'
 import AgentProtectedRoute from './Agent/Components/ProtectionRouteAgent/ProtectionRouteAgent'
 import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
-import CommonProtectedRoute from './Components/CommonProtectionRoute/commonProtectedRoute'
+import CommonProtectedRoute from './Components/CommonProtectionRoute/CommonProtectedRoute'
+import Orders from './Agent/Pages/Orders/Orders'
 
 function App() {
 
@@ -60,62 +61,92 @@ function App() {
       {/* App page */}
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<Home />} />
-          <Route path="/propertyListing" element={<PropertListing />} />
-          <Route path="/agents" element={<Agents />} />
-          <Route path="/propertyDetail/:id" element={<PropertyDetail />} />
-          <Route path="/blog" element={<Blog  />} />
-          <Route path="/profile" element={
-            <UserProtectedRoute>
-              <Profile />
-            </UserProtectedRoute>
-          } />
-          <Route path="/wishlist" element={
-            <UserProtectedRoute>
-              <Wishlist />
-            </UserProtectedRoute>
-          } />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/agent-detail/:id" element={<AgentDetail />} />
-          {/* <Route path='/addyourproperty' element={
-            <UserProtectedRoute>
-          <Route path='/addyourproperty' element={
-              <AddProperty />
-          } />
-          <Route path="/editproperty/:id" element={
-            <UserProtectedRoute>
-              
-              <AddProperty />
-            </UserProtectedRoute>
-          } /> */}
-          <Route path='/blogdetail' element={<BlogDetailPage />} />
-          <Route path='/blog/:id' element={<BlogDetailPage />} />
-          <Route path="/loginandsignup" element={<LoginAndSignuppage />} />
-          <Route path="/ownerdashboard" element={
-            <UserProtectedRoute>
-              <OwnerDashboard />
-            </UserProtectedRoute>
-          } />
-          <Route path="/dashboardpropertydetail/:id" element={
-            <DashboardPropertyDetail />
-          } />
-          <Route path='/plans' element={<PlansPage />} />
-          <Route path="/enquiry-detail/:id" element={
-            <UserProtectedRoute>
-              <EnquiryDetailLayoutUser />
-            </UserProtectedRoute>
-          } />
-          <Route path="/helpcenter" element={<HelpCenter />} />
-          <Route path='/termsandcondition' element={<TermsPage />} />
-          <Route path='/privacy' element={<PrivacyPolicy />} />
-          <Route path='/agent-register' element={
-            <UserProtectedRoute>
-              <RegisterAgent />
-            </UserProtectedRoute>} />
-          <Route path='/faqs' element={<Faqs />} />
-          <Route path='/invoice' element={<InvoicePage />} />
+       <Route path="/" element={<Home />} />
+<Route path="*" element={<Home />} />
+<Route path="/propertyListing" element={<PropertListing />} />
+<Route path="/agents" element={<Agents />} />
+<Route path="/propertyDetail/:id" element={<PropertyDetail />} />
+<Route path="/blog" element={<Blog />} />
+
+<Route
+  path="/profile"
+  element={
+    <UserProtectedRoute message="Please login to view your profile">
+      <Profile />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route
+  path="/wishlist"
+  element={
+    <UserProtectedRoute message="Please login to access your wishlist">
+      <Wishlist />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route path="/about" element={<About />} />
+<Route path="/contact" element={<Contact />} />
+<Route path="/agent-detail/:id" element={<AgentDetail />} />
+
+{/* <Route path='/addyourproperty' element={
+  <UserProtectedRoute>
+    <Route path='/addyourproperty' element={
+      <AddProperty />
+    } />
+    <Route path="/editproperty/:id" element={
+      <UserProtectedRoute>
+        <AddProperty />
+      </UserProtectedRoute>
+    } />
+  </UserProtectedRoute>
+} /> */}
+
+<Route path="/blogdetail" element={<BlogDetailPage />} />
+<Route path="/blog/:id" element={<BlogDetailPage />} />
+
+<Route path="/loginandsignup" element={<LoginAndSignuppage />} />
+
+<Route
+  path="/ownerdashboard"
+  element={
+    <UserProtectedRoute message="Please login to access your owner dashboard">
+      <OwnerDashboard />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route path="/dashboardpropertydetail/:id" element={
+  <DashboardPropertyDetail />
+} />
+
+<Route path="/plans" element={<PlansPage />} />
+
+<Route
+  path="/enquiry-detail/:id"
+  element={
+    <UserProtectedRoute message="Please login to view enquiry details">
+      <EnquiryDetailLayoutUser />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route path="/helpcenter" element={<HelpCenter />} />
+<Route path="/termsandcondition" element={<TermsPage />} />
+<Route path="/privacy" element={<PrivacyPolicy />} />
+
+<Route
+  path="/agent-register"
+  element={
+    <UserProtectedRoute message="Please login to register as an agent">
+      <RegisterAgent />
+    </UserProtectedRoute>
+  }
+/>
+
+<Route path="/faqs" element={<Faqs />} />
+<Route path="/invoice" element={<InvoicePage />} />
 
 
           {/* common routeprotected */}
@@ -181,6 +212,11 @@ function App() {
                 <AgentPropertyListing />
               </AgentProtectedRoute>
 
+            } />
+            <Route path='/agent/orders' element={
+              <AgentProtectedRoute>
+                <Orders />
+              </AgentProtectedRoute>
             } />
           </>
         </Routes>

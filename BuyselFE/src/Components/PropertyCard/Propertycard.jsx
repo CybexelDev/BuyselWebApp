@@ -10,9 +10,6 @@ import { toast } from "sonner";
 
 
 
-
-
-
 function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", shadow, hideContact=false,hideWishlist=false }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,30 +36,86 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
   };
 
 
+  // const handleShare = async (e) => {
+  //   e.stopPropagation();
+
+  //   try {
+  //     const imageUrl = property.images?.[0];
+
+  //     const response = await fetch(imageUrl);
+  //     const blob = await response.blob();
+
+  //     const file = new File([blob], "property.jpg", { type: blob.type });
+
+  //     if (navigator.canShare && navigator.canShare({ files: [file] })) {
+  //       await navigator.share({
+  //         title: property.label,
+  //         text: `${property.label}, ${property.description}, ${property.amenities}, ${property.land_area}, ${property.sq_ft}, ${property.perprice},  ${property.city} - ₹${property.price}`,
+  //         files: [file],
+  //       });
+  //     } else {
+  //       toast.error("Sharing not supported on this device");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const handleShare = async (e) => {
-    e.stopPropagation();
+  e.stopPropagation();
 
-    try {
-      const imageUrl = property.images?.[0];
+  try {
+    const imageUrl = property.images?.[0];
 
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
+    // Property detail page URL
+    const propertyLink = `${window.location.origin}/propertyDetail/${property.id}`;
 
-      const file = new File([blob], "property.jpg", { type: blob.type });
+    const shareText = `
+🏠 ${property.label}
 
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          title: property.label,
-          text: `${property.city} - ₹${property.price}`,
-          files: [file],
-        });
-      } else {
-        toast.error("Sharing not supported on this device");
-      }
-    } catch (err) {
-      console.log(err);
+${property.description || ""}
+
+📍 ${property.city || ""}
+
+📐 Land Area: ${property.land_area || ""}
+📏 Area: ${property.sq_ft || ""}
+💰 Price: ₹${property.price || ""}
+💵 Per Sq.Ft: ₹${property.perprice || ""}
+
+✨ Amenities: ${property.amenities || ""}
+
+View Property:
+${propertyLink}
+
+BuySel - Find Your Perfect Property
+`;
+
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+
+    const file = new File(
+      [blob],
+      "property.jpg",
+      { type: blob.type }
+    );
+
+    if (
+      navigator.canShare &&
+      navigator.canShare({ files: [file] })
+    ) {
+      await navigator.share({
+        title: property.label,
+        text: shareText,
+        files: [file],
+      });
+    } else {
+      toast.error("Sharing not supported on this device");
     }
-  };
+
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 
   const handleWtspClick = (e) => {
@@ -146,14 +199,12 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
             {property?.label}
           </h3>
 
-
           <button className="bg-[#b8e08d] p-2 rounded-full " onClick={(e) => e.stopPropagation()}>
             <a href={property?.location} >
               <img src={icon} alt="icon" className="h-[12px] w-[12px]" />
             </a>
           </button>
         </div>
-
 
         <p className="instrument-sans flex items-center justify-between text-[12px] mb-2 text-black font-[400]">
 

@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 import { getAgentEnquiries } from '../../../Api/agentsApi';
 import { useNavigate } from "react-router-dom";
 
-
 const EnquiryLayout = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [enquiries, setEnquiries] = useState([]);
@@ -95,7 +94,9 @@ const navigate = useNavigate();
               <h1 className="text-4xl font-black text-slate-900 tracking-tight instrument-sans">
                 Property <span className="text-[#6ABD11]">Leads</span>
               </h1>
-
+    <p className="text-sm text-slate-400 mt-2 host-grotesk">
+Manage and respond to enquiries received for your listed properties.
+ </p>
             </motion.div>
 
             <div className="flex items-center gap-3">

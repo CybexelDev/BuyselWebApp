@@ -12,14 +12,14 @@ const features = [
     "Property Verification",
     "Poster Creation",
   ];
-
+  
 
 
 const PreviewProperty = ({formData,setFormData}) => {
 
 const property = {
-  label: formData.title, // ✅ FIX
-  city: formData.city,   // ✅ FIX
+  label: formData.title,
+  city: formData.city,  
   location: `${formData.city}, ${formData.state}`,
   price:
     formData.purpose === "Sale"
@@ -165,7 +165,8 @@ const nearbyPlaces =
       Property Description
     </p>
 
-    <p className="text-[#181818] font-[400] text-[16px] host-grotesk mt-4 leading-relaxed">
+    <p   className="text-[#181818] font-[400] text-[16px] host-grotesk mt-4 leading-relaxed max-w-full whitespace-pre-wrap break-words overflow-wrap-anywhere"
+>
       {detail.description}
     </p>
 

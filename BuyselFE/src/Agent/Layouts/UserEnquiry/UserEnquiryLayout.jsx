@@ -122,9 +122,8 @@ const filteredEnquiries = enquiries.filter((item) => {
       User <span className="text-[#6ABD11]">Enquiries</span>
     </h1>
 
-    <p className="text-sm text-slate-400 mt-2">
-      Manage and respond to property leads from users
-    </p>
+    <p className="text-sm text-slate-400 mt-2 host-grotesk">
+Manage and respond to property leads sent directly to you    </p>
 
   </motion.div>
 

@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 function MediaUpload({ formData, setFormData, errors }) {
   const fileInputRef = useRef(null);
-
+console.log("for images",formData)
 const updateFiles = (files) => {
   const newFiles = Array.from(files).map((file) => ({
     file,
@@ -22,6 +22,11 @@ const updateFiles = (files) => {
     images: [...prev.images, ...newFiles],
   }));
 };
+const isHouse =
+  formData?.subcategory?.toLowerCase().trim() === "independent house";
+
+console.log("subcategory:", formData?.subcategory);
+console.log("isHouse:", isHouse);
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -47,10 +52,29 @@ const updateFiles = (files) => {
 
       {/* PROPERTY IMAGE (Large Box) */}
       <div className="mb-6">
-        <p className="lexend text-[16px] font-[600] leading-[135%] mb-2">
-          Property Image
-        </p>
+   <div className="mb-3">
+  <p className="lexend text-[16px] font-[600] leading-[135%]">
+    Property Image
+  </p>
 
+  {isHouse && (
+    <div className="mt-2 bg-[#F5F8F1] border border-[#DDE8D2] rounded-xl p-4">
+      <p className="text-sm font-semibold text-[#6ABD11] mb-2">
+        Recommended House Photos
+      </p>
+
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs sm:text-sm text-[#666] host-grotesk">
+  <li>• 1st photo – Full view of the house</li>
+  <li>• Gate / Front side</li>
+  <li>• Interior</li>
+  <li>• Room 1</li>
+  <li>• Room 2</li>
+  <li>• Road with house</li>
+  <li>• Kitchen side</li>
+</ul>
+    </div>
+  )}
+</div>
         <div
           onClick={() => fileInputRef.current.click()}
           onDrop={handleDrop}

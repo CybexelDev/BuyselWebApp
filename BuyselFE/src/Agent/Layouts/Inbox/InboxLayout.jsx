@@ -108,6 +108,9 @@ const [filters, setFilters] = useState({
               <h1 className="text-4xl font-black text-slate-900 tracking-tight instrument-sans">
                 Inbox <span className="text-[#6ABD11]">Enquiries</span>
               </h1>
+              
+    <p className="text-sm text-slate-400 mt-2 host-grotesk">
+Manage and respond to property enquiries matched to your service area    </p>
             </motion.div>
 
             <div className="flex items-center gap-3">

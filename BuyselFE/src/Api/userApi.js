@@ -5,11 +5,11 @@ import { toast } from "sonner";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
-export const userRegister = async (name, email, mobail, password, confirm_password) => {
+export const userRegister = async (name, email, mobile, password, confirm_password) => {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("email", email);
-  formData.append("mobail", mobail);
+  formData.append("mobile", mobile);
   formData.append("password", password);
   formData.append("confirm_password", confirm_password);
   try {
@@ -255,11 +255,13 @@ export const changePasswordReset = async (newPassword) => {
 
 export const sendFacebookToken = async (accessToken) => {
   try {
-    const res = await api.post("/auth/facebook/", {
+    const res = await api.post("/facebook-login/", {
       access_token: accessToken,
     });
 
     console.log(res.data, "Facebook login success");
+
+    return res.data;
 
   } catch (error) {
     console.log(error);
@@ -982,7 +984,6 @@ export const userDashboard = async () => {
 };
 
 
-
 export const userPropertyList = async () => {
   try {
     const res = await api.get("/owner/property/list/");
@@ -1205,3 +1206,15 @@ export const userGetPropertyById = async (id) => {
 };
 
 
+
+export const getSliderAdd = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}sliderads/`);
+
+    return res.data;
+
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

@@ -307,11 +307,20 @@ const FilterModal = ({ onClose, setParentFilters }) => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [filterOptions, setFilterOptions] = useState(null);
-  const selectedDistrictObj = filterOptions?.districts?.find(
-    d => d.name === selectedDistrict
-  );
+    const [selectedState, setSelectedState] = useState("");
 
-  const cities = selectedDistrictObj?.cities || [];
+const selectedStateObj = filterOptions?.locations?.find(
+  (location) => location.name === selectedState
+);
+
+const districts = selectedStateObj?.districts || [];
+
+const selectedDistrictObj = districts.find(
+  (district) => district.name === selectedDistrict
+);
+
+const cities = selectedDistrictObj?.cities || [];
+
   useEffect(() => {
     const fetchFilters = async () => {
       const res = await getFilterOptions();
@@ -336,33 +345,47 @@ const FilterModal = ({ onClose, setParentFilters }) => {
 
         {/* Form Fields */}
         <div className="space-y-4">
-          <FilterSelect
-            label="Purpose"
-            options={filterOptions?.purposes?.map(p => p.name) || []}
-            value={selectedPurpose}
-            onChange={setSelectedPurpose}
-          />
-          <FilterSelect
-            label="Category"
-            options={filterOptions?.categories?.map(c => c.name) || []}
-            value={selectedCategory}
-            onChange={setSelectedCategory}
-          />
-          <FilterSelect
-            label="District"
-            options={filterOptions?.districts?.map(d => d.name) || []}
-            value={selectedDistrict}
-            onChange={(val) => {
-              setSelectedDistrict(val);
-              setSelectedCity(""); // reset city when district changes
-            }}
-          />
-          <FilterSelect
-            label="City"
-            options={cities}
-            value={selectedCity}
-            onChange={setSelectedCity}
-          />
+       <FilterSelect
+  label="Purpose"
+  options={filterOptions?.purposes?.map((p) => p.name) || []}
+  value={selectedPurpose}
+  onChange={setSelectedPurpose}
+/>
+
+<FilterSelect
+  label="Category"
+  options={filterOptions?.categories?.map((c) => c.name) || []}
+  value={selectedCategory}
+  onChange={setSelectedCategory}
+/>
+
+<FilterSelect
+  label="State"
+  options={filterOptions?.locations?.map((l) => l.name) || []}
+  value={selectedState}
+  onChange={(val) => {
+    setSelectedState(val);
+    setSelectedDistrict("");
+    setSelectedCity("");
+  }}
+/>
+
+<FilterSelect
+  label="District"
+  options={districts.map((d) => d.name)}
+  value={selectedDistrict}
+  onChange={(val) => {
+    setSelectedDistrict(val);
+    setSelectedCity("");
+  }}
+/>
+
+<FilterSelect
+  label="City"
+  options={cities}
+  value={selectedCity}
+  onChange={setSelectedCity}
+/>
           {/* Price Range */}
           <div>
             <label className="block text-[13px] font-semibold instrument-sans mb-2">Price Range</label>

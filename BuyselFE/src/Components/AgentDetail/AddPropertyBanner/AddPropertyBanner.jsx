@@ -1,7 +1,16 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom';
 function AddPropertyBanner() {
+  const navigate=useNavigate()
+     const handleNavigate = (path) => {
+  navigate(path);
+  window.scrollTo({
+    top: 0,
+    behavior: "instant", 
+  });
+};
   return (
+    
     <>
     <div className='w-full bg-black 
                     min-h-[350px] lg:h-[479px] 
@@ -41,7 +50,7 @@ function AddPropertyBanner() {
                              py-2 sm:py-2.5 
                              rounded-[8px] lg:rounded-[9px]
                              cursor-pointer
-                             '>
+                             ' onClick={()=>handleNavigate("/addyourproperty")}>
 
             <svg width="19" height="19" viewBox="0 0 19 19" fill="none">
 <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">

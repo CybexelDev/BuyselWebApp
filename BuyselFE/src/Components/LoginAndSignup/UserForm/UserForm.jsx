@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { Mail, Lock } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import google from '../../../assets/images/LoginAndSignUp/google.png'
 import apple from '../../../assets/images/LoginAndSignUp/apple.png'
 import facbook from '../../../assets/images/LoginAndSignUp/facebook.png'
@@ -17,7 +17,8 @@ UserForm = ({ setSignup,onForgot }) => {
   const [login, setLogin] = useState({ username: '', password: '' })
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 const [errors, setErrors] = useState({});
 const validateForm = () => {
   const newErrors = {};
@@ -128,6 +129,9 @@ if (response?.error) {
     },
   });
 
+
+
+
   useEffect(() => {
   window.fbAsyncInit = function () {
     window.FB.init({
@@ -144,7 +148,7 @@ if (response?.error) {
   document.body.appendChild(script);
 }, []);
 
-  const handleFacebookLogin = () => {
+  const handleFacebookLogin =  () => {
   window.FB.login(
     function (response) {
       if (response.authResponse) {
@@ -153,7 +157,33 @@ if (response?.error) {
         console.log("Facebook login success:", accessToken);
 
         // 👉 send to backend
-        sendFacebookToken(accessToken);
+        const response =   sendFacebookToken(accessToken);
+
+       dispatch({
+          type: 'SET_USER',
+          payload: {
+            userName: response?.user?.name,
+            accessToken: response?.access,
+            // refreshToken: response?.refresh,
+            userId: response?.user?.id,
+            image: response?.user?.image,
+            verificationStatus: response?.user?.auth_provider,
+            listedCount: response?.user?.total_properties,
+            role:response?.login_as,
+            is_plan:response?.is_plan,
+            remainingProperty:response?.user?.remaining_property
+
+          }
+        })
+
+         localStorage.setItem('accessToken', response?.access);
+         localStorage.setItem('refreshToken', response?.refresh);
+         localStorage.setItem('id', response?.user?.id);
+
+        navigate("/");
+        console.log(response, "Login successs and data sented to login component");
+        toast.success(`Hello ${response?.user?.name}`)
+
       } else {
         console.log("User cancelled login");
       }
@@ -202,27 +232,40 @@ if (response?.error) {
   )}
       </div>
 
-     <div className="relative mb-2">
+   <div className="relative mb-2">
   <Lock className="absolute left-4 top-4 text-gray-500" size={18} />
 
   <input
     value={login.password}
-  onChange={(e) => {
-  setLogin({ ...login, password: e.target.value });
+    onChange={(e) => {
+      setLogin({ ...login, password: e.target.value });
 
-  if (errors.password) {
-    setErrors((prev) => ({
-      ...prev,
-      password: "",
-    }));
-  }
-}}
-    type="password"
+      if (errors.password) {
+        setErrors((prev) => ({
+          ...prev,
+          password: "",
+        }));
+      }
+    }}
+    type={showPassword ? "text" : "password"}
     placeholder="Password"
-    className={`w-full pl-10 pr-4 py-3 rounded-lg bg-green-100 focus:outline-none ${
+    className={`w-full pl-10 pr-12 py-3 rounded-lg bg-green-100 focus:outline-none ${
       errors.password ? "border border-red-500" : ""
     }`}
   />
+
+  {/* Eye Icon */}
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-4 top-3.5 text-gray-500 hover:text-gray-700"
+  >
+    {showPassword ? (
+      <EyeOff size={18} />
+    ) : (
+      <Eye size={18} />
+    )}
+  </button>
 
   {errors.password && (
     <p className="text-red-500 text-sm mt-1 host-grotesk">

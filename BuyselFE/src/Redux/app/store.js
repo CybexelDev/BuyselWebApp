@@ -1,7 +1,6 @@
-// src/store.js
 import { createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; 
+import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 
 const initialUserState = {
@@ -10,61 +9,41 @@ const initialUserState = {
   userId: null,
   image: null,
   verificationStatus: null,
-  role:null,
+  role: null,
   listedCount: null,
   isLoggedIn: false,
-  remainingProperty:null,
-  is_plan:false
+  remainingProperty: null,
+  is_plan: false
 };
 
 function userReducer(state = initialUserState, action) {
   switch (action.type) {
+
     case 'SET_USER':
-        console.log("SET_USER payload:", action.payload);
+      console.log("SET_USER payload:", action.payload);
 
       return {
-         ...state,
-        userName: action.payload.userName, 
+        ...state,
+        userName: action.payload.userName,
         accessToken: action.payload.accessToken,
         userId: action.payload.userId,
         image: action.payload.image,
-        verificationStatus: action.payload.auth_provider,
-        role:action.payload.role,
+        verificationStatus: action.payload.verificationStatus,
+        role: action.payload.role,
         listedCount: action.payload.listedCount,
-        remainingProperty:action.payload.remainingProperty,
+        remainingProperty: action.payload.remainingProperty,
         isLoggedIn: true,
-        is_plan:action.payload.is_plan
+        is_plan: action.payload.is_plan
       };
-
-  //    case "UPDATE_REMAINING_PROPERTY":
-  // console.log(
-  //   "Reducer UPDATE_REMAINING_PROPERTY:",
-  //   action.payload
-  // );
-
-  // return {
-  //   ...state,
-  //   remainingProperty: action.payload,
-  // };
 
     case 'LOGOUT':
-      return {
-        ...state,
-        userName: null,
-        accessToken: null,
-        userId: null,
-        image:null,
-        verificationStatus: null,
-        role:null,
-        listedCount: null,
-        isLoggedIn: false,
-        remainingProperty:null,
-        is_plan:null
-      };
+      return initialUserState;
+
     default:
       return state;
   }
 }
+
 
 const initialAgentState = {
   agentName: null,
@@ -72,96 +51,85 @@ const initialAgentState = {
   agentId: null,
   image: null,
   agent_type: null,
-  role:null,
+  role: null,
   isLoggedIn: false,
-  remainingPropertyAgent:null
+  remainingPropertyAgent: null
 };
 
 function agentReducer(state = initialAgentState, action) {
   switch (action.type) {
-      // case "UPDATE_AGENT_IMAGE":
-      // return {
-      //   ...state,
-      //   image: action.payload.image,
-      // };
 
     case 'SET_AGENT':
       return {
         ...state,
-        agentName: action.payload.agentName, 
+        agentName: action.payload.agentName,
         accessToken: action.payload.accessToken,
         agentId: action.payload.agentId,
         image: action.payload.image,
         agent_type: action.payload.agent_type,
-        role:action.payload.role,
-        remainingPropertyAgent:action.payload.remainingPropertyAgent,
-        isLoggedIn: true,
+        role: action.payload.role,
+        remainingPropertyAgent: action.payload.remainingPropertyAgent,
+        isLoggedIn: true
       };
-    case 'AGENT_LOGOUT':                                                                    
-      return {
-        ...state,
-        agentName: null,
-        accessToken: null,
-        agentId: null,
-        image:null,
-        agent_type: null,
-        role:null,
-        isLoggedIn: false,
-        remainingPropertyAgent:null
-      };
+
+    case 'AGENT_LOGOUT':
+      return initialAgentState;
+
     default:
       return state;
   }
 }
 
 
-const rootReducer = combineReducers({
+// Individual reducers
+const appReducer = combineReducers({
   user: userReducer,
-  agent: agentReducer,
+  agent: agentReducer
 });
 
 
+// Root reducer
+const rootReducer = (state, action) => {
 
-// when user logintime agent logout and this work also reverse
-// const appReducer = combineReducers({
-//   user: userReducer,
-//   agent: agentReducer,
-// });
+  // USER LOGIN
+  // Clear agent completely
+  if (action.type === 'SET_USER') {
+    return appReducer(
+      {
+        ...state,
+        agent: initialAgentState
+      },
+      action
+    );
+  }
 
-// const rootReducer = (state, action) => {
 
-//   if (action.type === "SET_USER") {
-//     return appReducer(
-//       {
-//         ...state,
-//         agent: initialAgentState, // ✅ clear agent
-//       },
-//       action
-//     );
-//   }
+  // AGENT LOGIN
+  // Clear user completely
+  if (action.type === 'SET_AGENT') {
+    return appReducer(
+      {
+        ...state,
+        user: initialUserState
+      },
+      action
+    );
+  }
 
-//   if (action.type === "SET_AGENT") {
-//     return appReducer(
-//       {
-//         ...state,
-//         user: initialUserState, // ✅ clear user
-//       },
-//       action
-//     );
-//   }
 
-//   return appReducer(state, action);
-// };
+  return appReducer(state, action);
+};
 
 
 const persistConfig = {
   key: 'root',
-  storage,     
+  storage
 };
 
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
+const persistedReducer = persistReducer(
+  persistConfig,
+  rootReducer
+);
 
 const store = createStore(persistedReducer);
 
