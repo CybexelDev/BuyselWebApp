@@ -492,7 +492,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                   onClick={() => setActive(role)}
                   className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${active === role
                     ? "bg-[#8AD32E] text-white shadow"
-                    : "text-[#7CB305]"
+                    : "text-black"
                     }`}
                 >
                   {role}
@@ -581,7 +581,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
           <div
             key={plan.name}
-            className="bg-[#F1FDDA]
+            className="bg-white
       h-[120px]
       w-full
       rounded-3xl
@@ -589,7 +589,8 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       justify-center
       items-center
       mx-auto
-      shadow-lg"
+      shadow-[0_0_12px_rgba(0,0,0,0.12)]
+"
           >
 
             <h2 className="text-lg xl:text-xl font-semibold mb-2 lexend text-center">
@@ -674,7 +675,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
             text-center
             px-2
             ${i % 2 === 0
-                      ? "bg-[#7bbe1624]"
+                      ? "bg-[#9ca09724]"
                       : "bg-white"
                     }`}
                 >
