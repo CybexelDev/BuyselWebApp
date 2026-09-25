@@ -138,7 +138,7 @@ const hasSocialLinks =
               </h2>
 
               <p className=" text-[12px]  lg:text-[16px] text-[#312F2F] host-grotesk font-medium flex items-center justify-center sm:justify-start gap-2">
-                <span>{agentData?.designation}</span>
+                <span>{agentData?.professional_title}</span>
                 <svg
                   width="100"
                   height="2"
