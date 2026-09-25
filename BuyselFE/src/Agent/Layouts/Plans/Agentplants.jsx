@@ -231,9 +231,11 @@ if (result) {
     <div className="grid gap-8">
       {upgradePlans.map((agent) => {
         const activePlan =
-          agent.plans.find(
-            (p) => p.plan_id === selectedPlan[agent.id]
-          ) || agent.plans[0];
+  agent.plans?.find(
+    (p) => p.plan_id === selectedPlan[agent.id]
+  ) || agent.plans?.[0];
+
+if (!activePlan) return null;
 
         return (
           <PlanCard
