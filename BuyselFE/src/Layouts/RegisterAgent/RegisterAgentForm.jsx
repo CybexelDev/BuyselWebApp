@@ -10,7 +10,9 @@ import { openRazorpay } from "../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 
 
-const AgentRegistration = ({ formData, handleChange, setFormData }) => {
+
+
+ const AgentRegistration = ({ formData, handleChange, setFormData }) => {
   const [agentPlans, setAgentPlans] = useState([]);
   const [selectedPlans, setSelectedPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);

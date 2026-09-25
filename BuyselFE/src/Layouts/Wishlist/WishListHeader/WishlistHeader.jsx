@@ -3,7 +3,7 @@ import React from "react";
 import "./wishlist.css";
 import logo from "../../../assets/images/logo/logo.png";
 import Navbar from "../../../Components/Navbar/Navbar";
-import bgPromotionalBanner from "../../../assets/images/plan/bgPromotionalBanner.png";
+import bgPromotionalBanner from "../../../assets/images/appPromotionalBanner/bgPromotionalBanner.png"
 
 const WishlistHeader = () => {
   return (
@@ -26,6 +26,7 @@ const WishlistHeader = () => {
           }}
         />
 
+
         {/* Logo */}
         <div className="wishlist-cta-logo-container relative z-10">
           <div className="flex items-center justify-center">
@@ -43,3 +44,4 @@ const WishlistHeader = () => {
 };
 
 export default WishlistHeader;
+

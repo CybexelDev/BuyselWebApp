@@ -48,8 +48,8 @@ const Hero = () => {
             backgroundRepeat: "no-repeat",
           }}>
             <div className="flex flex-col justify-center h-full gap-4 text-center md:text-left"  >
-              <p className="md:text-[35px] text-[28px] instrument-sans font-bold ">Start Your<br />Commission-<span className="text-[#b8b8b8]">Free</span><br />Journey Today!</p>
-              <p className="md:text-[16px] text-[15px] text-[#000000] max-w-[400px] host-grotesk">Discover lands, homes, commercial buildings, hotels, malls and investment properties — all verified and listed by genuine owners and trusted agents.</p>
+              <p className="md:text-[35px] text-[28px] instrument-sans font-bold ">Start Your<br />Real-<span className="text-[#b8b8b8]">Estate</span><br />Journey Today!</p>
+              <p className="md:text-[16px] text-[15px] text-[#000000] md:max-w-[400px] host-grotesk">Discover lands, homes, commercial buildings, hotels, malls and investment properties — all verified and listed by genuine owners and trusted agents.</p>
 
             
               <div className="flex justify-center md:justify-start ">
@@ -90,7 +90,7 @@ const Hero = () => {
 
       <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-70px] md:mb-5 left-8 bottom-[80px] z-10">
         <div className=''>
-          <p className=' md:text-[24px] text-[18px] font-semibold instrument-sans'>10,000+</p>
+          <p className=' md:text-[24px] text-[18px] font-semibold instrument-sans'>10,00+</p>
           <p className='instrument-sans md:text-[16px] text-[13px]'>Verified Listings</p>
         </div>
         <div className='count'>
@@ -99,7 +99,7 @@ const Hero = () => {
         </div>
         <div className='count'>
           <p className=' font-semibold md:text-[24px] text-[18px] instrument-sans'>100%</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Commission Free</p>
+          <p className='instrument-sans md:text-[16px] text-[13px]'>Trusted Partners</p>
         </div>
       </div>
 

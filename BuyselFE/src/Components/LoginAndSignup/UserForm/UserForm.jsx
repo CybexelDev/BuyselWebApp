@@ -129,6 +129,9 @@ if (response?.error) {
     },
   });
 
+
+
+
   useEffect(() => {
   window.fbAsyncInit = function () {
     window.FB.init({
@@ -145,7 +148,7 @@ if (response?.error) {
   document.body.appendChild(script);
 }, []);
 
-  const handleFacebookLogin = () => {
+  const handleFacebookLogin =  () => {
   window.FB.login(
     function (response) {
       if (response.authResponse) {
@@ -154,7 +157,33 @@ if (response?.error) {
         console.log("Facebook login success:", accessToken);
 
         // 👉 send to backend
-        sendFacebookToken(accessToken);
+        const response =   sendFacebookToken(accessToken);
+
+       dispatch({
+          type: 'SET_USER',
+          payload: {
+            userName: response?.user?.name,
+            accessToken: response?.access,
+            // refreshToken: response?.refresh,
+            userId: response?.user?.id,
+            image: response?.user?.image,
+            verificationStatus: response?.user?.auth_provider,
+            listedCount: response?.user?.total_properties,
+            role:response?.login_as,
+            is_plan:response?.is_plan,
+            remainingProperty:response?.user?.remaining_property
+
+          }
+        })
+
+         localStorage.setItem('accessToken', response?.access);
+         localStorage.setItem('refreshToken', response?.refresh);
+         localStorage.setItem('id', response?.user?.id);
+
+        navigate("/");
+        console.log(response, "Login successs and data sented to login component");
+        toast.success(`Hello ${response?.user?.name}`)
+
       } else {
         console.log("User cancelled login");
       }

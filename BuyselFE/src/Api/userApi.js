@@ -255,11 +255,13 @@ export const changePasswordReset = async (newPassword) => {
 
 export const sendFacebookToken = async (accessToken) => {
   try {
-    const res = await api.post("/auth/facebook/", {
+    const res = await api.post("/facebook-login/", {
       access_token: accessToken,
     });
 
     console.log(res.data, "Facebook login success");
+
+    return res.data;
 
   } catch (error) {
     console.log(error);

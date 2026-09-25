@@ -88,19 +88,17 @@ export default function ad() {
     };
 
 
-
-
     useEffect(() => {
         const fetchSliderImages = async () => {
             const images = await getSliderAdd();
             images.map((image) => {
                 setSliderImages((prevImages) => [...prevImages, image.image]);
             });
-           
         };
         fetchSliderImages();
     }, []);
 
+    
     return (
         <div className=" bg-white p-1 md:p-8">
             <div className='flex items-center justify-center mt-23'>
