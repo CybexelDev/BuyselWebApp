@@ -602,6 +602,11 @@ updated.push({
                 </div>
               ))}
             </div>
+            {errors?.landmarks && (
+  <p className="text-red-500 text-xs mt-1 ml-2">
+    {errors.landmarks}
+  </p>
+)}
 
             <button
               type="button"
@@ -646,6 +651,8 @@ updated.push({
                   placeholder="Enter key selling point"
                   value={point}
                   onChange={(e) => handlePointChange(index, e.target.value)}
+                                error={errors?.keyPoints}
+
                   className="
           w-full
           sm:flex-1
@@ -679,6 +686,13 @@ updated.push({
                 )}
               </div>
             ))}
+
+            {errors?.keyPoints && (
+  <p className="text-red-500 text-xs mt-[-8px] ml-2">
+    {errors.keyPoints}
+  </p>
+)}
+            
 
             {/* Add Button */}
 
@@ -749,6 +763,11 @@ updated.push({
                 + Add Amenities
               </button>
             )}
+             {errors?.amenities && (
+    <p className="text-red-500 text-xs mt-1 ml-2">
+      {errors.amenities}
+    </p>
+  )}
           </div>
 
           <Input

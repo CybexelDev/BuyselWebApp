@@ -394,7 +394,7 @@ const handleWishlist = async (e) => {
               <h2 className="text-lg lg:text-xl mb-3 font-semibold text-black ">
                Property Features
              </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-3 xl:gap-5 text-xs lg:text-sm">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2 gap-4 lg:gap-3 xl:gap-5 text-xs lg:text-sm">
            
              {property?.features?.length > 0 ? (
                property.features.map((item, index) => (

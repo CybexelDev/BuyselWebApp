@@ -18,7 +18,7 @@ import {
   getPropertyData,
   getAgentProfile,
 } from "../../../Api/agentsApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { userGetPropertyById, userPostProperty, updateUserPropertyListing, getProfile, userDashboard } from "../../../Api/userApi";
 
 const getInitialFormData = () => ({
@@ -86,6 +86,7 @@ function AddPropertySection() {
   const maxStep = isAgent ? 4 : (is_plan ? 4 : 5);
 
   const { id } = useParams();
+  const navigate = useNavigate()
 
   //Fetch full meta
   useEffect(() => {
@@ -399,28 +400,45 @@ function AddPropertySection() {
       if (res) {
         // Owner without plan -> Payment required
         if (!id && !isAgent && !is_plan && res.payment_required) {
-          openRazorpay({
-            name: "BuySel",
-            description: res.plan_name,
-            plan_type: "owner",
-            plan_id: res.plan_id,
-            cache_key: res.cache_key,
+openRazorpay({
+  name: "BuySel",
+  description: res.plan_name,
+  plan_type: "owner",
+  plan_id: res.plan_id,
+  cache_key: res.cache_key,
 
-            onSuccess: async () => {
-              const dashboard = await userDashboard();
+  onSuccess: async (paymentRes) => {
+    // Navigate immediately
+    navigate("/invoice", {
+      state: {
+        paymentData: paymentRes,
+        planData: {
+          plan_name: res.plan_name,
+          plan_id: res.plan_id,
+        },
+      },
+    });
 
-              dispatch({
-                type: "SET_USER",
-                payload: {
-                  ...user,
-                  remainingProperty: dashboard.data.remaining_property,
-                },
-              });
+    // Update dashboard in background
+    try {
+      const dashboard = await userDashboard();
 
-              setShowSuccess(true);
-              setFormData(getInitialFormData());
-            },
-          });
+      dispatch({
+        type: "SET_USER",
+        payload: {
+          ...user,
+          remainingProperty: dashboard.data.remaining_property,
+        },
+      });
+    } catch (error) {
+      console.error("Dashboard update error:", error);
+    }
+
+    setFormData(getInitialFormData());
+  },
+}); 
+
+
 
           return;
         }

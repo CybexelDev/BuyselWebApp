@@ -146,7 +146,7 @@ const isBasicAgent = agent?.agent_type === "basic";const filteredNavItems = isBa
 
 
 <nav
-  className={`fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl ${
+  className={`fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center rounded-2xl sm:rounded-3xl border border-white/20 bg-[#7AC704]/95 p-2 backdrop-blur-2xl lg:hidden z-50 shadow-2xl ${
     isBasicAgent ? "gap-6 px-6" : "gap-2"
   }`}
 >
@@ -157,7 +157,7 @@ const isBasicAgent = agent?.agent_type === "basic";const filteredNavItems = isBa
       <button
         key={item.id}
         onClick={() => navigate(item.path)}
-        className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-15 md:h-13"
+        className="relative flex items-center justify-center w-8 h-9 sm:w-12 sm:h-12 md:w-15 md:h-13"
       >
         {/* ICON */}
         <item.icon
@@ -170,7 +170,7 @@ const isBasicAgent = agent?.agent_type === "basic";const filteredNavItems = isBa
         {isActive && (
           <motion.div
             layoutId="nav-pill"
-            className="absolute inset-0 rounded-2xl bg-white/20 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.25)]"
+            className="absolute inset-0 rounded-xl bg-white/20 backdrop-blur-md shadow-[0_8px_25px_rgba(0,0,0,0.25)]"
             transition={{
               type: "spring",
               stiffness: 400,

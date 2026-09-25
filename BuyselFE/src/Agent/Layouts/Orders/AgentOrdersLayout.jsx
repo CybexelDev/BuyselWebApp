@@ -248,7 +248,7 @@ const badge =
       {/* Left Accent */}
       <div className={`absolute left-0 top-0 h-full w-2 bg-[#6ABD117A]`} />
 
-      <div className="relative p-8">
+      <div className="relative p-7">
         {/* ================= TOP ================= */}
 
         <div className="flex flex-col lg:flex-row lg:justify-between gap-6">
@@ -258,7 +258,7 @@ const badge =
             </div>
 
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-gray-400">
+              <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
                 {order.plan_type}
               </p>
 
@@ -278,7 +278,7 @@ const badge =
             >
 {order.status.replace("_", " ")}            </span>
 
-            <h2 className="text-3xl font-black text-[#6ABD11]">
+            <h2 className="text-2xl font-black text-[#6ABD11]">
               ₹{order.price.toLocaleString()}
             </h2>
           </div>
@@ -286,7 +286,7 @@ const badge =
 
         {/* Divider */}
 
-        <div className="my-8 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+        <div className="my-6 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
         {/* ================= INFO GRID ================= */}
 
@@ -296,7 +296,7 @@ const badge =
               Purchase Date
             </p>
 
-            <h3 className="mt-2 text-lg font-bold text-slate-900">
+            <h3 className="mt-2 text-md font-bold text-slate-900">
               {order.purchase_date}
             </h3>
           </div>
@@ -306,7 +306,7 @@ const badge =
               Payment
             </p>
 
-            <h3 className="mt-2 text-lg font-bold text-slate-900">
+            <h3 className="mt-2 text-md font-bold text-slate-900">
               Razorpay
             </h3>
           </div>

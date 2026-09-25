@@ -9,7 +9,7 @@ import Advertisment from "../../Components/Advertisment/Advertisment";
 import PlanCard from "../../Components/PlanCard/PlanCard";
 import CurrentPlan from "../../Components/CurrentPlan/CurrentPlan";
 import { AdvertisementRequest } from "../../../Api/agentsApi";
-import { agentPlans,advertisementRequest,getAgentNotifications } from "../../../Api/agentsApi";
+import { agentPlans,advertisementRequest,getAgentReelNotifications} from "../../../Api/agentsApi";
 import { openRazorpay } from "../../../utils/razorpay";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -230,8 +230,7 @@ if (result) {
 
     <div className="grid gap-8">
       {upgradePlans.map((agent) => {
-      const activePlan =
-  agent.plans?.find(
+        const activePlan = agent.plans?.find(
     (p) => p.plan_id === selectedPlan[agent.id]
   ) || agent.plans?.[0];
 
