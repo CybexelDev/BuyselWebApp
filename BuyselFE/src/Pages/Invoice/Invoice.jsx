@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 function InvoicePage() {
@@ -12,9 +12,11 @@ const agent = useSelector((state) => state.agent);
 const role = agent?.role || user?.role;
 const isAgent = role === "agent";
 
-  const location = useLocation();
+const location = useLocation();
+const navigate = useNavigate();
 
-  const paymentData = location.state?.paymentData;
+const paymentData = location.state?.paymentData;
+const afterInvoice = location.state?.afterInvoice;
 
   console.log(paymentData, "Payment Data 000000000000000000000000");
 
@@ -325,11 +327,14 @@ const isAgent = role === "agent";
           Print Invoice
         </button>
            <button
-onClick={() =>
-  window.location.href = isAgent
-    ? "/agent/dashboard"
-    : "/"
-}          style={{
+onClick={() => {
+  if (afterInvoice === "auth") {
+    navigate("/loginandsignup"); // your combined Login/Signup page
+    return;
+  }
+
+  navigate(isAgent ? "/agent/dashboard" : "/");
+}}       style={{
             
             color: "#000",
             border: "2px solid #000",
@@ -339,8 +344,11 @@ onClick={() =>
             fontWeight: "bold",
           }}
         >
-  {isAgent ? "Go to Dashboard" : "Back to Home"}
-        </button>
+{afterInvoice === "auth"
+  ? "Continue to Agent Login"
+  : isAgent
+    ? "Go to Dashboard"
+    : "Back to Home"}        </button>
       </div>
     </div>
   );

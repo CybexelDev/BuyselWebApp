@@ -148,6 +148,8 @@ if (
       navigate("/invoice", {
         state: {
           paymentData: paymentRes,
+              afterInvoice: "auth",
+
         },
       });
     },

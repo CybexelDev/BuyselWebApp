@@ -4,7 +4,6 @@ import { toast } from "sonner";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-
 export const userRegister = async (
   name,
   email,

@@ -256,57 +256,55 @@ if (res?.properties) {
     </svg>
   </button>
 
-  {open && (
-    <div className="absolute mt-2 w-full bg-lime-500 rounded-2xl shadow-lg z-50 p-2">
-      <ul className="text-sm text-white inter">
-        
-        <li
-          onClick={async () => {
-            setSelectedCity("");
-            setOpen(false);
+ {open && (
+  <div className="absolute mt-2 w-full bg-lime-500 rounded-2xl shadow-lg z-50 p-2 max-h-[220px] sm:max-h-[250px] md:max-h-[280px] lg:max-h-[300px] overflow-y-auto">
+    <ul className="text-sm text-white inter">
+      
+      <li
+        onClick={async () => {
+          setSelectedCity("");
+          setOpen(false);
 
-            const res = await searchAgentProperties(
-              id,
-              searchQuery,
-              activeCategory
-            );
+          const res = await searchAgentProperties(
+            id,
+            searchQuery,
+            activeCategory
+          );
 
-            if (res?.properties) {
-              setPropertyData(res.properties);
-            }
-          }}
-          className="px-4 py-2 hover:text-lime-500 hover:bg-white rounded-xl cursor-pointer"
-        >
-          All Location
-        </li>
+          if (res?.properties) {
+            setPropertyData(res.properties);
+          }
+        }}
+        className="px-4 py-2 hover:text-lime-500 hover:bg-white rounded-xl cursor-pointer"
+      >
+        All Location
+      </li>
 
-        {Array.isArray(cities) &&
-          cities.map((city, index) => (
-            <li
-              key={index}
-              onClick={async () => {
+      {Array.isArray(cities) &&
+        cities.map((city, index) => (
+          <li
+            key={index}
+            onClick={async () => {
+              setSelectedCity(city);
+              setOpen(false);
 
-                setSelectedCity(city);
-                setOpen(false);
+              const res = await filterAgentPropertyByCity(
+                id,
+                city
+              );
 
-                const res =
-                  await filterAgentPropertyByCity(
-                    id,
-                    city
-                  );
-
-                if (res?.properties) {
-                  setPropertyData(res.properties);
-                }
-              }}
-              className="px-4 py-2  hover:text-lime-500 hover:bg-white rounded-xl cursor-pointer"
-            >
-              {city}
-            </li>
-          ))}
-      </ul>
-    </div>
-  )}
+              if (res?.properties) {
+                setPropertyData(res.properties);
+              }
+            }}
+            className="px-4 py-2 hover:text-lime-500 hover:bg-white rounded-xl cursor-pointer"
+          >
+            {city}
+          </li>
+        ))}
+    </ul>
+  </div>
+)}
 </div>
         </div>
 
