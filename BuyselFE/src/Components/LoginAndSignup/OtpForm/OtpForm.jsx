@@ -119,6 +119,10 @@ const resendOtp = async () => {
 
     console.log(error);
 
+  toast.error(
+    error?.response?.data?.error || "Something went wrong"
+  );
+
   }
 };
 
