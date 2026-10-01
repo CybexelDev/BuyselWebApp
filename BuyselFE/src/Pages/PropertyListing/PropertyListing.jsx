@@ -39,7 +39,7 @@ useEffect(() => {
 };
 
 
-console.log(count, "%%%%%%%%%%%%%");
+(count, "%%%%%%%%%%%%%");
 
 
 // useEffect(() => {
@@ -63,7 +63,7 @@ console.log(count, "%%%%%%%%%%%%%");
 //       }
 
 //     } catch (error) {
-//       console.log(error);
+//       (error);
 //     }
 //   };
 
@@ -79,7 +79,7 @@ console.log(count, "%%%%%%%%%%%%%");
 //             setData(res);
 //           }
 //         } catch (error) {
-//           console.log(error);
+//           (error);
 //         }
 //       };
 //       fetchData();
@@ -114,7 +114,7 @@ console.log(count, "%%%%%%%%%%%%%");
 //       }
 
 //     } catch (error) {
-//       console.log(error);
+//       (error);
 //     }
 //   };
 
@@ -131,7 +131,7 @@ console.log(count, "%%%%%%%%%%%%%");
 //             setData(res);
 //           }
 //         } catch (error) {
-//           console.log(error);
+//           (error);
 //         }
 //       };
 //       fetchData();
@@ -181,7 +181,7 @@ useEffect(() => {
       }
 
     } catch (error) {
-      console.log(error);
+      (error);
     }
   };
 

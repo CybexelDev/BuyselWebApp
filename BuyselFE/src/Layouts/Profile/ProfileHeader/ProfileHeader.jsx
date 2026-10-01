@@ -45,7 +45,7 @@ const ProfileHeader = ({ setMode, setParentProfileData }) => {
         }));
 
       } catch (err) {
-        console.log(err);
+        (err);
       }
     }
   };
@@ -62,7 +62,7 @@ const ProfileHeader = ({ setMode, setParentProfileData }) => {
         }
 
       } catch (error) {
-        console.log(error);
+        (error);
       }
     };
 

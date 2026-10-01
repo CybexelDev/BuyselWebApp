@@ -83,7 +83,7 @@ const handleOtp = async () => {
     }
 
   } catch (error) {
-    console.log(error);
+    (error);
   }
 };
  
@@ -117,7 +117,7 @@ const resendOtp = async () => {
 
   } catch (error) {
 
-    console.log(error);
+    (error);
 
   toast.error(
     error?.response?.data?.error || "Something went wrong"

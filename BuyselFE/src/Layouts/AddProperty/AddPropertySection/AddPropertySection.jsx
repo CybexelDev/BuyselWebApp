@@ -95,7 +95,7 @@ function AddPropertySection() {
         setPropertyData(res);
         setCategories(res?.categories || []);
       } catch (err) {
-        console.error("Meta fetch error:", err);
+        error("Meta fetch error:", err);
       }
     };
     fetchMeta();
@@ -198,7 +198,7 @@ function AddPropertySection() {
           },
         });
       } catch (err) {
-        console.error("Fetch property error:", err);
+        error("Fetch property error:", err);
       }
     };
 
@@ -237,7 +237,7 @@ function AddPropertySection() {
         }
 
       } catch (err) {
-        console.error("Profile fetch error:", err);
+        error("Profile fetch error:", err);
       }
     };
 
@@ -387,7 +387,7 @@ function AddPropertySection() {
           res = await userPostProperty(payload);
         }
       }
-      console.log("API RESPONSE:", res);
+      ("API RESPONSE:", res);
 
       if (!res?.status) {
         toast.error(res.message);
@@ -442,7 +442,7 @@ function AddPropertySection() {
         setFormData(getInitialFormData());
       }
     } catch (err) {
-      console.error("Submit error:", err);
+      error("Submit error:", err);
     } finally {
       setLoading(false);
     }

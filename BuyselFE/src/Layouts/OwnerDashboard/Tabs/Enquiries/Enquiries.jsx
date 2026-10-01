@@ -39,14 +39,14 @@ const EnquiryLayoutUser = () => {
       setLoading(true);
 
       const res = await getAllPropertyEnquiries();
-      console.log(res)
+      (res)
 
       if (res) {
         setEnquiries(res.data);
       }
 
     } catch (error) {
-      console.log(error);
+      (error);
     } finally {
       setLoading(false);
     }

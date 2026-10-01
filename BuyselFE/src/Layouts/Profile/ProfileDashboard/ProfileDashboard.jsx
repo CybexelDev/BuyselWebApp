@@ -23,7 +23,7 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
         const data = await getWishlist();
         setWish(data || []);
       } catch (error) {
-        console.log(error);
+        (error);
       }
     };
 
@@ -36,7 +36,7 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
         const data = await getMyActivity();
         setActivityData(data || {});
       } catch (error) {
-        console.log(error);
+        (error);
       }
     };
 
@@ -70,7 +70,7 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
         )
       );
     } catch (err) {
-      console.log(err);
+      (err);
     }
   };
 
@@ -87,7 +87,7 @@ const ProfileDashboard = ({ data, users , mode, setMode, setParentProfileData })
         )
       );
     } catch (err) {
-      console.log(err);
+      (err);
     }
   };
 

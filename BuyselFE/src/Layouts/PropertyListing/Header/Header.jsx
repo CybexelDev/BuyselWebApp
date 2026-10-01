@@ -30,8 +30,8 @@ const handleClearLocation = () => {
   });
 };
 
-console.log("filters city",filters.city);
-console.log("searchCity",searchCity);
+("filters city",filters.city);
+("searchCity",searchCity);
   const tabs = [ "Sale", "Rent","Lease","Agent", ];
     const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -57,7 +57,7 @@ console.log("searchCity",searchCity);
           lat,
           lng,
         });
-        console.log("nearby data",data)
+        ("nearby data",data)
       },
       
       () => {

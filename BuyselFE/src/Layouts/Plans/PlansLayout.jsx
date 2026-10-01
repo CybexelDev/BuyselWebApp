@@ -27,7 +27,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const user = useSelector((state) => state.user);
   const isPlan = useSelector((state) => state.user.is_plan);
 
-  console.log("is_plan:", isPlan);
+  ("is_plan:", isPlan);
 
   const handleSelectPlan = (plan) => {
 
@@ -60,15 +60,15 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
       if (!selectedPlan) return;
 
-      console.log(selectedPlan);
+      (selectedPlan);
 
       const res = await activateUserPlan(selectedPlan.id);
       toast.success("Plan Activated")
 
-      console.log(res);
+      (res);
 
     } catch (error) {
-      console.log(error);
+      (error);
     }
   };
 
@@ -78,7 +78,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   //       const data = await getAllPlans();
   //       setPlansData(data);
   //     } catch (err) {
-  //       console.log(err);
+  //       (err);
   //     }
   //   };
 
@@ -94,7 +94,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       setPlansData(data);
 
     } catch (err) {
-      console.log(err);
+      (err);
     } finally {
       setLoading(false);
     }
@@ -304,7 +304,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const rawPlans = getPlansByRole();
   const features = planConfig[active].features;
   const propertyCount = plansData?.property_count || 0;
-  console.log("count:", propertyCount);
+  ("count:", propertyCount);
 
 
   const plans = rawPlans.map((plan) => ({
@@ -317,7 +317,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   }));
   const isOwnerPlans = plans.length === 4;
 
-  console.log(plans, "PLANS.............");
+  (plans, "PLANS.............");
 
 
   const renderIcon = (type) => {
@@ -810,7 +810,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       plan_id: selectedPlan?.plan_id,
       onSuccess: async (res) => {
         const dashboard = await userDashboard();
-        console.log("Remaining:", dashboard.data.remaining_property);
+        ("Remaining:", dashboard.data.remaining_property);
  
         dispatch({
         type: "SET_USER",

@@ -10,6 +10,9 @@ import {
   Square,
   Pencil,
   Trash,
+  Home,
+  Building2,
+  BriefcaseBusiness,
 } from "lucide-react";
 import { TfiRulerAlt2 } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +32,13 @@ const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-s
   const[remainingEdit,setRemainingEdit] = useState(0)
   const [limitType, setLimitType] = useState("");
 const [showFilterModal, setShowFilterModal] = useState(false);
-
+const [hasSinglePropertyPackage, setHasSinglePropertyPackage] = useState(false);
+const [propertyStats, setPropertyStats] = useState({
+  total: [0, 0],
+  residential: [0, 0],
+  commercial: [0, 0],
+  edits: [0, 0],
+});
 const [filters, setFilters] = useState({
   status: "",
   city: "",
@@ -46,8 +55,6 @@ const role = userRole || agentRole;
 //     : state.user.listedCount
 // );
 
-// console.log("property_count :", property_count);
-console.log("role :",role);
 
   const navigate = useNavigate();
 const agent = useSelector((state) => state.agent);
@@ -64,7 +71,6 @@ useEffect(() => {
         res = await userPropertyList();
       }
 
-      console.log("API Response :", res);
 
     
       if (res) {
@@ -77,6 +83,15 @@ useEffect(() => {
       }
     });
   }
+    setHasSinglePropertyPackage(
+    res.has_single_property_package === true
+  );
+  setPropertyStats({
+  total: res.remaining_used || [0, 0],
+  residential: res.residential_used || [0, 0],
+  commercial: res.commercial_used || [0, 0],
+  edits: res.used_edit_count || [0, 0],
+});
 }
       // data array
       if (Array.isArray(res?.data)) {
@@ -117,7 +132,7 @@ useEffect(() => {
 
 
     } catch (err) {
-      console.error("Property fetch error:", err);
+      error("Property fetch error:", err);
 
     } finally {
       setLoading(false);
@@ -144,7 +159,6 @@ useEffect(() => {
       }else{
 
         toast.error("Delete failed")
-        console.log("Failed");
       }
      }
 
@@ -283,8 +297,333 @@ const filteredProperties = properties.filter((property) => {
 
           {loading && (
   <p className="text-center py-10">Loading...</p>
-)}
+)}{/* PROPERTY STATS */}
+{/* PROPERTY STATS */}
+{role !== "agent" && (
+<>
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
 
+  {/* Total Properties */}
+  <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+    {/* Green side accent */}
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+    <div className="flex items-start justify-between">
+
+      <div>
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+          Total Properties
+        </p>
+
+        <div className="flex items-baseline gap-1.5 mt-2">
+          <span className="text-3xl font-bold text-slate-900 instrument-sans">
+            {propertyStats.total[0]}
+          </span>
+
+          {!hasSinglePropertyPackage && (
+            <span className="text-sm font-medium text-slate-400">
+              / {propertyStats.total[1]}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Icon */}
+      <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+        <Home
+          size={20}
+          strokeWidth={1.8}
+          className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+        />
+      </div>
+
+    </div>
+
+    {/* Progress */}
+    <div className="mt-5">
+
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] text-slate-400">
+          Usage
+        </span>
+
+        {!hasSinglePropertyPackage && (
+          <span className="text-[11px] font-medium text-slate-500">
+            {propertyStats.total[1] > 0
+              ? Math.round(
+                  (propertyStats.total[0] / propertyStats.total[1]) * 100
+                )
+              : 0}
+            %
+          </span>
+        )}
+      </div>
+
+      {!hasSinglePropertyPackage && (
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${
+                propertyStats.total[1] > 0
+                  ? Math.min(
+                      (propertyStats.total[0] / propertyStats.total[1]) * 100,
+                      100
+                    )
+                  : 0
+              }%`,
+            }}
+          />
+        </div>
+      )}
+
+    </div>
+
+  </div>
+
+
+  {/* Residential */}
+  <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+    <div className="flex items-start justify-between">
+
+      <div>
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+          Residential
+        </p>
+
+        <div className="flex items-baseline gap-1.5 mt-2">
+          <span className="text-3xl font-bold text-slate-900 instrument-sans">
+            {propertyStats.residential[0]}
+          </span>
+
+          {!hasSinglePropertyPackage && (
+            <span className="text-sm font-medium text-slate-400">
+              / {propertyStats.residential[1]}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+        <Building2
+          size={20}
+          strokeWidth={1.8}
+          className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+        />
+      </div>
+
+    </div>
+
+    <div className="mt-5">
+
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] text-slate-400">
+          Usage
+        </span>
+
+        {!hasSinglePropertyPackage && (
+          <span className="text-[11px] font-medium text-slate-500">
+            {propertyStats.residential[1] > 0
+              ? Math.round(
+                  (propertyStats.residential[0] /
+                    propertyStats.residential[1]) *
+                    100
+                )
+              : 0}
+            %
+          </span>
+        )}
+      </div>
+
+      {!hasSinglePropertyPackage && (
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${
+                propertyStats.residential[1] > 0
+                  ? Math.min(
+                      (propertyStats.residential[0] /
+                        propertyStats.residential[1]) *
+                        100,
+                      100
+                    )
+                  : 0
+              }%`,
+            }}
+          />
+        </div>
+      )}
+
+    </div>
+
+  </div>
+
+
+  {/* Commercial */}
+  <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+    <div className="flex items-start justify-between">
+
+      <div>
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+          Commercial
+        </p>
+
+        <div className="flex items-baseline gap-1.5 mt-2">
+          <span className="text-3xl font-bold text-slate-900 instrument-sans">
+            {propertyStats.commercial[0]}
+          </span>
+
+          {!hasSinglePropertyPackage && (
+            <span className="text-sm font-medium text-slate-400">
+              / {propertyStats.commercial[1]}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+        <BriefcaseBusiness
+          size={20}
+          strokeWidth={1.8}
+          className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+        />
+      </div>
+
+    </div>
+
+    <div className="mt-5">
+
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] text-slate-400">
+          Usage
+        </span>
+
+        {!hasSinglePropertyPackage && (
+          <span className="text-[11px] font-medium text-slate-500">
+            {propertyStats.commercial[1] > 0
+              ? Math.round(
+                  (propertyStats.commercial[0] /
+                    propertyStats.commercial[1]) *
+                    100
+                )
+              : 0}
+            %
+          </span>
+        )}
+      </div>
+
+      {!hasSinglePropertyPackage && (
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${
+                propertyStats.commercial[1] > 0
+                  ? Math.min(
+                      (propertyStats.commercial[0] /
+                        propertyStats.commercial[1]) *
+                        100,
+                      100
+                    )
+                  : 0
+              }%`,
+            }}
+          />
+        </div>
+      )}
+
+    </div>
+
+  </div>
+
+
+  {/* Edit Count */}
+  <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+    <div className="flex items-start justify-between">
+
+      <div>
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+          Edit Count
+        </p>
+
+        <div className="flex items-baseline gap-1.5 mt-2">
+          <span className="text-3xl font-bold text-slate-900 instrument-sans">
+            {propertyStats.edits[0]}
+          </span>
+
+          {!hasSinglePropertyPackage && (
+            <span className="text-sm font-medium text-slate-400">
+              / {propertyStats.edits[1]}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+        <Pencil
+          size={20}
+          strokeWidth={1.8}
+          className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+        />
+      </div>
+
+    </div>
+
+    <div className="mt-5">
+
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] text-slate-400">
+          Usage
+        </span>
+
+        {!hasSinglePropertyPackage && (
+          <span className="text-[11px] font-medium text-slate-500">
+            {propertyStats.edits[1] > 0
+              ? Math.round(
+                  (propertyStats.edits[0] / propertyStats.edits[1]) * 100
+                )
+              : 0}
+            %
+          </span>
+        )}
+      </div>
+
+      {!hasSinglePropertyPackage && (
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${
+                propertyStats.edits[1] > 0
+                  ? Math.min(
+                      (propertyStats.edits[0] / propertyStats.edits[1]) * 100,
+                      100
+                    )
+                  : 0
+              }%`,
+            }}
+          />
+        </div>
+      )}
+
+    </div>
+
+  </div>
+
+</div>
+</>
+)}
           {/* SEARCH + FILTER */}
           {properties.length > 0 && (
           <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4 justify-between mb-8 shadow-sm">

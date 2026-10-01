@@ -45,7 +45,7 @@ useEffect(() => {
         setEnquiries(mappedData);
       }
     } catch (err) {
-      console.error("Inbox fetch error:", err);
+      error("Inbox fetch error:", err);
     }
   };
 

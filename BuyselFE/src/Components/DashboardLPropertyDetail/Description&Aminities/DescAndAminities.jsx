@@ -5,7 +5,7 @@ import { sendPropertyEnquiry } from "../../../Api/userApi";
 function DescAndAminities({ data }) {
   const [detail, setDetail] = useState({});
 
-  console.log(detail.key_selling_points, "llll");
+  (detail.key_selling_points, "llll");
 
   useEffect(() => {
     setDetail(data);

@@ -64,10 +64,8 @@ const handleNotificationClick = async (id) => {
   const fetchNotifications = async () => {
     try {
       const res = await getAgentNotifications();
-      console.log("notif", res); 
       setNotifications(res || []);
     } catch (err) {
-      console.log(err);
     }
   };
 

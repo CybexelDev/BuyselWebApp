@@ -79,7 +79,7 @@ const AgentForm = ({ onForgot }) => {
       }
 
     } catch (error) {
-      console.error("Login error:", error);
+      error("Login error:", error);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

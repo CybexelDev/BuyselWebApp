@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  console.log(selectedPlan, "selected pln>>>>>>>>>>>>>>>>>");
+  (selectedPlan, "selected pln>>>>>>>>>>>>>>>>>");
 
 
   const validateForm = () => {
@@ -155,7 +155,7 @@ if (
     },
 
     onFailure: (error) => {
-      console.log("Payment Failed:", error);
+      ("Payment Failed:", error);
       toast.error("Payment failed. Registration was not completed.");
     },
   });
@@ -164,7 +164,7 @@ if (
 }
 
   } catch (error) {
-    console.error("Registration error:", error);
+    error("Registration error:", error);
     toast.error("Registration failed. Please try again.");
   }
 };

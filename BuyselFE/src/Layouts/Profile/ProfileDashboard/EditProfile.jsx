@@ -44,7 +44,7 @@ setParentProfileData((prev) => ({
   ...formData,
 }));      setMode("");
     } catch (err) {
-      console.log(err);
+      (err);
     }
   };
 

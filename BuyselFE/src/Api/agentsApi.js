@@ -38,7 +38,6 @@ export const getEnquiryDetail = async (id) => {
     const res = await api.get(`/enquiry-detail/${id}/`);
     return res.data;
   } catch (err) {
-    console.log(err);
     return null;
   }
 };
@@ -53,7 +52,7 @@ export const getAgentProfile = async () => {
 
     return false;
   } catch (error) {
-    console.error("get profile API error:", error);
+    error("get profile API error:", error);
     return false;
   }
 };
@@ -71,7 +70,7 @@ export const changeAgentPassword = async (currentPassword, newPassword, confirmP
     return result.data;
 
   } catch (error) {
-    console.error("change password error:", error);
+    error("change password error:", error);
     return false;
   }
 };
@@ -98,7 +97,6 @@ export const resendAgentForgotOtp = async (email) => {
 
   } catch (error) {
 
-    console.log(error);
 
     return false;
   }
@@ -147,7 +145,7 @@ data.append(
     return result.data;
 
   } catch (error) {
-    console.error("update profile error:", error);
+    error("update profile error:", error);
     return false;
   }
 };
@@ -164,7 +162,7 @@ export const getAgentInboxMessages = async () => {
 
     return result.data;
   } catch (error) {
-    console.error("inbox messages error:", error);
+    error("inbox messages error:", error);
     return [];
   }
 };
@@ -175,7 +173,7 @@ export const deleteInboxMessage = async (id) => {
     const res = await api.delete(`/agent/inbox-message-delete/${id}/`);
     return res.data;
   } catch (error) {
-    console.error("delete message error:", error);
+    error("delete message error:", error);
     return false;
   }
 };
@@ -185,7 +183,6 @@ export const getAgentEnquiries = async () => {
     const res = await api.get("/enquiry/");
     return res.data;
   } catch (err) {
-    console.log(err);
     return null;
   }
 };
@@ -198,7 +195,6 @@ export const registerAgent = async (data) => {
 
     return res.data;
   } catch (err) {
-    console.log(err);
 
     return (
       err.response?.data || {
@@ -217,7 +213,7 @@ export const getContactMessage = async()=>{
     }
      return result.data;
   } catch (error) {
-    console.error("PRoperty not found:", error);
+    error("PRoperty not found:", error);
     return [];
   }
 }
@@ -229,7 +225,7 @@ export const deleteAgentContactEnquiry = async(id)=>{
     const res = await api.delete(`/agent/contact-delete/${id}/`)
     return res.data
   }catch(err){
-    console.error("delete message error:",err)
+    error("delete message error:",err)
     return false
   }
 }
@@ -246,7 +242,7 @@ export const getPropertyData = async () => {
 
     return res.data;
   } catch (error) {
-    console.error("Failed to fetch property meta:", error);
+    error("Failed to fetch property meta:", error);
     return {
       categories: [],
       subcategories: [],
@@ -288,7 +284,6 @@ export const verifyAgentForgotOtp = async (otpValue, email) => {
 
   } catch (error) {
 
-    console.log(error);
 
     return false;
   }
@@ -326,7 +321,6 @@ export const agentChangePasswordReset = async (newPassword) => {
 
   } catch (error) {
 
-    console.log(error);
 
     return false;
   }
@@ -362,7 +356,7 @@ export const agentForgotPassword = async (email) => {
 
   } catch (error) {
 
-    console.log(error);
+    (error);
 
     return false;
   }
@@ -454,7 +448,7 @@ formData.append(
 
     return res.data;
   } catch (error) {
-    console.error("Property error:", error.response?.data || error.message);
+    error("Property error:", error.response?.data || error.message);
     return false;
   }
 };
@@ -466,7 +460,7 @@ export const getPropertyListing = async () => {
 
     return result.data || []; // ✅ raw backend data only
   } catch (error) {
-    console.error("property listing error:", error);
+    error("property listing error:", error);
     return [];
   }
 };
@@ -481,7 +475,7 @@ export const getDashboard = async () => {
 
     return result.data;
   } catch (error) {
-    console.error("dashboard data couldn't get:", error);
+    error("dashboard data couldn't get:", error);
     return [];
   }
 };
@@ -491,7 +485,7 @@ export const deletePropertyListing = async(id)=>{
     const res = await api.delete(`/agent/property/${id}/`)
     return res.data
   }catch(err){
-    console.error("delete property error:",err)
+    error("delete property error:",err)
     return false
   }
 }
@@ -501,7 +495,7 @@ export const getPropertyById = async (id) => {
     const res = await api.get(`/agent/property/${id}/`);
     return res.data?.data || null;
   } catch (error) {
-    console.error("get property by id error:", error);
+    error("get property by id error:", error);
     return null;
   }
 };
@@ -514,7 +508,7 @@ export const updatePropertyListing = async (id, data) => {
     formData.append("category", data.category_id);
     formData.append("subcategory", data.subcategory);
     formData.append("purpose", data.purpose);
-    console.log("subcategory:", data.subcategory);
+    ("subcategory:", data.subcategory);
 
     formData.append("label", data.title);
     formData.append("description", data.description);
@@ -598,7 +592,7 @@ formData.append(
     return res.data;
 
   } catch (err) {
-    console.error("update property error:", err);
+    error("update property error:", err);
     return false;
   }
 };
@@ -613,7 +607,7 @@ export const agentPlans = async () => {
 
     return result.data;
   } catch (error) {
-    console.error("plans couldn't get:", error);
+    error("plans couldn't get:", error);
     return [];
   }
 };
@@ -624,7 +618,7 @@ export const getPurchaseHistory = async () => {
     const res = await api.get("/agent/purchase-history/");
     return res.data;
   } catch (error) {
-    console.error("Purchase history error:", error);
+    error("Purchase history error:", error);
     return {
       status: false,
       plans: [],
@@ -640,7 +634,7 @@ export const advertisementRequest = async (planId) => {
 
     return res.data;
   } catch (error) {
-    console.error("Advertisement request error:", error);
+    error("Advertisement request error:", error);
     return false;
   }
 };
@@ -650,7 +644,7 @@ export const getAgentNotifications = async () => {
     const res = await api.get("/agent/notifications/");
     return res.data; 
   } catch (error) {
-    console.error("notification error:", error);
+    error("notification error:", error);
     return [];
   }
 };
@@ -660,7 +654,7 @@ export const getAgentReelNotifications = async () => {
     const res = await api.get("/agent/reel-notifications/");
     return res.data;
   } catch (error) {
-    console.error("Reel notification error:", error);
+    error("Reel notification error:", error);
     return null; 
   }
 };
@@ -670,7 +664,7 @@ export const markNotificationAsRead = async (id) => {
     const res = await api.post(`/agent/notifications/read/${id}/`);
     return res.data;
   } catch (error) {
-    console.error("mark read error:", error);
+    error("mark read error:", error);
     return false;
   }
 };
@@ -680,7 +674,7 @@ export const getUnreadCount = async () => {
     const res = await api.get("/agent/notifications/unread-count/");
     return res.data?.unread_count || 0;
     } catch (error) {
-    console.error("unread count error:", error);
+    error("unread count error:", error);
     return 0;
   }
 };
@@ -692,7 +686,7 @@ export const ConnectWithAdmin = async (formData) => {
     const res = await api.post(`agent/contact-message/`, formData);
     return res.data;
   } catch (error) {
-    console.error("Contact error:", error);
+    error("Contact error:", error);
     return false;
   }
 };
@@ -706,7 +700,7 @@ export const AdvertisementRequest = async (formData) => {
     );
     return res.data;
   } catch (error) {
-    console.error("Advertisement Request error:", error);
+    error("Advertisement Request error:", error);
     return false;
   }
 };

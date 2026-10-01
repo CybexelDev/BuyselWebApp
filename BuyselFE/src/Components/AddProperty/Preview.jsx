@@ -103,7 +103,7 @@ const nearbyPlaces =
     distance: item.distance || "",
   })) || [];
 
-  console.log(nearbyPlaces, "Nearby Places");
+  (nearbyPlaces, "Nearby Places");
 
 
 
