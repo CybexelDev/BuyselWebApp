@@ -16,7 +16,6 @@ function Details({ agentData }) {
     e.preventDefault();
     
     
-  ("Agent ID:", agentId);
 
     if (!contactData.first_name || !contactData.last_name || !contactData.email || !contactData.phone || !contactData.message)
        {

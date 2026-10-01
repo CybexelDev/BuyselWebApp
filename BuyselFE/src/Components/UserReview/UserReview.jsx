@@ -48,7 +48,7 @@ const handleEdit = (review) => {
         }
       })
     } catch (error) {
-      (error);
+      
     }
   }
 
@@ -68,7 +68,6 @@ const handleEdit = (review) => {
 
   const handleLike = async (reviewId) => {
   const res = await toggleReviewLike(reviewId);
-    ("API response:", res);
 
   if (!res) return;
 

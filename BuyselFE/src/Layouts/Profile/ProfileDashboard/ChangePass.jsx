@@ -29,7 +29,7 @@ const ChangePassword = ({ setMode }) => {
 
     const res = await changePassword(payload);
 
-    ("SUCCESS:", res);
+
     toast.success("Password changed successfully ");
 
     setForm({

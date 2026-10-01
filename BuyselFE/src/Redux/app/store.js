@@ -20,7 +20,7 @@ function userReducer(state = initialUserState, action) {
   switch (action.type) {
 
     case 'SET_USER':
-      ("SET_USER payload:", action.payload);
+
 
       return {
         ...state,

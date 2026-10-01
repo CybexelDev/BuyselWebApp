@@ -8,7 +8,7 @@ function Profile() {
   const [users,setUsers] = useState([])
   const[mode,setMode]=useState("")
   const[profileData,setProfileData]=useState({})
-  (profileData,"88888888888888888888");
+
   
   return (
     <div>

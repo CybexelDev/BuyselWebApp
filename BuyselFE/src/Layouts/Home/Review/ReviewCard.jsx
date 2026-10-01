@@ -11,7 +11,7 @@ const ReviewCard = ({ item }) => {
         <img
           src={item.image}
           alt={item.name}
-            onError={() => ("IMAGE FAILED:", item.image)}
+            onError={() => console.log("IMAGE FAILED:", item.image)}
 
           className="w-[66px] h-[66px] rounded-full "
         />

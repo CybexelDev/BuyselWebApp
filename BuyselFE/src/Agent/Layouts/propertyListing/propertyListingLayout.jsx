@@ -132,7 +132,7 @@ useEffect(() => {
 
 
     } catch (err) {
-      error("Property fetch error:", err);
+
 
     } finally {
       setLoading(false);

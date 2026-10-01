@@ -20,8 +20,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
   const images = property.images || [];
   const purpose = property?.purpose;
 
-  // ("PROPERTY DATA:", property);
-  // ("PURPOSE VALUE:", purpose);
+
 
   const prevImage = () => {
     setCurrentIndex((prev) =>
@@ -57,7 +56,7 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
   //       toast.error("Sharing not supported on this device");
   //     }
   //   } catch (err) {
-  //     (err);
+  //     
   //   }
   // };
 
@@ -113,7 +112,7 @@ BuySel - Find Your Perfect Property
     }
 
   } catch (err) {
-    (err);
+    
   }
 };
 

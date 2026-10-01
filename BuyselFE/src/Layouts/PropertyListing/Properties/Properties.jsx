@@ -15,12 +15,12 @@ function PropertiesSection({ propertiesData, dataCount }) {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  (propertiesData, "propertiesData in properties section ???????????????");
 
 
-  // (propertiesData, "propertiesData in properties section ???????????????");
 
-  // (dataCount, "%%%%%%%%%%%%%%%%%%%%%%%%");
+  // console.log(propertiesData, "propertiesData in properties section ???????????????");
+
+  // console.log(dataCount, "%%%%%%%%%%%%%%%%%%%%%%%%");
 
 
   // useEffect(() => {

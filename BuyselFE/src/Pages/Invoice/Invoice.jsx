@@ -18,7 +18,7 @@ const navigate = useNavigate();
 const paymentData = location.state?.paymentData;
 const afterInvoice = location.state?.afterInvoice;
 
-  (paymentData, "Payment Data 000000000000000000000000");
+
 
 
   const invoiceData = {
@@ -61,7 +61,7 @@ const afterInvoice = location.state?.afterInvoice;
 
       pdf.save(`${invoiceData.invoiceNo}.pdf`);
     } catch (error) {
-      (error);
+      
       toast("PDF generation failed");
     }
   };

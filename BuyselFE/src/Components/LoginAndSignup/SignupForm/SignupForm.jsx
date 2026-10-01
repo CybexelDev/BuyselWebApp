@@ -83,7 +83,7 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
       SetOtpSent(true);
     }
   } catch (error) {
-    (error);
+    
     toast.error("Something went wrong");
   } finally {
     setLoading(false);

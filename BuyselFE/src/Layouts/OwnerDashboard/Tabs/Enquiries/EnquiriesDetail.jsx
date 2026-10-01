@@ -32,14 +32,13 @@ const fetchDetail = async () => {
 
     const res = await getEnquiryDetail(id);
 
-    (res);
 
     if (res) {
       setDetail(res.data);
     }
 
   } catch (error) {
-    (error);
+    
   } finally {
     setLoading(false);
   }

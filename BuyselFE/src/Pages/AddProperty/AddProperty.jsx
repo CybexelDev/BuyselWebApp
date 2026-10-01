@@ -15,23 +15,16 @@ function AddProperty() {
   const remainingProperty = user?.remainingProperty;
   const remainingPropertyAgent = agent?.remainingPropertyAgent;
 
-  ("ROLE:", role);
-  ("remainingProperty:", remainingProperty);
-  ("remainingPropertyAgent:", remainingPropertyAgent);
 
-  ("USER LOADING CONDITION:",
-    role === "user" && remainingProperty == null
-  );
 
-  ("AGENT LOADING CONDITION:",
-    role === "agent" && remainingPropertyAgent == null
-  );
+
+
 
   if (
     (role === "user" && remainingProperty == null) ||
     (role === "agent" && remainingPropertyAgent == null)
   ) {
-    ("🔥 RETURNING LOADING");
+
     return <Loading />;
   }
   // if (role === "user" && remainingProperty <= 0) {

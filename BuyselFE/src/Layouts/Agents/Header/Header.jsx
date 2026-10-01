@@ -77,8 +77,7 @@ function Header({ onchange, location, cityDataSend }) {
       if (city) {
         cityDataSend(city);
       }
-      ("Selected city:", selecetdLocation);
-      ("City API response:", city);
+    
     };
     getCityDatas();
   }, [selecetdLocation]);

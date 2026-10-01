@@ -29,7 +29,7 @@ function AgentDashboard() {
           setDashboard(res);
         }
       } catch (err) {
-        error("Error fetching dashboard:", err);
+
       } finally {
         setLoading(false);
       }

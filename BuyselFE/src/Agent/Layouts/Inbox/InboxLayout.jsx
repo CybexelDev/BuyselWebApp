@@ -35,7 +35,7 @@ const [filters, setFilters] = useState({
       }
       }
       catch(err){
-        error("Contact message fetch error:",err);
+
       }
     }
     fetchMessages()

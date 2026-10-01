@@ -23,8 +23,7 @@ const HeaderDashboardProperty =  ({ property }) => {
 const agent = useSelector((state) => state.agent);
 
   const navigate = useNavigate()
-  ("USER:", user);
-("AGENT:", agent);
+
 
 const handleBack = () => {
   if (agent?.accessToken) {

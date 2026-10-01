@@ -18,17 +18,14 @@ const [selectedCity, setSelectedCity] = useState("");
 const [open, setOpen] = useState(false);
 useEffect(() => {
 
-  ("useEffect running");
 
   const fetchCities = async () => {
 
-    ("inside fetchCities", id);
 
     if (!id) return;
 
     const res = await getAgentPropertyCities(id);
 
-    ("cities response", res);
 
     if (res?.cities) {
       setCities(res?.cities);
@@ -50,7 +47,6 @@ useEffect(() => {
   }, [agentData]);
 useEffect(() => {
   const fetchSearch = async () => {
-    (id)
     if (!id) return;
 
     const res = await searchAgentProperties(

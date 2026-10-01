@@ -41,7 +41,7 @@ const handleSubmit = async () => {
 
   } catch (error) {
 
-    (error);
+    
 
   }
 };

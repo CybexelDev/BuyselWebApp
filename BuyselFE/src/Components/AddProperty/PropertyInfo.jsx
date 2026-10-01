@@ -150,13 +150,11 @@ const toggleAmenity = (amenity) => {
   };
 
  const handleCategoryChange = (val) => {
-  ("Selected category value:", val);
 
   const selected = propertyData.categories.find(
     (c) => c.name === val
   );
 
-  ("Matched category:", selected);
 
   setFormData((prev) => ({
     ...prev,
@@ -173,11 +171,8 @@ const toggleAmenity = (amenity) => {
     (s) => s.name === val
   );
 
-  ("SELECTED SUBCATEGORY:", val);
-  ("SELECTED SUBCATEGORY DATA:", selected);
 
   setFormData((prev) => {
-    ("FEATURES BEFORE CLEAR:", prev.features);
 
     return {
       ...prev,
@@ -204,7 +199,6 @@ const toggleAmenity = (amenity) => {
       try {
         const data = await getPropertyData();
 
-        ("Property Data:", data);
 
         if (data) {
           setPropertyData((prev) => ({
@@ -217,24 +211,16 @@ const toggleAmenity = (amenity) => {
           }));
         }
       } catch (err) {
-        error("Property data fetch error:", err);
+
       }
     };
 
     fetchData();
   }, []);
 
-  useEffect(() => {
-    ("FULL FEATURES:", formData.features);
-  }, [formData.features]);
-
-  useEffect(() => {
-  ("Selected Amenities IDs:", formData.amenities);
-}, [formData.amenities]);
+ 
 
 
-("Category ID:", formData.category_id);
-("Filtered:", filteredSubcategories);
 
   return (
     <div className="flex gap-8">

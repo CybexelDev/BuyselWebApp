@@ -3,7 +3,6 @@ import { toast } from "sonner";
 
 function MediaUpload({ formData, setFormData, errors }) {
   const fileInputRef = useRef(null);
-("for images",formData)
 const updateFiles = (files) => {
   const newFiles = Array.from(files).map((file) => ({
     file,
@@ -25,8 +24,6 @@ const updateFiles = (files) => {
 const isHouse =
   formData?.subcategory?.toLowerCase().trim() === "independent house";
 
-("subcategory:", formData?.subcategory);
-("isHouse:", isHouse);
 
   const handleDrop = (e) => {
     e.preventDefault();
