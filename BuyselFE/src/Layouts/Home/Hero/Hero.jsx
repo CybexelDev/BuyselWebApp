@@ -48,8 +48,8 @@ const Hero = () => {
             backgroundRepeat: "no-repeat",
           }}>
             <div className="flex flex-col justify-center h-full gap-4 text-center md:text-left"  >
-              <p className="md:text-[35px] text-[28px] instrument-sans font-bold ">Start Your<br />Commission-<span className="text-[#b8b8b8]">Free</span><br />Journey Today!</p>
-              <p className="md:text-[16px] text-[15px] text-[#000000] max-w-[400px] host-grotesk">Discover lands, homes, commercial buildings, hotels, malls and investment properties — all verified and listed by genuine owners and trusted agents.</p>
+              <p className="md:text-[35px] text-[28px] instrument-sans font-bold ">Start Your<br />Real-<span className="text-[#b8b8b8]">Estate</span><br />Journey Today!</p>
+              <p className="md:text-[16px] text-[15px] text-[#000000] md:max-w-[400px] host-grotesk">Discover lands, homes, commercial buildings, hotels, malls and investment properties — all verified and listed by genuine owners and trusted agents.</p>
 
             
               <div className="flex justify-center md:justify-start ">

@@ -15,16 +15,7 @@ function AgentDetail() {
   const [agentsData, setAgentsData] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
-  const agentData = {
-    name: "Arun Kumar",
-    role: "premiumAgent",
-    designation: "Senior Real Estate Agent",
-    location: "Coimbatore",
-    email: "arunkumar@gmail.com",
-    address: "Gandhipuram, Coimbatore",
-    agentId: "Buysel1986234",
-    verified: true,
-  };
+  
 
   const isPremiumOrElite = agentsData?.agent_type === "premium" || agentsData?.agent_type === "elite"
 

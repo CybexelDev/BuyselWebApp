@@ -1,3 +1,4 @@
+
 import React from "react";
 import "./wishlist.css";
 import logo from "../../../assets/images/logo/logo.png";
@@ -24,6 +25,7 @@ const WishlistHeader = () => {
             backgroundImage: `url(${bgPromotionalBanner})`,
           }}
         />
+
 
         {/* Logo */}
         <div className="wishlist-cta-logo-container relative z-10">
