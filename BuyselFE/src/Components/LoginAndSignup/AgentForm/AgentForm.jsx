@@ -35,56 +35,56 @@ const AgentForm = ({ onForgot }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    if (!validateForm()) return;
+const handleLogin = async () => {
+  if (!validateForm()) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const response = await premiumAgentLogin(
-        login.email,
-        login.password
+  try {
+    const response = await premiumAgentLogin(
+      login.email,
+      login.password
+    );
+
+    if (response?.error) {
+      const errorMessage = Array.isArray(response.error)
+        ? response.error.join(", ")
+        : response.error;
+
+      toast.error(errorMessage);
+      return;
+    }
+
+    if (response) {
+      dispatch({
+        type: "SET_AGENT",
+        payload: {
+          agentName: response?.agent_details?.username,
+          accessToken: response?.access,
+          agentId: response?.agent_details?.agent_id,
+          image: response?.agent_details?.profile_image,
+          agent_type: response?.agent_details?.agent_type,
+          role: response?.login_as,
+          isLoggedIn: true,
+        },
+      });
+
+      localStorage.setItem("accessToken", response?.access);
+      localStorage.setItem("refreshToken", response?.refresh);
+      localStorage.setItem(
+        "agentId",
+        response?.agent_details?.agent_id
       );
 
-      if (response?.error) {
-        const errorMessage = Array.isArray(response.error)
-          ? response.error.join(", ")
-          : response.error;
-
-        toast.error(errorMessage);
-        return;
-      }
-
-      if (response) {
-        dispatch({
-          type: "SET_AGENT",
-          payload: {
-            agentName: response?.agent_details?.username,
-            accessToken: response?.access,
-            agentId: response?.agent_details?.agent_id,
-            image: response?.agent_details?.profile_image,
-            agent_type: response?.agent_details?.agent_type,
-            role: response?.login_as,
-          },
-        });
-
-        localStorage.setItem("accessToken", response?.access);
-        localStorage.setItem("refreshToken", response?.refresh);
-        localStorage.setItem(
-          "agentId",
-          response?.agent_details?.agent_id
-        );
-
-        navigate("/agent/dashboard");
-      }
-
-    } catch (error) {
-
-      toast.error("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
+      navigate("/agent/dashboard");
     }
-  };
+  } catch (error) {
+    console.error("Login error:", error);
+    toast.error("Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>
