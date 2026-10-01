@@ -35,7 +35,7 @@ const [filters, setFilters] = useState({
       }
       }
       catch(err){
-        console.error("Contact message fetch error:",err);
+
       }
     }
     fetchMessages()
@@ -54,7 +54,6 @@ const [filters, setFilters] = useState({
     }else{
 
       toast.error("Delete failed")
-      console.log("Failed");
     }
    }
 
