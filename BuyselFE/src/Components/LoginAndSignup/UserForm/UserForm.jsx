@@ -51,7 +51,6 @@ if (response?.error) {
   return;
 }
       if (response) {
-        console.log("user Login success page:", response);
         
         dispatch({
           type: 'SET_USER',
@@ -77,11 +76,9 @@ if (response?.error) {
 
 
       } else {
-        console.log("Invalid credentials");
       }
 
     } catch (error) {
-      console.error("Login error:", error);
     }
     finally {
     setLoading(false);
@@ -94,7 +91,6 @@ if (response?.error) {
     onSuccess: async (tokenResponse) => {
       try {
         const response = await handleGoogleLogin({ tokenResponse });
-        console.log(response, "wwwwwwwwww");
 
         dispatch({
           type: 'SET_USER',
@@ -117,15 +113,13 @@ if (response?.error) {
          localStorage.setItem('id', response?.user?.id);
 
         navigate("/");
-        console.log(response, "Login successs and data sented to login component");
         toast.success(`Hello ${response?.user?.name}`)
 
       } catch (error) {
-        console.error('Login failed:', error.response?.data || error.message);
+
       }
     },
     onError: () => {
-      console.log('Google Login Failed');
     },
   });
 
@@ -154,7 +148,6 @@ if (response?.error) {
       if (response.authResponse) {
         const accessToken = response.authResponse.accessToken;
 
-        console.log("Facebook login success:", accessToken);
 
         // 👉 send to backend
         const response =   sendFacebookToken(accessToken);
@@ -181,11 +174,9 @@ if (response?.error) {
          localStorage.setItem('id', response?.user?.id);
 
         navigate("/");
-        console.log(response, "Login successs and data sented to login component");
         toast.success(`Hello ${response?.user?.name}`)
 
       } else {
-        console.log("User cancelled login");
       }
     },
     { scope: "email,public_profile" }

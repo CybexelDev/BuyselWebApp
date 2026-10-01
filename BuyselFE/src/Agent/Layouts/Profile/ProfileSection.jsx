@@ -299,7 +299,14 @@ const handleChangePassword = async () => {
 
   {/* NEW ADDRESS FIELD */}
   <InputField label="Address" name="address" value={formData.address} onChange={handleChange} icon={<MapPin size={18} />} disabled={!isEditing} />
-
+<InputField
+  label="Pincode"
+  name="pincode"
+  value={formData.pincode}
+  onChange={handleChange}
+  icon={<MapPin size={18} />}
+  disabled={!isEditing}
+/>
   <InputField label="Website" name="website" value={formData.website} onChange={handleChange} icon={<Share2 size={18} />} disabled={!isEditing} />
 
   {/* NEW INSTAGRAM FIELD */}
@@ -307,8 +314,16 @@ const handleChangePassword = async () => {
 
   <InputField label="Facebook" name="facebook" value={formData.facebook} onChange={handleChange} icon={<FaFacebook size={18} />} disabled={!isEditing} />
 
-  <InputField label="Whatsapp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} icon={<FaWhatsapp size={18} />} disabled={!isEditing} />
-
+<div className="md:col-span-2">
+  <InputField
+    label="Whatsapp"
+    name="whatsapp"
+    value={formData.whatsapp}
+    onChange={handleChange}
+    icon={<FaWhatsapp size={18} />}
+    disabled={!isEditing}
+  />
+</div>
 </div>
                             </section>
 

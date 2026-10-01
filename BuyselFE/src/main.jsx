@@ -32,6 +32,7 @@ createRoot(document.getElementById('root')).render(
                mx-auto
                host-grotesk
                el
+               
                transition-all duration-300 ease-out
                animate-[fadeIn_0.3s_ease-out]
                `, error: 'text-red-400',

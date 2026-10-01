@@ -16,7 +16,6 @@ const res =
     setEmail(localEmail);
     setOtpSent(true);
   } else {
-    console.log("Something went wrong");
   }
 };
 
