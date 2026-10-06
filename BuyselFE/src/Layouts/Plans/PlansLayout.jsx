@@ -189,10 +189,12 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       default:
         return [];
     }
-  }; const planConfig = {
+  };
+   const planConfig = {
     Owner: {
      features: [
   "Plan Validity",
+      "Total Listings",
   "Listing Type",
   "Priority Search",
   "Enquiry Limit",
@@ -205,6 +207,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 ],
     getData: (plan) => [
   plan.validity,
+  plan.property_listing_limit,
   plan.listing_type,
   convert(plan.priority_search),
   plan.enquiry_limit,
