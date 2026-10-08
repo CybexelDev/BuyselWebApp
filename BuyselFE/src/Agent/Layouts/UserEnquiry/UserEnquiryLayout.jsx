@@ -123,7 +123,8 @@ const filteredEnquiries = enquiries.filter((item) => {
     </h1>
 
     <p className="text-sm text-slate-400 mt-2 host-grotesk">
-Manage and respond to property leads sent directly to you    </p>
+Manage and respond to property enquiries matched to your service area 
+   </p>
 
   </motion.div>
 
