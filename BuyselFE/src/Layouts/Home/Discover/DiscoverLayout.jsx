@@ -1,17 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import image1 from "../../../assets/images/discover/image1.png"
-import image2 from "../../../assets/images/discover/image2.png"
-import image3 from "../../../assets/images/discover/image3.png"
-import image4 from "../../../assets/images/discover/image4.png"
-import image5 from "../../../assets/images/discover/image5.png"
-import image6 from "../../../assets/images/discover/image6.png"
-import image7 from "../../../assets/images/discover/image7.png"
-import image8 from "../../../assets/images/discover/image8.png"
-import image9 from "../../../assets/images/discover/image9.png"
-import image10 from "../../../assets/images/discover/image10.png"
-import image11 from "../../../assets/images/discover/image11.png"
-import image12 from "../../../assets/images/discover/image12.png"
+import image1 from "../../../assets/images/discover/image1.png?w=800&format=webp"
+import image2 from "../../../assets/images/discover/image2.png?w=800&format=webp"
+import image3 from "../../../assets/images/discover/image3.png?w=800&format=webp"
+import image4 from "../../../assets/images/discover/image4.png?w=800&format=webp"
+import image5 from "../../../assets/images/discover/image5.png?w=800&format=webp"
+import image6 from "../../../assets/images/discover/image6.png?w=800&format=webp"
+import image7 from "../../../assets/images/discover/image7.png?w=800&format=webp"
+import image8 from "../../../assets/images/discover/image8.png?w=800&format=webp"
+import image9 from "../../../assets/images/discover/image9.png?w=800&format=webp"
+import image10 from "../../../assets/images/discover/image10.png?w=800&format=webp"
+import image11 from "../../../assets/images/discover/image11.png?w=800&format=webp"
+import image12 from "../../../assets/images/discover/image12.png?w=800&format=webp"
 // discover
 const properties = [
   { id: 1, image: image1, height: "h-[203px]", offset: "mt-30", text: ["Shops &", "Showrooms"] },
@@ -86,7 +86,7 @@ ${isDesktop ? item.height : "h-[160px] md:h-[250px]"}
   style={isDesktop ? { gridColumnStart: item.colStart } : {}}
 >
 
-      <img src={item.image} className="w-full h-full object-cover absolute inset-0" alt="" />
+      <img src={item.image} loading="lazy" className="w-full h-full object-cover absolute inset-0" alt="" />
       <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-all duration-400 backdrop-blur-sm bg-black/20" />
       
       {item.text && (

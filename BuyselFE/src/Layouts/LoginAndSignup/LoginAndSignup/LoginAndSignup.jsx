@@ -1,7 +1,7 @@
 import { useState } from "react";
-import houseImg3 from "../../../assets/images/LoginAndSignUp/g1.png";
-import houseImg from "../../../assets/images/LoginAndSignUp/g2.png";
-import houseImg2 from "../../../assets/images/LoginAndSignUp/g3.png";
+import houseImg3 from "../../../assets/images/LoginAndSignUp/g1.png?w=800&format=webp";
+import houseImg from "../../../assets/images/LoginAndSignUp/g2.png?w=800&format=webp";
+import houseImg2 from "../../../assets/images/LoginAndSignUp/g3.png?w=800&format=webp";
 import logo from '../../../assets/images/logo/logo.png'
 import loginI from '../../../assets/images/icons/login.png'
 import user from '../../../assets/images/icons/user.png'

@@ -1,8 +1,8 @@
 import React from 'react'
 import add from '../../../assets/images/icons/add.png'
 import add2 from '../../../assets/images/addP/add.png'
-import add3 from '../../../assets/images/addP/add2.png'
-import add4 from '../../../assets/images/addP/ad1.png'
+import add3 from '../../../assets/images/addP/add2.png?w=800&format=webp'
+import add4 from '../../../assets/images/addP/ad1.png?w=800&format=webp'
 import { useNavigate } from 'react-router-dom'
 
 const AddPropertyAndAgent = () => {
@@ -21,7 +21,7 @@ const AddPropertyAndAgent = () => {
                     <div className='flex items-center h-full md:px-16 px-3'>
                         <div className='px-2 md:max-w-[500px]'>
                             <div className=' w-full rounded-[30px] relative'>
-                                <img src={add3} alt="plus" className='w-[500px] mb-5  pt-[-20px] mr-8' />
+                                <img src={add3} loading="lazy" alt="plus" className='w-[500px] mb-5  pt-[-20px] mr-8' />
                             </div>
                              
                             <h2 className='text-[25px] mb-5 font-[700] instrument-sans'>Add Your Property & Reach <br />Real Buyers</h2>
@@ -36,7 +36,7 @@ const AddPropertyAndAgent = () => {
                     <div className='flex items-center justify-center h-full'>
                         <div className='px-5 md:max-w-[500px]'>
                             <div className=' w-full rounded-[30px] relative'>
-                                <img src={add4} alt="plus" className='w-[500px] mb-5  pt-[-20px] mr-8' />
+                                <img src={add4} loading="lazy" alt="plus" className='w-[500px] mb-5  pt-[-20px] mr-8' />
                             </div>
                              
                             <h2 className='text-[25px] mb-5 font-[700] instrument-sans text-white'>Become a BuySel <br />Verified Agent</h2>
