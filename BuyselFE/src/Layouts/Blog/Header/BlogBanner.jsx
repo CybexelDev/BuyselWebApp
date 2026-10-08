@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./BlogBanner.css";
 import logo from "../../../assets/images/logo/logo.png";
 import Navbar from "../../../Components/Navbar/Navbar";
-import bgImage from "../../../assets/images/blog/BgImage.png";
+import bgImage from "../../../assets/images/blog/BgImage.png?w=800&format=webp";
 
 const BlogBanner = ({
   h1 = "Welcome to Buysel Blogs",

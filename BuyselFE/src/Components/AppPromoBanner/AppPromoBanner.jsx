@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapPin, Home, Search } from 'lucide-react';
 import bgPromotionalBanner from '../../assets/images/appPromotionalBanner/bgPromotionalBanner.png'
-import mainPhone from '../../assets/images/appPromotionalBanner/groupImage.png'
+import mainPhone from '../../assets/images/appPromotionalBanner/groupImage.png?w=800&format=webp'
 import GooglePlayStore from '../../assets/images/appPromotionalBanner/googlePlay.png'
 import Apple from '../../assets/images/appPromotionalBanner/Apple.png'
 
@@ -35,6 +35,7 @@ bg-[position:center_41.3%]
           <div className="absolute -mt-15 xl:-mt-0 xl:bottom-[-7px]  xl:ml-30">
             <img 
               src={mainPhone}
+              loading="lazy"
               alt="App Preview"
               className="h-[390px] xl:h-[500px] w-auto "
             />

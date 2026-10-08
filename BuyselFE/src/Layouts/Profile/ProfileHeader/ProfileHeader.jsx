@@ -2,7 +2,7 @@
 import React, { use, useEffect, useState } from "react";
 import './profileHeader.css'
 import logo from '../../../assets/images/logo/logo.png'
-import house from '../../../assets/images/profile/house.png'
+import house from '../../../assets/images/profile/house.png?w=800&format=webp'
 import profile from '../../../assets/images/profile/profile.png'
 import location from '../../../assets/images/profile/location.png'
 import { Link } from "react-scroll"
