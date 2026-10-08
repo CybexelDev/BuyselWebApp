@@ -7,6 +7,7 @@ import { addReviewToServer, deletReview, toggleReviewLike } from "../../Api/user
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { toast } from "sonner";
 import { updateReview } from "../../Api/userApi";
+import { useSelector } from "react-redux";
 function UserReview({ review, id, triggerRefresh }) {
 
   const [reviews, setReviews] = useState([])
@@ -17,6 +18,7 @@ function UserReview({ review, id, triggerRefresh }) {
   const [openMenuId, setOpenMenuId] = useState(null);
 const [isEditingReview, setIsEditingReview] = useState(false);
 const [editingReviewId, setEditingReviewId] = useState(null);
+const user = useSelector((state) => state.user);
 const handleEdit = (review) => {
   setIsEditingReview(true);
   setEditingReviewId(review.id);
@@ -35,22 +37,22 @@ const handleEdit = (review) => {
   }, [review])
 
 
-  const addReview = () => {
-    try {
-  const token = localStorage.getItem("accessToken");
-
-  if (!token) {
-    toast.error("Please login to write review");
+const addReview = () => {
+  if (user?.role !== "user") {
+    toast.error("Please login as a user to write a review");
     return;
-  }      addReviewToServer({ rating, review: reviewss, id }).then((response) => {
-        if (response) {
-          triggerRefresh();
-        }
-      })
-    } catch (error) {
-      
-    }
   }
+
+  addReviewToServer({
+    rating,
+    review: reviewss,
+    id,
+  }).then((response) => {
+    if (response) {
+      triggerRefresh();
+    }
+  });
+};
 
   useEffect(() => {
     const handleClickOutside = () => setOpenMenuId(null);
@@ -113,7 +115,15 @@ const handleEdit = (review) => {
               User Feedback
             </p>
 
-            <button onClick={() => setOpen(true)} className="jakarta cursor-pointer font-[450] mt-3 text-[12px] leading-[100%] bg-[#84CC16] text-white rounded-[8px] py-[12px] px-8">
+            <button   onClick={() => {
+    if (user?.role !== "user") {
+      toast.error("Please login as a user to write a review");
+      return;
+    }
+
+    setOpen(true);
+  }}
+   className="jakarta cursor-pointer font-[450] mt-3 text-[12px] leading-[100%] bg-[#84CC16] text-white rounded-[8px] py-[12px] px-8">
               Write a Review
             </button>
           </div>

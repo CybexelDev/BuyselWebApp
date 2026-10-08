@@ -169,10 +169,10 @@ function AddPropertySection() {
           squareFeet: data.sq_ft || "",
 
           // ✅ FIXED FEATURES MAPPING
-         features: (data.features || []).map((f) => ({
-  name: f.name || null,
-  option: f.option || null,
-  value: f.value,
+   features: (data.features || []).map((f) => ({
+  field_name: f.name || "",
+  option: f.option || "",
+  value: f.value || 0,
 })),
 
           amenities: data.amenities || [],
@@ -340,27 +340,11 @@ function AddPropertySection() {
 
     try {
       setLoading(true);
-    const transformedFeatures = (formData.features || []).map((f) => {
-  let fieldName = f.name;
-
-  propertyData.subcategories.forEach((sub) => {
-    sub.fields?.forEach((field) => {
-      const optionExists = field.options?.some(
-        (opt) => opt.name === f.name
-      );
-
-      if (optionExists) {
-        fieldName = field.field_name;
-      }
-    });
-  });
-
-  return {
-    name: fieldName,
-    option: fieldName !== f.name ? f.name : null,
-    value: f.value,
-  };
-});
+const transformedFeatures = (formData.features || []).map((f) => ({
+  name: f.field_name,
+  option: f.option,
+  value: f.value,
+}));
 
       const payload = {
         ...formData,
