@@ -117,15 +117,20 @@ function AddPropertySection() {
           ? await getPropertyById(id)
           : await userGetPropertyById(id);
 
-        const optionToFieldMap = {};
+       const optionToFieldMap = {};
 
-        propertyData.subcategories.forEach((sub) => {
-          sub.fields?.forEach((field) => {
-            field.options?.forEach((opt) => {
-              optionToFieldMap[opt.name] = field.field_name;
-            });
-          });
-        });
+propertyData.subcategories.forEach((sub) => {
+  if (sub.name !== data.subcategory) return;
+
+  sub.fields?.forEach((field) => {
+    field.options?.forEach((opt) => {
+      const optionName =
+        typeof opt === "string" ? opt : opt.name;
+
+      optionToFieldMap[optionName] = field.field_name;
+    });
+  });
+});
 
         const perprice = data.perprice || "";
         let price = "";
@@ -168,12 +173,28 @@ function AddPropertySection() {
           landArea: data.land_area || "",
           squareFeet: data.sq_ft || "",
 
-          // ✅ FIXED FEATURES MAPPING
-   features: (data.features || []).map((f) => ({
-  field_name: f.name || "",
-  option: f.option || "",
-  value: f.value || 0,
-})),
+   features: (data.features || []).map((f) => {
+  // Backend already has parent field + option
+  if (f.option) {
+    return {
+      field_name: f.name || "",
+      option: f.option,
+      value: Number(f.value) || 0,
+    };
+  }
+
+  // Backend response:
+  // { name: "Living room", value: "1" }
+  //
+  // Find parent field from metadata
+  const parentField = optionToFieldMap[f.name];
+
+  return {
+    field_name: parentField || "",
+    option: parentField ? f.name : "",
+    value: Number(f.value) || 0,
+  };
+}),
 
           amenities: data.amenities || [],
           keyPoints: data.selling_points || [],
