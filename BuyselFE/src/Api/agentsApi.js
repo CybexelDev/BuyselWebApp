@@ -562,9 +562,15 @@ if (data.purpose === "Sale") {
 
 formData.append("price", price);
 
+const transformedFeatures = (data.features || []).map((f) => ({
+  name: f.field_name,
+  option: f.option,
+  value: f.value,
+}));
+
 formData.append(
   "field_values",
-  JSON.stringify(data.features || [])
+  JSON.stringify(transformedFeatures)
 );
 
     (data.amenities || []).forEach((id) => {
