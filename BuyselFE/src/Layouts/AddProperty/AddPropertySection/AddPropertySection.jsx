@@ -116,19 +116,23 @@ function AddPropertySection() {
         const data = isAgent
           ? await getPropertyById(id)
           : await userGetPropertyById(id);
+const optionToFieldMap = {};
 
-       const optionToFieldMap = {};
+// First try to find the selected subcategory
+const selectedSubcategory = propertyData.subcategories.find(
+  (sub) =>
+    String(sub.name).trim().toLowerCase() ===
+    String(data.subcategory).trim().toLowerCase()
+);
 
-propertyData.subcategories.forEach((sub) => {
-  if (sub.name !== data.subcategory) return;
+// Use selected subcategory fields
+selectedSubcategory?.fields?.forEach((field) => {
+  field.options?.forEach((opt) => {
+    const optionName =
+      typeof opt === "string" ? opt : opt.name;
 
-  sub.fields?.forEach((field) => {
-    field.options?.forEach((opt) => {
-      const optionName =
-        typeof opt === "string" ? opt : opt.name;
-
-      optionToFieldMap[optionName] = field.field_name;
-    });
+    optionToFieldMap[String(optionName).trim().toLowerCase()] =
+      field.field_name;
   });
 });
 
@@ -187,8 +191,8 @@ propertyData.subcategories.forEach((sub) => {
   // { name: "Living room", value: "1" }
   //
   // Find parent field from metadata
-  const parentField = optionToFieldMap[f.name];
-
+const parentField =
+  optionToFieldMap[String(f.name).trim().toLowerCase()];
   return {
     field_name: parentField || "",
     option: parentField ? f.name : "",
@@ -361,11 +365,15 @@ propertyData.subcategories.forEach((sub) => {
 
     try {
       setLoading(true);
+console.log("🔥 FORM FEATURES:", formData.features);
+
 const transformedFeatures = (formData.features || []).map((f) => ({
   name: f.field_name,
   option: f.option,
   value: f.value,
 }));
+
+console.log("🔥 TRANSFORMED FEATURES:", transformedFeatures);
 
       const payload = {
         ...formData,

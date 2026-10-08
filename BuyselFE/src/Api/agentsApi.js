@@ -563,7 +563,7 @@ if (data.purpose === "Sale") {
 formData.append("price", price);
 
 const transformedFeatures = (data.features || []).map((f) => ({
-  name: f.field_name,
+  name: data.subcategory,
   option: f.option,
   value: f.value,
 }));
@@ -593,7 +593,14 @@ formData.append(
         formData.append("images", img.file || img);
       });
     }
+console.log(
+  "🔥 FIELD_VALUES SENT:",
+  JSON.stringify(transformedFeatures)
+);
 
+for (const [key, value] of formData.entries()) {
+  console.log("🔥 FORMDATA:", key, value);
+}
     const res = await api.put(`/agent/property/${id}/`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
