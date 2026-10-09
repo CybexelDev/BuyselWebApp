@@ -1,3 +1,4 @@
+
 // import { use, useEffect, useState } from "react";
 // import Navbar from "../../../Components/Navbar/Navbar";
 // import logo from "../../../assets/images/logo/logo.png";
@@ -745,7 +746,6 @@
 
 
 
-
 import { useEffect, useState } from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
 import logo from "../../../assets/images/logo/logo.png";
@@ -852,7 +852,6 @@ function Header({ onchange, location, cityDataSend }) {
       if (city) {
         cityDataSend(city);
       }
-
     };
     getCityDatas();
   }, [selecetdLocation]);
@@ -997,10 +996,8 @@ function Header({ onchange, location, cityDataSend }) {
             />
           </button>
           {open && (
-
             <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl z-50 p-1">
               <ul className="text-sm text-white host-grotesk">
-
                 <li
                   onClick={() => {
                     setOpen(false);
