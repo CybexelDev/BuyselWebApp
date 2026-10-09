@@ -385,10 +385,21 @@ const Input = ({ label, name, value, onChange, error, required = false }) => {
   const handleInputChange = (e) => {
     let val = e.target.value;
 
-    if (["phone", "whatsapp", "pincode", "pricePerAcre", "totalPrice", "landArea", "squareFeet"].includes(name)) {
-      val = val.replace(/\D/g, "");
-    }
-
+  if (
+  [
+    "phone",
+    "whatsapp",
+    "pincode",
+    "pricePerAcre",
+    "totalPrice",
+    "landArea",
+    "squareFeet",
+    "yearsofexperience",
+    "TotalDealsServed",
+  ].includes(name)
+) {
+  val = val.replace(/\D/g, "");
+}
     if (["title", "city", "village", "taluk", "district", "state"].includes(name)) {
       val = val.replace(/[^a-zA-Z\s]/g, "");
     }
