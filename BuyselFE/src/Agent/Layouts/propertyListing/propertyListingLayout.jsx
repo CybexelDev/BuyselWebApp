@@ -392,7 +392,7 @@ const filteredProperties = properties.filter((property) => {
 
       <div>
         <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
-          Residential
+          Residential / Plot & Land
         </p>
 
         <div className="flex items-baseline gap-1.5 mt-2">
@@ -473,7 +473,7 @@ const filteredProperties = properties.filter((property) => {
 
       <div>
         <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
-          Commercial
+          Commercial / Industrial
         </p>
 
         <div className="flex items-baseline gap-1.5 mt-2">
