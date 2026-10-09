@@ -166,19 +166,37 @@ function Header({ onchange, location, cityDataSend }) {
               </div>
 
               {/* Right Image */}
-              <div
+              {/* <div
                 className="
                 relative
                  right-0
                bottom-60
                min-[900px]:bottom-40
                 lg:bottom-45
-                max-[900px]:w-[1100px]        /* < 900 */
-                 min-[900px]:max-[1023px]:w-[530px] /* 900–1024 */
+                max-[900px]:w-[1100px]         < 900 
+                 min-[900px]:max-[1023px]:w-[530px]  900–1024 
                  min-[1024px]:w-[570px] 
 
                 pointer-events-none
               "
+              > */}
+
+                 <div
+                 className="
+     relative
+    right-0
+    bottom-60
+    min-[900px]:bottom-40
+    lg:bottom-45
+
+    w-[1400px]
+    max-[899px]:max-w-none
+
+    min-[900px]:max-[1023px]:w-[530px]
+    min-[1024px]:w-[570px]
+
+    pointer-events-none
+  "
               >
                 <img
                   src={agenthero}
