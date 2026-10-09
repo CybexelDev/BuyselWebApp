@@ -71,7 +71,7 @@ function App() {
 <Route
   path="/profile"
   element={
-    <UserProtectedRoute message="Please login to view your profile">
+    <UserProtectedRoute >
       <Profile />
     </UserProtectedRoute>
   }

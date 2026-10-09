@@ -89,7 +89,6 @@ export const openRazorpay = async ({
       }
     );
 
-    console.log(order, "CREATE PAYMENT RESPONSE");
 
     // ✅ CHECK RESPONSE
     if (!order?.payment?.razorpay_order_id) {
@@ -114,7 +113,6 @@ export const openRazorpay = async ({
 
       handler: async function (response) {
 
-        console.log(response, "PAYMENT SUCCESS RESPONSE");
 
         const paymentId = order?.payment?.payment_db_id
 
@@ -162,10 +160,7 @@ export const openRazorpay = async ({
             }
           );
 
-          console.log(
-            verifyRes.data,
-            "VERIFY PAYMENT RESPONSE"
-          );
+     
 
           toast("Payment Successful ✅");
 
@@ -175,10 +170,6 @@ export const openRazorpay = async ({
 
         } catch (error) {
 
-          console.log(
-            error?.response?.data || error,
-            "VERIFY ERROR"
-          );
 
           toast("Payment Verification Failed ❌");
 
@@ -196,7 +187,6 @@ export const openRazorpay = async ({
       },
     };
 
-    console.log(options, "RAZORPAY OPTIONS");
 
     // ✅ OPEN PAYMENT WINDOW
     const rzp = new window.Razorpay(options);
@@ -206,10 +196,6 @@ export const openRazorpay = async ({
     // ❌ PAYMENT FAILED
     rzp.on("payment.failed", function (response) {
 
-      console.log(
-        response.error,
-        "PAYMENT FAILED"
-      );
 
       toast(response.error.description);
 
@@ -217,10 +203,6 @@ export const openRazorpay = async ({
 
   } catch (error) {
 
-    console.log(
-      error?.response?.data || error,
-      "CREATE PAYMENT ERROR"
-    );
 
     toast("Something went wrong");
   }

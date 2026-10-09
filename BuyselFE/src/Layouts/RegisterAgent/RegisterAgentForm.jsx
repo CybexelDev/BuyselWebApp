@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  console.log(selectedPlan, "selected pln>>>>>>>>>>>>>>>>>");
+
 
 
   const validateForm = () => {
@@ -148,12 +148,14 @@ if (
       navigate("/invoice", {
         state: {
           paymentData: paymentRes,
+              afterInvoice: "auth",
+
         },
       });
     },
 
     onFailure: (error) => {
-      console.log("Payment Failed:", error);
+
       toast.error("Payment failed. Registration was not completed.");
     },
   });
@@ -162,7 +164,7 @@ if (
 }
 
   } catch (error) {
-    console.error("Registration error:", error);
+
     toast.error("Registration failed. Please try again.");
   }
 };
@@ -383,10 +385,21 @@ const Input = ({ label, name, value, onChange, error, required = false }) => {
   const handleInputChange = (e) => {
     let val = e.target.value;
 
-    if (["phone", "whatsapp", "pincode", "pricePerAcre", "totalPrice", "landArea", "squareFeet"].includes(name)) {
-      val = val.replace(/\D/g, "");
-    }
-
+  if (
+  [
+    "phone",
+    "whatsapp",
+    "pincode",
+    "pricePerAcre",
+    "totalPrice",
+    "landArea",
+    "squareFeet",
+    "yearsofexperience",
+    "TotalDealsServed",
+  ].includes(name)
+) {
+  val = val.replace(/\D/g, "");
+}
     if (["title", "city", "village", "taluk", "district", "state"].includes(name)) {
       val = val.replace(/[^a-zA-Z\s]/g, "");
     }

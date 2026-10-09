@@ -35,7 +35,7 @@ const [filters, setFilters] = useState({
       }
       }
       catch(err){
-        console.error("Contact message fetch error:",err);
+
       }
     }
     fetchMessages()
@@ -54,7 +54,6 @@ const [filters, setFilters] = useState({
     }else{
 
       toast.error("Delete failed")
-      console.log("Failed");
     }
    }
 
@@ -110,7 +109,8 @@ const [filters, setFilters] = useState({
               </h1>
               
     <p className="text-sm text-slate-400 mt-2 host-grotesk">
-Manage and respond to property enquiries matched to your service area    </p>
+Manage and respond to property leads sent directly to you 
+    </p>
             </motion.div>
 
             <div className="flex items-center gap-3">

@@ -96,7 +96,7 @@ function AddPropertySection() {
         setPropertyData(res);
         setCategories(res?.categories || []);
       } catch (err) {
-        console.error("Meta fetch error:", err);
+
       }
     };
     fetchMeta();
@@ -116,16 +116,25 @@ function AddPropertySection() {
         const data = isAgent
           ? await getPropertyById(id)
           : await userGetPropertyById(id);
+const optionToFieldMap = {};
 
-        const optionToFieldMap = {};
+// First try to find the selected subcategory
+const selectedSubcategory = propertyData.subcategories.find(
+  (sub) =>
+    String(sub.name).trim().toLowerCase() ===
+    String(data.subcategory).trim().toLowerCase()
+);
 
-        propertyData.subcategories.forEach((sub) => {
-          sub.fields?.forEach((field) => {
-            field.options?.forEach((opt) => {
-              optionToFieldMap[opt.name] = field.field_name;
-            });
-          });
-        });
+// Use selected subcategory fields
+selectedSubcategory?.fields?.forEach((field) => {
+  field.options?.forEach((opt) => {
+    const optionName =
+      typeof opt === "string" ? opt : opt.name;
+
+    optionToFieldMap[String(optionName).trim().toLowerCase()] =
+      field.field_name;
+  });
+});
 
         const perprice = data.perprice || "";
         let price = "";
@@ -168,12 +177,28 @@ function AddPropertySection() {
           landArea: data.land_area || "",
           squareFeet: data.sq_ft || "",
 
-          // ✅ FIXED FEATURES MAPPING
-         features: (data.features || []).map((f) => ({
-  name: f.name || null,
-  option: f.option || null,
-  value: f.value,
-})),
+   features: (data.features || []).map((f) => {
+  // Backend already has parent field + option
+  if (f.option) {
+    return {
+      field_name: f.name || "",
+      option: f.option,
+      value: Number(f.value) || 0,
+    };
+  }
+
+  // Backend response:
+  // { name: "Living room", value: "1" }
+  //
+  // Find parent field from metadata
+const parentField =
+  optionToFieldMap[String(f.name).trim().toLowerCase()];
+  return {
+    field_name: parentField || "",
+    option: parentField ? f.name : "",
+    value: Number(f.value) || 0,
+  };
+}),
 
           amenities: data.amenities || [],
           keyPoints: data.selling_points || [],
@@ -199,7 +224,7 @@ function AddPropertySection() {
           },
         });
       } catch (err) {
-        console.error("Fetch property error:", err);
+
       }
     };
 
@@ -238,7 +263,7 @@ function AddPropertySection() {
         }
 
       } catch (err) {
-        console.error("Profile fetch error:", err);
+
       }
     };
 
@@ -340,27 +365,15 @@ function AddPropertySection() {
 
     try {
       setLoading(true);
-    const transformedFeatures = (formData.features || []).map((f) => {
-  let fieldName = f.name;
+console.log("🔥 FORM FEATURES:", formData.features);
 
-  propertyData.subcategories.forEach((sub) => {
-    sub.fields?.forEach((field) => {
-      const optionExists = field.options?.some(
-        (opt) => opt.name === f.name
-      );
+const transformedFeatures = (formData.features || []).map((f) => ({
+  name: f.field_name,
+  option: f.option,
+  value: f.value,
+}));
 
-      if (optionExists) {
-        fieldName = field.field_name;
-      }
-    });
-  });
-
-  return {
-    name: fieldName,
-    option: fieldName !== f.name ? f.name : null,
-    value: f.value,
-  };
-});
+console.log("🔥 TRANSFORMED FEATURES:", transformedFeatures);
 
       const payload = {
         ...formData,
@@ -388,7 +401,6 @@ function AddPropertySection() {
           res = await userPostProperty(payload);
         }
       }
-      console.log("API RESPONSE:", res);
 
       if (!res?.status) {
         toast.error(res.message);
@@ -460,7 +472,7 @@ openRazorpay({
         setFormData(getInitialFormData());
       }
     } catch (err) {
-      console.error("Submit error:", err);
+
     } finally {
       setLoading(false);
     }

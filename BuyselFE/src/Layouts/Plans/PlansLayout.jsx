@@ -27,7 +27,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const user = useSelector((state) => state.user);
   const isPlan = useSelector((state) => state.user.is_plan);
 
-  console.log("is_plan:", isPlan);
 
   const handleSelectPlan = (plan) => {
 
@@ -60,15 +59,13 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
       if (!selectedPlan) return;
 
-      console.log(selectedPlan);
 
       const res = await activateUserPlan(selectedPlan.id);
       toast.success("Plan Activated")
 
-      console.log(res);
 
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -78,7 +75,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   //       const data = await getAllPlans();
   //       setPlansData(data);
   //     } catch (err) {
-  //       console.log(err);
+  //       
   //     }
   //   };
 
@@ -94,7 +91,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       setPlansData(data);
 
     } catch (err) {
-      console.log(err);
+      
     } finally {
       setLoading(false);
     }
@@ -192,10 +189,12 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       default:
         return [];
     }
-  }; const planConfig = {
+  };
+   const planConfig = {
     Owner: {
      features: [
   "Plan Validity",
+      "Total Listings",
   "Listing Type",
   "Priority Search",
   "Enquiry Limit",
@@ -208,6 +207,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 ],
     getData: (plan) => [
   plan.validity,
+  plan.property_listing_limit,
   plan.listing_type,
   convert(plan.priority_search),
   plan.enquiry_limit,
@@ -304,7 +304,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const rawPlans = getPlansByRole();
   const features = planConfig[active].features;
   const propertyCount = plansData?.property_count || 0;
-  console.log("count:", propertyCount);
 
 
   const plans = rawPlans.map((plan) => ({
@@ -317,7 +316,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   }));
   const isOwnerPlans = plans.length === 4;
 
-  console.log(plans, "PLANS.............");
 
 
   const renderIcon = (type) => {
@@ -811,7 +809,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       plan_id: selectedPlan?.plan_id,
       onSuccess: async (res) => {
         const dashboard = await userDashboard();
-        console.log("Remaining:", dashboard.data.remaining_property);
  
         dispatch({
         type: "SET_USER",

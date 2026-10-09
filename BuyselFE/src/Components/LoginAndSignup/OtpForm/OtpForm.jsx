@@ -68,9 +68,10 @@ const handleOtp = async () => {
           accessToken: data?.access,
           userId: data?.user?.id,
           image: data?.user.image,
-          listedCount: data?.user?.total_properties,
+          // listedCount: data?.user?.total_properties,
           verificationStatus: data?.user?.auth_provider,
           role:data?.login_as,
+          remainingProperty: data?.remainingProperty,
         }
       });
 
@@ -83,7 +84,7 @@ const handleOtp = async () => {
     }
 
   } catch (error) {
-    console.log(error);
+    
   }
 };
  
@@ -117,7 +118,11 @@ const resendOtp = async () => {
 
   } catch (error) {
 
-    console.log(error);
+    
+
+  toast.error(
+    error?.response?.data?.error || "Something went wrong"
+  );
 
   }
 };

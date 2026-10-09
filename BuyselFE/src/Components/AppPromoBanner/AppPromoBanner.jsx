@@ -4,6 +4,7 @@ import bgPromotionalBanner from '../../assets/images/appPromotionalBanner/bgProm
 import mainPhone from '../../assets/images/appPromotionalBanner/groupImage.png?w=800&format=webp'
 import GooglePlayStore from '../../assets/images/appPromotionalBanner/googlePlay.png'
 import Apple from '../../assets/images/appPromotionalBanner/Apple.png'
+import { toast } from 'sonner';
 
 // AppBanner
 const AppPromoBanner = () => {
@@ -57,8 +58,8 @@ bg-[position:center_41.3%]
 
                    w-[160px] sm:w-[189px] 
                    h-[55px] sm:h-[59px] 
-                   rounded-full cursor-pointer">
-              <img src={GooglePlayStore} alt="Google Play" className="h-[31.14px] ml-5 w-[28px]" />
+                   rounded-full cursor-pointer"onClick={()=>toast.info("The BuySel app is currently under maintenance. We'll be back soon!")} >
+              <img src={GooglePlayStore} alt="Google Play" className="h-[31.14px] ml-5 w-[28px]"  />
               <div className="text-white text-left flex leading-tight flex-col">
                 <p className=" text-[8px] xl:text-[12.13px] font-[350] inter">Download on the</p>
                 <p className="text-[14px] xl:text-[18.2px] font-semibold roboto text-center">Play Store</p>
@@ -68,7 +69,7 @@ bg-[position:center_41.3%]
 <button className="flex items-center gap-2 bg-black 
                    w-[160px] sm:w-[189px] 
                    h-[55px] sm:h-[59px] 
-                   rounded-full cursor-pointer">
+                   rounded-full cursor-pointer" onClick={()=>toast.info("The BuySel app is currently under maintenance. We'll be back soon!")}>
               <img src={Apple} alt="Apple" className="h-[31.14px] ml-5 w-[28px]" />
               <div className="text-white text-left flex leading-tight flex-col">
                 <p className=" text-[8px] xl:text-[12.13px] font-[350] inter">Download on the</p>

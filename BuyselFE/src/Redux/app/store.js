@@ -20,7 +20,7 @@ function userReducer(state = initialUserState, action) {
   switch (action.type) {
 
     case 'SET_USER':
-      console.log("SET_USER payload:", action.payload);
+
 
       return {
         ...state,
@@ -89,6 +89,10 @@ const appReducer = combineReducers({
 
 
 // Root reducer
+// const rootReducer = (state, action) => {
+//   return appReducer(state, action);
+// };
+
 const rootReducer = (state, action) => {
 
   // USER LOGIN

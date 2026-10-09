@@ -11,10 +11,10 @@ const Agents = () => {
   const [city, setCity] = useState("");
   const [locationDataa, setLocationDataa] = useState([]);
 
-  console.log(city, "cyryyyyyyy");
+
   
 
-  console.log(searchQuery, "agent search");
+
 
   useEffect(() => {
 

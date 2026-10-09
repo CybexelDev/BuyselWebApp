@@ -54,18 +54,29 @@ const updateFeatureCount = (fieldName, optionName, type) => {
     const features = prev.features || [];
 
     const existing = features.find(
-      (f) => f.name === optionName
+      (f) =>
+        f.field_name === fieldName &&
+        f.option === optionName
     );
 
     const current = existing?.value || 0;
 
     let newValue = current;
-    if (type === "plus") newValue = current + 1;
-    if (type === "minus") newValue = Math.max(0, current - 1);
 
-    // remove old
+    if (type === "plus") {
+      newValue = current + 1;
+    }
+
+    if (type === "minus") {
+      newValue = Math.max(0, current - 1);
+    }
+
     const filtered = features.filter(
-      (f) => f.name !== optionName
+      (f) =>
+        !(
+          f.field_name === fieldName &&
+          f.option === optionName
+        )
     );
 
     const updatedFeatures = [
@@ -73,8 +84,8 @@ const updateFeatureCount = (fieldName, optionName, type) => {
       ...(newValue > 0
         ? [
             {
-              name: optionName,
-              field_name: existing?.field_name || fieldName, // ✅ FIX
+              field_name: fieldName,
+              option: optionName,
               value: newValue,
             },
           ]
@@ -150,13 +161,11 @@ const toggleAmenity = (amenity) => {
   };
 
  const handleCategoryChange = (val) => {
-  console.log("Selected category value:", val);
 
   const selected = propertyData.categories.find(
     (c) => c.name === val
   );
 
-  console.log("Matched category:", selected);
 
   setFormData((prev) => ({
     ...prev,
@@ -173,11 +182,8 @@ const toggleAmenity = (amenity) => {
     (s) => s.name === val
   );
 
-  console.log("SELECTED SUBCATEGORY:", val);
-  console.log("SELECTED SUBCATEGORY DATA:", selected);
 
   setFormData((prev) => {
-    console.log("FEATURES BEFORE CLEAR:", prev.features);
 
     return {
       ...prev,
@@ -204,7 +210,6 @@ const toggleAmenity = (amenity) => {
       try {
         const data = await getPropertyData();
 
-        console.log("Property Data:", data);
 
         if (data) {
           setPropertyData((prev) => ({
@@ -217,24 +222,16 @@ const toggleAmenity = (amenity) => {
           }));
         }
       } catch (err) {
-        console.error("Property data fetch error:", err);
+
       }
     };
 
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log("FULL FEATURES:", formData.features);
-  }, [formData.features]);
-
-  useEffect(() => {
-  console.log("Selected Amenities IDs:", formData.amenities);
-}, [formData.amenities]);
+ 
 
 
-console.log("Category ID:", formData.category_id);
-console.log("Filtered:", filteredSubcategories);
 
   return (
     <div className="flex gap-8">
@@ -288,8 +285,10 @@ console.log("Filtered:", filteredSubcategories);
                       {field.options.map((opt, index) => {
   const optionValue = typeof opt === "string" ? opt : opt.name;
 
-  const selected =
-    formData.features?.find((f) => f.name === field.field_name)?.value === optionValue;
+const selected =
+  formData.features?.find(
+    (f) => f.field_name === field.field_name
+  )?.option === optionValue;
 
   return (
     <button
@@ -297,16 +296,20 @@ console.log("Filtered:", filteredSubcategories);
       type="button"
       onClick={() =>
         setFormData((prev) => {
-          const updatedFeatures = (prev.features || []).filter(
-            (f) => f.name !== field.field_name
-          );
+         const updatedFeatures = (prev.features || []).filter(
+  (f) => f.field_name !== field.field_name
+);
 
           return {
             ...prev,
-            features: [
-              ...updatedFeatures,
-              { name: field.field_name, value: optionValue },
-            ],
+         features: [
+  ...updatedFeatures,
+  {
+    field_name: field.field_name,
+    option: optionValue,
+    value: 1,
+  },
+],
           };
         })
       }
@@ -336,7 +339,11 @@ console.log("Filtered:", filteredSubcategories);
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {field.options.map((opt) => {
                         const count =
-  formData.features?.find((f) => f.name === opt.name)?.value || 0;
+  formData.features?.find(
+    (f) =>
+      f.field_name === field.field_name &&
+      f.option === opt.name
+  )?.value || 0;
 
                         const selected = count > 0;
 
@@ -345,18 +352,23 @@ console.log("Filtered:", filteredSubcategories);
                             key={opt.name}
                            onClick={() => {
   setFormData((prev) => {
-    const exists = prev.features?.find(
-      (f) => f.name === opt.name
-    );
-
-    let updated = (prev.features || []).filter(
-      (f) => f.name !== opt.name
-    );
+  const exists = prev.features?.find(
+  (f) =>
+    f.field_name === field.field_name &&
+    f.option === opt.name
+);
+  let updated = (prev.features || []).filter(
+  (f) =>
+    !(
+      f.field_name === field.field_name &&
+      f.option === opt.name
+    )
+);
 
     if (!exists) {
 updated.push({
-  name: opt.name,
-  field_name: field.field_name, // ✅ ADD THIS
+  field_name: field.field_name,
+  option: opt.name,
   value: 1,
 });
     }
