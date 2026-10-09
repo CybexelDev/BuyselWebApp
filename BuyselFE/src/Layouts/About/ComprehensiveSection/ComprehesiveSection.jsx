@@ -1,7 +1,7 @@
 import React from 'react'
-import house2 from "../../../assets/images/about/house2.png"
-import house3 from "../../../assets/images/about/house3.png"
-import house4 from "../../../assets/images/about/house4.png"
+import house2 from "../../../assets/images/about/house2.png?w=2000&format=webp"
+import house3 from "../../../assets/images/about/house3.png?w=800&format=webp"
+import house4 from "../../../assets/images/about/house4.png?w=800&format=webp"
 
 
 

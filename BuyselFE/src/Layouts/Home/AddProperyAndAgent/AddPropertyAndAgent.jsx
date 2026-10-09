@@ -1,5 +1,6 @@
 import React from 'react'
 import add from '../../../assets/images/icons/add.png'
+import add2 from '../../../assets/images/addP/add.png'
 import add3 from '../../../assets/images/addP/add2.png?w=800&format=webp'
 import add4 from '../../../assets/images/addP/ad1.png?w=800&format=webp'
 import { useNavigate } from 'react-router-dom'

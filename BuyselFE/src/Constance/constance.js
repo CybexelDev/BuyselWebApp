@@ -921,9 +921,9 @@ export const userReviews = [
   },
 ];
 
-import v1 from '../assets/images/premium/v1.png'
-import v2 from '../assets/images/premium/v2.png'
-import v3 from '../assets/images/premium/v3.png'
+import v1 from '../assets/images/premium/v1.png?w=800&format=webp'
+import v2 from '../assets/images/premium/v2.png?w=800&format=webp'
+import v3 from '../assets/images/premium/v3.png?w=800&format=webp'
 
 
 export const premiumHomes = [

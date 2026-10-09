@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
 import logo from "../../../assets/images/logo/logo.png";
 import agenthero from "../../../assets/images/agenthero/agenthero1.png";
-import house from "../../../assets/images/about/house.png"
+import house from "../../../assets/images/about/house.png?w=1600&format=webp"
 import { Icon } from "@iconify/react";
 
 function AboutHeader() {
@@ -70,6 +70,7 @@ function AboutHeader() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 z-40 w-[7%]">
         <img
           src={logo}
+          loading="lazy"
           alt="logo"
           className="w-[100px]"
         />
