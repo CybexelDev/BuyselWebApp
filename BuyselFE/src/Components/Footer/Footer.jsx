@@ -12,7 +12,7 @@ const Footer = ({bg="bg-white",margin="mt-22"}) => {
   });
 };
     return (
-        <div className={`px-6 md:px-12 lg:px-5 ${margin} ${bg}`}>
+        <div className={`px-6 md:px-8 lg:px-5 ${margin} ${bg}`}>
             <footer className="bg-black text-white rounded-t-3xl py-14">
                 <div
           className="max-w-7xl mx-auto
