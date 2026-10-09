@@ -238,8 +238,7 @@ function Header({ onchange, location, cityDataSend }) {
             />
           </button>
           {open && (
-            <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl  z-50 p-1">
-              <ul className="text-sm text-white host-grotesk">
+<div className="absolute mt-2 w-48 bg-black shadow-lg rounded-2xl z-50 p-1 max-h-48 overflow-y-auto overscroll-contain scrollbar-hide">          <ul className="text-sm text-white host-grotesk">
                 <li
                   onClick={() => {
                     setOpen(false);
