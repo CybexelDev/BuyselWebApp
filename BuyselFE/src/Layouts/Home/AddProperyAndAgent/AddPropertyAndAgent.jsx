@@ -20,8 +20,8 @@ const AddPropertyAndAgent = () => {
     <section className="mt-[70px] md:mt-[100px]">
       <div className="flex flex-col md:flex-row">
         {/* ---------- Property Card ---------- */}
-        <div className="w-full md:w-1/2 min-h-fit md:min-h-screen bg-[#b0dc81]">
-          <div className="flex items-center justify-center h-full px-4 sm:px-8 lg:px-16 py-10 md:py-0 md:min-h-screen">
+        <div className="w-full md:w-1/2 min-h-fit  bg-[#b0dc81]">
+          <div className="flex items-center justify-center h-full px-4 sm:px-8 lg:px-16 py-10 md:py-12 ">
             <div className="w-full max-w-[550px]">
               <div className="w-full">
                 <img src={add3} loading="lazy"
@@ -54,8 +54,8 @@ const AddPropertyAndAgent = () => {
         </div>
 
         {/* ---------- Agent Card ---------- */}
-        <div className="w-full md:w-1/2 min-h-fit md:min-h-screen bg-black">
-          <div className="flex items-center justify-center h-full px-4 sm:px-8 lg:px-16 py-10 md:py-0 md:min-h-screen">
+        <div className="w-full md:w-1/2 min-h-fit  bg-black">
+          <div className="flex items-center justify-center h-full px-4 sm:px-8 lg:px-16 py-10 md:py-12 ">
             <div className="w-full max-w-[550px]">
               <div className="w-full">
                 <img
