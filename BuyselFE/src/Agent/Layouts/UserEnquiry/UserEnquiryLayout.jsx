@@ -240,7 +240,7 @@ Manage and respond to property enquiries matched to your service area
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 
+      className="bg-white border border-slate-200 rounded-2xl p-4 
       flex flex-col lg:flex-row lg:items-center justify-between 
       gap-4 md:gap-6 hover:shadow-lg hover:border-[#74C122]/40 transition-all"
     >
@@ -253,7 +253,7 @@ Manage and respond to property enquiries matched to your service area
 
         <div>
           <h4 className="font-bold text-slate-900">{item.name}</h4>
-          <p className="text-sm text-slate-400 flex items-center gap-1">
+          <p className="text-sm font-[450] text-slate-400 host-grotesk flex items-center gap-1">
             <Phone size={12} /> {item.contact}
           </p>
         </div>
@@ -275,12 +275,12 @@ Manage and respond to property enquiries matched to your service area
 
       <div className="hidden lg:flex items-center gap-2 min-w-[120px]">
         <MapPin size={16} className="text-[#74C122]" />
-        <span className="text-sm font-semibold text-slate-600">
+        <span className="text-sm font-bold text-slate-600">
           {item.pincode}
         </span>
       </div>
 
-      <div className="flex-1 text-sm text-slate-600 leading-relaxed">
+      <div className="flex-1 text-sm text-slate-600 host-grotesk font-semibold leading-relaxed">
         {item.requirement}
       </div>
 
