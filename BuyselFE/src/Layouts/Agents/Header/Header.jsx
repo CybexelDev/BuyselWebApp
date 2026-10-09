@@ -248,8 +248,8 @@ function Header({ onchange, location, cityDataSend }) {
             />
           </button>
           {open && (
-            <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl z-50 p-1">
-              <ul className="text-sm text-white host-grotesk">
+<div className="absolute mt-2 w-48 bg-black shadow-lg rounded-2xl z-50 p-1 max-h-48 overflow-y-auto overscroll-contain">
+             <ul className="text-sm text-white host-grotesk">
                 <li
                   onClick={() => {
                     setOpen(false);
@@ -259,19 +259,30 @@ function Header({ onchange, location, cityDataSend }) {
                 >
                   All Locations
                 </li>
-                {Array.isArray(location) &&
-                  location.map((loc, index) => (
-                    <li
-                      key={index}
-                      onClick={() => {
-                        setOpen(false);
-                        setSelectedLocation(loc);
-                      }}
-                      className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
-                    >
-                      {loc}
-                    </li>
-                  ))}
+            
+{Array.isArray(location) &&
+  location
+    .filter(
+      (loc, index, arr) =>
+        arr.findIndex(
+          (item) =>
+            item.trim().toLowerCase() ===
+            loc.trim().toLowerCase()
+        ) === index
+    )
+    .map((loc, index) => (
+      <li
+        key={loc.trim().toLowerCase()}
+        onClick={() => {
+          setOpen(false);
+          setSelectedLocation(loc);
+        }}
+        className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
+      >
+        {loc}
+      </li>
+    ))}
+
               </ul>
             </div>
           )}
