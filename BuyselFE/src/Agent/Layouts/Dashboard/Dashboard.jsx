@@ -25,7 +25,7 @@ import Linegraph from "../../Components/LineGraph/Linegraph";
 const ROUTES = {
     home: "/",
   addProperty: "/agent/property",
-  enquiries: "/agent/user-enquiry",
+  enquiries: "/agent/enquiry",
   inbox: "/agent/inbox",
   plans: "/agent/plans",
 };
