@@ -9,6 +9,7 @@ import premium from '../../../assets/images/agentDetail/crown.png'
 export default function AgentTabs({ searchedData, query, locationDats }) {
     const [searchParams] = useSearchParams()
     const type = searchParams.get("type");
+    const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [agents, setAgents] = useState([]);
@@ -42,25 +43,31 @@ export default function AgentTabs({ searchedData, query, locationDats }) {
     }, [type]);
 
 useEffect(() => {
-  if (locationDats?.length > 0) {
-    setAgents(locationDats);
-    return;
-  }
+  const loadAgents = async () => {
+    setLoading(true);
 
-  if (query.length > 0) {
-    setAgents(searchedData);
-    return;
-  }
+    try {
+      if (locationDats?.length > 0) {
+        setAgents(locationDats);
+        return;
+      }
 
-  const getAgent = async () => {
-    const data = await getAgents({ category: activeTab });
+      if (query.length > 0) {
+        setAgents(searchedData || []);
+        return;
+      }
 
-    if (data) {
-      setAgents(data);
+      const data = await getAgents({ category: activeTab });
+      setAgents(data || []);
+    } catch (error) {
+      console.error("Failed to load agents:", error);
+      setAgents([]);
+    } finally {
+      setLoading(false);
     }
   };
 
-  getAgent();
+  loadAgents();
 }, [activeTab, searchedData, locationDats, query]);
  
 
@@ -135,6 +142,7 @@ useEffect(() => {
                     </div>
                 ))}
             </div>
+{!loading && filteredAgents.length > 0 && (
 
             <div className="flex justify-center items-center gap-6 mt-12">
 
@@ -168,6 +176,7 @@ useEffect(() => {
                 </button>
 
             </div>
+            )}
         </div>
     );
 }
