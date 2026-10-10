@@ -27,6 +27,7 @@ const handleClearLocation = () => {
     ...filters,
     city: "",
     district: "",
+    state:""
   });
 };
 
@@ -405,6 +406,7 @@ const cities = selectedDistrictObj?.cities || [];
               purpose: selectedPurpose,
               category: selectedCategory,
               district: selectedDistrict,
+              state:selectedState,
               city: selectedCity,
               min_price: minPrice,
               max_price: maxPrice,
@@ -422,6 +424,7 @@ const cities = selectedDistrictObj?.cities || [];
               category: "",
               district: "",
               city: "",
+              state:"",
               min_price: "",
               max_price: "",
               isFilterApplied: false,
