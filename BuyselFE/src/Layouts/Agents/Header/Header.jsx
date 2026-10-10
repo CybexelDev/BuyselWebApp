@@ -1,4 +1,3 @@
-
 // import { use, useEffect, useState } from "react";
 // import Navbar from "../../../Components/Navbar/Navbar";
 // import logo from "../../../assets/images/logo/logo.png";
@@ -10,8 +9,6 @@
 //   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 //   const [open, setOpen] = useState(false);
 //   const [selecetdLocation, setSelectedLocation] = useState("Location");
-
-
 
 //   useEffect(() => {
 //     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -66,7 +63,6 @@
 //     Z
 //   `;
 
-
 //   useEffect(() => {
 
 //     const getCityDatas = async () => {
@@ -93,7 +89,6 @@
 //       <div className="relative z-50">
 //         <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
 //       </div>
-
 
 //       <div className="absolute top-2 sm:top-3 md:top-4 lg:top-5 left-1/2 -translate-x-1/2 z-40 w-[7%]">
 //         <img
@@ -125,14 +120,14 @@
 //             {/* Main Content */}
 //             <div
 //               className="
-//                   relative 
+//                   relative
 //                   flex flex-row max-[900px]:flex-col
 //                   items-start
 //                   max-[900px]:items-center
 //                   max-[900px]:text-center
 //                   justify-between items-start
 //                   px-4 sm:px-8 lg:pl-[29px]
-//                   pt-[90px] sm:pt-[110px]   
+//                   pt-[90px] sm:pt-[110px]
 //                   h-full
 //                   md:pr-0"
 //             >
@@ -141,7 +136,7 @@
 //                 <h2
 //                   className="
 //                   instrument-sans font-[600]
-//                   text-[55px] 
+//                   text-[55px]
 //                   min-[900px]:text-[34px]   /* 900px → 1024px */
 //                   lg:text-[38px]
 //                   leading-[140%] mb-[10px]
@@ -155,7 +150,7 @@
 //                   className="
 //                 text-[#3e3131]
 //                   host-grotesk font-[400]
-//                   text-[34px] 
+//                   text-[34px]
 //                    min-[900px]:text-[18px]   /* 900px → 1024px */
 //                   lg:text-[19px]
 //                   leading-[140%]
@@ -174,9 +169,9 @@
 //                bottom-60
 //                min-[900px]:bottom-40
 //                 lg:bottom-45
-//                 max-[900px]:w-[1100px]         < 900 
-//                  min-[900px]:max-[1023px]:w-[530px]  900–1024 
-//                  min-[1024px]:w-[570px] 
+//                 max-[900px]:w-[1100px]         < 900
+//                  min-[900px]:max-[1023px]:w-[530px]  900–1024
+//                  min-[1024px]:w-[570px]
 
 //                 pointer-events-none
 //               "
@@ -213,11 +208,11 @@
 //     relative
 //     mb-10                 /* < 900px */
 //     min-[900px]:mb-0
-//     min-[900px]:absolute    
+//     min-[900px]:absolute
 //     min-[900px]:left-1/2
 //     min-[900px]:-translate-x-1/2
 //     min-[900px]:bottom-[15px]
-    
+
 //     min-[900px]:max-[1023px]:w-[400px]
 //     lg:w-[469px]
 //     xl:w-[609px]
@@ -225,7 +220,7 @@
 
 //     bg-white
 //     rounded-[20px]
-    
+
 //     max-[900px]:shadow-[0_4px_10.3px_rgba(136,130,130,0.25)]
 //     min-[900px]:shadow-[0_4px_8.7px_rgba(158,138,138,0.25)]
 //     px-[14px] lg:px-[20px]
@@ -279,7 +274,6 @@
 //                       {loc}
 //                     </li>
 //                   ))}
-
 
 //               </ul>
 //             </div>
@@ -362,19 +356,6 @@
 // }
 
 // export default Header;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { useEffect, useLayoutEffect, useRef, useState } from "react";
 // import Navbar from "../../../Components/Navbar/Navbar";
@@ -508,14 +489,14 @@
 //               {/* Main Content */}
 //               <div
 //                 className="
-//                   relative 
+//                   relative
 //                   flex flex-row max-[900px]:flex-col
 //                   items-start
 //                   max-[900px]:items-center
 //                   max-[900px]:text-center
 //                   justify-between items-start
 //                   px-4 sm:px-8 lg:pl-[29px]
-//                   pt-[90px] sm:pt-[110px]   
+//                   pt-[90px] sm:pt-[110px]
 //                   h-full
 //                   md:pr-0"
 //               >
@@ -524,7 +505,7 @@
 //                   <h2
 //                     className="
 //                       instrument-sans font-[600]
-//                       text-[55px] 
+//                       text-[55px]
 //                       min-[900px]:text-[34px]
 //                       lg:text-[38px]
 //                       leading-[140%] mb-[10px]
@@ -538,7 +519,7 @@
 //                     className="
 //                       text-[#3e3131]
 //                       host-grotesk font-[400]
-//                       text-[34px] 
+//                       text-[34px]
 //                       min-[900px]:text-[18px]
 //                       lg:text-[19px]
 //                       leading-[140%]
@@ -583,11 +564,11 @@
 //     relative
 //     mb-10                 /* < 900px */
 //     min-[900px]:mb-0
-//     min-[900px]:absolute    
+//     min-[900px]:absolute
 //     min-[900px]:left-1/2
 //     min-[900px]:-translate-x-1/2
 //     min-[900px]:bottom-[15px]
-    
+
 //     min-[900px]:max-[1023px]:w-[400px]
 //     lg:w-[469px]
 //     xl:w-[609px]
@@ -595,7 +576,7 @@
 
 //     bg-white
 //     rounded-[20px]
-    
+
 //     max-[900px]:shadow-[0_4px_10.3px_rgba(136,130,130,0.25)]
 //     min-[900px]:shadow-[0_4px_8.7px_rgba(158,138,138,0.25)]
 //     px-[14px] lg:px-[20px]
@@ -731,21 +712,6 @@
 
 // export default Header;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
 import logo from "../../../assets/images/logo/logo.png";
@@ -753,87 +719,19 @@ import agenthero from "../../../assets/images/agenthero/agenthero1.png";
 import { Icon } from "@iconify/react";
 import { getCityData } from "../../../Api/userApi";
 
-/* convert a "1700px design space" value to a scaled value */
-const u = (n) => `calc(${n} * var(--u))`;
-
-/* Ticket shape values (same numbers as the old SVG) */
-const cornerRadius = 40;
-const topNotchWidth = 240;
-const notchDepth = 70;
-const notchRadius = 27;
-const bottomNotchWidth = 900;
-const notchDepth2 = 110;
-const notchRadius2 = 58;
-
-const PAGE_BG = "#ffffff"; // <- set to your page background colour
-
-/* Notches + concave fillets, drawn with plain CSS */
+/* Notches + concave fillets, Tailwind only (white = page background) */
 function TicketNotches() {
-  const bg = `var(--page-bg)`;
-  const fillet = (r, pos) =>
-    `radial-gradient(circle at ${pos}, transparent calc(${u(r)} - 0.5px), ${bg} ${u(r)})`;
-
   return (
     <>
-      {/* ---------- TOP NOTCH ---------- */}
-      <div
-        className="absolute top-0 z-20"
-        style={{
-          left: `calc(50% - ${u(topNotchWidth / 2)})`,
-          width: u(topNotchWidth),
-          height: u(notchDepth),
-          background: bg,
-          borderRadius: `0 0 ${u(notchRadius)} ${u(notchRadius)}`,
-        }}
-      />
-      <div
-        className="absolute top-0 z-20"
-        style={{
-          left: `calc(50% - ${u(topNotchWidth / 2)} - ${u(notchRadius)})`,
-          width: u(notchRadius),
-          height: u(notchRadius),
-          background: fillet(notchRadius, "0 100%"),
-        }}
-      />
-      <div
-        className="absolute top-0 z-20"
-        style={{
-          left: `calc(50% + ${u(topNotchWidth / 2)})`,
-          width: u(notchRadius),
-          height: u(notchRadius),
-          background: fillet(notchRadius, "100% 100%"),
-        }}
-      />
+      {/* ---------- TOP NOTCH (240 x 70, radius 27) ---------- */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-white w-[calc(240*var(--u))] h-[calc(70*var(--u))] rounded-b-[calc(27*var(--u))]" />
+      <div className="absolute top-0 z-20 left-[calc(50%_-_147*var(--u))] w-[calc(27*var(--u))] h-[calc(27*var(--u))] bg-[radial-gradient(circle_at_0_100%,transparent_calc(27*var(--u)_-_0.5px),white_calc(27*var(--u)))]" />
+      <div className="absolute top-0 z-20 left-[calc(50%_+_120*var(--u))] w-[calc(27*var(--u))] h-[calc(27*var(--u))] bg-[radial-gradient(circle_at_100%_100%,transparent_calc(27*var(--u)_-_0.5px),white_calc(27*var(--u)))]" />
 
-      {/* ---------- BOTTOM NOTCH ---------- */}
-      <div
-        className="absolute bottom-0 z-20"
-        style={{
-          left: `calc(50% - ${u(bottomNotchWidth / 2)})`,
-          width: u(bottomNotchWidth),
-          height: u(notchDepth2),
-          background: bg,
-          borderRadius: `${u(notchRadius2)} ${u(notchRadius2)} 0 0`,
-        }}
-      />
-      <div
-        className="absolute bottom-0 z-20"
-        style={{
-          left: `calc(50% - ${u(bottomNotchWidth / 2)} - ${u(notchRadius2)})`,
-          width: u(notchRadius2),
-          height: u(notchRadius2),
-          background: fillet(notchRadius2, "0 0"),
-        }}
-      />
-      <div
-        className="absolute bottom-0 z-20"
-        style={{
-          left: `calc(50% + ${u(bottomNotchWidth / 2)})`,
-          width: u(notchRadius2),
-          height: u(notchRadius2),
-          background: fillet(notchRadius2, "100% 0"),
-        }}
-      />
+      {/* ---------- BOTTOM NOTCH (900 x 110, radius 58) ---------- */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 bg-white w-[calc(900*var(--u))] h-[calc(110*var(--u))] rounded-t-[calc(58*var(--u))]" />
+      <div className="absolute bottom-0 z-20 left-[calc(50%_-_508*var(--u))] w-[calc(58*var(--u))] h-[calc(58*var(--u))] bg-[radial-gradient(circle_at_0_0,transparent_calc(58*var(--u)_-_0.5px),white_calc(58*var(--u)))]" />
+      <div className="absolute bottom-0 z-20 left-[calc(50%_+_450*var(--u))] w-[calc(58*var(--u))] h-[calc(58*var(--u))] bg-[radial-gradient(circle_at_100%_0,transparent_calc(58*var(--u)_-_0.5px),white_calc(58*var(--u)))]" />
     </>
   );
 }
@@ -862,94 +760,90 @@ function Header({ onchange, location, cityDataSend }) {
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
       <div className="relative z-50">
-        <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
+        <Navbar
+          top="top-[16px]"
+          padding="lg:px-[29px]"
+          right="right-4 sm:right-1 min-[900px]:!-right-2"
+        />
       </div>
 
-      <div className="absolute top-2 sm:top-3 md:top-4 lg:top-7 left-1/2 -translate-x-1/2 z-40 w-[7%] ">
+      <div className="absolute top-2 sm:top-3 md:top-4 lg:top-7 left-1/2 -translate-x-1/2 z-40 w-[7%]">
         <img src={logo} alt="logo" className="w-[100px] 2xl:w-[200px]" />
       </div>
 
-      {/* ================= TICKET (was the <svg>) ================= */}
-      <div
-        className="
-          relative w-full overflow-hidden bg-[#e7e7e7]
-          max-[899px]:aspect-[1700/1080]
-          min-[900px]:aspect-[1700/440]
-        "
-        style={{
-          containerType: "inline-size",
-          "--u": "calc(100cqw / 1700)", // 1 design-px, scales with ticket width
-          "--page-bg": PAGE_BG,
-          borderRadius: u(cornerRadius),
-        }}
-      >
-        <TicketNotches />
-
-        {/* Main Content */}
+      {/* ================= TICKET ================= */}
+      {/* Wrapper = size container; --u = 1 design-px (ticket width / 1700), used only for notches/corners */}
+      <div className="w-full [container-type:inline-size] [--u:calc(100cqw/1700)]">
         <div
           className="
-            relative z-10 h-full
-            flex flex-row max-[900px]:flex-col
-            items-start max-[900px]:items-center
-            max-[900px]:text-center
-            justify-between
-            pt-[calc(90*var(--u))] sm:pt-[calc(110*var(--u))]
-            px-[calc(16*var(--u))] sm:px-[calc(32*var(--u))] lg:pl-[calc(29*var(--u))]
-            md:pr-0
+            relative w-full overflow-hidden bg-[#e7e7e7]
+            rounded-[20px] lg:rounded-[calc(40*var(--u))]
+            min-h-[420px] pb-[200px]
+            min-[900px]:min-h-0 min-[900px]:pb-0
+            min-[900px]:h-[300px] lg:h-[360px] 2xl:h-[440px]
           "
         >
-          {/* Left Text */}
-          <div className="w-full min-[900px]:max-w-[calc(390*var(--u))] z-10">
-            <h2
-              className="
-                instrument-sans font-[600]
-                text-[length:calc(55*var(--u))]
-                min-[900px]:text-[length:calc(34*var(--u))]
-                lg:text-[length:calc(38*var(--u))]
-                leading-[140%] mb-[calc(10*var(--u))]
-              "
-            >
-              Find the Right Agent for{" "}
-              <span className="text-[#6ABD11ED]">Your Property</span>
-            </h2>
+          <TicketNotches />
 
-            <p
-              className="
-                text-[#3e3131] host-grotesk font-[400]
-                text-[length:calc(34*var(--u))]
-                min-[900px]:text-[length:calc(18*var(--u))]
-                lg:text-[length:calc(19*var(--u))]
-                leading-[140%]
-              "
-            >
-              Plot specialists, rental experts, and home sale
-              professionals—all in one place.
-            </p>
-          </div>
-
-          {/* Right Image */}
+          {/* Main Content */}
           <div
             className="
-              relative right-0
-              bottom-[calc(240*var(--u))]
-              min-[900px]:bottom-[calc(160*var(--u))]
-              lg:bottom-[calc(180*var(--u))]
-              max-[900px]:w-[calc(1100*var(--u))]
-              min-[900px]:max-[1023px]:w-[calc(530*var(--u))]
-              min-[1024px]:w-[calc(570*var(--u))]
-              pointer-events-none
-            "
+    h-full
+    flex flex-col items-center text-center
+    min-[900px]:relative min-[900px]:z-10
+    min-[900px]:flex-row min-[900px]:items-start
+    min-[900px]:text-left min-[900px]:justify-between
+    pt-20 px-5
+    min-[900px]:pt-14 lg:pt-24 min-[900px]:pl-8 min-[900px]:pr-0
+    2xl:pt-32 2xl:pl-[29px]
+  "
           >
-            <img
-              src={agenthero}
-              alt="Agent Hero"
-              className="w-full h-auto object-contain"
-            />
+            {/* Left Text */}
+            <div className="w-full max-w-[400px] sm:max-w-full min-[900px]:!max-w-[300px] lg:!max-w-[380px] 2xl:!max-w-[480px]">
+              <h2
+                className="
+      instrument-sans font-[600] leading-[140%] mb-2
+      text-[24px] sm:text-[26px]
+      min-[900px]:text-[18px] lg:text-[26px] xl:text-[30px] 2xl:text-[37px]
+    "
+              >
+                Find the Right Agent for{" "}
+                <span className="text-[#6ABD11ED]">Your Property</span>
+              </h2>
+
+              <p
+                className="
+      text-[#3e3131] host-grotesk font-[400] leading-[140%]
+      text-[15px] sm:text-[16px]
+      min-[900px]:text-[11px] lg:text-[15px] xl:text-[15px] 2xl:text-[17px]
+    "
+              >
+                Plot specialists, rental experts, and home sale
+                professionals—all in one place.
+              </p>
+            </div>
+
+            {/* Right Image */}
+            <div
+              className="
+    pointer-events-none z-10
+    absolute bottom-0 left-1/2 -translate-x-1/2
+    w-[300px] sm:w-[380px]
+    min-[900px]:left-auto min-[900px]:translate-x-0 min-[900px]:right-0
+    min-[900px]:w-[400px] lg:w-[480px] 2xl:w-[600px]
+  "
+            >
+              <img
+                src={agenthero}
+                alt="Agent Hero"
+                className="w-full h-auto object-contain"
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Search Box (unchanged) */}
+      {/* Search Box */}
       <div
         className="
           relative
