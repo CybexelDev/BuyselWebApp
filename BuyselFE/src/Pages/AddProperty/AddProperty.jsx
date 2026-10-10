@@ -31,9 +31,9 @@ function AddProperty() {
   //   return <Navigate to="/plans" replace />;
   // }
 
-  if (role === "agent" && remainingPropertyAgent <= 0) {
-    return <Navigate to="/agent/plans" replace />;
-  }
+  // if (role === "agent" && remainingPropertyAgent <= 0) {
+  //   return <Navigate to="/agent/plans" replace />;
+  // }
 
   const isAgent = role === "agent";
 

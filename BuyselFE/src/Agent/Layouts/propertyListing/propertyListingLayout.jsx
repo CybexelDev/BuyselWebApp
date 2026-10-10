@@ -20,6 +20,7 @@ import { deletePropertyListing, getPropertyListing } from "../../../Api/agentsAp
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUserPropertyListing, userPropertyList } from "../../../Api/userApi";
+import { FaTrashAlt } from "react-icons/fa";
 
 const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-slate-50", lg = "lg:py-12", onClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -144,24 +145,117 @@ useEffect(() => {
 }, [role]);
 
   
-     const handleDelete = async(id)=>{
-      const confirmDelete = window.confirm("Are you sure delete?")
-  
-      if(!confirmDelete) return;
-      let res;
-      if(role === "agent"){
-          res = await deletePropertyListing(id);
-      }else if(role === "user"){
-        res = await deleteUserPropertyListing(id);
-      }
-      if(res){
-        setProperties((prev)=>prev.filter((item)=>item.id !== id))
-      }else{
+const handleDelete = (id) => {
+  const performDelete = async () => {
+    let res;
+    if (role === "agent") {
+      res = await deletePropertyListing(id);
+    } else if (role === "user") {
+      res = await deleteUserPropertyListing(id);
+    }
+    if (res) {
+      setProperties((prev) => prev.filter((item) => item.id !== id));
+    } else {
+      toast.error("Delete failed");
+    }
+  };
 
-        toast.error("Delete failed")
-      }
-     }
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Slide up + fade out, then dismiss the toast
+  const closeCard = (e, t) => {
+    const card = e.currentTarget.closest("[data-delete-card]");
+    if (!card || !card.animate || reduceMotion) {
+      toast.dismiss(t);
+      return;
+    }
+    card.style.pointerEvents = "none"; // blocks double clicks while leaving
+    card
+      .animate(
+        [
+          { opacity: 1, transform: "translateY(0) scale(1)" },
+          { opacity: 0, transform: "translateY(-28px) scale(0.96)" },
+        ],
+        { duration: 250, easing: "ease-in", fill: "forwards" }
+      )
+      .addEventListener("finish", () => toast.dismiss(t));
+  };
+
+  toast.custom(
+    (t) => (
+      <div
+        data-delete-card
+        ref={(el) => {
+          // Slide down + fade in (runs once, even if the toast re-renders)
+          if (el && !el.dataset.entered && !reduceMotion && el.animate) {
+            el.dataset.entered = "1";
+            el.animate(
+              [
+                { opacity: 0, transform: "translateY(-28px) scale(0.96)" },
+                { opacity: 1, transform: "translateY(0) scale(1)" },
+              ],
+              { duration: 350, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+            );
+          }
+        }}
+        className="host-grotesk flex w-[320px] max-w-[90vw] flex-col items-center rounded-2xl border border-[#6ABD11]/50 bg-white p-4 text-center"
+      >
+        {/* Icon */}
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#C8F08A] to-[#8FD43A] text-slate-900 shadow-[0_0_14px_rgba(106,189,17,0.5)]">
+          <FaTrashAlt size={16} />
+        </span>
+
+        {/* Text */}
+        <div className="mt-2">
+          <p className="text-sm font-bold text-slate-900">
+            Are you sure you want to delete?
+          </p>
+          <p className="mt-0.5 text-xs text-slate-500">
+            This listing will be removed.
+          </p>
+        </div>
+
+        {/* Buttons */}
+        <div className="mt-3 flex w-full justify-center gap-3">
+          <button
+            onClick={(e) => closeCard(e, t)}
+            className="cursor-pointer rounded-xl border border-[#6ABD11]/40 bg-[#6ABD11]/10 px-5 py-2 text-xs font-semibold text-[#3F8004] transition hover:bg-[#6ABD11]/20"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={(e) => {
+              performDelete();
+              closeCard(e, t);
+            }}
+            className="cursor-pointer rounded-xl bg-gradient-to-r from-red-500 to-red-600 px-5 py-2 text-xs font-semibold text-white shadow-sm transition hover:from-red-600 hover:to-red-700 hover:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.6)]"
+          >
+            Yes, delete
+          </button>
+        </div>
+      </div>
+    ),
+    {
+      id: `delete-${id}`,
+      duration: Infinity,
+      position: "top-center",
+      unstyled: true,
+      dismissible: false,
+      style: {
+        background: "transparent",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
+        border: "none",
+        boxShadow: "none",
+        padding: 0,
+        borderRadius: 0,
+        maxWidth: "none",
+        transition: "none",
+        animation: "none",
+      },
+    }
+  );
+};
 
 const filteredProperties = properties.filter((property) => {
 

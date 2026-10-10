@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./contactheader.css";
 import logo from "../../../assets/images/logo/logo.png";
 import Navbar from "../../../Components/Navbar/Navbar";
-import bgimg from "../../../assets/images/contact/bgimg.png";
+import bgimg from "../../../assets/images/contact/bgimg.png?w=800&format=webp";
 
 const Header = () => {
   return (
@@ -10,14 +10,14 @@ const Header = () => {
       <Navbar />
       <div
         className="
-    relative w-full min-h-[350px] md:min-h-[420px]
-    bg-[#e6e6e6] rounded-[32px] overflow-hidden
-    bg-no-repeat
-    bg-[position:right_100%]   
-    md:bg-right              
-    bg-[length:90%_250px]                           
-    sm:bg-[length:87%]
-    lg:bg-[length:79%]"
+         relative w-full min-h-[350px] md:min-h-[420px]
+         bg-[#e6e6e6] rounded-[32px] overflow-hidden
+         bg-no-repeat
+         bg-[position:right_100%]   
+         md:bg-right              
+         bg-[length:90%_250px]                           
+         sm:bg-[length:87%]
+         lg:bg-[length:79%]"
         style={{
           backgroundImage: `url(${bgimg})`,
         }}
@@ -27,6 +27,7 @@ const Header = () => {
           <div className="flex items-center justify-center">
             <img
               src={logo}
+              loading="lazy"
               alt="logo"
               className="contact-cta-logo w-[100px]"
             />

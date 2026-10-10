@@ -1,106 +1,129 @@
-import { useEffect, useState } from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
 import logo from "../../../assets/images/logo/logo.png";
-import agenthero from "../../../assets/images/agenthero/agenthero1.png";
-import house from "../../../assets/images/about/house.png"
-import { Icon } from "@iconify/react";
+import house from "../../../assets/images/about/house.png?w=1600&format=webp";
 
-function AboutHeader() {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+/* convert a "1700px design space" value to a scaled value */
+const u = (n) => `calc(${n} * var(--u))`;
 
-  useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  const isVeryLarge = screenWidth > 1800;
+/* Ticket shape values (same numbers as the old SVG) */
+const cornerRadius = 40;
+const topNotchWidth = 240;
+const notchDepth = 70;
+const notchRadius = 27;
+const bottomNotchWidth = 900;
+const notchDepth2 = 110;
+const notchRadius2 = 58;
 
-  const width = 1700;
-  const height = screenWidth < 900 ? 1080 : 557;
-  const cornerRadius = 40;
-  const topNotchWidth = 230;
-  const bottomNotchWidth = 500;
-  const notchDepth = 60;
-  const notchDepth2 = 70;
-  const notchRadius = 38;
-  const notchRadius2 = 40;
 
-  const topNotchStart = width / 2 - topNotchWidth / 2;
-  const topNotchEnd = width / 2 + topNotchWidth / 2;
-  const bottomNotchStart = width / 2 - bottomNotchWidth / 2;
-  const bottomNotchEnd = width / 2 + bottomNotchWidth / 2;
+const PAGE_BG = "#ffffff"; // <- set to your page background colour
 
-  const ticketPath = `
-    M ${cornerRadius},0
-    L ${topNotchStart - notchRadius},0
-    Q ${topNotchStart},0 ${topNotchStart},${notchRadius}
-    L ${topNotchStart},${notchDepth - notchRadius}
-    Q ${topNotchStart},${notchDepth} ${topNotchStart + notchRadius},${notchDepth}
-    L ${topNotchEnd - notchRadius},${notchDepth}
-    Q ${topNotchEnd},${notchDepth} ${topNotchEnd},${notchDepth - notchRadius}
-    L ${topNotchEnd},${notchRadius}
-    Q ${topNotchEnd},0 ${topNotchEnd + notchRadius},0
-    L ${width - cornerRadius},0
-    Q ${width},0 ${width},${cornerRadius}
-    L ${width},${height - cornerRadius}
-    Q ${width},${height} ${width - cornerRadius},${height}
-    L ${bottomNotchEnd + notchRadius2},${height}
-    Q ${bottomNotchEnd},${height} ${bottomNotchEnd},${height - notchRadius2}
-    L ${bottomNotchEnd},${height - notchDepth2 + notchRadius2}
-    Q ${bottomNotchEnd},${height - notchDepth2} ${bottomNotchEnd - notchRadius2},${height - notchDepth2}
-    L ${bottomNotchStart + notchRadius2},${height - notchDepth2}
-    Q ${bottomNotchStart},${height - notchDepth2} ${bottomNotchStart},${height - notchDepth2 + notchRadius2}
-    L ${bottomNotchStart},${height - notchRadius2}
-    Q ${bottomNotchStart},${height} ${bottomNotchStart - notchRadius2},${height}
-    L ${cornerRadius},${height}
-    Q 0,${height} 0,${height - cornerRadius}
-    L 0,${cornerRadius}
-    Q 0,0 ${cornerRadius},0
-    Z
-  `;
+/* Notches + concave fillets, drawn with plain CSS */
+function TicketNotches() {
+  const bg = `var(--page-bg)`;
+  const fillet = (r, pos) =>
+    `radial-gradient(circle at ${pos}, transparent calc(${u(r)} - 0.5px), ${bg} ${u(r)})`;
 
   return (
+    <>
+      {/* ---------- TOP NOTCH ---------- */}
+      <div
+        className="absolute top-0 z-20"
+        style={{
+          left: `calc(50% - ${u(topNotchWidth / 2)})`,
+          width: u(topNotchWidth),
+          height: u(notchDepth),
+          background: bg,
+          borderRadius: `0 0 ${u(notchRadius)} ${u(notchRadius)}`,
+        }}
+      />
+      <div
+        className="absolute top-0 z-20"
+        style={{
+          left: `calc(50% - ${u(topNotchWidth / 2)} - ${u(notchRadius)})`,
+          width: u(notchRadius),
+          height: u(notchRadius),
+          background: fillet(notchRadius, "0 100%"),
+        }}
+      />
+      <div
+        className="absolute top-0 z-20"
+        style={{
+          left: `calc(50% + ${u(topNotchWidth / 2)})`,
+          width: u(notchRadius),
+          height: u(notchRadius),
+          background: fillet(notchRadius, "100% 100%"),
+        }}
+      />
+
+      {/* ---------- BOTTOM NOTCH ---------- */}
+      <div
+        className="absolute bottom-0 z-20"
+        style={{
+          left: `calc(50% - ${u(bottomNotchWidth / 2)})`,
+          width: u(bottomNotchWidth),
+          height: u(notchDepth2),
+          background: bg,
+          borderRadius: `${u(notchRadius2)} ${u(notchRadius2)} 0 0`,
+        }}
+      />
+      <div
+        className="absolute bottom-0 z-20"
+        style={{
+          left: `calc(50% - ${u(bottomNotchWidth / 2)} - ${u(notchRadius2)})`,
+          width: u(notchRadius2),
+          height: u(notchRadius2),
+          background: fillet(notchRadius2, "0 0"),
+        }}
+      />
+      <div
+        className="absolute bottom-0 z-20"
+        style={{
+          left: `calc(50% + ${u(bottomNotchWidth / 2)})`,
+          width: u(notchRadius2),
+          height: u(notchRadius2),
+          background: fillet(notchRadius2, "100% 0"),
+        }}
+      />
+    </>
+  );
+}
+
+function AboutHeader() {
+  return (
     <div
-      className="relative w-full px-[13px] md:px-[18px] mt-[15px] sm:mt-[27px] lg:mt-[20px] 
+      className="relative w-full px-[13px] md:px-[18px] mt-[15px] sm:mt-[27px] lg:mt-[20px]
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
-          <div className="relative z-50">
-      <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
-            </div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-40 w-[7%]">
-        <img
-          src={logo}
-          alt="logo"
-          className="w-[100px]"
-        />
+      <div className="relative z-50">
+        <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
       </div>
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
-        <defs>
-          <clipPath id="ticketClip">
-            <path d={ticketPath} />
-          </clipPath>
-        </defs>
 
-        <path d={ticketPath} fill="#e7e7e7" />
+      <div className="absolute top-0 lg:top-2 left-1/2 -translate-x-1/2 z-40 w-[7%]">
+        <img src={logo} loading="lazy" alt="logo" className="w-[100px] 2xl:w-[200px]" />
+      </div>
 
-        {/* HTML Content */}
-        <foreignObject
-          x="0"
-          y="0"
-          width={width}
-          height={height}
-          clipPath="url(#ticketClip)"
-        >
-          <div className="w-full h-full relative bg-cover bg-center "
-           style={{backgroundImage:`url(${house})`}}
-          >
+      {/* ================= TICKET (was the <svg>) ================= */}
+      <div
+        className="
+          relative w-full overflow-hidden bg-[#e7e7e7]
+          max-[899px]:aspect-[1700/1080]
+          min-[900px]:aspect-[1700/557]
+        "
+        style={{
+          containerType: "inline-size",
+          "--u": "calc(100cqw / 1700)",
+          "--page-bg": PAGE_BG,
+          borderRadius: u(cornerRadius),
+        }}
+      >
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${house})` }}
+        />
 
-
-          </div>
-        </foreignObject>
-      </svg>
-
-      
+        <TicketNotches />
+      </div>
     </div>
   );
 }
