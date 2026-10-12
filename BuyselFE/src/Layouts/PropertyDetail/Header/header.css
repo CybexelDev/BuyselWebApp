@@ -32,6 +32,19 @@
 }
 
 
+@media screen  and (max-width:768px){
+
+.detail-cta-logo-container {
+    width: 30%;
+    padding: 8px 1px;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    background: #ffffff;
+    border-radius: 0 0 25px 25px;
+}
+}
+
 .detail-cta-logo-container::before {
     content: "";
     position: absolute;
@@ -110,3 +123,4 @@
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in-out;
 }
+
