@@ -1,3 +1,4 @@
+
 // import { use, useEffect, useState } from "react";
 // import Navbar from "../../../Components/Navbar/Navbar";
 // import logo from "../../../assets/images/logo/logo.png";
@@ -9,6 +10,8 @@
 //   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 //   const [open, setOpen] = useState(false);
 //   const [selecetdLocation, setSelectedLocation] = useState("Location");
+
+
 
 //   useEffect(() => {
 //     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -63,6 +66,7 @@
 //     Z
 //   `;
 
+
 //   useEffect(() => {
 
 //     const getCityDatas = async () => {
@@ -89,6 +93,7 @@
 //       <div className="relative z-50">
 //         <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
 //       </div>
+
 
 //       <div className="absolute top-2 sm:top-3 md:top-4 lg:top-5 left-1/2 -translate-x-1/2 z-40 w-[7%]">
 //         <img
@@ -120,14 +125,14 @@
 //             {/* Main Content */}
 //             <div
 //               className="
-//                   relative
+//                   relative 
 //                   flex flex-row max-[900px]:flex-col
 //                   items-start
 //                   max-[900px]:items-center
 //                   max-[900px]:text-center
 //                   justify-between items-start
 //                   px-4 sm:px-8 lg:pl-[29px]
-//                   pt-[90px] sm:pt-[110px]
+//                   pt-[90px] sm:pt-[110px]   
 //                   h-full
 //                   md:pr-0"
 //             >
@@ -136,7 +141,7 @@
 //                 <h2
 //                   className="
 //                   instrument-sans font-[600]
-//                   text-[55px]
+//                   text-[55px] 
 //                   min-[900px]:text-[34px]   /* 900px → 1024px */
 //                   lg:text-[38px]
 //                   leading-[140%] mb-[10px]
@@ -150,7 +155,7 @@
 //                   className="
 //                 text-[#3e3131]
 //                   host-grotesk font-[400]
-//                   text-[34px]
+//                   text-[34px] 
 //                    min-[900px]:text-[18px]   /* 900px → 1024px */
 //                   lg:text-[19px]
 //                   leading-[140%]
@@ -169,9 +174,9 @@
 //                bottom-60
 //                min-[900px]:bottom-40
 //                 lg:bottom-45
-//                 max-[900px]:w-[1100px]         < 900
-//                  min-[900px]:max-[1023px]:w-[530px]  900–1024
-//                  min-[1024px]:w-[570px]
+//                 max-[900px]:w-[1100px]         < 900 
+//                  min-[900px]:max-[1023px]:w-[530px]  900–1024 
+//                  min-[1024px]:w-[570px] 
 
 //                 pointer-events-none
 //               "
@@ -208,11 +213,11 @@
 //     relative
 //     mb-10                 /* < 900px */
 //     min-[900px]:mb-0
-//     min-[900px]:absolute
+//     min-[900px]:absolute    
 //     min-[900px]:left-1/2
 //     min-[900px]:-translate-x-1/2
 //     min-[900px]:bottom-[15px]
-
+    
 //     min-[900px]:max-[1023px]:w-[400px]
 //     lg:w-[469px]
 //     xl:w-[609px]
@@ -220,7 +225,7 @@
 
 //     bg-white
 //     rounded-[20px]
-
+    
 //     max-[900px]:shadow-[0_4px_10.3px_rgba(136,130,130,0.25)]
 //     min-[900px]:shadow-[0_4px_8.7px_rgba(158,138,138,0.25)]
 //     px-[14px] lg:px-[20px]
@@ -274,6 +279,7 @@
 //                       {loc}
 //                     </li>
 //                   ))}
+
 
 //               </ul>
 //             </div>
@@ -356,6 +362,19 @@
 // }
 
 // export default Header;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import { useEffect, useLayoutEffect, useRef, useState } from "react";
 // import Navbar from "../../../Components/Navbar/Navbar";
@@ -489,14 +508,14 @@
 //               {/* Main Content */}
 //               <div
 //                 className="
-//                   relative
+//                   relative 
 //                   flex flex-row max-[900px]:flex-col
 //                   items-start
 //                   max-[900px]:items-center
 //                   max-[900px]:text-center
 //                   justify-between items-start
 //                   px-4 sm:px-8 lg:pl-[29px]
-//                   pt-[90px] sm:pt-[110px]
+//                   pt-[90px] sm:pt-[110px]   
 //                   h-full
 //                   md:pr-0"
 //               >
@@ -505,7 +524,7 @@
 //                   <h2
 //                     className="
 //                       instrument-sans font-[600]
-//                       text-[55px]
+//                       text-[55px] 
 //                       min-[900px]:text-[34px]
 //                       lg:text-[38px]
 //                       leading-[140%] mb-[10px]
@@ -519,7 +538,7 @@
 //                     className="
 //                       text-[#3e3131]
 //                       host-grotesk font-[400]
-//                       text-[34px]
+//                       text-[34px] 
 //                       min-[900px]:text-[18px]
 //                       lg:text-[19px]
 //                       leading-[140%]
@@ -564,11 +583,11 @@
 //     relative
 //     mb-10                 /* < 900px */
 //     min-[900px]:mb-0
-//     min-[900px]:absolute
+//     min-[900px]:absolute    
 //     min-[900px]:left-1/2
 //     min-[900px]:-translate-x-1/2
 //     min-[900px]:bottom-[15px]
-
+    
 //     min-[900px]:max-[1023px]:w-[400px]
 //     lg:w-[469px]
 //     xl:w-[609px]
@@ -576,7 +595,7 @@
 
 //     bg-white
 //     rounded-[20px]
-
+    
 //     max-[900px]:shadow-[0_4px_10.3px_rgba(136,130,130,0.25)]
 //     min-[900px]:shadow-[0_4px_8.7px_rgba(158,138,138,0.25)]
 //     px-[14px] lg:px-[20px]
@@ -712,6 +731,18 @@
 
 // export default Header;
 
+
+
+
+
+
+
+
+
+
+
+
+
 import { useEffect, useState } from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
 import logo from "../../../assets/images/logo/logo.png";
@@ -724,10 +755,55 @@ function TicketNotches() {
   return (
     <>
       {/* ---------- TOP NOTCH (240 x 70, radius 27) ---------- */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-white w-[calc(240*var(--u))] h-[calc(70*var(--u))] rounded-b-[calc(27*var(--u))]" />
-      <div className="absolute top-0 z-20 left-[calc(50%_-_147*var(--u))] w-[calc(27*var(--u))] h-[calc(27*var(--u))] bg-[radial-gradient(circle_at_0_100%,transparent_calc(27*var(--u)_-_0.5px),white_calc(27*var(--u)))]" />
-      <div className="absolute top-0 z-20 left-[calc(50%_+_120*var(--u))] w-[calc(27*var(--u))] h-[calc(27*var(--u))] bg-[radial-gradient(circle_at_100%_100%,transparent_calc(27*var(--u)_-_0.5px),white_calc(27*var(--u)))]" />
+      {/* ---------- TOP NOTCH ---------- */}
+{/* Below 1024px: responsive steps | lg+: original --u shape */}
+<div
+  className="
+    absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-white
+    w-1/4 h-[40px] rounded-b-[18px]
+    sm:w-1/5 sm:h-[46px] sm:rounded-b-[20px]
+    md:h-[54px] md:rounded-b-[22px]
+    lg:w-[calc(240*var(--u))] lg:h-[calc(70*var(--u))] lg:rounded-b-[calc(27*var(--u))]
+  "
+/>
 
+{/* Left fillet */}
+<div
+  className="
+    absolute top-0 z-20
+    left-[calc(37.5%_-_18px)] w-[18px] h-[18px]
+    bg-[radial-gradient(circle_at_0_100%,transparent_17.5px,white_18px)]
+
+    sm:left-[calc(40%_-_20px)] sm:w-[20px] sm:h-[20px]
+    sm:bg-[radial-gradient(circle_at_0_100%,transparent_19.5px,white_20px)]
+
+    md:left-[calc(40%_-_22px)] md:w-[22px] md:h-[22px]
+    md:bg-[radial-gradient(circle_at_0_100%,transparent_21.5px,white_22px)]
+
+    lg:left-[calc(50%_-_147*var(--u))]
+    lg:w-[calc(27*var(--u))] lg:h-[calc(27*var(--u))]
+    lg:bg-[radial-gradient(circle_at_0_100%,transparent_calc(27*var(--u)_-_0.5px),white_calc(27*var(--u)))]
+  "
+/>
+
+{/* Right fillet */}
+<div
+  className="
+    absolute top-0 z-20
+    left-[62.5%] w-[18px] h-[18px]
+    bg-[radial-gradient(circle_at_100%_100%,transparent_17.5px,white_18px)]
+
+    sm:left-[60%] sm:w-[20px] sm:h-[20px]
+    sm:bg-[radial-gradient(circle_at_100%_100%,transparent_19.5px,white_20px)]
+
+    md:left-[60%] md:w-[22px] md:h-[22px]
+    md:bg-[radial-gradient(circle_at_100%_100%,transparent_21.5px,white_22px)]
+
+    lg:left-[calc(50%_+_120*var(--u))]
+    lg:w-[calc(27*var(--u))] lg:h-[calc(27*var(--u))]
+    lg:bg-[radial-gradient(circle_at_100%_100%,transparent_calc(27*var(--u)_-_0.5px),white_calc(27*var(--u)))]
+  "
+/>
       {/* ---------- BOTTOM NOTCH (900 x 110, radius 58) ---------- */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 bg-white w-[calc(900*var(--u))] h-[calc(110*var(--u))] rounded-t-[calc(58*var(--u))]" />
       <div className="absolute bottom-0 z-20 left-[calc(50%_-_508*var(--u))] w-[calc(58*var(--u))] h-[calc(58*var(--u))] bg-[radial-gradient(circle_at_0_0,transparent_calc(58*var(--u)_-_0.5px),white_calc(58*var(--u)))]" />
@@ -760,14 +836,10 @@ function Header({ onchange, location, cityDataSend }) {
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
       <div className="relative z-50">
-        <Navbar
-          top="top-[16px]"
-          padding="lg:px-[29px]"
-          right="right-4 sm:right-1 min-[900px]:!-right-2"
-        />
+        <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-0" />
       </div>
 
-      <div className="absolute top-2 sm:top-3 md:top-4 lg:top-7 left-1/2 -translate-x-1/2 z-40 w-[7%]">
+      <div className="absolute top-4 sm:top-5 md:top-4 lg:top-[21px] xl:top-7 left-1/2 -translate-x-1/2 z-40 w-[69px] sm:w-[85px] md:w-[100px]">
         <img src={logo} alt="logo" className="w-[100px] 2xl:w-[200px]" />
       </div>
 
@@ -778,7 +850,7 @@ function Header({ onchange, location, cityDataSend }) {
           className="
             relative w-full overflow-hidden bg-[#e7e7e7]
             rounded-[20px] lg:rounded-[calc(40*var(--u))]
-            min-h-[420px] pb-[200px]
+            min-h-[380px] sm:min-h-[420px] pb-[200px]
             min-[900px]:min-h-0 min-[900px]:pb-0
             min-[900px]:h-[300px] lg:h-[360px] 2xl:h-[440px]
           "
@@ -787,52 +859,52 @@ function Header({ onchange, location, cityDataSend }) {
 
           {/* Main Content */}
           <div
-            className="
+  className="
     h-full
     flex flex-col items-center text-center
     min-[900px]:relative min-[900px]:z-10
     min-[900px]:flex-row min-[900px]:items-start
     min-[900px]:text-left min-[900px]:justify-between
-    pt-20 px-5
-    min-[900px]:pt-14 lg:pt-24 min-[900px]:pl-8 min-[900px]:pr-0
-    2xl:pt-32 2xl:pl-[29px]
+    pt-15 md:pt-18 px-5
+    min-[900px]:pt-24 min-[900px]:pl-6 min-[900px]:pr-0 lg:pl-7
+    2xl:pt-32 2xl:pl-7
   "
-          >
+>
             {/* Left Text */}
-            <div className="w-full max-w-[400px] sm:max-w-full min-[900px]:!max-w-[300px] lg:!max-w-[380px] 2xl:!max-w-[480px]">
+            <div className="w-full  min-[900px]:max-w-[300px] lg:max-w-[380px] 2xl:max-w-[480px]">
               <h2
                 className="
-      instrument-sans font-[600] leading-[140%] mb-2
-      text-[24px] sm:text-[26px]
-      min-[900px]:text-[18px] lg:text-[26px] xl:text-[30px] 2xl:text-[37px]
-    "
+                  instrument-sans font-[600] leading-[140%] mb-2
+                  text-[24px] sm:text-[30px]
+                  min-[900px]:text-[24px] lg:text-[32px] 2xl:text-[38px]
+                "
               >
                 Find the Right Agent for{" "}
                 <span className="text-[#6ABD11ED]">Your Property</span>
               </h2>
 
               <p
-                className="
-      text-[#3e3131] host-grotesk font-[400] leading-[140%]
-      text-[15px] sm:text-[16px]
-      min-[900px]:text-[11px] lg:text-[15px] xl:text-[15px] 2xl:text-[17px]
-    "
-              >
-                Plot specialists, rental experts, and home sale
-                professionals—all in one place.
-              </p>
+  className="max-w-[400px] max-lg:mx-auto max-sm:text-center
+    text-[#3e3131] host-grotesk font-[400] leading-[120%]
+    text-[14px] sm:text-[16px]
+    min-[900px]:text-[14px] lg:text-[15px] 2xl:text-[16px]"
+>
+  Plot specialists, rental experts, and home sale
+  professionals—all in one place.
+</p>
+  
             </div>
 
             {/* Right Image */}
             <div
-              className="
+  className="
     pointer-events-none z-10
     absolute bottom-0 left-1/2 -translate-x-1/2
     w-[300px] sm:w-[380px]
     min-[900px]:left-auto min-[900px]:translate-x-0 min-[900px]:right-0
     min-[900px]:w-[400px] lg:w-[480px] 2xl:w-[600px]
   "
-            >
+>
               <img
                 src={agenthero}
                 alt="Agent Hero"
@@ -890,8 +962,8 @@ function Header({ onchange, location, cityDataSend }) {
             />
           </button>
           {open && (
-            <div className="absolute mt-2 w-40 bg-black shadow-lg rounded-2xl z-50 p-1">
-              <ul className="text-sm text-white host-grotesk">
+<div className="absolute mt-2 w-48 bg-black shadow-lg rounded-2xl z-50 p-1 max-h-48 overflow-y-auto overscroll-contain">
+             <ul className="text-sm text-white host-grotesk">
                 <li
                   onClick={() => {
                     setOpen(false);
@@ -901,22 +973,34 @@ function Header({ onchange, location, cityDataSend }) {
                 >
                   All Locations
                 </li>
-                {Array.isArray(location) &&
-                  location.map((loc, index) => (
-                    <li
-                      key={index}
-                      onClick={() => {
-                        setOpen(false);
-                        setSelectedLocation(loc);
-                      }}
-                      className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
-                    >
-                      {loc}
-                    </li>
-                  ))}
+            
+{Array.isArray(location) &&
+  location
+    .filter(
+      (loc, index, arr) =>
+        arr.findIndex(
+          (item) =>
+            item.trim().toLowerCase() ===
+            loc.trim().toLowerCase()
+        ) === index
+    )
+    .map((loc, index) => (
+      <li
+        key={loc.trim().toLowerCase()}
+        onClick={() => {
+          setOpen(false);
+          setSelectedLocation(loc);
+        }}
+        className="px-4 py-2 hover:bg-[#75c222] hover:text-black rounded-xl cursor-pointer"
+      >
+        {loc}
+      </li>
+    ))}
+
               </ul>
             </div>
           )}
+
         </div>
 
         <div

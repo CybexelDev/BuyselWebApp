@@ -26,36 +26,56 @@ function TicketNotches() {
   return (
     <>
       {/* ---------- TOP NOTCH ---------- */}
+      {/* Below 1024px: responsive steps | lg+: original --u shape */}
       <div
-        className="absolute top-0 z-20"
-        style={{
-          left: `calc(50% - ${u(topNotchWidth / 2)})`,
-          width: u(topNotchWidth),
-          height: u(notchDepth),
-          background: bg,
-          borderRadius: `0 0 ${u(notchRadius)} ${u(notchRadius)}`,
-        }}
-      />
-      <div
-        className="absolute top-0 z-20"
-        style={{
-          left: `calc(50% - ${u(topNotchWidth / 2)} - ${u(notchRadius)})`,
-          width: u(notchRadius),
-          height: u(notchRadius),
-          background: fillet(notchRadius, "0 100%"),
-        }}
-      />
-      <div
-        className="absolute top-0 z-20"
-        style={{
-          left: `calc(50% + ${u(topNotchWidth / 2)})`,
-          width: u(notchRadius),
-          height: u(notchRadius),
-          background: fillet(notchRadius, "100% 100%"),
-        }}
+        className="
+          absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-[var(--page-bg)]
+          w-1/4 h-[40px] rounded-b-[18px]
+          sm:w-1/5 sm:h-[46px] sm:rounded-b-[20px]
+          md:h-[54px] md:rounded-b-[22px]
+          lg:w-[calc(240*var(--u))] lg:h-[calc(70*var(--u))] lg:rounded-b-[calc(27*var(--u))]
+        "
       />
 
-      {/* ---------- BOTTOM NOTCH ---------- */}
+      {/* Left fillet */}
+      <div
+        className="
+          absolute top-0 z-20
+          left-[calc(37.5%_-_18px)] w-[18px] h-[18px]
+          bg-[radial-gradient(circle_at_0_100%,transparent_17.5px,var(--page-bg)_18px)]
+
+          sm:left-[calc(40%_-_20px)] sm:w-[20px] sm:h-[20px]
+          sm:bg-[radial-gradient(circle_at_0_100%,transparent_19.5px,var(--page-bg)_20px)]
+
+          md:left-[calc(40%_-_22px)] md:w-[22px] md:h-[22px]
+          md:bg-[radial-gradient(circle_at_0_100%,transparent_21.5px,var(--page-bg)_22px)]
+
+          lg:left-[calc(50%_-_147*var(--u))]
+          lg:w-[calc(27*var(--u))] lg:h-[calc(27*var(--u))]
+          lg:bg-[radial-gradient(circle_at_0_100%,transparent_calc(27*var(--u)_-_0.5px),var(--page-bg)_calc(27*var(--u)))]
+        "
+      />
+
+      {/* Right fillet */}
+      <div
+        className="
+          absolute top-0 z-20
+          left-[62.5%] w-[18px] h-[18px]
+          bg-[radial-gradient(circle_at_100%_100%,transparent_17.5px,var(--page-bg)_18px)]
+
+          sm:left-[60%] sm:w-[20px] sm:h-[20px]
+          sm:bg-[radial-gradient(circle_at_100%_100%,transparent_19.5px,var(--page-bg)_20px)]
+
+          md:left-[60%] md:w-[22px] md:h-[22px]
+          md:bg-[radial-gradient(circle_at_100%_100%,transparent_21.5px,var(--page-bg)_22px)]
+
+          lg:left-[calc(50%_+_120*var(--u))]
+          lg:w-[calc(27*var(--u))] lg:h-[calc(27*var(--u))]
+          lg:bg-[radial-gradient(circle_at_100%_100%,transparent_calc(27*var(--u)_-_0.5px),var(--page-bg)_calc(27*var(--u)))]
+        "
+      />
+
+      {/* ---------- BOTTOM NOTCH (unchanged) ---------- */}
       <div
         className="absolute bottom-0 z-20"
         style={{
@@ -95,11 +115,11 @@ function AboutHeader() {
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
       <div className="relative z-50">
-        <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-4 sm:right-5" />
+        <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-0" />
       </div>
 
-      <div className="absolute top-0 lg:top-2 left-1/2 -translate-x-1/2 z-40 w-[7%]">
-        <img src={logo} loading="lazy" alt="logo" className="w-[100px] 2xl:w-[200px]" />
+      <div className="absolute top-1 sm:top-2 md:top-3 lg:top-[1px] xl:top-2 left-1/2 -translate-x-1/2 z-40 w-[69px] sm:w-[89px] md:w-[100px]">
+        <img src={logo} alt="logo" className="w-[100px] 2xl:w-[200px]" />
       </div>
 
       {/* ================= TICKET (was the <svg>) ================= */}
