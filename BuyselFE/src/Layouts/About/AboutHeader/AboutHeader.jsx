@@ -27,53 +27,54 @@ function TicketNotches() {
     <>
       {/* ---------- TOP NOTCH ---------- */}
       {/* Below 1024px: responsive steps | lg+: original --u shape */}
-      <div
-        className="
-          absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-[var(--page-bg)]
-          w-1/4 h-[40px] rounded-b-[18px]
-          sm:w-1/5 sm:h-[46px] sm:rounded-b-[20px]
-          md:h-[54px] md:rounded-b-[22px]
-          lg:w-[calc(240*var(--u))] lg:h-[calc(70*var(--u))] lg:rounded-b-[calc(27*var(--u))]
-        "
-      />
+      {/* ---------- TOP NOTCH ---------- */}
+<div
+  className="
+    absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-[var(--page-bg)]
+    w-1/4 h-[40px] rounded-b-[18px]
+    sm:w-1/5 sm:h-[46px] sm:rounded-b-[20px]
+    md:h-[54px] md:rounded-b-[22px]
+    lg:w-[calc(240*var(--u))] lg:h-[calc(70*var(--u))] lg:rounded-b-[calc(27*var(--u))]
+  "
+/>
 
-      {/* Left fillet */}
-      <div
-        className="
-          absolute top-0 z-20
-          left-[calc(37.5%_-_18px)] w-[18px] h-[18px]
-          bg-[radial-gradient(circle_at_0_100%,transparent_17.5px,var(--page-bg)_18px)]
+{/* Left curve: 2px wider so it overlaps the notch */}
+<div
+  className="
+    absolute top-0 z-20
+    left-[calc(37.5%_-_18px)] w-[20px] h-[18px]
+    bg-[radial-gradient(circle_at_0_100%,transparent_17.5px,var(--page-bg)_18px)]
 
-          sm:left-[calc(40%_-_20px)] sm:w-[20px] sm:h-[20px]
-          sm:bg-[radial-gradient(circle_at_0_100%,transparent_19.5px,var(--page-bg)_20px)]
+    sm:left-[calc(40%_-_20px)] sm:w-[22px] sm:h-[20px]
+    sm:bg-[radial-gradient(circle_at_0_100%,transparent_19.5px,var(--page-bg)_20px)]
 
-          md:left-[calc(40%_-_22px)] md:w-[22px] md:h-[22px]
-          md:bg-[radial-gradient(circle_at_0_100%,transparent_21.5px,var(--page-bg)_22px)]
+    md:left-[calc(40%_-_22px)] md:w-[24px] md:h-[22px]
+    md:bg-[radial-gradient(circle_at_0_100%,transparent_21.5px,var(--page-bg)_22px)]
 
-          lg:left-[calc(50%_-_147*var(--u))]
-          lg:w-[calc(27*var(--u))] lg:h-[calc(27*var(--u))]
-          lg:bg-[radial-gradient(circle_at_0_100%,transparent_calc(27*var(--u)_-_0.5px),var(--page-bg)_calc(27*var(--u)))]
-        "
-      />
+    lg:left-[calc(50%_-_147*var(--u))]
+    lg:w-[calc(27*var(--u)_+_2px)] lg:h-[calc(27*var(--u))]
+    lg:bg-[radial-gradient(circle_at_0_100%,transparent_calc(27*var(--u)_-_0.5px),var(--page-bg)_calc(27*var(--u)))]
+  "
+/>
 
-      {/* Right fillet */}
-      <div
-        className="
-          absolute top-0 z-20
-          left-[62.5%] w-[18px] h-[18px]
-          bg-[radial-gradient(circle_at_100%_100%,transparent_17.5px,var(--page-bg)_18px)]
+{/* Right curve: starts 2px earlier so it overlaps the notch */}
+<div
+  className="
+    absolute top-0 z-20
+    left-[calc(62.5%_-_2px)] w-[20px] h-[18px]
+    bg-[radial-gradient(circle_at_100%_100%,transparent_17.5px,var(--page-bg)_18px)]
 
-          sm:left-[60%] sm:w-[20px] sm:h-[20px]
-          sm:bg-[radial-gradient(circle_at_100%_100%,transparent_19.5px,var(--page-bg)_20px)]
+    sm:left-[calc(60%_-_2px)] sm:w-[22px] sm:h-[20px]
+    sm:bg-[radial-gradient(circle_at_100%_100%,transparent_19.5px,var(--page-bg)_20px)]
 
-          md:left-[60%] md:w-[22px] md:h-[22px]
-          md:bg-[radial-gradient(circle_at_100%_100%,transparent_21.5px,var(--page-bg)_22px)]
+    md:left-[calc(60%_-_2px)] md:w-[24px] md:h-[22px]
+    md:bg-[radial-gradient(circle_at_100%_100%,transparent_21.5px,var(--page-bg)_22px)]
 
-          lg:left-[calc(50%_+_120*var(--u))]
-          lg:w-[calc(27*var(--u))] lg:h-[calc(27*var(--u))]
-          lg:bg-[radial-gradient(circle_at_100%_100%,transparent_calc(27*var(--u)_-_0.5px),var(--page-bg)_calc(27*var(--u)))]
-        "
-      />
+    lg:left-[calc(50%_+_120*var(--u)_-_2px)]
+    lg:w-[calc(27*var(--u)_+_2px)] lg:h-[calc(27*var(--u))]
+    lg:bg-[radial-gradient(circle_at_100%_100%,transparent_calc(27*var(--u)_-_0.5px),var(--page-bg)_calc(27*var(--u)))]
+  "
+/>
 
       {/* ---------- BOTTOM NOTCH (unchanged) ---------- */}
       <div
