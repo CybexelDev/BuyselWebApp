@@ -75,24 +75,48 @@ useEffect(() => {
     return (
         <div className="bg-white min-h-screen p-2 sm:p-10">
 
-            <div className="flex gap-1 sm:gap-4 mb-8">
-                {["All", "Agent", "Premium Agent", "Elite Agent"].map((tab) => (
-                    <button
-                        key={tab}
-                        onClick={() => {
-                            setActiveTab(tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite");
-                            setCurrentPage(1);
-                        }}
-                        className={`px-3 sm:px-5 py-2 rounded-[9px] text-sm host-grotesk font-medium transition-all duration-300 cursor-pointer
-                                    ${activeTab === (tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite")
-                                ? "bg-black text-[#75c222] shadow-md"
-                                : "text-black hover:bg-gray-200"
-                            }`}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
+<div className="flex gap-1 sm:gap-4 mb-8 flex-wrap">
+  {[
+    { label: "All", value: "All" },
+    { label: "Agent", value: "basic" },
+    {
+      label: "Premium Agent",
+      value: "premium",
+      icon: premium,
+    },
+    {
+      label: "Elite Agent",
+      value: "elite",
+      icon: elite,
+    },
+  ].map((tab) => (
+    <button
+      key={tab.value}
+      onClick={() => {
+        setActiveTab(tab.value);
+        setCurrentPage(1);
+      }}
+      className={`px-2 sm:px-5 py-2 rounded-[9px]
+        text-[12px] sm:text-sm host-grotesk font-medium transition-all
+        duration-300 cursor-pointer flex items-center gap-2
+        ${
+          activeTab === tab.value
+            ? "bg-black text-[#75c222] shadow-md"
+            : "text-black hover:bg-gray-200"
+        }`}
+    >
+      {tab.icon && (
+        <img
+          src={tab.icon}
+          alt={tab.label}
+          className="w-5 h-5 object-contain"
+        />
+      )}
+
+      {tab.label}
+    </button>
+  ))}
+</div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                 {currentAgents.map((agent) => (
