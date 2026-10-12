@@ -9,12 +9,11 @@ const ReviewCard = ({ item }) => {
 <div className="flex relative justify-between items-start mb-[12px] md:mb-[20px]">
 
         <img
-          src={item.image}
-          alt={item.name}
-            onError={() => console.log("IMAGE FAILED:", item.image)}
-
-          className="w-[66px] h-[66px] rounded-full "
-        />
+  src={item.image}
+  alt={item.name}
+  onError={() => console.log("IMAGE FAILED:", item.image)}
+  className="w-[66px] h-[66px] rounded-full object-cover shrink-0"
+/>
 
  <div className="absolute right-0 top-6 sm:top-10 md:top-12 lg:top-[33px]">
   <svg 
