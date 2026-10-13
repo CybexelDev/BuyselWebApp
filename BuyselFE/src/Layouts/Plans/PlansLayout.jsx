@@ -41,8 +41,6 @@ return;
       );
       return;
     }
-
-
     // Agent plans
     if (active !== "Owner") {
       setShowAgentModal(true);
