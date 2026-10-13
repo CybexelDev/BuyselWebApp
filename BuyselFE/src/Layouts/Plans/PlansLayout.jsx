@@ -29,6 +29,11 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
 
   const handleSelectPlan = (plan) => {
+    // Check user login
+if (!user?.accessToken) {
+navigate("/loginandsignup");
+return;
+}
 
     if (plansData?.is_upgrade_plan) {
       toast.error(
@@ -480,7 +485,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       {showtabs && (
         <div className="flex justify-center mb-10 md:mb-15 px-2">
 
-          <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">
+          <div className="w-auto overflow-x-auto scrollbar-hide">
 
             <div className="flex items-center border border-[#8AD32E] rounded-full p-1 bg-white min-w-max">
 
@@ -488,7 +493,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                 <button
                   key={role}
                   onClick={() => setActive(role)}
-                  className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${active === role
+                  className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] sm:text-[17px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${active === role
                     ? "bg-[#8AD32E] text-white shadow"
                     : "text-black"
                     }`}
@@ -525,7 +530,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
               {features.map((feature, i) => (
                 <div
                   key={feature}
-                  className="flex justify-between items-center bg-[#F7FCEB] rounded-full px-4 py-3"
+                  className="flex justify-between items-center bg-[#9ca09724] rounded-full px-4 py-3"
                 >
                   <span className="text-[12px] font-medium text-gray-700">
                     {feature}
@@ -785,7 +790,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
                   <div
                     key={index}
-                    className="flex items-center justify-between bg-[#F7FCEB] rounded-2xl px-4 py-3"
+                    className="flex items-center justify-between bg-[#9ca09724] rounded-2xl px-4 py-3"
                   >
 
                     <span className="text-sm font-medium text-gray-700">
