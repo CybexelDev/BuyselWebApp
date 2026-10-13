@@ -9,6 +9,7 @@ import premium from '../../../assets/images/agentDetail/crown.png'
 export default function AgentTabs({ searchedData, query, locationDats }) {
     const [searchParams] = useSearchParams()
     const type = searchParams.get("type");
+    const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [agents, setAgents] = useState([]);
@@ -42,25 +43,31 @@ export default function AgentTabs({ searchedData, query, locationDats }) {
     }, [type]);
 
 useEffect(() => {
-  if (locationDats?.length > 0) {
-    setAgents(locationDats);
-    return;
-  }
+  const loadAgents = async () => {
+    setLoading(true);
 
-  if (query.length > 0) {
-    setAgents(searchedData);
-    return;
-  }
+    try {
+      if (locationDats?.length > 0) {
+        setAgents(locationDats);
+        return;
+      }
 
-  const getAgent = async () => {
-    const data = await getAgents({ category: activeTab });
+      if (query.length > 0) {
+        setAgents(searchedData || []);
+        return;
+      }
 
-    if (data) {
-      setAgents(data);
+      const data = await getAgents({ category: activeTab });
+      setAgents(data || []);
+    } catch (error) {
+      console.error("Failed to load agents:", error);
+      setAgents([]);
+    } finally {
+      setLoading(false);
     }
   };
 
-  getAgent();
+  loadAgents();
 }, [activeTab, searchedData, locationDats, query]);
  
 
@@ -68,24 +75,48 @@ useEffect(() => {
     return (
         <div className="bg-white min-h-screen p-2 sm:p-10">
 
-            <div className="flex gap-1 sm:gap-4 mb-8">
-                {["All", "Agent", "Premium Agent", "Elite Agent"].map((tab) => (
-                    <button
-                        key={tab}
-                        onClick={() => {
-                            setActiveTab(tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite");
-                            setCurrentPage(1);
-                        }}
-                        className={`px-3 sm:px-5 py-2 rounded-[9px] text-sm host-grotesk font-medium transition-all duration-300 cursor-pointer
-                                    ${activeTab === (tab === "All" ? "All" : tab === "Agent" ? "basic" : tab === "Premium Agent" ? "premium" : "elite")
-                                ? "bg-black text-[#75c222] shadow-md"
-                                : "text-black hover:bg-gray-200"
-                            }`}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
+<div className="flex gap-1 sm:gap-4 mb-8 flex-wrap">
+  {[
+    { label: "All", value: "All" },
+    { label: "Agent", value: "basic" },
+    {
+      label: "Premium Agent",
+      value: "premium",
+      icon: premium,
+    },
+    {
+      label: "Elite Agent",
+      value: "elite",
+      icon: elite,
+    },
+  ].map((tab) => (
+    <button
+      key={tab.value}
+      onClick={() => {
+        setActiveTab(tab.value);
+        setCurrentPage(1);
+      }}
+      className={`px-2 sm:px-5 py-2 rounded-[9px]
+        text-[12px] sm:text-sm host-grotesk font-medium transition-all
+        duration-300 cursor-pointer flex items-center gap-2
+        ${
+          activeTab === tab.value
+            ? "bg-black text-[#75c222] shadow-md"
+            : "text-black hover:bg-gray-200"
+        }`}
+    >
+      {tab.icon && (
+        <img
+          src={tab.icon}
+          alt={tab.label}
+          className="w-5 h-5 object-contain"
+        />
+      )}
+
+      {tab.label}
+    </button>
+  ))}
+</div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                 {currentAgents.map((agent) => (
@@ -135,6 +166,7 @@ useEffect(() => {
                     </div>
                 ))}
             </div>
+{!loading && filteredAgents.length > 0 && (
 
             <div className="flex justify-center items-center gap-6 mt-12">
 
@@ -168,6 +200,7 @@ useEffect(() => {
                 </button>
 
             </div>
+            )}
         </div>
     );
 }

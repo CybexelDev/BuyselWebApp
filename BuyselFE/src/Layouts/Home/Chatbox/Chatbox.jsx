@@ -20,6 +20,11 @@ const handleSubmit = async (e) => {
     return;
   }
 
+if (!simple && !/^\d{6}$/.test(formData.pincode)) {
+  toast.error("PIN code must be exactly 6 digits");
+  return;
+}
+
   let res;
 
 if (type === "admin") {
@@ -129,18 +134,20 @@ if (type === "admin") {
                   Your PIN Code
                 </label>
 
-                <input
-                  type="text"
-                  placeholder="6-digit PIN"
-                  value={formData.pincode}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      pincode: e.target.value,
-                    })
-                  }
-                  className="w-full h-[48px] border border-[#D6D6D6] rounded-full px-5 outline-none focus:border-[#75C222]"
-                />
+             <input
+  type="text"
+  inputMode="numeric"
+  placeholder="6-digit PIN"
+  maxLength={6}
+  value={formData.pincode}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      pincode: e.target.value.replace(/\D/g, "").slice(0, 6),
+    })
+  }
+  className="w-full h-[48px] border border-[#D6D6D6] rounded-full px-5 outline-none focus:border-[#75C222]"
+/>
               </div>
             )}
 

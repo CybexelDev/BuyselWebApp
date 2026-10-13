@@ -15,7 +15,7 @@ function PropertiesSection({ propertiesData, dataCount }) {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(propertiesData, "propertiesData in properties section ???????????????");
+
 
 
   // console.log(propertiesData, "propertiesData in properties section ???????????????");

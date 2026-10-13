@@ -37,7 +37,6 @@ const [orders, setOrders] = useState([]);
 
   fetchOrders();
 }, []);
-  console.log(orders)
   const filteredOrders = useMemo(() => {
   return orders.filter((order) => {
     const matchesSearch =

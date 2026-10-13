@@ -27,11 +27,12 @@ const handleClearLocation = () => {
     ...filters,
     city: "",
     district: "",
+    state:""
   });
 };
 
-console.log("filters city",filters.city);
-console.log("searchCity",searchCity);
+
+
   const tabs = [ "Sale", "Rent","Lease","Agent", ];
     const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -57,7 +58,6 @@ console.log("searchCity",searchCity);
           lat,
           lng,
         });
-        console.log("nearby data",data)
       },
       
       () => {
@@ -406,6 +406,7 @@ const cities = selectedDistrictObj?.cities || [];
               purpose: selectedPurpose,
               category: selectedCategory,
               district: selectedDistrict,
+              state:selectedState,
               city: selectedCity,
               min_price: minPrice,
               max_price: maxPrice,
@@ -423,6 +424,7 @@ const cities = selectedDistrictObj?.cities || [];
               category: "",
               district: "",
               city: "",
+              state:"",
               min_price: "",
               max_price: "",
               isFilterApplied: false,

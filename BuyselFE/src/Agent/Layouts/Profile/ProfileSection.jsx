@@ -207,7 +207,7 @@ const handleChangePassword = async () => {
             <Sidebar />
 
             <main className="flex-1  w-full min-h-screen transition-all duration-300">
-                <div className="w-full max-w-7xl p-6 md:p-10 lg:p-12">
+                <div className="w-full max-w-7xl p-6 md:p-10 lg:p-10 xl:p-12">
 
                     <header className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
@@ -223,46 +223,47 @@ const handleChangePassword = async () => {
                         </motion.div>
 
                         {/* RIGHT SIDE */}
-                        <div className="flex md:items-center justify-between items-center   md:gap-4">
+<div className="flex items-center justify-between gap-4 flex-col-reverse sm:flex-row lg:flex-col-reverse xl:flex-row">
+    {/* EDIT BUTTON */}
+    {!isEditing && (
+        <button
+            onClick={() => setIsEditing(true)}
+            className="px-6 py-3 bg-[#6ABD11] text-white rounded-xl cursor-pointer text-sm font-bold shadow host-grotesk hover:bg-[#5aa30e] transition"
+        >
+            Edit Profile
+        </button>
+    )}
 
-                            {/* EDIT BUTTON */}
-                            {!isEditing && (
-                                <button
-                                    onClick={() => setIsEditing(true)}
-                                    className="px-6 py-3 bg-[#6ABD11] text-white rounded-xl cursor-pointer text-sm font-bold shadow host-grotesk hover:bg-[#5aa30e] transition"
-                                >
-                                    Edit Profile
-                                </button>
-                            )}
+    {/* BUYSEL ID CARD */}
+    <div className="bg-white border border-slate-200 px-3 sm:px-4 lg:px-6 py-3 rounded-2xl shadow-sm flex flex-row items-center gap-3 sm:gap-4">
+        <div className="text-center sm:text-right sm:border-r border-slate-100 sm:pr-4">
+            <span className="block text-[10px] font-bold text-[#6ABD11] uppercase tracking-widest host-grotesk">
+                Buysel ID
+            </span>
 
-                            {/* BUYSEL ID CARD */}
-            <div className="bg-white border border-slate-200 px-3 sm:px-4 lg:px-6 py-3 rounded-2xl shadow-sm flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-  <div className="text-center sm:text-right sm:border-r border-slate-100 sm:pr-4">
-    <span className="block text-[10px] font-bold text-[#6ABD11] uppercase tracking-widest host-grotesk">
-      Buysel ID
-    </span>
-    <span className="text-sm host-grotesk font-bold text-slate-700 break-all">
-      {formData.buySelId}
-    </span>
-  </div>
+            <span className="text-sm host-grotesk font-bold text-slate-700 break-all">
+                {formData.buySelId}
+            </span>
+        </div>
 
-  <div className="flex items-center gap-2 text-[#6ABD11]">
-    <ShieldCheck size={20} />
-    <span className="text-xs font-bold uppercase instrument-sans">
-      Verified
-    </span>
-  </div>
+        <div className="flex items-center gap-2 text-[#6ABD11]">
+            <ShieldCheck size={20} />
+
+            <span className="text-xs font-bold uppercase instrument-sans">
+                Verified
+            </span>
+        </div>
+    </div>
+
 </div>
-
-                        </div>
                     </header>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-3 xl:gap-8 items-start">
                         <div className="lg:col-span-8 space-y-8">
 
                             {/* Identity Section */}
                             <section className="bg-white border border-slate-200 rounded-[32px] p-8 shadow-sm">
-                                <div className="flex flex-col md:flex-row md:items-center gap-8 mb-10 pb-8 border-b border-slate-50">
+                                <div className="flex flex-col md:flex-row md:items-center gap-4 mb-10 pb-8 border-b border-slate-50">
                                     <div className="relative group mx-auto md:mx-0">
                                         <div className="w-32 h-32 rounded-3xl overflow-hidden border-4 border-slate-50 bg-slate-100 shadow-inner">
                                             {profileImage ? (
@@ -279,7 +280,7 @@ const handleChangePassword = async () => {
                                         </button>
                                     </div>
                                     <div className="text-center md:text-left">
-                                        <h3 className="text-2xl font-bold text-slate-800 instrument-sans">{formData.name}</h3>
+                                        <h3 className="text-[22px] font-bold text-slate-800 instrument-sans">{formData.name}</h3>
                                         <p className="text-[#6ABD11] font-bold text-sm host-grotesk">{formData.title}</p>
                                         <p className="text-slate-400 text-xs mt-1 font-medium">{formData.number}</p>
                                     </div>
@@ -299,7 +300,14 @@ const handleChangePassword = async () => {
 
   {/* NEW ADDRESS FIELD */}
   <InputField label="Address" name="address" value={formData.address} onChange={handleChange} icon={<MapPin size={18} />} disabled={!isEditing} />
-
+<InputField
+  label="Pincode"
+  name="pincode"
+  value={formData.pincode}
+  onChange={handleChange}
+  icon={<MapPin size={18} />}
+  disabled={!isEditing}
+/>
   <InputField label="Website" name="website" value={formData.website} onChange={handleChange} icon={<Share2 size={18} />} disabled={!isEditing} />
 
   {/* NEW INSTAGRAM FIELD */}
@@ -307,8 +315,16 @@ const handleChangePassword = async () => {
 
   <InputField label="Facebook" name="facebook" value={formData.facebook} onChange={handleChange} icon={<FaFacebook size={18} />} disabled={!isEditing} />
 
-  <InputField label="Whatsapp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} icon={<FaWhatsapp size={18} />} disabled={!isEditing} />
-
+<div className="md:col-span-2">
+  <InputField
+    label="Whatsapp"
+    name="whatsapp"
+    value={formData.whatsapp}
+    onChange={handleChange}
+    icon={<FaWhatsapp size={18} />}
+    disabled={!isEditing}
+  />
+</div>
 </div>
                             </section>
 
@@ -397,7 +413,7 @@ const handleChangePassword = async () => {
                         </div>
 
                         <aside className="lg:col-span-4 space-y-6">
-                            <section className="bg-white border border-slate-200 rounded-[32px] p-8 shadow-sm">
+                            <section className="bg-white border border-slate-200 rounded-[32px] py-8 px-4 shadow-sm">
                                 <div className="flex items-center gap-3 mb-6">
                                     <Lock size={20} className="text-[#6ABD11]" />
                                     <h3 className="text-lg font-bold text-slate-800 instrument-sans">Security</h3>

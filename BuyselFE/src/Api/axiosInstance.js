@@ -19,7 +19,6 @@ let refreshSubscribers = [];
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
-    console.log("TOKEN:", token);
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -38,11 +37,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-console.log("INTERCEPTOR HIT", {
-  status: error.response?.status,
-  retry: originalRequest._retry,
-  url: originalRequest.url
-});
+
     if (
       (error.response?.status === 401 || error.response?.status === 403)
     ) {
@@ -68,7 +63,6 @@ console.log("INTERCEPTOR HIT", {
 
       try {
         const refreshToken = localStorage.getItem("refreshToken");
-          console.log("REFRESH TOKEN:", refreshToken);
 
 
         const { data } = await axios.post(

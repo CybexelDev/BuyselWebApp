@@ -10,6 +10,9 @@ import {
   Square,
   Pencil,
   Trash,
+  Home,
+  Building2,
+  BriefcaseBusiness,
 } from "lucide-react";
 import { TfiRulerAlt2 } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +20,7 @@ import { deletePropertyListing, getPropertyListing } from "../../../Api/agentsAp
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUserPropertyListing, userPropertyList } from "../../../Api/userApi";
+import { FaTrashAlt } from "react-icons/fa";
 
 const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-slate-50", lg = "lg:py-12", onClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,7 +33,13 @@ const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-s
   const[remainingEdit,setRemainingEdit] = useState(0)
   const [limitType, setLimitType] = useState("");
 const [showFilterModal, setShowFilterModal] = useState(false);
-
+const [hasSinglePropertyPackage, setHasSinglePropertyPackage] = useState(false);
+const [propertyStats, setPropertyStats] = useState({
+  total: [0, 0],
+  residential: [0, 0],
+  commercial: [0, 0],
+  edits: [0, 0],
+});
 const [filters, setFilters] = useState({
   status: "",
   city: "",
@@ -46,8 +56,6 @@ const role = userRole || agentRole;
 //     : state.user.listedCount
 // );
 
-// console.log("property_count :", property_count);
-console.log("role :",role);
 
   const navigate = useNavigate();
 const agent = useSelector((state) => state.agent);
@@ -64,7 +72,6 @@ useEffect(() => {
         res = await userPropertyList();
       }
 
-      console.log("API Response :", res);
 
     
       if (res) {
@@ -77,6 +84,15 @@ useEffect(() => {
       }
     });
   }
+    setHasSinglePropertyPackage(
+    res.has_single_property_package === true
+  );
+  setPropertyStats({
+  total: res.remaining_used || [0, 0],
+  residential: res.residential_used || [0, 0],
+  commercial: res.commercial_used || [0, 0],
+  edits: res.used_edit_count || [0, 0],
+});
 }
       // data array
       if (Array.isArray(res?.data)) {
@@ -117,7 +133,7 @@ useEffect(() => {
 
 
     } catch (err) {
-      console.error("Property fetch error:", err);
+
 
     } finally {
       setLoading(false);
@@ -129,25 +145,117 @@ useEffect(() => {
 }, [role]);
 
   
-     const handleDelete = async(id)=>{
-      const confirmDelete = window.confirm("Are you sure delete?")
-  
-      if(!confirmDelete) return;
-      let res;
-      if(role === "agent"){
-          res = await deletePropertyListing(id);
-      }else if(role === "user"){
-        res = await deleteUserPropertyListing(id);
-      }
-      if(res){
-        setProperties((prev)=>prev.filter((item)=>item.id !== id))
-      }else{
+const handleDelete = (id) => {
+  const performDelete = async () => {
+    let res;
+    if (role === "agent") {
+      res = await deletePropertyListing(id);
+    } else if (role === "user") {
+      res = await deleteUserPropertyListing(id);
+    }
+    if (res) {
+      setProperties((prev) => prev.filter((item) => item.id !== id));
+    } else {
+      toast.error("Delete failed");
+    }
+  };
 
-        toast.error("Delete failed")
-        console.log("Failed");
-      }
-     }
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Slide up + fade out, then dismiss the toast
+  const closeCard = (e, t) => {
+    const card = e.currentTarget.closest("[data-delete-card]");
+    if (!card || !card.animate || reduceMotion) {
+      toast.dismiss(t);
+      return;
+    }
+    card.style.pointerEvents = "none"; // blocks double clicks while leaving
+    card
+      .animate(
+        [
+          { opacity: 1, transform: "translateY(0) scale(1)" },
+          { opacity: 0, transform: "translateY(-28px) scale(0.96)" },
+        ],
+        { duration: 250, easing: "ease-in", fill: "forwards" }
+      )
+      .addEventListener("finish", () => toast.dismiss(t));
+  };
+
+  toast.custom(
+    (t) => (
+      <div
+        data-delete-card
+        ref={(el) => {
+          // Slide down + fade in (runs once, even if the toast re-renders)
+          if (el && !el.dataset.entered && !reduceMotion && el.animate) {
+            el.dataset.entered = "1";
+            el.animate(
+              [
+                { opacity: 0, transform: "translateY(-28px) scale(0.96)" },
+                { opacity: 1, transform: "translateY(0) scale(1)" },
+              ],
+              { duration: 350, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+            );
+          }
+        }}
+        className="host-grotesk flex w-[320px] max-w-[90vw] flex-col items-center rounded-2xl border border-[#6ABD11]/50 bg-white p-4 text-center"
+      >
+        {/* Icon */}
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#C8F08A] to-[#8FD43A] text-slate-900 shadow-[0_0_14px_rgba(106,189,17,0.5)]">
+          <FaTrashAlt size={16} />
+        </span>
+
+        {/* Text */}
+        <div className="mt-2">
+          <p className="text-sm font-bold text-slate-900">
+            Are you sure you want to delete?
+          </p>
+          <p className="mt-0.5 text-xs text-slate-500">
+            This listing will be removed.
+          </p>
+        </div>
+
+        {/* Buttons */}
+        <div className="mt-3 flex w-full justify-center gap-3">
+          <button
+            onClick={(e) => closeCard(e, t)}
+            className="cursor-pointer rounded-xl border border-[#6ABD11]/40 bg-[#6ABD11]/10 px-5 py-2 text-xs font-semibold text-[#3F8004] transition hover:bg-[#6ABD11]/20"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={(e) => {
+              performDelete();
+              closeCard(e, t);
+            }}
+            className="cursor-pointer rounded-xl bg-gradient-to-r from-red-500 to-red-600 px-5 py-2 text-xs font-semibold text-white shadow-sm transition hover:from-red-600 hover:to-red-700 hover:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.6)]"
+          >
+            Yes, delete
+          </button>
+        </div>
+      </div>
+    ),
+    {
+      id: `delete-${id}`,
+      duration: Infinity,
+      position: "top-center",
+      unstyled: true,
+      dismissible: false,
+      style: {
+        background: "transparent",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
+        border: "none",
+        boxShadow: "none",
+        padding: 0,
+        borderRadius: 0,
+        maxWidth: "none",
+        transition: "none",
+        animation: "none",
+      },
+    }
+  );
+};
 
 const filteredProperties = properties.filter((property) => {
 
@@ -283,8 +391,333 @@ const filteredProperties = properties.filter((property) => {
 
           {loading && (
   <p className="text-center py-10">Loading...</p>
-)}
+)}{/* PROPERTY STATS */}
+{/* PROPERTY STATS */}
+{role !== "agent" && (
+<>
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
 
+  {/* Total Properties */}
+  <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+    {/* Green side accent */}
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+    <div className="flex items-start justify-between">
+
+      <div>
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+          Total Properties
+        </p>
+
+        <div className="flex items-baseline gap-1.5 mt-2">
+          <span className="text-3xl font-bold text-slate-900 instrument-sans">
+            {propertyStats.total[0]}
+          </span>
+
+          {!hasSinglePropertyPackage && (
+            <span className="text-sm font-medium text-slate-400">
+              / {propertyStats.total[1]}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Icon */}
+      <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+        <Home
+          size={20}
+          strokeWidth={1.8}
+          className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+        />
+      </div>
+
+    </div>
+
+    {/* Progress */}
+    <div className="mt-5">
+
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] text-slate-400">
+          Usage
+        </span>
+
+        {!hasSinglePropertyPackage && (
+          <span className="text-[11px] font-medium text-slate-500">
+            {propertyStats.total[1] > 0
+              ? Math.round(
+                  (propertyStats.total[0] / propertyStats.total[1]) * 100
+                )
+              : 0}
+            %
+          </span>
+        )}
+      </div>
+
+      {!hasSinglePropertyPackage && (
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${
+                propertyStats.total[1] > 0
+                  ? Math.min(
+                      (propertyStats.total[0] / propertyStats.total[1]) * 100,
+                      100
+                    )
+                  : 0
+              }%`,
+            }}
+          />
+        </div>
+      )}
+
+    </div>
+
+  </div>
+
+
+  {/* Residential */}
+  <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+    <div className="flex items-start justify-between">
+
+      <div>
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+          Residential / Plot & Land
+        </p>
+
+        <div className="flex items-baseline gap-1.5 mt-2">
+          <span className="text-3xl font-bold text-slate-900 instrument-sans">
+            {propertyStats.residential[0]}
+          </span>
+
+          {!hasSinglePropertyPackage && (
+            <span className="text-sm font-medium text-slate-400">
+              / {propertyStats.residential[1]}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+        <Building2
+          size={20}
+          strokeWidth={1.8}
+          className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+        />
+      </div>
+
+    </div>
+
+    <div className="mt-5">
+
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] text-slate-400">
+          Usage
+        </span>
+
+        {!hasSinglePropertyPackage && (
+          <span className="text-[11px] font-medium text-slate-500">
+            {propertyStats.residential[1] > 0
+              ? Math.round(
+                  (propertyStats.residential[0] /
+                    propertyStats.residential[1]) *
+                    100
+                )
+              : 0}
+            %
+          </span>
+        )}
+      </div>
+
+      {!hasSinglePropertyPackage && (
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${
+                propertyStats.residential[1] > 0
+                  ? Math.min(
+                      (propertyStats.residential[0] /
+                        propertyStats.residential[1]) *
+                        100,
+                      100
+                    )
+                  : 0
+              }%`,
+            }}
+          />
+        </div>
+      )}
+
+    </div>
+
+  </div>
+
+
+  {/* Commercial */}
+  <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+    <div className="flex items-start justify-between">
+
+      <div>
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+          Commercial / Industrial
+        </p>
+
+        <div className="flex items-baseline gap-1.5 mt-2">
+          <span className="text-3xl font-bold text-slate-900 instrument-sans">
+            {propertyStats.commercial[0]}
+          </span>
+
+          {!hasSinglePropertyPackage && (
+            <span className="text-sm font-medium text-slate-400">
+              / {propertyStats.commercial[1]}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+        <BriefcaseBusiness
+          size={20}
+          strokeWidth={1.8}
+          className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+        />
+      </div>
+
+    </div>
+
+    <div className="mt-5">
+
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] text-slate-400">
+          Usage
+        </span>
+
+        {!hasSinglePropertyPackage && (
+          <span className="text-[11px] font-medium text-slate-500">
+            {propertyStats.commercial[1] > 0
+              ? Math.round(
+                  (propertyStats.commercial[0] /
+                    propertyStats.commercial[1]) *
+                    100
+                )
+              : 0}
+            %
+          </span>
+        )}
+      </div>
+
+      {!hasSinglePropertyPackage && (
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${
+                propertyStats.commercial[1] > 0
+                  ? Math.min(
+                      (propertyStats.commercial[0] /
+                        propertyStats.commercial[1]) *
+                        100,
+                      100
+                    )
+                  : 0
+              }%`,
+            }}
+          />
+        </div>
+      )}
+
+    </div>
+
+  </div>
+
+
+  {/* Edit Count */}
+  <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+    <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+    <div className="flex items-start justify-between">
+
+      <div>
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+          Edit Count
+        </p>
+
+        <div className="flex items-baseline gap-1.5 mt-2">
+          <span className="text-3xl font-bold text-slate-900 instrument-sans">
+            {propertyStats.edits[0]}
+          </span>
+
+          {!hasSinglePropertyPackage && (
+            <span className="text-sm font-medium text-slate-400">
+              / {propertyStats.edits[1]}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+        <Pencil
+          size={20}
+          strokeWidth={1.8}
+          className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+        />
+      </div>
+
+    </div>
+
+    <div className="mt-5">
+
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] text-slate-400">
+          Usage
+        </span>
+
+        {!hasSinglePropertyPackage && (
+          <span className="text-[11px] font-medium text-slate-500">
+            {propertyStats.edits[1] > 0
+              ? Math.round(
+                  (propertyStats.edits[0] / propertyStats.edits[1]) * 100
+                )
+              : 0}
+            %
+          </span>
+        )}
+      </div>
+
+      {!hasSinglePropertyPackage && (
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+            style={{
+              width: `${
+                propertyStats.edits[1] > 0
+                  ? Math.min(
+                      (propertyStats.edits[0] / propertyStats.edits[1]) * 100,
+                      100
+                    )
+                  : 0
+              }%`,
+            }}
+          />
+        </div>
+      )}
+
+    </div>
+
+  </div>
+
+</div>
+</>
+)}
           {/* SEARCH + FILTER */}
           {properties.length > 0 && (
           <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4 justify-between mb-8 shadow-sm">

@@ -6,24 +6,28 @@ import { getTestimonial } from "../../../Api/userApi";
 const Review = () => {
   const [review, setReview] = useState([]);
   const [visible, setVisible] = useState(3);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(3);
   const [transition, setTransition] = useState(true);
 
-  // Fetch reviews
+  // Fetch testimonials
   useEffect(() => {
     const fetchReviews = async () => {
-      const res = await getTestimonial();
+      try {
+        const res = await getTestimonial();
 
-      const formatted = res.map((item) => ({
-        name: item.name,
-        review: item.description,
-        title: item.opinion,
-        rating: item.rating,
-        image: item.image || "",
-        role: item.designation,
-      }));
+        const formatted = res.map((item) => ({
+          name: item.name,
+          review: item.description,
+          title: item.opinion,
+          rating: item.rating,
+          image: item.image || "",
+          role: item.designation,
+        }));
 
-      setReview(formatted);
+        setReview(formatted);
+      } catch (error) {
+        console.error("Failed to fetch testimonials:", error);
+      }
     };
 
     fetchReviews();
@@ -50,12 +54,11 @@ const Review = () => {
 
   const total = review.length;
 
-  // Only slide when there are more than 2 reviews
-  const shouldSlide = visible === 1
-  ? total > 1
-  : total > 2;
+  // Enable slider only when enough reviews exist
+  const shouldSlide =
+    visible === 1 ? total > 1 : total > visible;
 
-  // Clone reviews only when slider is active
+  // Clone reviews for infinite sliding
   const clonedReviews = shouldSlide
     ? [
         ...review.slice(-visible),
@@ -64,50 +67,59 @@ const Review = () => {
       ]
     : review;
 
-  // Set initial index
+  // Reset slider position when review count or screen size changes
   useEffect(() => {
-    if (shouldSlide) {
-      setIndex(visible);
-    } else {
-      setIndex(0);
-    }
-
-    setTransition(true);
+    setTransition(false);
+    setIndex(shouldSlide ? visible : 0);
   }, [total, visible, shouldSlide]);
 
-  // Auto slide
+  // Re-enable transition after resetting the position
+  useEffect(() => {
+    if (!transition) {
+      const frame = requestAnimationFrame(() => {
+        setTransition(true);
+      });
+
+      return () => cancelAnimationFrame(frame);
+    }
+  }, [transition]);
+
+  // Automatic sliding
   useEffect(() => {
     if (!shouldSlide) return;
 
     const interval = setInterval(() => {
       setIndex((prev) => prev + 1);
-    }, 1500);
+    }, 2500);
 
     return () => clearInterval(interval);
   }, [shouldSlide]);
 
-  // Infinite loop correction
-  useEffect(() => {
-    if (!shouldSlide) return;
+// Infinite loop correction
+useEffect(() => {
+  if (!shouldSlide || !transition) return;
 
-    if (index === total + visible) {
-      const timeout = setTimeout(() => {
-        setTransition(false);
-        setIndex(visible);
-      }, 500);
+  // Reached the cloned testimonials at the end
+  if (index >= total + visible) {
+    const timeout = setTimeout(() => {
+      setTransition(false);
+      setIndex(index - total);
+    }, 500);
 
-      return () => clearTimeout(timeout);
-    }
-  }, [index, total, visible, shouldSlide]);
+    return () => clearTimeout(timeout);
+  }
 
-  // Re-enable transition after jump
-  useEffect(() => {
-    if (!transition) {
-      requestAnimationFrame(() => {
-        setTransition(true);
-      });
-    }
-  }, [transition]);
+  // Reached the cloned testimonials at the beginning
+  if (index < visible) {
+    const timeout = setTimeout(() => {
+      setTransition(false);
+      setIndex(index + total);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }
+}, [index, total, visible, shouldSlide, transition]);
+
 
   // Next button
   const nextSlide = () => {
@@ -128,12 +140,12 @@ const Review = () => {
 
   const realIndex =
     total > 0
-      ? (index - visible + total) % total
+      ? ((index - visible) % total + total) % total
       : 0;
 
   const progress =
     shouldSlide && maxIndex > 0
-      ? (realIndex / maxIndex) * 100
+      ? (Math.min(realIndex, maxIndex) / maxIndex) * 100
       : 100;
 
   return (
@@ -176,7 +188,7 @@ const Review = () => {
           >
             {clonedReviews.map((item, i) => (
               <div
-                key={i}
+                key={`${item.name}-${i}`}
                 className="flex-shrink-0"
                 style={{
                   width: `${100 / visible}%`,
@@ -205,8 +217,10 @@ const Review = () => {
           {/* Navigation Buttons */}
           <div className="flex gap-3 mr-3">
             <button
+              type="button"
               onClick={prevSlide}
               disabled={!shouldSlide}
+              aria-label="Previous testimonial"
               className={`w-[23px] sm:w-[37px] h-[23px] sm:h-[37px] flex items-center justify-center rounded-full bg-black text-white ${
                 shouldSlide
                   ? "cursor-pointer"
@@ -217,8 +231,10 @@ const Review = () => {
             </button>
 
             <button
+              type="button"
               onClick={nextSlide}
               disabled={!shouldSlide}
+              aria-label="Next testimonial"
               className={`w-[23px] sm:w-[37px] h-[23px] sm:h-[37px] flex items-center justify-center rounded-full bg-black text-white ${
                 shouldSlide
                   ? "cursor-pointer"
@@ -235,4 +251,3 @@ const Review = () => {
 };
 
 export default Review;
-

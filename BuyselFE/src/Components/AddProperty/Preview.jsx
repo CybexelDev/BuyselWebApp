@@ -103,7 +103,6 @@ const nearbyPlaces =
     distance: item.distance || "",
   })) || [];
 
-  console.log(nearbyPlaces, "Nearby Places");
 
 
 
@@ -130,13 +129,13 @@ const nearbyPlaces =
   </h3>
 
   <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 lg:grid-cols-2 xl:grid-cols-4">
-    {(formData.features || []).map((item, index) => (
-      <DetailItem
-        key={index}
-        title={item.name}
-        value={item.value}
-      />
-    ))}
+ {(formData.features || []).map((item, index) => (
+  <DetailItem
+    key={index}
+    title={item.option}
+    value={item.value}
+  />
+))}
   </div>
 
 </div>

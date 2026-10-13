@@ -27,9 +27,13 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const user = useSelector((state) => state.user);
   const isPlan = useSelector((state) => state.user.is_plan);
 
-  console.log("is_plan:", isPlan);
 
   const handleSelectPlan = (plan) => {
+    // Check user login
+if (!user?.accessToken) {
+navigate("/loginandsignup");
+return;
+}
 
     if (plansData?.is_upgrade_plan) {
       toast.error(
@@ -37,8 +41,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       );
       return;
     }
-
-
     // Agent plans
     if (active !== "Owner") {
       setShowAgentModal(true);
@@ -60,15 +62,13 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
       if (!selectedPlan) return;
 
-      console.log(selectedPlan);
 
       const res = await activateUserPlan(selectedPlan.id);
       toast.success("Plan Activated")
 
-      console.log(res);
 
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -78,7 +78,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   //       const data = await getAllPlans();
   //       setPlansData(data);
   //     } catch (err) {
-  //       console.log(err);
+  //       
   //     }
   //   };
 
@@ -94,7 +94,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       setPlansData(data);
 
     } catch (err) {
-      console.log(err);
+      
     } finally {
       setLoading(false);
     }
@@ -192,10 +192,12 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       default:
         return [];
     }
-  }; const planConfig = {
+  };
+   const planConfig = {
     Owner: {
      features: [
   "Plan Validity",
+      "Total Listings",
   "Listing Type",
   "Priority Search",
   "Enquiry Limit",
@@ -208,6 +210,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 ],
     getData: (plan) => [
   plan.validity,
+  plan.property_listing_limit,
   plan.listing_type,
   convert(plan.priority_search),
   plan.enquiry_limit,
@@ -304,7 +307,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   const rawPlans = getPlansByRole();
   const features = planConfig[active].features;
   const propertyCount = plansData?.property_count || 0;
-  console.log("count:", propertyCount);
 
 
   const plans = rawPlans.map((plan) => ({
@@ -317,7 +319,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
   }));
   const isOwnerPlans = plans.length === 4;
 
-  console.log(plans, "PLANS.............");
 
 
   const renderIcon = (type) => {
@@ -482,7 +483,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       {showtabs && (
         <div className="flex justify-center mb-10 md:mb-15 px-2">
 
-          <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">
+          <div className="w-auto overflow-x-auto scrollbar-hide">
 
             <div className="flex items-center border border-[#8AD32E] rounded-full p-1 bg-white min-w-max">
 
@@ -490,7 +491,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
                 <button
                   key={role}
                   onClick={() => setActive(role)}
-                  className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${active === role
+                  className={`whitespace-nowrap px-4 md:px-6 py-2 rounded-full text-[14px] sm:text-[17px] md:text-[20px] cursor-pointer lexend font-[550] transition-all duration-300 ${active === role
                     ? "bg-[#8AD32E] text-white shadow"
                     : "text-black"
                     }`}
@@ -527,7 +528,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
               {features.map((feature, i) => (
                 <div
                   key={feature}
-                  className="flex justify-between items-center bg-[#F7FCEB] rounded-full px-4 py-3"
+                  className="flex justify-between items-center bg-[#9ca09724] rounded-full px-4 py-3"
                 >
                   <span className="text-[12px] font-medium text-gray-700">
                     {feature}
@@ -787,7 +788,7 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
 
                   <div
                     key={index}
-                    className="flex items-center justify-between bg-[#F7FCEB] rounded-2xl px-4 py-3"
+                    className="flex items-center justify-between bg-[#9ca09724] rounded-2xl px-4 py-3"
                   >
 
                     <span className="text-sm font-medium text-gray-700">
@@ -811,7 +812,6 @@ const PlansLayout = ({ showtabs = true, padding = "py-10" }) => {
       plan_id: selectedPlan?.plan_id,
       onSuccess: async (res) => {
         const dashboard = await userDashboard();
-        console.log("Remaining:", dashboard.data.remaining_property);
  
         dispatch({
         type: "SET_USER",

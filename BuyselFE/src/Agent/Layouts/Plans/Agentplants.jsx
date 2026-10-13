@@ -30,8 +30,6 @@ function AgentPlans() {
   const { agent_type } = useSelector((state) => state.agent);
 
 
-  console.log(adPackages, "[[[[[[[[[[[[[[[[");
-  // console.log(selectedPlan, "?????????????????");
  
   const navigate = useNavigate()
 
@@ -39,7 +37,6 @@ function AgentPlans() {
   useEffect(() => {
     const fetchPlan = async () => {
       const res = await agentPlans();
-      console.log("agentPlans response:", res); // 👈 HERE
 
 
 //validate is upgradeplan in there or not
@@ -144,11 +141,9 @@ if (result) {
       "Your advertisement request has been sent to our admin team. They will contact you shortly.",
     duration: 5000,
   });
-  console.log(result);
 }    
     
   else {
-    console.log("Request failed");
   }
 };
 

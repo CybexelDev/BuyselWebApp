@@ -5,6 +5,7 @@ import {
   MapPin, Home, Tag, ArrowLeft, 
   Calendar, ShieldCheck, Zap
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useParams } from "react-router-dom";
 import { getEnquiryDetail } from '../../../Api/agentsApi';
@@ -20,6 +21,7 @@ const formatDate = (date) => {
 const EnquiryDetailLayout = () => {
   const { id } = useParams();
   const [detail, setDetail] = useState(null);
+  const navigate=useNavigate()
   useEffect(() => {
   const fetchDetail = async () => {
     const res = await getEnquiryDetail(id);
@@ -43,7 +45,7 @@ if (!detail) return <div>Loading...</div>;
         <div className="max-w-6xl mx-auto p-4 md:p-10">
           
           <header className="mb-8 flex items-center justify-between">
-            <button className="group flex items-center gap-2 text-slate-500 hover:text-[#74C122] transition-colors font-bold text-sm uppercase tracking-widest instrument-sans">
+            <button className="group flex items-center gap-2 text-slate-500 hover:text-[#74C122] transition-colors font-bold text-sm uppercase tracking-widest instrument-sans" onClick={()=>navigate("/agent/enquiry")}>
               <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
               Back to Enquirys
             </button>
@@ -146,7 +148,7 @@ src={
                   <div className="bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-white/20 shadow-2xl flex items-center gap-2">
                     <Tag size={18} className="text-[#74C122]" />
                     <span className="text-xl font-black text-slate-900 tracking-tight host-grotesk">
-₹{Number(detail.property.price).toLocaleString()}                    </span>
+₹{detail.property.price}          </span>
                   </div>
                 </div>
               </div>

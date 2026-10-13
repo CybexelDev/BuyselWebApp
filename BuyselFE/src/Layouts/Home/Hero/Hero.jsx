@@ -35,7 +35,7 @@ const Hero = () => {
       <div className="footer-cta-container overflow-hidden">
         <div class="footer-cta-logo-container ">
           <div className='flex items-center justify-center'>
-            <img src={logo} alt="logo" className="footer-cta-logo w-[100px] " />
+            <img src={logo} alt="logo" className=" w-[100px] " />
           </div>
         </div>
 
