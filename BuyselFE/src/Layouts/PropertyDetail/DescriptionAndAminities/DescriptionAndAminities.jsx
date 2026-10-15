@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import i1 from "../../../assets/images/propertDetail/i1.png"
 import { sendPropertyEnquiry } from '../../../Api/userApi'
 import { toast } from 'sonner'
+import { Sparkles } from "lucide-react";
+
 export const DescriptionAndAminities = ({ data }) => {
   const [detail, setDetail] = useState([])
   const [loading, setLoading] = useState(false);
@@ -107,30 +109,78 @@ const handleSubmit = async (e) => {
 
             <p className='text-[#181818] host-grotesk text-[20px] font-[500] mt-3'>Key Selling Points</p>
 
-            <ul className="space-y-4 mt-2 host-grotesk">
-              {detail?.keySellingPoint?.map((item, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span className="mt-2 w-1 h-1 bg-[#4C4545] rounded-full"></span>
-                  <p className="text-[#4C4545] text-sm leading-relaxed">
-                    {item.content}
-                  </p>
-                </li>
-              ))}
-            </ul>
-
+{detail?.keySellingPoint?.length > 0 ? (
+  <ul className="space-y-4 mt-2 host-grotesk">
+    {detail.keySellingPoint.map((item, index) => (
+      <li key={index} className="flex items-start gap-3">
+        <span className="mt-2 w-1 h-1 bg-[#4C4545] rounded-full flex-shrink-0" />
+        <p className="text-[#4C4545] text-sm leading-relaxed">
+          {item.content}
+        </p>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p className="text-[#777777] host-grotesk text-[16px] mt-2">
+    No key selling points available
+  </p>
+)}
           </div>
           {/* aminties here daa */}
-          <div className=''>
-            <p className='host-grotesk text-[24px] font-[700] text-[#181818] mt-6'>Amenities & Features</p>
-            <div className='flex flex-wrap gap-2 md:gap-4 host-grotesk mt-4'>
-              {detail?.amenities?.map((item, index) => (
-                <div key={index} className='bg-[#74c222] rounded-[14px] px-3 md:px-7 py-2 md:py-3 flex gap-1 host-grotesk text-[14px] md:text-[15px] text-[#ffffff] cursor-pointer'>
-                  <img className='w-[14px] h-[14px] object-contain mt-1 ' src={item?.icon} />
-                  {item?.name}
-                </div>
-              ))}
-            </div>
-          </div>
+          
+{detail?.amenities?.length > 0 ? (
+  // UI when amenities are available
+  <div>
+    <p className="host-grotesk text-[24px] font-[700] text-[#181818] mt-6">
+      Amenities & Features
+    </p>
+
+    <div className="flex flex-wrap gap-2 md:gap-4 host-grotesk mt-4">
+      {detail.amenities.map((item, index) => (
+        <div
+          key={index}
+          className="bg-[#74c222] rounded-[14px] px-3 md:px-7 py-2 md:py-3 flex gap-1 text-[14px] md:text-[15px] text-white"
+        >
+          {item?.icon && (
+            <img
+              className="w-[14px] h-[14px] object-contain mt-1"
+              src={item.icon}
+              alt=""
+            />
+          )}
+          {item?.name}
+        </div>
+      ))}
+    </div>
+  </div>
+) : (
+  // Alternative UI when amenities are unavailable
+  <div className="mt-6 min-h-[200px] lg:min-h-[500px] w-full rounded-2xl border border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white p-6 md:p-10 flex flex-col items-center justify-center text-center">
+  {/* Icon */}
+  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-gray-200">
+    <Sparkles className="h-7 w-7 text-gray-400" strokeWidth={1.5} />
+  </div>
+
+  {/* Heading */}
+  <h3 className="host-grotesk mt-5 text-[20px] md:text-[22px] font-bold text-[#181818]">
+    Amenities & Features
+  </h3>
+
+  {/* Description */}
+  <p className="host-grotesk mt-2 max-w-md text-[14px] leading-relaxed text-gray-500">
+    We're still updating the amenities for this property. Please contact us and we'll be happy to help.
+  </p>
+
+  {/* Optional CTA */}
+  <a
+    href="/contact"
+    className="host-grotesk mt-6 inline-flex items-center rounded-full bg-[#181818] px-5 py-2.5 text-[14px] font-medium text-white transition hover:bg-black/80"
+  >
+    Contact us for details
+  </a>
+</div>
+)}
+
         </div>
 
        <div className="md:col-span-4">

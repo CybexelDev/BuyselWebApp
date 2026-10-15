@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import SkeletonCard from '../../../Components/SkeletonCard/SkeletonCard';
 import noimage from "../../../assets/images/propertDetail/noimage.png"
 import Chatbox from '../../Home/Chatbox/Chatbox';
+import { useSelector } from "react-redux";
 
 function PropertiesSection({ propertiesData, dataCount }) {
 
@@ -14,6 +15,8 @@ function PropertiesSection({ propertiesData, dataCount }) {
   const [page, setPage] = useState(1);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const user = useSelector((state) => state.user);
+  const agent = useSelector((state) => state.agent);
 
 
 
@@ -84,37 +87,91 @@ function PropertiesSection({ propertiesData, dataCount }) {
   const currentProperties = properties?.slice(firstIndex, lastIndex);
   const totalPages = Math.ceil(properties?.length / itemsPerPage);
 
-  const addWishlist = (id) => {
-    const token = localStorage.getItem("accessToken");
 
-    if (!token) {
-      toast.error("Please login to use wishlist");
-      return;
+
+  //   const addWishlist = (id) => {
+  //   const token = localStorage.getItem("accessToken");
+
+  //   if (!token) {
+  //     toast.error("Please login to use wishlist");
+  //     return;
+  //   }
+  //   addToWishlist({ id });
+  //   toast.success("Added to wishlist")
+
+  //   setProperties((prev) =>
+  //     prev.map((item) =>
+  //       item.id === id
+  //         ? { ...item, is_wishlisted: true }
+  //         : item
+  //     )
+  //   );
+  // };
+
+const addWishlist = async (id) => {
+  // Allow wishlist only for a logged-in user
+  if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to use wishlist");
+    return;
+  }
+
+  try {
+    const res = await addToWishlist({ id });
+
+    if (res) {
+      setProperties((prev) =>
+        prev.map((item) =>
+          item.id === id
+            ? { ...item, is_wishlisted: true }
+            : item
+        )
+      );
+
+      toast.success("Added to wishlist");
     }
-    addToWishlist({ id });
-    toast.success("Added to wishlist")
+  } catch (error) {
+    toast.error("Failed to add to wishlist");
+  }
+};
 
-    setProperties((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, is_wishlisted: true }
-          : item
-      )
-    );
-  };
+  // const removeWishlist = (id) => {
+  //   removeToWishlist({ id });
+  //   toast.error("Removed from wishlist ");
 
-  const removeWishlist = (id) => {
-    removeToWishlist({ id });
-    toast.error("Removed from wishlist ");
+  //   setProperties((prev) =>
+  //     prev.map((item) =>
+  //       item.id === id
+  //         ? { ...item, is_wishlisted: false }
+  //         : item
+  //     )
+  //   );
+  // };
 
-    setProperties((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, is_wishlisted: false }
-          : item
-      )
-    );
-  };
+
+  const removeWishlist = async (id) => {
+  if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to use wishlist");
+    return;
+  }
+
+  try {
+    const res = await removeToWishlist({ id });
+
+    if (res) {
+      setProperties((prev) =>
+        prev.map((item) =>
+          item.id === id
+            ? { ...item, is_wishlisted: false }
+            : item
+        )
+      );
+
+      toast.success("Removed from wishlist");
+    }
+  } catch (error) {
+    toast.error("Failed to remove from wishlist");
+  }
+};
 
 
   const isFiltered = propertiesData?.length > 0 && properties?.length === 0;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import apartments from "../../../assets/images/icons/apartments.svg";
 import location from "../../../assets/images/icons/location(1).svg";
 import Chatbutton from "../Chatbox/Chatbutton";
@@ -53,6 +53,33 @@ const handleSearch = () => {
 
   const nav = useNavigate();
 
+  const propertyTypeRef = useRef(null);
+const budgetRef = useRef(null);
+
+useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (
+      propertyTypeRef.current &&
+      !propertyTypeRef.current.contains(e.target)
+    ) {
+      setPropertyTypeOpen(false);
+    }
+
+    if (
+      budgetRef.current &&
+      !budgetRef.current.contains(e.target)
+    ) {
+      setOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
   return (
     <div className="relative w-full flex justify-center px-6 mt-16 md:mt-0 sm:px-2 md:px-4 mb-16">
       <div className="w-full max-w-[1043px] bg-[#f2f2f2] rounded-[39px] px-4 sm:px-6 lg:px-[28px] shadow-sm instrument-sans ">
@@ -97,6 +124,7 @@ const handleSearch = () => {
           </div>
 
          <div
+           ref={propertyTypeRef}
   className="relative poppins flex items-center justify-between w-auto xl:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3 cursor-pointer"
   onClick={() => setPropertyTypeOpen(!propertyTypeOpen)}
 >
@@ -141,6 +169,7 @@ const handleSearch = () => {
 
 
           <div
+            ref={budgetRef}
             className="relative poppins flex items-center justify-between w-auto xl:w-[269px] h-[52px] bg-[#dfd7d7] rounded-[17px] px-3 cursor-pointer"
             onClick={() => setOpen(!open)}
           >
