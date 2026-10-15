@@ -168,10 +168,12 @@ function HeroBanner({ properties = 0, remaining = 0 }) {
 }
 
 /* ───────────── Listing usage ring ───────────── */
-function ListingUsage({ used = 0, remaining = 0, className = "" }) {
-  const navigate = useNavigate();
-  const limit = used + remaining;
-  const pct = limit ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+function ListingUsage({ used = 0, deleted = 0, remaining = 0, className = "" }) {
+const navigate = useNavigate();
+const totalCount = used + deleted + remaining;
+const usedCount = used + deleted;
+const limit = totalCount;
+const pct = limit ? Math.min(100, Math.round((usedCount / limit) * 100)) : 0;
   const R = 62;
   const C = 2 * Math.PI * R;
 
@@ -202,7 +204,7 @@ function ListingUsage({ used = 0, remaining = 0, className = "" }) {
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="instrument-sans text-4xl font-black tabular-nums text-slate-900">{pct}%</span>
-            <span className="text-xs text-slate-500">{used} of {limit} used</span>
+            <span className="text-xs text-slate-500">  {usedCount} of {limit} used</span>
           </div>
         </div>
 
@@ -439,9 +441,8 @@ function AgentDashboard() {
             className="lg:col-span-2"
             data={dashboard?.monthly_enquiries || []}
           />
-          <ListingUsage used={totalProperties} remaining={remainingListings} />
+         <ListingUsage used={totalProperties} deleted={DeletedProperties} remaining={remainingListings}/>
         </div>
-
         <div className="mt-6">
           <RecentEnquiries
             className="lg:col-span-2"
