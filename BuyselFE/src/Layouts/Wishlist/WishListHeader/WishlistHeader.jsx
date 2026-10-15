@@ -17,7 +17,6 @@ const WishlistHeader = () => {
           className="
             absolute inset-0 opacity-10
             pointer-events-none
-            
             bg-[length:100%_100%]
             bg-[position:center_bottom]
           "

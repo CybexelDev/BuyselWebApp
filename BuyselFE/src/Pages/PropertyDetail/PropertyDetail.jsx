@@ -53,12 +53,19 @@ const transformProperty = (data) => {
       distance: item.distance
     })),
     description: data.description,
-    addressfully : `${data.location_details.village} ${data.location_details.city} ${data.location_details.state} ${data.location_details.pincode} `,
-    keySellingPoint: data.key_selling_points.map(item => ({
+addressfully: [
+  data.location_details?.village,
+  data.location_details?.city,
+  data.location_details?.state,
+  data.location_details?.pincode,
+]
+  .filter((value) => value && value !== "null")
+  .join(" "),
+      keySellingPoint: data.key_selling_points.map(item => ({
       content: item
     })),
     seller: {
-      company: "Owner",
+      company: data.contact_details.property_owner,
       name: data.contact_details.owner,
       phone: data.contact_details.phone,
       image: data.contact_details.owner_profile_image 
