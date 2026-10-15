@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import {
   Search,
   Filter,
@@ -46,6 +48,9 @@ const [filters, setFilters] = useState({
   minPrice: "",
   maxPrice: "",
 });
+
+
+
   const userRole = useSelector((state) => state.user.role);
 const agentRole = useSelector((state) => state.agent.role);
 
@@ -294,6 +299,52 @@ const filteredProperties = properties.filter((property) => {
     matchesMaxPrice
   );
 });
+
+
+const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 8;
+const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+
+const startIndex = (currentPage - 1) * itemsPerPage;
+
+const paginatedProperties = filteredProperties.slice(
+  startIndex,
+  startIndex + itemsPerPage
+);
+
+
+const getPageNumbers = () => {
+  const pages = [];
+
+  if (totalPages <= 5) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  pages.push(1);
+
+  if (currentPage > 3) {
+    pages.push("...");
+  }
+
+  const startPage = Math.max(2, currentPage - 1);
+  const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+  for (let page = startPage; page <= endPage; page++) {
+    pages.push(page);
+  }
+
+  if (currentPage < totalPages - 2) {
+    pages.push("...");
+  }
+
+  pages.push(totalPages);
+
+  return pages.filter(
+    (page, index) => page === "..." || pages.indexOf(page) === index
+  );
+};
+
+
     return (
   <div className={`min-h-screen ${bg} flex overflow-x-hidden`}>
 
@@ -730,7 +781,10 @@ const filteredProperties = properties.filter((property) => {
                 type="text"
                 placeholder="Search property..."
                 className="outline-none w-full text-sm"
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+  setSearchTerm(e.target.value);
+  setCurrentPage(1);
+}}
               />
             </div>
 
@@ -893,7 +947,7 @@ const filteredProperties = properties.filter((property) => {
             </button>
     </div>
   ) : (
-    filteredProperties.map((property) => (
+    paginatedProperties.map((property) => (
 
               <div
                 key={property.id}
@@ -1000,6 +1054,68 @@ const filteredProperties = properties.filter((property) => {
   )}
 </div>
 
+{!loading && filteredProperties.length > itemsPerPage && (
+  <div className="mt-6 flex justify-center">
+    <div className="inline-flex items-center gap-1 sm:gap-3 rounded-2xl bg-white px-3 py-2 shadow-lg shadow-black/10">
+      {/* Previous Button */}
+      <button
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        disabled={currentPage === 1}
+        aria-label="Previous page"
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full
+          bg-black text-white transition cursor-pointer
+          hover:bg-gray-800
+          "
+      >
+        <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+      </button>
+
+      {/* Page Numbers */}
+      {getPageNumbers().map((page, index) =>
+        page === "..." ? (
+          <span
+            key={`dots-${index}`}
+            className="flex h-8 w-6 sm:w-8 select-none items-center justify-center
+              text-sm font-bold tracking-widest text-[#a3a7c4]"
+            aria-disabled="true"
+          >
+            ...
+          </span>
+        ) : (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            aria-current={currentPage === page ? "page" : undefined}
+            className={`flex h-8 w-8 sm:h-8 sm:w-8 items-center justify-center rounded-lg
+              text-sm sm:text-base font-medium transition cursor-pointer
+              ${
+                currentPage === page
+                  ? "bg-[#6ABD11] text-white shadow-sm"
+                  : "text-gray-900 hover:bg-gray-100"
+              }`}
+          >
+            {page}
+          </button>
+        )
+      )}
+
+      {/* Next Button */}
+      <button
+        onClick={() =>
+          setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+        }
+        disabled={currentPage === totalPages}
+        aria-label="Next page"
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full
+          bg-black text-white transition cursor-pointer
+          hover:bg-gray-800
+          "
+      >
+        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+      </button>
+    </div>
+  </div>
+)}
         </div>
       </main>
     </div>

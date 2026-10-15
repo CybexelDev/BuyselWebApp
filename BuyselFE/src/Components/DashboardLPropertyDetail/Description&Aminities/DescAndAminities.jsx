@@ -49,8 +49,7 @@ function DescAndAminities({ data }) {
               </ul>
             ) : (
               <p className="text-[#777777] host-grotesk text-[16px] mt-3">
-                No key selling points available
-              </p>
+You haven't added any key selling points              </p>
             )}
 
           </div>
@@ -85,32 +84,27 @@ function DescAndAminities({ data }) {
               </div>
             </div>
           ) : (
-            <div className="mt-3  w-full rounded-2xl border border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white p-6 md:p-10 flex flex-col items-center justify-center text-center">
+            <div className="mt-3 w-full rounded-2xl border border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white p-6 md:p-10 flex flex-col items-center justify-center text-center">
 
-              {/* ICON */}
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-gray-200">
-                <Sparkles
-                  className="h-7 w-7 text-gray-400"
-                  strokeWidth={1.5}
-                />
-              </div>
-             
+  {/* ICON */}
+  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-gray-200">
+    <Sparkles
+      className="h-7 w-7 text-gray-400"
+      strokeWidth={1.5}
+    />
+  </div>
 
-              {/* DESCRIPTION */}
-              <p className="host-grotesk mt-2 max-w-md text-[14px] leading-relaxed text-gray-500">
-                We're still updating the amenities for this property.
-                Please contact us and we'll be happy to help.
-              </p>
+  {/* TITLE */}
+  <h3 className="host-grotesk mt-4 text-base font-semibold text-gray-800">
+    No Amenities Added Yet
+  </h3>
 
-              {/* CONTACT BUTTON */}
-              <a
-                href="/contact"
-                className="host-grotesk mt-6 inline-flex items-center rounded-full bg-[#181818] px-5 py-2.5 text-[14px] font-medium text-white transition hover:bg-black/80"
-              >
-                Contact us for details
-              </a>
+  {/* DESCRIPTION */}
+  <p className="host-grotesk mt-2 max-w-md text-[14px] leading-relaxed text-gray-500">
+    You haven't added any amenities to this property yet. Add them online to highlight your property's features.
+  </p>
 
-            </div>
+</div>
           )}
 
         </div>
