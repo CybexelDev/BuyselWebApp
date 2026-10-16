@@ -624,7 +624,7 @@ const Sidebar = () => {
             BOTTOM SECTION
         ================================================= */}
 
-        <div className="relative z-10 px-4 pb-4">
+        <div className="relative z-10 px-4 pb-4 ">
 
           {/* Small upgrade/info card */}
 
@@ -643,8 +643,8 @@ const Sidebar = () => {
               border
               border-transparent
               px-3
-              py-2
-              text-gray-500
+              py-[6px]
+              text-red-500
               transition-all
               duration-300
               hover:border-red-100
@@ -669,7 +669,8 @@ const Sidebar = () => {
             >
 
               <LogOut
-                size={17}
+                size={16}
+                  strokeWidth={2.7}
                 className="
                   transition-transform
                   duration-300
@@ -681,10 +682,12 @@ const Sidebar = () => {
 
             <span
               className="
-                text-[10px]
+                text-[13px]
                 font-bold
+
+                host-grotesk
                 uppercase
-                tracking-[0.12em]
+                tracking-[1px]
               "
             >
               Logout
