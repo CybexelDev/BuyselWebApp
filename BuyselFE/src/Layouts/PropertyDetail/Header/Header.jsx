@@ -394,42 +394,45 @@ const handleWishlist = async (e) => {
               <h2 className="text-lg lg:text-xl mb-3 font-semibold text-black ">
                Property Features
              </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2 gap-4 lg:gap-3 xl:gap-5 text-xs lg:text-sm">
-           
-             {property?.features?.length > 0 ? (
-               property.features.map((item, index) => (
-                 <div
-                   key={index}
-                   className="flex flex-col"
-                 >
-                   {/* icon + title */}
-                   <div className="flex items-center gap-2">
-                     <img
-                       src={item.icon}
-                       alt={item.name}
-                       className="w-6 h-6 object-contain flex-shrink-0"
-                     />
-           
-                     <h4 className="text-[16px] font-semibold text-black whitespace-nowrap">
-                       {item.name}
-                     </h4>
-                   </div>
-           
-                   {/* value */}
-                   <p className="text-[14px] text-gray-500 ml-7 mt-1">
-                     {item.value}
-                   </p>
-                 </div>
-               ))
-             ) : (
-               <div className="py-2 col-span-full">
-                 <p className="text-sm md:text-lg text-gray-500 font-medium">
-                   No features available
-                 </p>
-               </div>
-             )}
-           
-           </div>
+           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2 gap-4 lg:gap-3 xl:gap-4 text-xs lg:text-sm">
+  {property?.features?.length > 0 ? (
+    property.features.map((item, index) => (
+      <div
+        key={index}
+        className="group flex items-center gap-2 rounded-full pr-1 transition-all duration-300"
+      >
+        {/* icon */}
+        <img
+          src={item.icon}
+          alt={item.name}
+          className="w-4 h-4 object-contain flex-shrink-0"
+        />
+
+        {/* title */}
+        <h4 className="text-[14px] font-semibold text-black whitespace-nowrap">
+          {item.name}
+        </h4>
+
+        {/* value in circle */}
+        <span
+          className="flex items-center justify-center min-w-[28px] h-5 px-2 rounded-full
+                     bg-[#7BC21F]/10 border border-[#7BC21F] text-[10px] font-semibold text-black
+                     transition-all duration-300
+                     group-hover:bg-[#7BC21F] group-hover:text-white group-hover:scale-110
+                     group-hover:shadow-[0_0_0_4px_rgba(123,194,31,0.2)]"
+        >
+          {item.value}
+        </span>
+      </div>
+    ))
+  ) : (
+    <div className="py-2 col-span-full">
+      <p className="text-sm md:text-lg text-gray-500 font-medium">
+        No features available
+      </p>
+    </div>
+  )}
+</div>
           </div>
         </div>
       </div>
