@@ -24,6 +24,7 @@ const Navbar = ({
  const handleAddProperty = () => {
   if (!user?.isLoggedIn || !user?.accessToken) {
     toast.error("Please login to add a property");
+    navigate("/loginandsignup");
     return;
   }
 

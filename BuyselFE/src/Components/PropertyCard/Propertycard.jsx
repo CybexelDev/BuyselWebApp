@@ -7,6 +7,7 @@ import apartment from '../../assets/images/icons/apartment.svg'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 
 
@@ -16,6 +17,8 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
   const [liked, setLiked] = useState(false);
 
   const navigate = useNavigate()
+  const user = useSelector((state) => state.user);
+
 
   const images = property.images || [];
   const purpose = property?.purpose;
@@ -116,31 +119,27 @@ BuySel - Find Your Perfect Property
 };
 
 
-  const handleWtspClick = (e) => {
-    e.stopPropagation();
+ const handleWtspClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
 
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) {
-      e.preventDefault(); // 🚫 stop redirect
-      toast.error("Please login to contact");
-      return;
-    }
-
-    const url = `https://wa.me/${property.whatsapp}`;
-    window.open(url, "_blank");
-
+  if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to contact");
+    return;
   }
 
-  const handleCallClick = (e) => {
-    e.stopPropagation();
-    const token = localStorage.getItem("accessToken");
+  const url = `https://wa.me/${property.whatsapp}`;
+  window.open(url, "_blank");
+};
 
-    if (!token) {
-      e.preventDefault(); // 🚫 stop redirect
-      toast.error("Please login to contact");
-      return;
-    }
+  const handleCallClick = (e) => {
+   e.preventDefault();
+  e.stopPropagation();
+
+  if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to contact");
+    return;
+  }
     window.location.href = `tel:${property.phone}`;
   }
 
