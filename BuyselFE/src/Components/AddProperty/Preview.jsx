@@ -128,15 +128,34 @@ const nearbyPlaces =
     Property Features
   </h3>
 
-  <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 lg:grid-cols-2 xl:grid-cols-4">
- {(formData.features || []).map((item, index) => (
-  <DetailItem
-    key={index}
-    title={item.option}
-    value={item.value}
-  />
-))}
-  </div>
+<div className="grid grid-cols-2 sm:grid-cols-3 gap-6 lg:grid-cols-2 xl:grid-cols-4">
+  {(formData.features || [])
+    .filter((item) => {
+      // Hide empty features
+      if (!item.option && Number(item.value) === 0) {
+        return false;
+      }
+      return true;
+    })
+    .map((item, index) => {
+      const isBhk =
+        item.field_name?.trim().toLowerCase() === "bhk types" ||
+        ["1BHK", "2BHK", "3BHK", "4BHK", "5BHK"].includes(item.option);
+
+      return (
+        <DetailItem
+          key={index}
+          title={isBhk ? "BHK types" : item.option}
+          value={
+            isBhk
+              ? item.option
+              : item.value
+          }
+        />
+      );
+    })}
+</div>
+
 
 </div>
 
