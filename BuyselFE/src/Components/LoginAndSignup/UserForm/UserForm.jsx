@@ -301,7 +301,7 @@ if (response?.error) {
         </span>
       </p>
 
-      <div className="flex items-center gap-3 my-6">
+      <div className="flex items-center gap-3 my-5">
         <div className="flex-1 h-[1px] bg-gray-300"></div>
         <span className="text-sm text-gray-400">
           Or sign in with
@@ -310,17 +310,11 @@ if (response?.error) {
       </div>
 
       <div className="flex justify-center gap-4">
-        <button onClick={() => Glogin()} className="border border-[#9d9d9d] rounded-lg px-5 py-2 bg-white shadow cursor-pointer">
-          <img src={google} className='w-6 h-6 object-contain' />
+        <button onClick={() => Glogin()} className="border border-[#9d9d9d] rounded-lg px-5 py-1.5 bg-white shadow cursor-pointer">
+          <img src={google} className='w-8 h-8 object-contain' />
         </button>
 
-        <button className="border border-[#9d9d9d] rounded-lg px-6 py-2 bg-white shadow cursor-pointer">
-          <img src={apple} className='w-6 h-6 object-contain' />
-        </button>
-
-        <button onClick={handleFacebookLogin} className="border border-[#9d9d9d] rounded-lg px-6 py-2 bg-white shadow cursor-pointer">
-          <img src={facbook} className='w-6 h-6 object-contain' />
-        </button>
+        
       </div>
     </>
   )
