@@ -562,11 +562,17 @@ if (data.purpose === "Sale") {
 
 formData.append("price", price);
 
-const transformedFeatures = (data.features || []).map((f) => ({
-  name: data.subcategory,
-  option: f.option,
-  value: f.value,
-}));
+
+const transformedFeatures = (data.features || []).map((f) => {
+  const isBhk = /^\d+\s*BHK$/i.test(String(f.value ?? ""));
+
+  return {
+    name: isBhk ? "BHK types" : data.subcategory,
+    option: f.option,
+    value: f.value,
+  };
+});
+
 
 formData.append(
   "field_values",

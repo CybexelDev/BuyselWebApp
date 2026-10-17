@@ -367,11 +367,33 @@ const parentField =
       setLoading(true);
 console.log("🔥 FORM FEATURES:", formData.features);
 
-const transformedFeatures = (formData.features || []).map((f) => ({
-  name: f.field_name,
-  option: f.option,
-  value: f.value,
-}));
+const transformedFeatures = (formData.features || [])
+  .filter((f) => !(f.option === "" && Number(f.value) === 0))
+  .map((f) => {
+    const isBhk =
+      f.field_name?.trim().toLowerCase() === "bhk types" ||
+      f.name?.trim().toLowerCase() === "bhk types" ||
+      /^\d+\s*BHK$/i.test(String(f.value ?? "")) ||
+      /^\d+\s*BHK$/i.test(String(f.option ?? ""));
+
+    if (isBhk) {
+      const bhkValue = String(f.value ?? f.option ?? "")
+        .match(/\d+/)?.[0];
+
+      return {
+        name: "BHK types",
+        option: null,
+        value: bhkValue ? `${bhkValue}BHK` : f.value,
+      };
+    }
+
+    return {
+      name: f.field_name || f.name,
+      option: f.option,
+      value: f.value,
+    };
+  });
+
 
 console.log("🔥 TRANSFORMED FEATURES:", transformedFeatures);
 
