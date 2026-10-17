@@ -14,6 +14,8 @@ import { X } from "lucide-react";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
 import { addToWishlist,removeToWishlist } from "../../../Api/userApi";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const HeaderProperty = ({ property }) => {
   const [showGallery, setShowGallery] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -21,6 +23,9 @@ const HeaderProperty = ({ property }) => {
   const [touchEnd, setTouchEnd] = useState(null);
 
 const [isWishlisted, setIsWishlisted] = useState(false);
+const user = useSelector((state) => state.user);
+const navigate = useNavigate()
+
 
 useEffect(() => {
   setIsWishlisted(property?.is_wishlist || false);
@@ -58,13 +63,14 @@ useEffect(() => {
       prevImage();
     }
   };
+
+
 const handleWishlist = async (e) => {
   e.stopPropagation();
 
-  const token = localStorage.getItem("accessToken");
-
-  if (!token) {
+   if (!user?.isLoggedIn || !user?.accessToken) {
     toast.error("Please login to use wishlist");
+    navigate("/loginandsignup");
     return;
   }
 
@@ -98,14 +104,11 @@ const handleWishlist = async (e) => {
   const handleWtspClick = (e) => {
     e.stopPropagation();
 
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) {
-
-      e.preventDefault(); // 🚫 stop redirect
-      toast.error("Please login to contact");
-      return;
-    }
+    if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to contact");
+    navigate("/loginandsignup");
+    return;
+  }
 
     const url = `https://wa.me/${property?.seller?.phone}`;
     window.open(url, "_blank");
@@ -114,14 +117,11 @@ const handleWishlist = async (e) => {
 
   const handleCallClick = (e) => {
     e.stopPropagation();
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) {
-
-      e.preventDefault(); 
-      toast.error("Please login to contact");
-      return;
-    }
+    if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to contact");
+    navigate("/loginandsignup");
+    return;
+  }
     window.location.href = `tel:${property?.seller?.phone}`;
   }
 
