@@ -1,8 +1,8 @@
 import React from 'react'
 import add from '../../../assets/images/icons/add.png'
 import add2 from '../../../assets/images/addP/add.png'
-import add3 from '../../../assets/images/addP/add2.png?w=800&format=webp'
-import add4 from '../../../assets/images/addP/ad1.png?w=800&format=webp'
+import add3 from '../../../assets/images/addP/add2.png'
+import add4 from '../../../assets/images/addP/ad1.png'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { toast } from 'sonner'
@@ -45,7 +45,7 @@ const AddPropertyAndAgent = () => {
           <div className="flex items-center justify-center h-full px-4 sm:px-8 lg:px-16 py-10 md:py-12 ">
             <div className="w-full max-w-[550px]">
               <div className="w-full">
-                <img src={add3} loading="lazy"
+                <img src={add3}
                   alt="Add property"
                   className="w-full max-w-[380px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[500px] h-auto mb-5 object-contain"
                 />
@@ -80,7 +80,7 @@ const AddPropertyAndAgent = () => {
             <div className="w-full max-w-[550px]">
               <div className="w-full">
                 <img
-                  src={add4} loading="lazy"
+                  src={add4} 
                   alt="Become an agent"
                   className="w-full max-w-[380px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[500px] h-auto mb-5 object-contain"
                 />
