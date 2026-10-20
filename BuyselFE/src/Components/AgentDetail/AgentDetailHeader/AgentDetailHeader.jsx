@@ -5,6 +5,7 @@ import Navbar from "../../Navbar/Navbar";
 import crown from "../../../assets/images/agentDetail/crown.png";
 import elite from "../../../assets/images/agentDetail/elite.png";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
   const [showLinks, setShowLinks] = useState(false);
   const dropdownRef = useRef(null);
@@ -19,16 +20,18 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
       ? "linear-gradient(to right, #FEFCDC,  #83cc1687 100%)"
       : "linear-gradient(to right, #D9D9D9 10%, #83cc1687 100%)";
 
+   const user = useSelector((state) => state.user);
+    
+
 
   const handleWtspClick = (e) => {
+   e.preventDefault();
+  e.stopPropagation();
 
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) {
-      e.preventDefault(); // 🚫 stop redirect
-      toast.info("Please login to connect with agent");
-      return;
-    }
+  if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to connect with agent");
+    return;
+  }
 
     // ✅ open WhatsApp manually
     const url = `https://wa.me/${agentData?.whatsapp_number}?text=${encodeURIComponent(
@@ -55,13 +58,13 @@ useEffect(() => {
   };
 }, []);
   const handleCallClick = (e) => {
+   e.preventDefault();
+  e.stopPropagation();
 
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      e.preventDefault(); // 🚫 stop redirect
-      toast.info("Please login to connect with agent");
-      return;
-    }
+  if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to connect with agent");
+    return;
+  }
     const url = `tel:${agentData?.phone_number}`;
     window.open(url, "_self");
 
