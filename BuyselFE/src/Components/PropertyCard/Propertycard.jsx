@@ -123,10 +123,10 @@ BuySel - Find Your Perfect Property
   e.preventDefault();
   e.stopPropagation();
 
-  if (!user?.isLoggedIn || !user?.accessToken) {
-    toast.error("Please login to contact");
-    return;
-  }
+  // if (!user?.isLoggedIn || !user?.accessToken) {
+  //   toast.error("Please login to contact");
+  //   return;
+  // }
 
   const url = `https://wa.me/${property.whatsapp}`;
   window.open(url, "_blank");
@@ -136,10 +136,10 @@ BuySel - Find Your Perfect Property
    e.preventDefault();
   e.stopPropagation();
 
-  if (!user?.isLoggedIn || !user?.accessToken) {
-    toast.error("Please login to contact");
-    return;
-  }
+  // if (!user?.isLoggedIn || !user?.accessToken) {
+  //   toast.error("Please login to contact");
+  //   return;
+  // }
     window.location.href = `tel:${property.phone}`;
   }
 

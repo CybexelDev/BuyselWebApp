@@ -96,13 +96,14 @@ export default function Ad() {
       <div className="px-2 py-6 md:px-8">
         {/* Shape wrapper: sizes come from CSS variables, changed per breakpoint */}
         <div
-          style={maskStyle}
-          className="relative w-full overflow-hidden bg-neutral-200
-            h-[220px] sm:h-[320px] md:h-[470px]
-            [--r:16px] [--s:10px] [--tw:200px] [--th:28px]
-            sm:[--r:24px] sm:[--s:16px] sm:[--tw:380px] sm:[--th:44px]
-            md:[--r:40px] md:[--s:23px] md:[--tw:680px] md:[--th:60px]"
-        >
+  style={maskStyle}
+  className="relative w-full overflow-hidden bg-neutral-200
+    h-[190px] sm:h-[320px] md:h-[400px] lg:h-[470px]
+    [--r:16px] [--s:10px] [--tw:200px] [--th:28px]
+    sm:[--r:24px] sm:[--s:16px] sm:[--tw:380px] sm:[--th:44px]
+    md:[--r:40px] md:[--s:23px] md:[--tw:400px] md:[--th:60px]
+    lg:[--tw:580px] xl:[--tw:680px]"
+>
           {/* Slides (cross-fade) */}
           {images.map((src, i) => (
             <div

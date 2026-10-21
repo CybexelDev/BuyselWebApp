@@ -28,10 +28,10 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
    e.preventDefault();
   e.stopPropagation();
 
-  if (!user?.isLoggedIn || !user?.accessToken) {
-    toast.error("Please login to connect with agent");
-    return;
-  }
+  // if (!user?.isLoggedIn || !user?.accessToken) {
+  //   toast.error("Please login to connect with agent");
+  //   return;
+  // }
 
     // ✅ open WhatsApp manually
     const url = `https://wa.me/${agentData?.whatsapp_number}?text=${encodeURIComponent(
@@ -57,18 +57,21 @@ useEffect(() => {
     document.removeEventListener("mousedown", handleClickOutside);
   };
 }, []);
+
   const handleCallClick = (e) => {
    e.preventDefault();
   e.stopPropagation();
 
-  if (!user?.isLoggedIn || !user?.accessToken) {
-    toast.error("Please login to connect with agent");
-    return;
-  }
+  // if (!user?.isLoggedIn || !user?.accessToken) {
+  //   toast.error("Please login to connect with agent");
+  //   return;
+  // }
     const url = `tel:${agentData?.phone_number}`;
     window.open(url, "_self");
 
   }
+
+
 const hasSocialLinks =
   agentData?.facebook ||
   agentData?.instagram ||
