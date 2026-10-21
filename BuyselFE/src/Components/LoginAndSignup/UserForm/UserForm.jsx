@@ -310,8 +310,8 @@ if (response?.error) {
       </div>
 
       <div className="flex justify-center gap-4">
-        <button onClick={() => Glogin()} className="border border-[#9d9d9d] rounded-lg px-5 py-1.5 bg-white shadow cursor-pointer">
-          <img src={google} className='w-8 h-8 object-contain' />
+        <button onClick={() => Glogin()} className="border border-[#9d9d9d] rounded-lg px-10 py-1.5 bg-white shadow cursor-pointer">
+          <img src={google} className='w-10 h-10 object-contain' />
         </button>
 
         

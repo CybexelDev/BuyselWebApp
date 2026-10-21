@@ -331,7 +331,7 @@ const handleWishlist = async (e) => {
               </div>
 
               <a
-                href="#"
+                // href="#"
                 onClick={handleWtspClick}
                 className="w-full shadow-sm bg-[#7BC21F] text-[15px] lg:text-[18px] text-white py-2.5 lg:py-3 rounded-[12px] lg:rounded-[15px] mb-3 lg:mb-[14px] mt-6 lg:mt-12 font-medium flex items-center justify-center gap-2">
                 <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -342,7 +342,7 @@ const handleWishlist = async (e) => {
               </a>
 
               <a
-                href="#"
+                // href="#"
                 onClick={handleCallClick}
                 className="w-full shadow-sm bg-white text-black text-[15px] lg:text-[18px] py-2.5 lg:py-3 rounded-[12px] lg:rounded-[15px] mb-1 lg:mb-3 font-medium flex items-center justify-center gap-2 border border-gray-100 lg:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
