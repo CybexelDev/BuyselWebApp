@@ -102,7 +102,7 @@ export default function ad() {
     return (
         <div className=" bg-white p-1 md:p-8">
             <div className='flex items-center justify-center mt-23'>
-                <p className='text-[20px] max-w-[850px]  mb-7 poppins flex items-center justify-center text-center px-3'>BuySel connects you to trusted agents and genuine property listings in one place. Our platform is designed to make your search faster, smoother and more convenient.</p>
+                <p className='md:text-[20px] text-[15px] max-w-[850px]  mb-7 poppins flex items-center justify-center text-center px-3'>BuySel connects you to trusted agents and genuine property listings in one place. Our platform is designed to make your search faster, smoother and more convenient.</p>
             </div>
             <div className="py-6 px-2 md:px-8 transition-transform duration-700 ease-in-out">
                 <FolderTab className="w-full h-[150px] sm:h-[300px]  md:h-[470px] bg-cover bg-center transition-transform duration-700 ease-in-out"
