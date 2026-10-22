@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const categories = ["Sale", "Rent", "Lease"];
 import Propertycard from "../../../Components/PropertyCard/Propertycard";
 import { properties } from "../../../Constance/constance";
-import house from "../../../assets/images/wishlist/house.png"
+import house from "../../../assets/images/wishlist/house.webp"
 import { getWishlist, filterWishlist, sortWishlist, clearWishlist, addToWishlist } from "../../../Api/userApi";
 import { useSelector } from "react-redux";
 import { removeToWishlist } from "../../../Api/userApi";
