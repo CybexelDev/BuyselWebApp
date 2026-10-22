@@ -1,7 +1,7 @@
 import React from 'react'
-import house2 from "../../../assets/images/about/house2.png"
-import house3 from "../../../assets/images/about/house3.png"
-import house4 from "../../../assets/images/about/house4.png"
+import house2 from "../../../assets/images/about/house2.webp"
+import house3 from "../../../assets/images/about/house3.webp"
+import house4 from "../../../assets/images/about/house4.webp"
 
 
 const iconData = [

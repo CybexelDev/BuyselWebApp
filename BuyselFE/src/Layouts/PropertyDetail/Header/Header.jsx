@@ -3,9 +3,9 @@ import './header.css'
 import logo from '../../../assets/images/logo/logo.png'
 import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
-import img from "../../../assets/images/carousel/he.png"
-import img2 from "../../../assets/images/carousel/he.png"
-import img3 from "../../../assets/images/carousel/he.png"
+import img from "../../../assets/images/carousel/he.webp"
+import img2 from "../../../assets/images/carousel/he.webp"
+import img3 from "../../../assets/images/carousel/he.webp"
 import Navbar from "../../../Components/Navbar/Navbar";
 import flat from "../../../assets/images/propertDetail/flat.png"
 import phone from "../../../assets/images/propertDetail/phone.png"
