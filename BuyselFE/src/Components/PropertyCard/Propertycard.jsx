@@ -219,7 +219,7 @@ BuySel - Find Your Perfect Property
         </p>
 
 <div className="text-black space-y-1">
-  <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">
+  <h2 className="instrument-sans font-[600] text-[15px] truncate leading-[100%]">
     Total ₹{property.price}
     {purpose === "Rent" && ( <span> / month</span> )}
   </h2>
