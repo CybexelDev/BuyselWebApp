@@ -123,10 +123,10 @@ BuySel - Find Your Perfect Property
   e.preventDefault();
   e.stopPropagation();
 
-  if (!user?.isLoggedIn || !user?.accessToken) {
-    toast.error("Please login to contact");
-    return;
-  }
+  // if (!user?.isLoggedIn || !user?.accessToken) {
+  //   toast.error("Please login to contact");
+  //   return;
+  // }
 
   const url = `https://wa.me/${property.whatsapp}`;
   window.open(url, "_blank");
@@ -136,10 +136,10 @@ BuySel - Find Your Perfect Property
    e.preventDefault();
   e.stopPropagation();
 
-  if (!user?.isLoggedIn || !user?.accessToken) {
-    toast.error("Please login to contact");
-    return;
-  }
+  // if (!user?.isLoggedIn || !user?.accessToken) {
+  //   toast.error("Please login to contact");
+  //   return;
+  // }
     window.location.href = `tel:${property.phone}`;
   }
 
@@ -219,7 +219,7 @@ BuySel - Find Your Perfect Property
         </p>
 
 <div className="text-black space-y-1">
-  <h2 className="instrument-sans font-[600] text-[15px] leading-[100%]">
+  <h2 className="instrument-sans font-[600] text-[15px] truncate leading-[100%]">
     Total ₹{property.price}
     {purpose === "Rent" && ( <span> / month</span> )}
   </h2>
