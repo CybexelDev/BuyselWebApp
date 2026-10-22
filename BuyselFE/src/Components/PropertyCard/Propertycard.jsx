@@ -205,7 +205,7 @@ BuySel - Find Your Perfect Property
 
         <p className="instrument-sans flex items-center justify-between text-[12px] mb-2 text-black font-[400]">
 
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-1 truncate">
             <img src={map} alt="map" />
             {property?.city}
           </span>
