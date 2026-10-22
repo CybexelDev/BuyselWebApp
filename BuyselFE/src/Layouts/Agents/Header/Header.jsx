@@ -835,9 +835,7 @@ function Header({ onchange, location, cityDataSend }) {
       className="relative w-full p-2 sm:p-3 mg:p-4 lg:p-5
                 pb-10 max-[899px]:pb-3 min-[900px]:pb-0"
     >
-      <div className="relative z-50">
-        <Navbar top="top-[16px]" padding="lg:px-[29px]" right="right-0" />
-      </div>
+      <Navbar/>
 
       <div className="absolute top-4 sm:top-5 md:top-4 lg:top-[21px] xl:top-7 left-1/2 -translate-x-1/2 z-40 w-[69px] sm:w-[85px] md:w-[100px]">
         <img src={logo} alt="logo" className="w-[100px] 2xl:w-[200px]" />

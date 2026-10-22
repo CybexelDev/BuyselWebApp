@@ -69,6 +69,10 @@ const addReview = () => {
   }
 
   const handleLike = async (reviewId) => {
+    if (!user?.isLoggedIn || !user?.accessToken){
+      toast.error("Please login");
+    return;
+    }
   const res = await toggleReviewLike(reviewId);
 
   if (!res) return;

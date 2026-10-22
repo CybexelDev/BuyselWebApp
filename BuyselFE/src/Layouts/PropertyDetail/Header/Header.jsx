@@ -14,6 +14,8 @@ import { X } from "lucide-react";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
 import { addToWishlist,removeToWishlist } from "../../../Api/userApi";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const HeaderProperty = ({ property }) => {
   const [showGallery, setShowGallery] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -21,6 +23,9 @@ const HeaderProperty = ({ property }) => {
   const [touchEnd, setTouchEnd] = useState(null);
 
 const [isWishlisted, setIsWishlisted] = useState(false);
+const user = useSelector((state) => state.user);
+const navigate = useNavigate()
+
 
 useEffect(() => {
   setIsWishlisted(property?.is_wishlist || false);
@@ -58,13 +63,14 @@ useEffect(() => {
       prevImage();
     }
   };
+
+
 const handleWishlist = async (e) => {
   e.stopPropagation();
 
-  const token = localStorage.getItem("accessToken");
-
-  if (!token) {
+   if (!user?.isLoggedIn || !user?.accessToken) {
     toast.error("Please login to use wishlist");
+    navigate("/loginandsignup");
     return;
   }
 
@@ -98,14 +104,11 @@ const handleWishlist = async (e) => {
   const handleWtspClick = (e) => {
     e.stopPropagation();
 
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) {
-
-      e.preventDefault(); // 🚫 stop redirect
-      toast.error("Please login to contact");
-      return;
-    }
+  //   if (!user?.isLoggedIn || !user?.accessToken) {
+  //   toast.error("Please login to contact");
+  //   navigate("/loginandsignup");
+  //   return;
+  // }
 
     const url = `https://wa.me/${property?.seller?.phone}`;
     window.open(url, "_blank");
@@ -114,14 +117,11 @@ const handleWishlist = async (e) => {
 
   const handleCallClick = (e) => {
     e.stopPropagation();
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) {
-
-      e.preventDefault(); 
-      toast.error("Please login to contact");
-      return;
-    }
+  //   if (!user?.isLoggedIn || !user?.accessToken) {
+  //   toast.error("Please login to contact");
+  //   navigate("/loginandsignup");
+  //   return;
+  // }
     window.location.href = `tel:${property?.seller?.phone}`;
   }
 
@@ -331,9 +331,9 @@ const handleWishlist = async (e) => {
               </div>
 
               <a
-                href="#"
+                // href="#"
                 onClick={handleWtspClick}
-                className="w-full shadow-sm bg-[#7BC21F] text-[15px] lg:text-[18px] text-white py-2.5 lg:py-3 rounded-[12px] lg:rounded-[15px] mb-3 lg:mb-[14px] mt-6 lg:mt-12 font-medium flex items-center justify-center gap-2">
+                className="w-full shadow-sm cursor-pointer bg-[#7BC21F] text-[15px] lg:text-[18px] text-white py-2.5 lg:py-3 rounded-[12px] lg:rounded-[15px] mb-3 lg:mb-[14px] mt-6 lg:mt-12 font-medium flex items-center justify-center gap-2">
                 <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.566 0.011137C8.22698 0.2127 6.27229 0.934574 4.51916 2.25176C3.96604 2.66426 3.02854 3.57364 2.57385 4.13145C1.30823 5.6877 0.487913 7.58145 0.17385 9.63926C0.075413 10.3049 0.066038 11.8893 0.1551 12.5455C0.3426 13.9283 0.745726 15.2174 1.32698 16.3283L1.55666 16.7549L0.769163 19.633C0.333225 21.2127 -0.0136496 22.5158 0.00041295 22.5252C0.00978795 22.5346 1.34104 22.1971 2.95823 21.7705L5.89729 20.9971L6.47385 21.2736C8.73791 22.3564 11.4801 22.6283 13.941 22.0143C15.4926 21.6252 17.0442 20.8564 18.2864 19.858C19.4957 18.8783 20.6629 17.3971 21.3239 15.9908C22.3317 13.8674 22.6457 11.5846 22.2567 9.26426C21.4645 4.54864 17.6489 0.822075 12.9004 0.123638C12.3192 0.0392628 10.9973 -0.0263634 10.566 0.011137ZM12.5535 2.02676C14.5317 2.29864 16.3129 3.19395 17.766 4.64239C19.9926 6.87364 20.9207 9.95332 20.2926 13.0236C19.9926 14.4815 19.2989 15.9205 18.3379 17.0689C16.8848 18.8127 14.9348 19.9189 12.652 20.3127C11.9957 20.4205 10.4817 20.4205 9.83948 20.3127C8.64416 20.1018 7.58948 19.7268 6.60979 19.1596L6.1926 18.9205L4.48635 19.3705C3.54416 19.6143 2.76604 19.8064 2.75666 19.7971C2.74729 19.7877 2.93948 19.0283 3.1926 18.1096L3.64729 16.4408L3.40823 16.0518C2.1426 13.9799 1.7301 11.6689 2.19885 9.33457C2.85979 6.05801 5.30666 3.35332 8.50823 2.35489C9.86291 1.93301 11.1239 1.82989 12.5535 2.02676Z" fill="white" fill-opacity="0.93" />
                   <path d="M7.04528 6.02505C6.52028 6.19849 5.8359 7.10317 5.65309 7.86255C5.37184 9.06255 5.73746 10.2672 6.86246 11.8141C7.88434 13.2204 8.99059 14.3125 10.2046 15.1094C10.9921 15.625 12.3609 16.2204 13.2656 16.4407C13.739 16.5532 14.5968 16.5625 14.9953 16.4594C15.614 16.2954 16.3875 15.7704 16.6359 15.3438C16.8 15.0672 16.9078 14.5985 16.9171 14.1719C16.9218 13.8391 16.9125 13.7969 16.8093 13.7219C16.5843 13.5485 14.4093 12.5454 14.2078 12.5172C13.964 12.4797 13.9546 12.4891 13.4812 13.1032C12.9937 13.7313 12.764 13.9516 12.6093 13.9516C12.4125 13.9516 11.2172 13.3422 10.725 12.986C10.4906 12.8172 10.1203 12.5079 9.90465 12.2969C9.25309 11.6547 8.50778 10.6282 8.50778 10.3704C8.50778 10.286 8.59684 10.1313 8.7609 9.92505C9.27184 9.28755 9.3984 9.07661 9.3984 8.87036C9.3984 8.62661 8.48434 6.40474 8.28746 6.17505C8.15621 6.02036 8.15621 6.02036 7.66403 6.00161C7.39215 5.99224 7.11559 6.00161 7.04528 6.02505Z" fill="white" fill-opacity="0.93" />
@@ -342,9 +342,9 @@ const handleWishlist = async (e) => {
               </a>
 
               <a
-                href="#"
+                // href="#"
                 onClick={handleCallClick}
-                className="w-full shadow-sm bg-white text-black text-[15px] lg:text-[18px] py-2.5 lg:py-3 rounded-[12px] lg:rounded-[15px] mb-1 lg:mb-3 font-medium flex items-center justify-center gap-2 border border-gray-100 lg:border-none">
+                className="w-full shadow-sm cursor-pointer bg-white text-black text-[15px] lg:text-[18px] py-2.5 lg:py-3 rounded-[12px] lg:rounded-[15px] mb-1 lg:mb-3 font-medium flex items-center justify-center gap-2 border border-gray-100 lg:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                   <path fill="#000" d="m19.23 15.26l-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.05 15.05 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2 2 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07c.53 8.54 7.36 15.36 15.89 15.89c1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98" />
                 </svg>

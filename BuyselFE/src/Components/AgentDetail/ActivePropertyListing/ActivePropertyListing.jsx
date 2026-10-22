@@ -7,6 +7,7 @@ import { addToWishlist, removeToWishlist } from '../../../Api/userApi';
 import {  Heart } from "lucide-react";
 import { searchAgentProperties,getAgentPropertyCities,filterAgentPropertyByCity} from '../../../Api/userApi';
 import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
 function ActivePropertyListing({ agentData, role,id }) {
   const pp = properties.slice(0, 8);
   const [activeCategory, setActiveCategory] = useState("Residential");
@@ -15,6 +16,8 @@ function ActivePropertyListing({ agentData, role,id }) {
 const [searchQuery, setSearchQuery] = useState("");
 const [cities, setCities] = useState([]);
 const [selectedCity, setSelectedCity] = useState("");
+  const user = useSelector((state) => state.user);
+
 const [open, setOpen] = useState(false);
 useEffect(() => {
 
@@ -154,44 +157,57 @@ if (res?.properties) {
     }
   };
 
-  const addWishlist = (id) => {
-    const token = localStorage.getItem("accessToken");
 
-  if (!token) {
+const addWishlist = async (id) => {
+  // Allow wishlist only for a logged-in user
+  if (!user?.isLoggedIn || !user?.accessToken) {
     toast.error("Please login to use wishlist");
     return;
   }
-    addToWishlist({ id });
 
-      toast.success("Added to wishlist")
+  try {
+    const res = await addToWishlist({ id });
 
-    setPropertyData((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, is_wishlist: true }
-          : item
-      )
-    );
-  };
+    if (res) {
+      setFeatured((prev) =>
+        prev.map((item) =>
+          item.id === id
+            ? { ...item, is_wishlisted: true }
+            : item
+        )
+      );
+
+      toast.success("Added to wishlist");
+    }
+  } catch (error) {
+    toast.error("Failed to add to wishlist");
+  }
+};
   
-   const removeWishlist = (id) => {
-      const token = localStorage.getItem("accessToken");
-
-  if (!token) {
+  const removeWishlist = async (id) => {
+  if (!user?.isLoggedIn || !user?.accessToken) {
     toast.error("Please login to use wishlist");
     return;
   }
-    removeToWishlist({ id });
-    toast.error("Removed from wishlist");
 
-    setPropertyData((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, is_wishlist: false }
-          : item
-      )
-    );
-  };
+  try {
+    const res = await removeToWishlist({ id });
+
+    if (res) {
+      setPropertyData((prev) =>
+        prev.map((item) =>
+          item.id === id
+            ? { ...item, is_wishlisted: false }
+            : item
+        )
+      );
+
+      toast.success("Removed from wishlist");
+    }
+  } catch (error) {
+    toast.error("Failed to remove from wishlist");
+  }
+};
 
 
 

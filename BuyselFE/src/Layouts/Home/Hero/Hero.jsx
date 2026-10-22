@@ -5,14 +5,30 @@ import logo from '../../../assets/images/logo/logo.png'
 import line from '../../../assets/images/header/line.png'
 import { ArrowUpRight } from 'lucide-react';
 import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
-import img from "../../../assets/images/carousel/he.png?w=1100&format=webp"
-import img2 from "../../../assets/images/carousel/he2.png?w=1100&format=webp"
-import img3 from "../../../assets/images/carousel/he3.png?w=1100&format=webp"
+import img from "../../../assets/images/carousel/he.png"
+import img2 from "../../../assets/images/carousel/he2.png"
+import img3 from "../../../assets/images/carousel/he3.png"
 import Navbar from "../../../Components/Navbar/Navbar";
 import ButtonHead from "../../../Components/ButtonHead/ButtonHead";
 
 const Hero = () => {
-  const images = [img, img2, img3];
+   const images = [img, img2, img3];
+
+useEffect(() => {
+  // Preload the first hero image with high priority
+  const heroImage = new Image();
+  heroImage.fetchPriority = "high";
+  heroImage.src = img;
+
+  // Preload the other carousel images
+  const secondImage = new Image();
+  secondImage.src = img2;
+
+  const thirdImage = new Image();
+  thirdImage.src = img3;
+}, []);
+  
+  // const images = [img, img2, img3];
   const [current, setCurrent] = useState(0);
 
   const prevSlide = () => {

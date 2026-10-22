@@ -1,12 +1,17 @@
 import React from 'react'
 import add from '../../../assets/images/icons/add.png'
 import add2 from '../../../assets/images/addP/add.png'
-import add3 from '../../../assets/images/addP/add2.png?w=800&format=webp'
-import add4 from '../../../assets/images/addP/ad1.png?w=800&format=webp'
+import add3 from '../../../assets/images/addP/add2.png'
+import add4 from '../../../assets/images/addP/ad1.png'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { toast } from 'sonner'
+
 
 const AddPropertyAndAgent = () => {
   const navigate = useNavigate()
+  const user = useSelector((state) => state.user);
+
 
   const handleNavigate = (path) => {
     navigate(path)
@@ -15,6 +20,21 @@ const AddPropertyAndAgent = () => {
       behavior: 'instant',
     })
   }
+
+   const handleAddProperty = () => {
+  if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to add a property");
+    navigate("/loginandsignup");
+    return;
+  }
+
+  if (user?.remainingProperty === 0) {
+    setShowLimitMessage(true);
+    return;
+  }
+
+  navigate("/addyourproperty");
+};
   
 
   return (
@@ -25,7 +45,7 @@ const AddPropertyAndAgent = () => {
           <div className="flex items-center justify-center h-full px-4 sm:px-8 lg:px-16 py-10 md:py-12 ">
             <div className="w-full max-w-[550px]">
               <div className="w-full">
-                <img src={add3} loading="lazy"
+                <img src={add3}
                   alt="Add property"
                   className="w-full max-w-[380px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[500px] h-auto mb-5 object-contain"
                 />
@@ -45,7 +65,7 @@ const AddPropertyAndAgent = () => {
 
               <button
                 className="w-full sm:w-auto flex items-center justify-center gap-2 bg-black text-white px-5 sm:px-6 py-3 rounded-xl hover:bg-[#6bb436] transition cursor-pointer host-grotesk font-[500] text-[14px] sm:text-[16px]"
-                onClick={() => handleNavigate('/addyourproperty')}
+                onClick={handleAddProperty}
               >
                 <img src={add} alt="" className="w-4 h-4 sm:w-5 sm:h-5" />
                 Add Property
@@ -60,7 +80,7 @@ const AddPropertyAndAgent = () => {
             <div className="w-full max-w-[550px]">
               <div className="w-full">
                 <img
-                  src={add4} loading="lazy"
+                  src={add4} 
                   alt="Become an agent"
                   className="w-full max-w-[380px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[500px] h-auto mb-5 object-contain"
                 />

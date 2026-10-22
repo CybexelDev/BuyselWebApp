@@ -3,6 +3,7 @@ import login from "../../assets/images/icons/login.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import add from '../../assets/images/nav/add.png'
+import { toast } from "sonner";
 
 const Navbar = ({
   gap = "xl:gap-[31px]",
@@ -17,17 +18,23 @@ const Navbar = ({
   const location = useLocation();
   const [mobileDropdown, setMobileDropdown] = useState(false);
   const [showLimitMessage, setShowLimitMessage] = useState(false);
+  const user = useSelector((state) => state.user);
 
-  const handleAddProperty = () => {
-    if (remainingProperty === 0) {
-      console.log(remainingProperty);
-      
-      setShowLimitMessage(true);
-      return;
-    }
 
-    navigate("/addyourproperty");
-  };
+ const handleAddProperty = () => {
+  if (!user?.isLoggedIn || !user?.accessToken) {
+    toast.error("Please login to add a property");
+    navigate("/loginandsignup");
+    return;
+  }
+
+  if (user?.remainingProperty === 0) {
+    setShowLimitMessage(true);
+    return;
+  }
+
+  navigate("/addyourproperty");
+};
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "Properties", path: "/propertyListing" },
