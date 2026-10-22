@@ -1,12 +1,11 @@
 import { useState } from "react";
-import houseImg3 from "../../../assets/images/LoginAndSignUp/g1.png?w=800&format=webp";
-import houseImg from "../../../assets/images/LoginAndSignUp/g2.png?w=800&format=webp";
-import houseImg2 from "../../../assets/images/LoginAndSignUp/g3.png?w=800&format=webp";
-import logo from "../../../assets/images/logo/logo.png";
-import loginI from "../../../assets/images/icons/login.png";
-import user from "../../../assets/images/icons/user.png";
-import "./LoginAndSignup.css";
-
+import houseImg3 from "../../../assets/images/LoginAndSignUp/g1.webp";
+import houseImg from "../../../assets/images/LoginAndSignUp/g2.webp";
+import houseImg2 from "../../../assets/images/LoginAndSignUp/g3.webp";
+import logo from '../../../assets/images/logo/logo.png'
+import loginI from '../../../assets/images/icons/login.png'
+import user from '../../../assets/images/icons/user.png'
+import './LoginAndSignup.css'
 import AgentForm from "../../../Components/LoginAndSignup/AgentForm/AgentForm";
 import UserForm from "../../../Components/LoginAndSignup/UserForm/UserForm";
 import SignupForm from "../../../Components/LoginAndSignup/SignupForm/SignupForm";

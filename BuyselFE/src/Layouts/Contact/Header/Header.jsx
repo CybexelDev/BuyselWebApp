@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./contactheader.css";
 import logo from "../../../assets/images/logo/logo.png";
 import Navbar from "../../../Components/Navbar/Navbar";
-import bgimg from "../../../assets/images/contact/bgimg.png?w=800&format=webp";
+import bgimg from "../../../assets/images/contact/bgimg.webp";
 
 const Header = () => {
   return (
@@ -27,7 +27,6 @@ const Header = () => {
           <div className="flex items-center justify-center">
             <img
               src={logo}
-              loading="lazy"
               alt="logo"
               className="contact-cta-logo w-[100px]"
             />

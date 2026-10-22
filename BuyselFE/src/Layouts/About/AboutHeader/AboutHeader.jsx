@@ -1,6 +1,6 @@
 import Navbar from "../../../Components/Navbar/Navbar";
 import logo from "../../../assets/images/logo/logo.png";
-import house from "../../../assets/images/about/house.png?w=1600&format=webp";
+import house from "../../../assets/images/about/house.webp";
 
 /* convert a "1700px design space" value to a scaled value */
 const u = (n) => `calc(${n} * var(--u))`;
