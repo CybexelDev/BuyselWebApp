@@ -115,25 +115,39 @@ export default function Ad() {
             />
           ))}
 
-          <button
-            onClick={prevSlide}
-            aria-label="Previous slide"
-            className="absolute bottom-6 left-6 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black text-white transition hover:bg-black/70 md:h-14 md:w-14"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path fill="#f4f4f4" d="M12.727 3.687a1 1 0 1 0-1.454-1.374l-8.5 9a1 1 0 0 0 0 1.374l8.5 9.001a1 1 0 1 0 1.454-1.373L4.875 12z" />
-            </svg>
-          </button>
+        <button
+  onClick={prevSlide}
+  aria-label="Previous slide"
+  className="absolute bottom-3 left-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black text-white transition hover:bg-black/70 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 md:h-14 md:w-14"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-4 w-4 md:h-6 md:w-6"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="#f4f4f4"
+      d="M12.727 3.687a1 1 0 1 0-1.454-1.374l-8.5 9a1 1 0 0 0 0 1.374l8.5 9.001a1 1 0 1 0 1.454-1.373L4.875 12z"
+    />
+  </svg>
+</button>
 
-          <button
-            onClick={nextSlide}
-            aria-label="Next slide"
-            className="absolute bottom-6 right-6 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black text-white transition hover:bg-black/70 md:h-14 md:w-14"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path fill="#f4f4f4" d="M11.273 3.687a1 1 0 1 1 1.454-1.374l8.5 9a1 1 0 0 1 0 1.374l-8.5 9.001a1 1 0 1 1-1.454-1.373L19.125 12z" />
-            </svg>
-          </button>
+<button
+  onClick={nextSlide}
+  aria-label="Next slide"
+  className="absolute bottom-3 right-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black text-white transition hover:bg-black/70 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 md:h-14 md:w-14"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-4 w-4 md:h-6 md:w-6"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="#f4f4f4"
+      d="M11.273 3.687a1 1 0 1 1 1.454-1.374l8.5 9a1 1 0 0 1 0 1.374l-8.5 9.001a1 1 0 1 1-1.454-1.373L19.125 12z"
+    />
+  </svg>
+</button>
         </div>
       </div>
     </div>
