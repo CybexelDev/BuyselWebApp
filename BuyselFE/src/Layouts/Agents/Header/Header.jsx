@@ -746,7 +746,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
 import logo from "../../../assets/images/logo/logo.png";
-import agenthero from "../../../assets/images/agenthero/agenthero1.png";
+import agenthero from "../../../assets/images/agenthero/agenthero1.webp";
 import { Icon } from "@iconify/react";
 import { getCityData } from "../../../Api/userApi";
 

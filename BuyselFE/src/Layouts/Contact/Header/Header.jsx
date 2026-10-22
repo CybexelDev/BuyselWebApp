@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./contactheader.css";
 import logo from "../../../assets/images/logo/logo.png";
 import Navbar from "../../../Components/Navbar/Navbar";
-import bgimg from "../../../assets/images/contact/bgimg.png";
+import bgimg from "../../../assets/images/contact/bgimg.webp";
 
 const Header = () => {
   return (

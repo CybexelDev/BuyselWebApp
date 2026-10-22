@@ -1,6 +1,6 @@
 import React from "react";
 import ButtonHead from "../../../Components/ButtonHead/ButtonHead";
-import planbg from "../../../assets/images/plan/plan.png";
+import planbg from "../../../assets/images/plan/plan.webp";
 
 function Plan() {
   return (

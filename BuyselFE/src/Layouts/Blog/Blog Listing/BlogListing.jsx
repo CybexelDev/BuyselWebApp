@@ -1,12 +1,4 @@
 import React, { useState,useRef } from "react";
-import blog1 from "../../../assets/images/blog/blog1.jpg"
-import blog2 from "../../../assets/images/blog/blog2.jpg"
-import blog3 from "../../../assets/images/blog/blog3.png"
-import blog4 from "../../../assets/images/blog/blog4.png"
-import blog5 from "../../../assets/images/blog/blog5.png"
-import blog6 from "../../../assets/images/blog/blog6.png"
-import blog7 from "../../../assets/images/blog/blog7.png"
-import blog8 from "../../../assets/images/blog/blog8.png"
 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
