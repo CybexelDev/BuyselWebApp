@@ -1,7 +1,7 @@
 
-import user1 from '../assets/images/Buyselbehind/user1.png'
-import user2 from '../assets/images/Buyselbehind/user2.png'
-import user3 from '../assets/images/Buyselbehind/user3.png'
+import user1 from '../assets/images/Buyselbehind/user1.webp'
+import user2 from '../assets/images/Buyselbehind/user2.webp'
+import user3 from '../assets/images/Buyselbehind/user3.webp'
 
 
 
@@ -921,9 +921,9 @@ export const userReviews = [
   },
 ];
 
-import v1 from '../assets/images/premium/v1.png'
-import v2 from '../assets/images/premium/v2.png'
-import v3 from '../assets/images/premium/v3.png'
+import v1 from '../assets/images/premium/v1.webp'
+import v2 from '../assets/images/premium/v2.webp'
+import v3 from '../assets/images/premium/v3.webp'
 
 
 export const premiumHomes = [

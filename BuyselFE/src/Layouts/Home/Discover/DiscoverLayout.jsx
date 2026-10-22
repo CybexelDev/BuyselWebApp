@@ -1,17 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import image1 from "../../../assets/images/discover/image1.png"
-import image2 from "../../../assets/images/discover/image2.png"
-import image3 from "../../../assets/images/discover/image3.png"
-import image4 from "../../../assets/images/discover/image4.png"
-import image5 from "../../../assets/images/discover/image5.png"
-import image6 from "../../../assets/images/discover/image6.png"
-import image7 from "../../../assets/images/discover/image7.png"
-import image8 from "../../../assets/images/discover/image8.png"
-import image9 from "../../../assets/images/discover/image9.png"
-import image10 from "../../../assets/images/discover/image10.png"
-import image11 from "../../../assets/images/discover/image11.png"
-import image12 from "../../../assets/images/discover/image12.png"
+import image1 from "../../../assets/images/discover/image1.webp"
+import image2 from "../../../assets/images/discover/image2.webp"
+import image3 from "../../../assets/images/discover/image3.webp"
+import image4 from "../../../assets/images/discover/image4.webp"
+import image5 from "../../../assets/images/discover/image5.webp"
+import image6 from "../../../assets/images/discover/image6.webp"
+import image7 from "../../../assets/images/discover/image7.webp"
+import image8 from "../../../assets/images/discover/image8.webp"
+import image9 from "../../../assets/images/discover/image9.webp"
+import image10 from "../../../assets/images/discover/image10.webp"
+import image11 from "../../../assets/images/discover/image11.webp"
+import image12 from "../../../assets/images/discover/image12.webp"
 // discover
 const properties = [
   { id: 1, image: image1, height: "h-[203px]", offset: "mt-30", text: ["Shops &", "Showrooms"] },
@@ -38,6 +38,7 @@ function DiscoverLayout() {
     behavior: "instant", 
   });
 };
+
 const categoryMap = {
   "Shops & Showrooms": "Commercial",
   "Office Spaces": "Commercial",
@@ -60,6 +61,7 @@ const handleClick = (item) => {
 
   handleNavigate(`/propertyListing?purpose=Sale&category=${category}`);
 };
+
   const PropertyCard = ({ item, isDesktop }) => (
    <div
   key={item.id}
