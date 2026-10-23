@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./header.css";
 import logo from "../../../assets/images/logo/logo.png";
 import filterIcon from "../../../assets/images/header/Filter.png";
@@ -30,7 +30,6 @@ const handleClearLocation = () => {
     state:""
   });
 };
-
 
 
   const tabs = [ "Sale", "Rent","Lease","Agent", ];
@@ -308,6 +307,23 @@ const FilterModal = ({ onClose, setParentFilters }) => {
   const [maxPrice, setMaxPrice] = useState("");
   const [filterOptions, setFilterOptions] = useState(null);
     const [selectedState, setSelectedState] = useState("");
+      const filterRef = useRef(null);
+
+
+useEffect(() => {
+  const handleOutsideClick = (e) => {
+    if (filterRef.current && !filterRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
+
+  document.addEventListener("mousedown", handleOutsideClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleOutsideClick);
+  };
+}, [onClose]);
+
 
 const selectedStateObj = filterOptions?.locations?.find(
   (location) => location.name === selectedState
@@ -331,7 +347,8 @@ const cities = selectedDistrictObj?.cities || [];
   }, []);
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-end bg-white/40 overflow-y-auto xl:px-10 xl:pt-60">
-      <div className="bg-white w-full max-w-[380px] max-h-[95vh] overflow-y-auto rounded-[23px] p-6 shadow-2xl relative animate-in slide-in-from-right duration-300 my-auto">
+      <div ref={filterRef}
+      className="bg-white w-full max-w-[380px] max-h-[95vh] overflow-y-auto rounded-[23px] p-6 shadow-2xl relative animate-in slide-in-from-right duration-300 my-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-[16px] instrument-sans font-bold text-black">Filter Properties</h2>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const categories = ["Sale", "Rent", "Lease"];
 import Propertycard from "../../../Components/PropertyCard/Propertycard";
@@ -107,6 +107,23 @@ function WishlistListingSection() {
 
   fetchData();
 }, []);
+
+
+const sortRef = useRef(null);
+
+useEffect(() => {
+  const handleOutsideClick = (event) => {
+    if (sortRef.current && !sortRef.current.contains(event.target)) {
+      setShowSort(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleOutsideClick);
+
+  return () => {
+    document.removeEventListener("mousedown", handleOutsideClick);
+  };
+}, []);
   
   return (
     <div className="bg-white rounded-lg px-8 py-6 host-grotesk">
@@ -146,7 +163,7 @@ function WishlistListingSection() {
         </div>
 
         <div className="flex items-center gap-10 md:gap-2 host-grotesk">
-          <div className="relative">
+          <div className="relative" ref={sortRef}>
             <button
               onClick={() => setShowSort(!showSort)}
               className=" text-[13px] md:text-[16px] border-[0.5px] border-[#C6C6C6] px-3 py-[6px] rounded-[9px] bg-white flex gap-2 font-medium cursor-pointer"
