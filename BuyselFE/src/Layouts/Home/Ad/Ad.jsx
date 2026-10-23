@@ -86,7 +86,7 @@ export default function Ad() {
   return (
     <div className="bg-white p-1 md:p-8">
       <div className="mt-23 flex items-center justify-center">
-        <p className="poppins mb-7 max-w-[850px] px-3 text-center text-[20px]">
+        <p className="poppins mb-7 max-w-[850px] px-3 text-center md:text-[20px] text-[14px]">
           BuySel connects you to trusted agents and genuine property listings in
           one place. Our platform is designed to make your search faster,
           smoother and more convenient.
