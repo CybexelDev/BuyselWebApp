@@ -3,9 +3,12 @@ import { Mail, Lock, User, Phone } from "lucide-react";
 import google from '../../../assets/images/LoginAndSignUp/google.png'
 import apple from '../../../assets/images/LoginAndSignUp/apple.png'
 import facbook from '../../../assets/images/LoginAndSignUp/facebook.png'
-import { userRegister } from '../../../Api/userApi';
+import { handleGoogleLogin, userRegister } from '../../../Api/userApi';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
+import { useDispatch } from 'react-redux';
+
 
 const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
 
@@ -14,6 +17,7 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const navigate=useNavigate()
+    const dispatch = useDispatch();
     const validateForm = () => {
   const newErrors = {};
 
@@ -89,6 +93,43 @@ const SignupForm = ({ setSignin, SetOtpSent, setEmail }) => {
     setLoading(false);
   }
 };
+
+
+  const Glogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const response = await handleGoogleLogin({ tokenResponse });
+
+        dispatch({
+          type: 'SET_USER',
+          payload: {
+            userName: response?.user?.name,
+            accessToken: response?.access,
+            userId: response?.user?.id,
+            image: response?.user?.image,
+            verificationStatus: response?.user?.auth_provider,
+            listedCount: response?.user?.total_properties,
+            role:response?.login_as,
+            is_plan:response?.is_plan,
+            remainingProperty:response?.user?.remaining_property
+
+          }
+        })
+
+         localStorage.setItem('accessToken', response?.access);
+         localStorage.setItem('refreshToken', response?.refresh);
+         localStorage.setItem('id', response?.user?.id);
+
+        navigate("/");
+        toast.success(`Hello ${response?.user?.name}`)
+
+      } catch (error) {
+
+      }
+    },
+    onError: () => {
+    },
+  });
     
 
     return (
