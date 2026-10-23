@@ -837,7 +837,7 @@ function Header({ onchange, location, cityDataSend }) {
     >
       <Navbar/>
 
-      <div className="absolute top-4 sm:top-5 md:top-4 lg:top-[21px] xl:top-7 left-1/2 -translate-x-1/2 z-40 w-[69px] sm:w-[85px] md:w-[100px]">
+      <div className="absolute top-4 sm:top-5 md:top-4 lg:top-[21px] xl:top-7 left-1/2 -translate-x-1/2 z-30 w-[69px] sm:w-[85px] md:w-[100px]">
         <img src={logo} alt="logo" className="w-[100px] 2xl:w-[200px]" />
       </div>
 
