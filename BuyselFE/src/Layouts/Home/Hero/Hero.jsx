@@ -81,20 +81,20 @@ useEffect(() => {
             }}
           >
             <div className="absolute inset-0" />
-            <div className="absolute bottom-15 right-6 z-20 flex gap-3">
-              <button
-                onClick={prevSlide}
-                className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
-              >
-                 <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
-              >
-                <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
-              </button>
-            </div>
+<div className="absolute bottom-15 right-6 z-20 hidden lg:flex gap-3">
+  <button
+    onClick={prevSlide}
+    className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
+  >
+    <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
+  </button>
+  <button
+    onClick={nextSlide}
+    className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
+  >
+    <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
+  </button>
+</div>
           </div>
 
         </div>
