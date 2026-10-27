@@ -99,7 +99,7 @@ useEffect(() => {
 
         </div>
       </div>
-      <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-70px] md:mb-5 left-8 bottom-[80px] z-10">
+      <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-80px] md:mb-5 left-8 bottom-[80px] z-10">
         <div className=''>
           <p className=' md:text-[24px] text-[18px] font-semibold instrument-sans'>10,00+</p>
           <p className='instrument-sans md:text-[16px] text-[13px]'>Verified Listings</p>
