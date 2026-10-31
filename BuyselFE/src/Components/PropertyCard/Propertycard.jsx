@@ -73,7 +73,10 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
     const shareText = `
 🏠 ${property.label}
+View Property:
+${propertyLink}
 
+BuySel - Find Your Perfect Property
 ${property.description || ""}
 
 📍 ${property.city || ""}
@@ -85,10 +88,6 @@ ${property.description || ""}
 
 ✨ Amenities: ${property.amenities || ""}
 
-View Property:
-${propertyLink}
-
-BuySel - Find Your Perfect Property
 `;
 
     const response = await fetch(imageUrl);
