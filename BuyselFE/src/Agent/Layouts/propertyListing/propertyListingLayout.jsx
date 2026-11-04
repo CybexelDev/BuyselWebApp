@@ -1,3 +1,1133 @@
+// import React, { useEffect, useState } from "react";
+// import Sidebar from "../../Components/Sidebar/Sidebar";
+// import { ChevronLeft, ChevronRight } from "lucide-react";
+
+// import {
+//   Search,
+//   Filter,
+//   Plus,
+//   MapPin,
+//   BedDouble,
+//   Bath,
+//   Square,
+//   Pencil,
+//   Trash,
+//   Home,
+//   Building2,
+//   BriefcaseBusiness,
+// } from "lucide-react";
+// import { TfiRulerAlt2 } from "react-icons/tfi";
+// import { useNavigate } from "react-router-dom";
+// import { deletePropertyListing, getPropertyListing } from "../../../Api/agentsApi";
+// import { toast } from "sonner";
+// import { useDispatch, useSelector } from "react-redux";
+// import { deleteUserPropertyListing, userPropertyList } from "../../../Api/userApi";
+// import { FaTrashAlt } from "react-icons/fa";
+
+// const PropertyListingLayout = ({ showSidebar = true, showEdit = true, bg = "bg-slate-50", lg = "lg:py-12", onClick }) => {
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [properties, setProperties] = useState([]);
+//   const dispatch=useDispatch()
+  
+//     const [loading, setLoading] = useState(false);
+//   const [showLimitMessage,setShowLimitMessage] = useState(false);
+//   const [remainingProperty, setRemainingProperty] = useState(0);
+//   const[remainingEdit,setRemainingEdit] = useState(0)
+//   const [limitType, setLimitType] = useState("");
+// const [showFilterModal, setShowFilterModal] = useState(false);
+// const [hasSinglePropertyPackage, setHasSinglePropertyPackage] = useState(false);
+// const [propertyStats, setPropertyStats] = useState({
+//   total: [0, 0],
+//   residential: [0, 0],
+//   commercial: [0, 0],
+//   edits: [0, 0],
+// });
+// const [filters, setFilters] = useState({
+//   status: "",
+//   city: "",
+//   minPrice: "",
+//   maxPrice: "",
+// });
+
+
+
+//   const userRole = useSelector((state) => state.user.role);
+// const agentRole = useSelector((state) => state.agent.role);
+
+// const role = userRole || agentRole;
+// // const property_count = useSelector((state) =>
+// //   role === "agent"
+// //     ? state.agent.listedCount
+// //     : state.user.listedCount
+// // );
+
+
+//   const navigate = useNavigate();
+// const agent = useSelector((state) => state.agent);
+// useEffect(() => {
+//   const fetchProperties = async () => {
+//     try {
+//       setLoading(true);
+
+//       let res;
+
+//       if (role === "agent") {
+//         res = await getPropertyListing();
+//       } else if (role === "user") {
+//         res = await userPropertyList();
+//       }
+
+
+    
+//       if (res) {
+//   if (role === "agent") {
+//     dispatch({
+//       type: "SET_AGENT",
+//       payload: {
+//         ...agent,
+//         remainingPropertyAgent: res.remaining_property
+//       }
+//     });
+//   }
+//     setHasSinglePropertyPackage(
+//     res.has_single_property_package === true
+//   );
+//   setPropertyStats({
+//   total: res.remaining_used || [0, 0],
+//   residential: res.residential_used || [0, 0],
+//   commercial: res.commercial_used || [0, 0],
+//   edits: res.used_edit_count || [0, 0],
+// });
+// }
+//       // data array
+//       if (Array.isArray(res?.data)) {
+
+//         const mapped = res.data.map((item) => ({
+//           id: item.id,
+//           title: item.label,
+//           location: item.city || item.location,
+//           price: item.price ? `₹ ${item.price}` : "N/A",
+
+//           features: Array.isArray(item.features)
+//             ? item.features
+//             : [],
+
+//           keyPoints: item.selling_points || [],
+
+//           area: item.sq_ft
+//             ? `${item.sq_ft} sq.ft`
+//             : item.land_area
+//             ? `${item.land_area} ${item.unit || "Cent"}`
+//             : "N/A",
+
+//           status: item.paid ? "Active" : "Pending",
+
+//           image:
+//             item.images?.length > 0
+//               ? item.images[0]
+//               : item.image ||
+//                 "https://via.placeholder.com/150",
+//         }));
+
+//         setProperties(mapped);
+//       }
+
+//   setRemainingProperty(res.remaining_property);
+//   setRemainingEdit(res.remaining_edit_count)
+  
+
+
+//     } catch (err) {
+
+
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   fetchProperties();
+
+// }, [role]);
+
+  
+// const handleDelete = (id) => {
+//   const performDelete = async () => {
+//     let res;
+//     if (role === "agent") {
+//       res = await deletePropertyListing(id);
+//     } else if (role === "user") {
+//       res = await deleteUserPropertyListing(id);
+//     }
+//     if (res) {
+//       setProperties((prev) => prev.filter((item) => item.id !== id));
+//     } else {
+//       toast.error("Delete failed");
+//     }
+//   };
+
+//   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+//   // Slide up + fade out, then dismiss the toast
+//   const closeCard = (e, t) => {
+//     const card = e.currentTarget.closest("[data-delete-card]");
+//     if (!card || !card.animate || reduceMotion) {
+//       toast.dismiss(t);
+//       return;
+//     }
+//     card.style.pointerEvents = "none"; // blocks double clicks while leaving
+//     card
+//       .animate(
+//         [
+//           { opacity: 1, transform: "translateY(0) scale(1)" },
+//           { opacity: 0, transform: "translateY(-28px) scale(0.96)" },
+//         ],
+//         { duration: 250, easing: "ease-in", fill: "forwards" }
+//       )
+//       .addEventListener("finish", () => toast.dismiss(t));
+//   };
+
+//   toast.custom(
+//     (t) => (
+//       <div
+//         data-delete-card
+//         ref={(el) => {
+//           // Slide down + fade in (runs once, even if the toast re-renders)
+//           if (el && !el.dataset.entered && !reduceMotion && el.animate) {
+//             el.dataset.entered = "1";
+//             el.animate(
+//               [
+//                 { opacity: 0, transform: "translateY(-28px) scale(0.96)" },
+//                 { opacity: 1, transform: "translateY(0) scale(1)" },
+//               ],
+//               { duration: 350, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+//             );
+//           }
+//         }}
+//         className="host-grotesk flex w-[320px] max-w-[90vw] flex-col items-center rounded-2xl border border-[#6ABD11]/50 bg-white p-4 text-center"
+//       >
+//         {/* Icon */}
+//         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#C8F08A] to-[#8FD43A] text-slate-900 shadow-[0_0_14px_rgba(106,189,17,0.5)]">
+//           <FaTrashAlt size={16} />
+//         </span>
+
+//         {/* Text */}
+//         <div className="mt-2">
+//           <p className="text-sm font-bold text-slate-900">
+//             Are you sure you want to delete?
+//           </p>
+//           <p className="mt-0.5 text-xs text-slate-500">
+//             This listing will be removed.
+//           </p>
+//         </div>
+
+//         {/* Buttons */}
+//         <div className="mt-3 flex w-full justify-center gap-3">
+//           <button
+//             onClick={(e) => closeCard(e, t)}
+//             className="cursor-pointer rounded-xl border border-[#6ABD11]/40 bg-[#6ABD11]/10 px-5 py-2 text-xs font-semibold text-[#3F8004] transition hover:bg-[#6ABD11]/20"
+//           >
+//             Cancel
+//           </button>
+//           <button
+//             onClick={(e) => {
+//               performDelete();
+//               closeCard(e, t);
+//             }}
+//             className="cursor-pointer rounded-xl bg-gradient-to-r from-red-500 to-red-600 px-5 py-2 text-xs font-semibold text-white shadow-sm transition hover:from-red-600 hover:to-red-700 hover:shadow-[0_8px_20px_-6px_rgba(239,68,68,0.6)]"
+//           >
+//             Yes, delete
+//           </button>
+//         </div>
+//       </div>
+//     ),
+//     {
+//       id: `delete-${id}`,
+//       duration: Infinity,
+//       position: "top-center",
+//       unstyled: true,
+//       dismissible: false,
+//       style: {
+//         background: "transparent",
+//         backdropFilter: "none",
+//         WebkitBackdropFilter: "none",
+//         border: "none",
+//         boxShadow: "none",
+//         padding: 0,
+//         borderRadius: 0,
+//         maxWidth: "none",
+//         transition: "none",
+//         animation: "none",
+//       },
+//     }
+//   );
+// };
+
+// const filteredProperties = properties.filter((property) => {
+
+//   const matchesSearch =
+//     property.title
+//       .toLowerCase()
+//       .includes(searchTerm.toLowerCase());
+
+//   const matchesStatus =
+//     filters.status === "" ||
+//     property.status === filters.status;
+
+//   const matchesCity =
+//     filters.city === "" ||
+//     property.location
+//       ?.toLowerCase()
+//       .includes(filters.city.toLowerCase());
+
+//   const numericPrice = Number(
+//     property.price.replace(/[₹, ]/g, "")
+//   );
+
+//   const matchesMinPrice =
+//     filters.minPrice === "" ||
+//     numericPrice >= Number(filters.minPrice);
+
+//   const matchesMaxPrice =
+//     filters.maxPrice === "" ||
+//     numericPrice <= Number(filters.maxPrice);
+
+//   return (
+//     matchesSearch &&
+//     matchesStatus &&
+//     matchesCity &&
+//     matchesMinPrice &&
+//     matchesMaxPrice
+//   );
+// });
+
+
+// const [currentPage, setCurrentPage] = useState(1);
+// const itemsPerPage = 8;
+// const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+
+// const startIndex = (currentPage - 1) * itemsPerPage;
+
+// const paginatedProperties = filteredProperties.slice(
+//   startIndex,
+//   startIndex + itemsPerPage
+// );
+
+
+// const getPageNumbers = () => {
+//   const pages = [];
+
+//   if (totalPages <= 5) {
+//     return Array.from({ length: totalPages }, (_, i) => i + 1);
+//   }
+
+//   pages.push(1);
+
+//   if (currentPage > 3) {
+//     pages.push("...");
+//   }
+
+//   const startPage = Math.max(2, currentPage - 1);
+//   const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+//   for (let page = startPage; page <= endPage; page++) {
+//     pages.push(page);
+//   }
+
+//   if (currentPage < totalPages - 2) {
+//     pages.push("...");
+//   }
+
+//   pages.push(totalPages);
+
+//   return pages.filter(
+//     (page, index) => page === "..." || pages.indexOf(page) === index
+//   );
+// };
+
+
+//     return (
+//   <div className={`min-h-screen ${bg} flex overflow-x-hidden`}>
+
+//     {/* HERE */}
+
+//     {showLimitMessage && (
+//      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+//   <div className="bg-white rounded-2xl shadow-xl p-8 w-[90%] max-w-md text-center">
+
+//     {/* Icon Badge */}
+//     <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-5">
+//       <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+//         <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+//       </svg>
+//     </div>
+
+//     {/* Title */}
+//     <h2 className="text-xl font-medium host-grotesk text-[#111111] mb-2">
+//        {limitType === "property"
+//     ? "Property limit reached"
+//     : "Edit limit reached"}
+//     </h2>
+
+//     {/* Description */}
+//     <p className="text-sm host-grotesk text-[#111111] leading-relaxed mb-7">
+//        {limitType === "property"
+//        ? "You've used all available property slots on your current plan. Upgrade to add more."
+//        : "You've used all available property edits on your current plan. Upgrade to continue editing properties."}    </p>
+
+//     {/* Buttons */}
+//     <div className="flex flex-col host-grotesk gap-2.5">
+//       <button onClick={() => {
+//   if (role === "agent") {
+//     navigate("/agent/plans");
+//   } else {
+//     navigate("/plans");
+//   }
+// }}
+//        className="w-full cursor-pointer py-3 bg-[#6ABD11] hover:bg-[#5aa30e] text-white text-sm font-medium rounded-lg flex items-center justify-center gap-2">
+//         <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+//           <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.82m5.84-2.56a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.819m2.562-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+//         </svg>
+//         Upgrade plan
+//       </button>
+
+//       <button
+//         onClick={() => setShowLimitMessage(false)}
+//         className="w-full cursor-pointer py-3 bg-transparent border border-gray-300 text-black text-sm rounded-lg hover:bg-gray-50 transition-colors"
+//       >
+//         Maybe later
+//       </button>
+//     </div>
+
+//   </div>
+// </div>
+//     )}
+    
+
+//     {showSidebar && <Sidebar />}
+
+//     <main className="flex w-full min-h-screen transition-all duration-300">
+//         <div className={`w-full  p-4 sm:p-6 md:p-10 ${lg} lg:px-12 `}>
+
+//           {/* HEADER */}
+//           <header className="mb-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+
+//             <div>
+//               <div className="flex items-center gap-2 text-[#6ABD11] font-bold text-xs uppercase tracking-[0.2em] mb-2">
+//                 <span className="h-1 w-8 bg-[#6ABD11] rounded-full" />
+//                 Property Management
+//               </div>
+
+//               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight instrument-sans">
+//                 Property <span className="text-[#6ABD11]">Listings</span>
+//               </h1>
+//              <p className="text-sm text-slate-400 mt-2 host-grotesk">Manage your property listings by adding, updating, or removing properties with ease.</p> 
+//             </div>
+
+//             <button
+//            onClick={() => {
+//   if (remainingProperty <= 0) {
+//     setLimitType("property");
+//     setShowLimitMessage(true);
+//     return;
+//   }
+
+//   navigate("/addyourproperty");
+// }}
+//              className="flex items-center justify-center cursor-pointer gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
+//               <Plus size={18} />
+//               Add Property
+//             </button>
+
+//           </header>
+
+//           {loading && (
+//   <p className="text-center py-10">Loading...</p>
+// )}{/* PROPERTY STATS */}
+// {/* PROPERTY STATS */}
+// {role !== "agent" && (
+// <>
+// <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+
+//   {/* Total Properties */}
+//   <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+//     {/* Green side accent */}
+//     <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+//     <div className="flex items-start justify-between">
+
+//       <div>
+//         <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+//           Total Properties
+//         </p>
+
+//         <div className="flex items-baseline gap-1.5 mt-2">
+//           <span className="text-3xl font-bold text-slate-900 instrument-sans">
+//             {propertyStats.total[0]}
+//           </span>
+
+//           {!hasSinglePropertyPackage && (
+//             <span className="text-sm font-medium text-slate-400">
+//               / {propertyStats.total[1]}
+//             </span>
+//           )}
+//         </div>
+//       </div>
+
+//       {/* Icon */}
+//       <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+//         <Home
+//           size={20}
+//           strokeWidth={1.8}
+//           className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+//         />
+//       </div>
+
+//     </div>
+
+//     {/* Progress */}
+//     <div className="mt-5">
+
+//       <div className="flex items-center justify-between mb-2">
+//         <span className="text-[11px] text-slate-400">
+//           Usage
+//         </span>
+
+//         {!hasSinglePropertyPackage && (
+//           <span className="text-[11px] font-medium text-slate-500">
+//             {propertyStats.total[1] > 0
+//               ? Math.round(
+//                   (propertyStats.total[0] / propertyStats.total[1]) * 100
+//                 )
+//               : 0}
+//             %
+//           </span>
+//         )}
+//       </div>
+
+//       {!hasSinglePropertyPackage && (
+//         <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+//           <div
+//             className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+//             style={{
+//               width: `${
+//                 propertyStats.total[1] > 0
+//                   ? Math.min(
+//                       (propertyStats.total[0] / propertyStats.total[1]) * 100,
+//                       100
+//                     )
+//                   : 0
+//               }%`,
+//             }}
+//           />
+//         </div>
+//       )}
+
+//     </div>
+
+//   </div>
+
+
+//   {/* Residential */}
+//   <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+//     <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+//     <div className="flex items-start justify-between">
+
+//       <div>
+//         <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+//           Residential / Plot & Land
+//         </p>
+
+//         <div className="flex items-baseline gap-1.5 mt-2">
+//           <span className="text-3xl font-bold text-slate-900 instrument-sans">
+//             {propertyStats.residential[0]}
+//           </span>
+
+//           {!hasSinglePropertyPackage && (
+//             <span className="text-sm font-medium text-slate-400">
+//               / {propertyStats.residential[1]}
+//             </span>
+//           )}
+//         </div>
+//       </div>
+
+//       <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+//         <Building2
+//           size={20}
+//           strokeWidth={1.8}
+//           className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+//         />
+//       </div>
+
+//     </div>
+
+//     <div className="mt-5">
+
+//       <div className="flex items-center justify-between mb-2">
+//         <span className="text-[11px] text-slate-400">
+//           Usage
+//         </span>
+
+//         {!hasSinglePropertyPackage && (
+//           <span className="text-[11px] font-medium text-slate-500">
+//             {propertyStats.residential[1] > 0
+//               ? Math.round(
+//                   (propertyStats.residential[0] /
+//                     propertyStats.residential[1]) *
+//                     100
+//                 )
+//               : 0}
+//             %
+//           </span>
+//         )}
+//       </div>
+
+//       {!hasSinglePropertyPackage && (
+//         <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+//           <div
+//             className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+//             style={{
+//               width: `${
+//                 propertyStats.residential[1] > 0
+//                   ? Math.min(
+//                       (propertyStats.residential[0] /
+//                         propertyStats.residential[1]) *
+//                         100,
+//                       100
+//                     )
+//                   : 0
+//               }%`,
+//             }}
+//           />
+//         </div>
+//       )}
+
+//     </div>
+
+//   </div>
+
+
+//   {/* Commercial */}
+//   <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+//     <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+//     <div className="flex items-start justify-between">
+
+//       <div>
+//         <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+//           Commercial / Industrial
+//         </p>
+
+//         <div className="flex items-baseline gap-1.5 mt-2">
+//           <span className="text-3xl font-bold text-slate-900 instrument-sans">
+//             {propertyStats.commercial[0]}
+//           </span>
+
+//           {!hasSinglePropertyPackage && (
+//             <span className="text-sm font-medium text-slate-400">
+//               / {propertyStats.commercial[1]}
+//             </span>
+//           )}
+//         </div>
+//       </div>
+
+//       <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+//         <BriefcaseBusiness
+//           size={20}
+//           strokeWidth={1.8}
+//           className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+//         />
+//       </div>
+
+//     </div>
+
+//     <div className="mt-5">
+
+//       <div className="flex items-center justify-between mb-2">
+//         <span className="text-[11px] text-slate-400">
+//           Usage
+//         </span>
+
+//         {!hasSinglePropertyPackage && (
+//           <span className="text-[11px] font-medium text-slate-500">
+//             {propertyStats.commercial[1] > 0
+//               ? Math.round(
+//                   (propertyStats.commercial[0] /
+//                     propertyStats.commercial[1]) *
+//                     100
+//                 )
+//               : 0}
+//             %
+//           </span>
+//         )}
+//       </div>
+
+//       {!hasSinglePropertyPackage && (
+//         <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+//           <div
+//             className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+//             style={{
+//               width: `${
+//                 propertyStats.commercial[1] > 0
+//                   ? Math.min(
+//                       (propertyStats.commercial[0] /
+//                         propertyStats.commercial[1]) *
+//                         100,
+//                       100
+//                     )
+//                   : 0
+//               }%`,
+//             }}
+//           />
+//         </div>
+//       )}
+
+//     </div>
+
+//   </div>
+
+
+//   {/* Edit Count */}
+//   <div className="group relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+
+//     <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#6ABD11]" />
+
+//     <div className="flex items-start justify-between">
+
+//       <div>
+//         <p className="text-xs font-medium text-slate-400 uppercase tracking-wider host-grotesk">
+//           Edit Count
+//         </p>
+
+//         <div className="flex items-baseline gap-1.5 mt-2">
+//           <span className="text-3xl font-bold text-slate-900 instrument-sans">
+//             {propertyStats.edits[0]}
+//           </span>
+
+//           {!hasSinglePropertyPackage && (
+//             <span className="text-sm font-medium text-slate-400">
+//               / {propertyStats.edits[1]}
+//             </span>
+//           )}
+//         </div>
+//       </div>
+
+//       <div className="w-11 h-11 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center group-hover:bg-[#6ABD11] transition-colors duration-300">
+//         <Pencil
+//           size={20}
+//           strokeWidth={1.8}
+//           className="text-[#6ABD11] group-hover:text-white transition-colors duration-300"
+//         />
+//       </div>
+
+//     </div>
+
+//     <div className="mt-5">
+
+//       <div className="flex items-center justify-between mb-2">
+//         <span className="text-[11px] text-slate-400">
+//           Usage
+//         </span>
+
+//         {!hasSinglePropertyPackage && (
+//           <span className="text-[11px] font-medium text-slate-500">
+//             {propertyStats.edits[1] > 0
+//               ? Math.round(
+//                   (propertyStats.edits[0] / propertyStats.edits[1]) * 100
+//                 )
+//               : 0}
+//             %
+//           </span>
+//         )}
+//       </div>
+
+//       {!hasSinglePropertyPackage && (
+//         <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+//           <div
+//             className="h-full bg-[#6ABD11] rounded-full transition-all duration-700 ease-out"
+//             style={{
+//               width: `${
+//                 propertyStats.edits[1] > 0
+//                   ? Math.min(
+//                       (propertyStats.edits[0] / propertyStats.edits[1]) * 100,
+//                       100
+//                     )
+//                   : 0
+//               }%`,
+//             }}
+//           />
+//         </div>
+//       )}
+
+//     </div>
+
+//   </div>
+
+// </div>
+// </>
+// )}
+//           {/* SEARCH + FILTER */}
+//           {properties.length > 0 && (
+//           <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center gap-4 justify-between mb-8 shadow-sm">
+
+//             {/* Search */}
+//             <div className="flex items-center border border-slate-200 rounded-xl px-3 py-2 w-full sm:w-80">
+//               <Search size={18} className="text-slate-400 mr-2" />
+
+//               <input
+//                 type="text"
+//                 placeholder="Search property..."
+//                 className="outline-none w-full text-sm"
+//                 onChange={(e) => {
+//   setSearchTerm(e.target.value);
+//   setCurrentPage(1);
+// }}
+//               />
+//             </div>
+
+//          {/* FILTER DROPDOWN */}
+// <div className="relative">
+
+//   <button
+//     onClick={() =>
+//       setShowFilterModal(!showFilterModal)
+//     }
+//     className="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 px-4 py-2 rounded-xl text-sm hover:bg-slate-100 transition w-full sm:w-auto"
+//   >
+//     <Filter size={16} />
+//     Filter
+//   </button>
+
+//   {/* DROPDOWN */}
+//   {showFilterModal && (
+
+//     <div
+//       className="absolute right-0 mt-3 w-[320px]
+//       bg-white border border-slate-200 rounded-2xl
+//       shadow-2xl p-5 z-50"
+//     >
+
+//       {/* STATUS */}
+    
+
+//       {/* CITY */}
+//       <div className="mb-4">
+
+//         <label className="block text-sm font-medium mb-2">
+//           City
+//         </label>
+
+//         <input
+//           type="text"
+//           placeholder="Enter city"
+//           value={filters.city}
+//           onChange={(e) =>
+//             setFilters({
+//               ...filters,
+//               city: e.target.value,
+//             })
+//           }
+//           className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+//         />
+
+//       </div>
+
+//       {/* MIN PRICE */}
+//       <div className="mb-4">
+
+//         <label className="block text-sm font-medium mb-2">
+//           Min Price
+//         </label>
+
+//         <input
+//           type="number"
+//           placeholder="Minimum price"
+//           value={filters.minPrice}
+//           onChange={(e) =>
+//             setFilters({
+//               ...filters,
+//               minPrice: e.target.value,
+//             })
+//           }
+//           className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+//         />
+
+//       </div>
+
+//       {/* MAX PRICE */}
+//       <div className="mb-5">
+
+//         <label className="block text-sm font-medium mb-2">
+//           Max Price
+//         </label>
+
+//         <input
+//           type="number"
+//           placeholder="Maximum price"
+//           value={filters.maxPrice}
+//           onChange={(e) =>
+//             setFilters({
+//               ...filters,
+//               maxPrice: e.target.value,
+//             })
+//           }
+//           className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none text-sm"
+//         />
+
+//       </div>
+
+//       {/* BUTTONS */}
+//       <div className="flex gap-2">
+
+//         <button
+//           onClick={() =>
+//             setFilters({
+//               status: "",
+//               city: "",
+//               minPrice: "",
+//               maxPrice: "",
+//             })
+//           }
+//           className="flex-1 border border-slate-200 py-2 rounded-xl text-sm"
+//         >
+//           Reset
+//         </button>
+
+//         <button
+//           onClick={() =>
+//             setShowFilterModal(false)
+//           }
+//           className="flex-1 bg-[#6ABD11] text-white py-2 rounded-xl text-sm"
+//         >
+//           Apply
+//         </button>
+
+//       </div>
+
+//     </div>
+
+//   )}
+
+// </div>
+
+//           </div>
+//           )}
+
+//           {/* PROPERTY LIST */}
+//           <div className="space-y-4" onClick={onClick}>
+// {!loading && filteredProperties.length === 0 ? (
+//       <div className="bg-white border border-slate-200 rounded-3xl p-10 sm:p-16 text-center shadow-sm flex flex-col items-center justify-center">    
+//       <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-5">
+//         <Search className="text-slate-400" size={34} />
+//       </div>
+
+//       <h2 className="text-xl sm:text-2xl font-semibold text-slate-800 mb-2 host-grotesk">
+//         No Properties Found
+//       </h2>
+
+//       <p className="text-slate-500 text-sm sm:text-base max-w-md mb-6 host-grotesk">
+//         You haven't added any properties yet or no results match your search.
+//       </p>
+
+//        <button
+//             onClick={() => {
+//   if (remainingProperty <= 0) {
+//     setLimitType("property");
+//     setShowLimitMessage(true);
+//     return;
+//   }
+
+//   navigate("/addyourproperty");
+// }}
+//              className="flex items-center justify-center cursor-pointer gap-2 bg-[#6ABD11] text-white px-5 py-3 rounded-xl text-sm font-bold shadow hover:bg-[#5aa30e] transition w-full sm:w-auto host-grotesk">
+//               Add NewProperty
+//             </button>
+//     </div>
+//   ) : (
+//     paginatedProperties.map((property) => (
+
+//               <div
+//                 key={property.id}
+//                 className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm cursor-pointer hover:shadow-md transition"
+//                 onClick={()=>navigate(`/dashboardpropertydetail/${property.id}`)}
+//               >
+
+//                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+//                   {/* LEFT */}
+//                   <div className="flex items-start sm:items-center gap-4">
+
+//                     <img
+//                       src={property.image}
+//                       alt="property"
+//                       className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-xl"
+//                     />
+
+//                     <div>
+//                       <h3 className="font-semibold text-base sm:text-lg text-slate-800 host-grotesk">
+//                         {property.title}
+//                       </h3>
+
+//                       <div className="flex items-center text-slate-500 text-sm gap-1 host-grotesk ">
+//                         <MapPin size={14} />
+//                         {property.location}
+//                       </div>
+
+//                       <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-slate-500 host-grotesk">
+
+//   {property.features.length > 0 ? (
+//    property.features.slice(0, 3).map((f, i) => (
+//         <div key={i} className="flex items-center gap-1">
+//         <Square size={14} />
+//         {f.name}: {f.value}
+//       </div>
+//     ))
+//   ) : (
+//     <div className="flex items-center gap-1">
+//       <Square size={14} />
+//       No features
+//     </div>
+//   )}
+
+//   <div className="flex items-center gap-1">
+//   <TfiRulerAlt2  size={14} />
+//     {property.area}
+//   </div>
+
+// </div>
+
+//                     </div>
+
+//                   </div>
+
+//                   {/* RIGHT SECTION */}
+//                   <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-3 lg:mt-0">
+
+//                     {/* Price */}
+//                     <div className="text-base sm:text-lg font-bold text-slate-800 host-grotesk">
+//                       {property.price}
+//                     </div>
+
+                    
+
+//                     {/* Edit */}  
+//                           {showEdit && (
+//   <div className="flex items-center gap-2">
+//     <button
+//   onClick={(e) => {
+//   e.stopPropagation();
+
+//   if (remainingEdit <= 0) {
+//     setLimitType("edit");
+//     setShowLimitMessage(true);
+//     return;
+//   }
+
+//   navigate(`/editproperty/${property.id}`);
+// }}
+//   className="flex items-center gap-1 text-sm border border-slate-200 cursor-pointer px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
+// >
+//   <Pencil size={14} />
+// </button>
+
+//     <button
+//       onClick={(e) =>{
+//           e.stopPropagation();
+//          handleDelete(property.id)}}
+//       className="p-2 text-slate-400 hover:text-red-500 transition cursor-pointer"
+//     >
+//       <Trash size={20} />
+//     </button>
+//   </div>
+// )}
+
+//                   </div>
+
+//                 </div>
+
+//               </div>
+
+//                 ))
+//   )}
+// </div>
+
+// {!loading && filteredProperties.length > itemsPerPage && (
+//   <div className="mt-6 flex justify-center">
+//     <div className="inline-flex items-center gap-1 sm:gap-3 rounded-2xl bg-white px-3 py-2 shadow-lg shadow-black/10">
+//       {/* Previous Button */}
+//       <button
+//         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+//         disabled={currentPage === 1}
+//         aria-label="Previous page"
+//         className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full
+//           bg-black text-white transition cursor-pointer
+//           hover:bg-gray-800
+//           "
+//       >
+//         <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+//       </button>
+
+//       {/* Page Numbers */}
+//       {getPageNumbers().map((page, index) =>
+//         page === "..." ? (
+//           <span
+//             key={`dots-${index}`}
+//             className="flex h-8 w-6 sm:w-8 select-none items-center justify-center
+//               text-sm font-bold tracking-widest text-[#a3a7c4]"
+//             aria-disabled="true"
+//           >
+//             ...
+//           </span>
+//         ) : (
+//           <button
+//             key={page}
+//             onClick={() => setCurrentPage(page)}
+//             aria-current={currentPage === page ? "page" : undefined}
+//             className={`flex h-8 w-8 sm:h-8 sm:w-8 items-center justify-center rounded-lg
+//               text-sm sm:text-base font-medium transition cursor-pointer
+//               ${
+//                 currentPage === page
+//                   ? "bg-[#6ABD11] text-white shadow-sm"
+//                   : "text-gray-900 hover:bg-gray-100"
+//               }`}
+//           >
+//             {page}
+//           </button>
+//         )
+//       )}
+
+//       {/* Next Button */}
+//       <button
+//         onClick={() =>
+//           setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+//         }
+//         disabled={currentPage === totalPages}
+//         aria-label="Next page"
+//         className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full
+//           bg-black text-white transition cursor-pointer
+//           hover:bg-gray-800
+//           "
+//       >
+//         <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+//       </button>
+//     </div>
+//   </div>
+// )}
+//         </div>
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default PropertyListingLayout; 
+
+
+
+
+
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -16,9 +1146,10 @@ import {
   Building2,
   BriefcaseBusiness,
 } from "lucide-react";
+import { ClipboardList, X, Eye} from "lucide-react";
 import { TfiRulerAlt2 } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
-import { deletePropertyListing, getPropertyListing } from "../../../Api/agentsApi";
+import { deletePropertyListing, getPropertyListing, saveAgentPropertyNote } from "../../../Api/agentsApi";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUserPropertyListing, userPropertyList } from "../../../Api/userApi";
@@ -64,7 +1195,7 @@ const role = userRole || agentRole;
 
   const navigate = useNavigate();
 const agent = useSelector((state) => state.agent);
-useEffect(() => {
+
   const fetchProperties = async () => {
     try {
       setLoading(true);
@@ -107,6 +1238,8 @@ useEffect(() => {
           title: item.label,
           location: item.city || item.location,
           price: item.price ? `₹ ${item.price}` : "N/A",
+          visited_count:item.visited_count,
+
 
           features: Array.isArray(item.features)
             ? item.features
@@ -121,6 +1254,9 @@ useEffect(() => {
             : "N/A",
 
           status: item.paid ? "Active" : "Pending",
+
+          // VISIT / NOTE ENTRIES (new) - each: { id, visited, note, created_at }
+          visits: Array.isArray(item.visits) ? item.visits : [],
 
           image:
             item.images?.length > 0
@@ -145,8 +1281,9 @@ useEffect(() => {
     }
   };
 
-  fetchProperties();
 
+useEffect(() => {
+  fetchProperties();
 }, [role]);
 
   
@@ -261,6 +1398,62 @@ const handleDelete = (id) => {
     }
   );
 };
+
+/* ---------- NOTE / VISITED (new) ---------- */
+const [showNoteModal, setShowNoteModal] = useState(false);
+const [noteProperty, setNoteProperty] = useState(null);
+const [noteVisited, setNoteVisited] = useState(false);
+const [noteText, setNoteText] = useState("");
+const [savingNote, setSavingNote] = useState(false);
+
+// number of entries marked as visited for one property
+const getVisitCount = (p) => (p.visits || []).filter((v) => v.visited).length;
+
+// total visits across all properties
+const totalVisits = properties.reduce((sum, p) => sum + getVisitCount(p), 0);
+
+const openNoteModal = (property) => {
+  setNoteProperty(property);
+  setNoteVisited(false);
+  setNoteText("");
+  setShowNoteModal(true);
+};
+
+const closeNoteModal = () => {
+  setShowNoteModal(false);
+  setNoteProperty(null);
+  setNoteVisited(false);
+  setNoteText("");
+};
+const handleNoteSubmit = async () => {
+  if (!noteProperty || savingNote) return;
+
+  try {
+    setSavingNote(true);
+
+    const formData = new FormData();
+
+    formData.append("is_visited", noteVisited);
+    formData.append("notes", noteText.trim());
+
+    await saveAgentPropertyNote(noteProperty.id, formData);
+    await fetchProperties()
+
+    toast.success("Saved successfully");
+
+    setShowNoteModal(false);
+    setNoteProperty(null);
+    setNoteVisited(false);
+    setNoteText("");
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Failed to save"
+    );
+  } finally {
+    setSavingNote(false);
+  }
+};
+/* ---------- END NOTE / VISITED ---------- */
 
 const filteredProperties = properties.filter((property) => {
 
@@ -400,6 +1593,71 @@ const getPageNumbers = () => {
 
   </div>
 </div>
+    )}
+
+    {/* NOTE POPUP (new) */}
+    {showNoteModal && (
+      <div
+        className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 p-4"
+        onClick={closeNoteModal}
+      >
+        <div
+          className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md host-grotesk"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-lg font-semibold text-slate-800">Property Note</h3>
+            <button
+              onClick={closeNoteModal}
+              className="text-slate-400 hover:text-slate-700 transition cursor-pointer"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <p className="text-sm text-slate-500 mb-4 truncate">
+            {noteProperty?.title}
+          </p>
+
+          <label className="flex items-center gap-3 mb-4 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={noteVisited}
+              onChange={(e) => setNoteVisited(e.target.checked)}
+              className="w-5 h-5 accent-[#6ABD11] cursor-pointer"
+            />
+            <span className="text-sm font-medium text-slate-700">
+              Visited this property
+            </span>
+          </label>
+
+          <textarea
+            value={noteText}
+            onChange={(e) => setNoteText(e.target.value)}
+            rows={4}
+            placeholder="Write your note here..."
+            className="w-full border border-slate-200 rounded-xl p-3 text-sm text-slate-700 outline-none focus:border-[#6ABD11] resize-none"
+          />
+
+         
+
+          <div className="flex justify-end gap-3 mt-5">
+            <button
+              onClick={closeNoteModal}
+              className="px-4 py-2 rounded-xl text-sm border border-slate-200 hover:bg-slate-100 transition cursor-pointer"
+            >
+              Close
+            </button>
+            <button
+              onClick={handleNoteSubmit}
+              disabled={savingNote}
+              className="px-5 py-2 rounded-xl text-sm font-bold bg-[#6ABD11] text-white hover:bg-[#5aa30e] transition disabled:opacity-60 cursor-pointer"
+            >
+              {savingNote ? "Saving..." : "Submit"}
+            </button>
+          </div>
+        </div>
+      </div>
     )}
     
 
@@ -916,6 +2174,8 @@ const getPageNumbers = () => {
           </div>
           )}
 
+          
+
           {/* PROPERTY LIST */}
           <div className="space-y-4" onClick={onClick}>
 {!loading && filteredProperties.length === 0 ? (
@@ -1004,47 +2264,71 @@ const getPageNumbers = () => {
                   </div>
 
                   {/* RIGHT SECTION */}
-                  <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-3 lg:mt-0">
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-6 mt-3 lg:mt-0">
 
-                    {/* Price */}
-                    <div className="text-base sm:text-lg font-bold text-slate-800 host-grotesk">
-                      {property.price}
-                    </div>
-
-                    
-
-                    {/* Edit */}  
-                          {showEdit && (
-  <div className="flex items-center gap-2">
-    <button
-  onClick={(e) => {
-  e.stopPropagation();
-
-  if (remainingEdit <= 0) {
-    setLimitType("edit");
-    setShowLimitMessage(true);
-    return;
-  }
-
-  navigate(`/editproperty/${property.id}`);
-}}
-  className="flex items-center gap-1 text-sm border border-slate-200 cursor-pointer px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
->
-  <Pencil size={14} />
-</button>
-
-    <button
-      onClick={(e) =>{
-          e.stopPropagation();
-         handleDelete(property.id)}}
-      className="p-2 text-slate-400 hover:text-red-500 transition cursor-pointer"
-    >
-      <Trash size={20} />
-    </button>
+  {/* Price */}
+  <div className="text-base sm:text-lg font-bold text-slate-800 host-grotesk">
+    {property.price}
   </div>
-)}
 
-                  </div>
+  {/* Note and Visit Count */}
+  <div className="flex flex-wrap items-center gap-3 sm:gap-6">
+
+    {/* Note */}
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        openNoteModal(property);
+      }}
+      title="Add visit / note"
+      className="flex items-center gap-1 text-sm border border-slate-200 cursor-pointer px-2.5 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
+    >
+      <ClipboardList size={16} />
+    </button>
+
+    {/* Visit Count */}
+    <div
+      title="Total visits"
+      className="flex items-center gap-1 text-sm font-semibold text-[#3F8004] bg-[#6ABD11]/10 px-3 py-2 rounded-lg host-grotesk"
+    >
+      <Eye size={14} />
+      {property.visited_count}
+    </div>
+
+    {/* Edit and Delete */}
+    {showEdit && (
+      <div className="flex items-center gap-2">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+
+            if (remainingEdit <= 0) {
+              setLimitType("edit");
+              setShowLimitMessage(true);
+              return;
+            }
+
+            navigate(`/editproperty/${property.id}`);
+          }}
+          className="flex items-center gap-1 text-sm border border-slate-200 cursor-pointer px-3 py-2 rounded-lg hover:bg-slate-100 transition host-grotesk"
+        >
+          <Pencil size={14} />
+        </button>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete(property.id);
+          }}
+          className="p-2 text-slate-400 hover:text-red-500 transition cursor-pointer"
+        >
+          <Trash size={20} />
+        </button>
+      </div>
+    )}
+
+  </div>
+</div>
 
                 </div>
 
@@ -1122,4 +2406,4 @@ const getPageNumbers = () => {
   );
 };
 
-export default PropertyListingLayout; 
+export default PropertyListingLayout;

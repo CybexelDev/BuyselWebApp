@@ -80,12 +80,10 @@ BuySel - Find Your Perfect Property
 ${property.description || ""}
 
 📍 ${property.city || ""}
-
 📐 Land Area: ${property.land_area || ""}
 📏 Area: ${property.sq_ft || ""}
 💰 Price: ₹${property.price || ""}
 💵 Per Sq.Ft: ₹${property.perprice || ""}
-
 ✨ Amenities: ${property.amenities || ""}
 
 `;

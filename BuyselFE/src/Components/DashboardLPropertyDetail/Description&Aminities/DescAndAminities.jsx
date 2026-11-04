@@ -1,13 +1,15 @@
 
 import React, { useState, useEffect } from "react";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Eye, EyeOff } from "lucide-react";
 
-function DescAndAminities({ data }) {
+function DescAndAminities({ data, notes=[],visitedCount }) {
   const [detail, setDetail] = useState({});
 
   useEffect(() => {
     setDetail(data || {});
   }, [data]);
+
+  
 
   return (
     <div className="md:px-7 px-3 py-1 md:py-5 sm:mb-8">
@@ -109,7 +111,89 @@ You haven't added any key selling points              </p>
 
         </div>
       </div>
+
+  {/* VISIT NOTES */}
+  {notes.length > 0 && (
+  <div className="mt-8 max-w-6xl mx-auto w-full host-grotesk">
+    {/* Header */}
+    <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-[#6ABD11]/10 flex items-center justify-center">
+          <ClipboardList size={20} className="text-[#3F8004]" />
+        </div>
+        <div>
+          <p className="text-[20px] font-[700] text-[#181818] leading-tight">
+            Visit Notes
+          </p>
+          <p className="text-sm text-slate-500">
+            {notes.length} {notes.length === 1 ? "entry" : "entries"}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 bg-[#6ABD11]/10 text-[#3F8004] px-4 py-2 rounded-xl text-sm font-semibold">
+        <Eye size={16} />
+        {visitedCount} {visitedCount === 1 ? "visit" : "visits"}
+      </div>
     </div>
+
+    <div className="relative">
+      {/* Timeline line */}
+      <div className="absolute left-[19px] top-2 bottom-2 w-px bg-slate-200" />
+
+      <div className="space-y-4">
+        {notes.map((n) => (
+          <div key={n.id} className="relative flex gap-4">
+            {/* Timeline dot */}
+            <div
+              className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 border-4 border-white shadow-sm ${
+                n.is_visited
+                  ? "bg-[#6ABD11] text-white"
+                  : "bg-slate-200 text-slate-500"
+              }`}
+            >
+              {n.is_visited ? <Eye size={16} /> : <EyeOff size={16} />}
+            </div>
+
+            {/* Card */}
+            <div className="flex-1 bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span
+                  className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                    n.is_visited
+                      ? "bg-[#6ABD11]/10 text-[#3F8004]"
+                      : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  {n.is_visited ? "Visited" : "Not visited"}
+                </span>
+
+                <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                  <Clock size={13} />
+                  {new Date(n.created_at).toLocaleString("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: true,
+                  })}
+                </div>
+              </div>
+
+              {n.notes && (
+                <p className="text-[#4C4545] text-[15px] mt-3 leading-relaxed">
+                  {n.notes}
+                </p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+</div>
   );
 }
 
