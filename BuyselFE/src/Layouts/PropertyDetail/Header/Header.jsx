@@ -414,15 +414,15 @@ const handleWishlist = async (e) => {
         </h4>
 
         {/* value in circle */}
-        <span
-          className="flex items-center justify-center min-w-[28px] h-5 px-2 rounded-full
-                     bg-[#7BC21F]/10 border border-[#7BC21F] text-[10px] font-semibold text-black
-                     transition-all duration-300
-                     group-hover:bg-[#7BC21F] group-hover:text-white group-hover:scale-110
-                     group-hover:shadow-[0_0_0_4px_rgba(123,194,31,0.2)]"
-        >
-          {item.value}
-        </span>
+       <span
+  className="flex items-center justify-center gap-1 min-w-[28px] min-h-5 px-2 rounded-full
+             bg-[#7BC21F]/10 border border-[#7BC21F]
+             text-[10px] font-semibold text-black whitespace-nowrap shrink-0
+             group-hover:bg-[#7BC21F] group-hover:text-white group-hover:scale-110
+             group-hover:shadow-[0_0_0_4px_rgba(123,194,31,0.2)]"
+>
+  {item.value}
+</span>
       </div>
     ))
   ) : (
