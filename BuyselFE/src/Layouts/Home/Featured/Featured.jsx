@@ -261,12 +261,17 @@ return (
       </div>
 
       <div className="flex items-center justify-between w-full px-4 sm:px-0 sm:pl-4 pt-4 sm:pt-6">
-        <button onClick={() => navigate('/propertyListing')} className="instrument-sans flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black pl-1">
-          Explore More
-          <span className="flex items-center justify-center w-[22px] md:w-[25px] h-[22px] md:h-[25px] rounded-full bg-black text-white">
-            <ArrowRight className="w-[13px] h-[13px] sm:w-4 sm:h-4" />
-          </span>
-        </button>
+        <button
+  onClick={() => navigate('/propertyListing')}
+  className="group instrument-sans cursor-pointer flex items-center gap-2 font-[600] md:font-[700] text-[11px] sm:text-[14px] md:text-[15px] text-black pl-1 transition-all duration-300 hover:gap-3"
+>
+  <span className="transition-colors duration-300 group-hover:text-gray-600">
+    Explore More
+  </span>
+  <span className="flex items-center justify-center w-[22px] md:w-[25px] h-[22px] md:h-[25px] rounded-full bg-black text-white overflow-hidden transition-all duration-300 group-hover:scale-110 group-hover:bg-gray-800 group-hover:shadow-md">
+    <ArrowRight className="w-[13px] h-[13px] sm:w-4 sm:h-4 transition-transform duration-300 " />
+  </span>
+</button>
 
         <div className="flex gap-3">
 

@@ -474,24 +474,26 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
     const agentLink = window.location.href;
 
     const lines = [
-      `👤 ${agentData?.username || ""}`,
-      agentData?.professional_title && `💼 ${agentData.professional_title}`,
-      agentData?.agent_type && agentData.agent_type !== "basic"
-        ? `⭐ ${agentData.agent_type === "elite" ? "Elite" : "Premium"} Agent`
-        : null,
-      agentData?.verified && "✅ BuySel Verified",
-      agentData?.agent_code && `🆔 Agent ID: ${agentData.agent_code}`,
+      ` ${agentData?.username || ""}`,
+      agentData?.professional_title && ` ${agentData.professional_title}`,
+     agentData?.agent_type
+  ? agentData.agent_type === "basic"
+    ? "Basic Agent"
+    : `Agent_type: ${agentData.agent_type === "elite" ? "Elite" : "Premium"} Agent`
+  : null,
+      // agentData?.verified && "✅ BuySel Verified",
+      agentData?.agent_code && ` Agent ID: ${agentData.agent_code}`,
       "",
-      agentData?.phone_number && `📞 Phone: ${agentData.phone_number}`,
+      agentData?.phone_number && ` Phone: ${agentData.phone_number}`,
       agentData?.whatsapp_number &&
-        `💬 WhatsApp: https://wa.me/${agentData.whatsapp_number}`,
-      agentData?.email && `✉️ Email: ${agentData.email}`,
+        ` WhatsApp: https://wa.me/${agentData.whatsapp_number}`,
+      agentData?.email && ` Email: ${agentData.email}`,
       (agentData?.address || agentData?.city) &&
         `📍 ${[agentData?.address, agentData?.city].filter(Boolean).join(", ")}`,
       "",
-      agentData?.website && `🌐 Website: ${agentData.website}`,
-      agentData?.facebook && `📘 Facebook: ${agentData.facebook}`,
-      agentData?.instagram && `📸 Instagram: ${agentData.instagram}`,
+      agentData?.website && ` Website: ${agentData.website}`,
+      agentData?.facebook && ` Facebook: ${agentData.facebook}`,
+      agentData?.instagram && ` Instagram: ${agentData.instagram}`,
       "",
       "View Profile:",
       agentLink,
@@ -594,13 +596,13 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
           </svg>
         </button>
 
-        <div className="flex flex-col md:flex-row md:items-center justify-between lg:justify-start lg:gap-45 md:gap-10">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between lg:justify-start lg:gap-45 md:gap-10">
           <div className="flex flex-col sm:flex-row items-center md:items-center gap-9 ">
             <div className="relative">
               <img
                 src={agentData?.profile_image}
                 alt="Agent"
-                className="w-24 h-24 md:w-[183px] md:h-[183px] rounded-full object-cover shadow-md"
+                className="w-24 h-24 md:w-[123px] md:h-[123px] lg:w-[183px] lg:h-[183px] rounded-full object-cover shadow-md"
               />
 
               {/* Role Badge */}
@@ -720,7 +722,7 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
           </div>
 
           {/* Right Section: Contact Details */}
-          <div className="flex flex-col gap-[18px] text-sm mt-8 md:mt-0 border-t md:border-t-0 pt-6 md:pt-0 border-gray-200">
+          <div className="flex flex-col gap-[15px] lg:gap-[18px]  text-sm mt-8 md:mt-0 border-t lg:border-t-0 pt-6 lg:pt-0 border-gray-200">
             <div className="flex items-center gap-3">
               <div
                 className={`bg-[#6ABD11ED] p-2 rounded-full text-white cursor-pointer shrink-0 `}

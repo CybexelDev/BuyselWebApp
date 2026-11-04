@@ -108,7 +108,7 @@ const nearbyPlaces =
 
     const [selectedImage, setSelectedImage] = useState(null);
   return (
-    <div className="flex-1 space-y-8  relative p-9 lg:p-0 2xl:p-9 rounded-2xl w-full">
+    <div className="flex-1 space-y-5  relative py-5 sm:p-8 lg:p-0 2xl:p-9 rounded-2xl w-full">
 
       <h1 className="text-2xl font-semibold lexend text-black">
         Preview Your Listing
