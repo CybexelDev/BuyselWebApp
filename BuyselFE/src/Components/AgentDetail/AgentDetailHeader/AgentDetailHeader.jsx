@@ -896,5 +896,4 @@ const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
     </div>
   );
 };
-
 export default AgentDetailHeader;

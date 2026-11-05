@@ -9,85 +9,34 @@ import noimage from "../../../assets/images/propertDetail/noimage.png"
 import Chatbox from '../../Home/Chatbox/Chatbox';
 import { useSelector } from "react-redux";
 
-function PropertiesSection({ propertiesData, dataCount }) {
+const ITEMS_PER_PAGE = 1; // you can also move this above the component
 
-  const [itemsPerPage, setItemsPerPage] = useState(12);
+function PropertiesSection({ propertiesData, dataCount }) {
   const [page, setPage] = useState(1);
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user);
   const agent = useSelector((state) => state.agent);
 
-
-
-
-  // console.log(propertiesData, "propertiesData in properties section ???????????????");
-
-  // console.log(dataCount, "%%%%%%%%%%%%%%%%%%%%%%%%");
-
-
-  // useEffect(() => {
-
-  //   setProperties(propertiesData);
-  //   setLoading(false);
-
-
-  // }, [propertiesData]);
-  
+  // Load data, and go back to page 1 only when new data arrives
   useEffect(() => {
     if (dataCount === undefined) {
       setLoading(true);
       return;
     }
 
-
     setLoading(false);
     setProperties(propertiesData || []);
+    setPage(1);
   }, [propertiesData, dataCount]);
 
-
-  useEffect(() => {
-    function handleResize() {
-      const width = window.innerWidth;
-
-      if (width < 640) {
-        setItemsPerPage(2 * 5);
-      }
-
-      else if (width < 768) {
-        setItemsPerPage(2 * 5);
-      }
-
-      else if (width < 1024) {
-        setItemsPerPage(2 * 5);
-      }
-
-      else if (width < 1280) {
-        setItemsPerPage(3 * 4);
-      }
-
-      else {
-        setItemsPerPage(4 * 3);
-      }
-
-      setPage(1);
-    }
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-
-
   // Pagination logic
-  const lastIndex = page * itemsPerPage;
-  const firstIndex = lastIndex - itemsPerPage;
-  const currentProperties = properties?.slice(firstIndex, lastIndex);
-  const totalPages = Math.ceil(properties?.length / itemsPerPage);
+  const lastIndex = page * ITEMS_PER_PAGE;
+  const firstIndex = lastIndex - ITEMS_PER_PAGE;
+  const currentProperties = properties.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
 
-
+  // ...addWishlist, removeWishlist and the JSX stay exactly as they are
 
   //   const addWishlist = (id) => {
   //   const token = localStorage.getItem("accessToken");
@@ -238,82 +187,64 @@ const addWishlist = async (id) => {
 
       </div>
 
-      <div className="host-grotesk flex justify-center mt-12">
-        <div className="flex items-center gap-2 sm:gap-4 bg-[#fbfbfb] shadow-lg rounded-xl px-4 py-2">
+      {totalPages > 1 && (
+  <div className="host-grotesk flex justify-center mt-12">
+    <div className="flex items-center gap-2 sm:gap-4 bg-[#fbfbfb] shadow-lg rounded-xl px-4 py-2">
 
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(p => p - 1)}
-            className="w-[23px] sm:w-[25px] h-[23px] sm:h-[25px]
-              flex items-center justify-center rounded-full bg-black text-white
-              ">
-            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button >
+      <button
+        disabled={page === 1}
+        onClick={() => setPage((p) => p - 1)}
+        className="w-[23px] sm:w-[25px] h-[23px] sm:h-[25px] cursor-pointer flex items-center justify-center rounded-full bg-black text-white"
+      >
+        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+      </button>
 
+      {(() => {
+        const pages = [];
 
-          {(() => {
-            const pages = [];
+        const addPage = (p) => {
+          if (p >= 1 && p <= totalPages && !pages.includes(p)) {
+            pages.push(p);
+          }
+        };
 
-            const addPage = (p) => {
-              if (p >= 1 && p <= totalPages && !pages.includes(p)) {
-                pages.push(p);
-              }
-            };
+        addPage(1);
+        addPage(totalPages);
+        addPage(page - 1);
+        addPage(page);
+        addPage(page + 1);
+        pages.sort((a, b) => a - b);
 
-            addPage(1);
-            addPage(totalPages);
-            addPage(page - 1);
-            addPage(page);
-            addPage(page + 1);
-            pages.sort((a, b) => a - b);
+        return pages.map((p, i) => (
+          <React.Fragment key={p}>
+            {i > 0 && p - pages[i - 1] > 1 && (
+              <span className="px-1 sm:px-2 text-gray-400">...</span>
+            )}
+            <button
+              onClick={() => setPage(p)}
+              className={`px-3 py-1 rounded-md text-[10px] sm:text-[14px] font-medium cursor-pointer ${
+                page === p
+                  ? "bg-[#6ABD11ED] text-white shadow"
+                  : "text-gray-900 hover:bg-gray-100"
+              }`}
+            >
+              {p}
+            </button>
+          </React.Fragment>
+        ));
+      })()}
 
+      <button
+        disabled={page === totalPages}
+        onClick={() => setPage((p) => p + 1)}
+        className="w-[23px] sm:w-[25px] h-[23px] sm:h-[25px] cursor-pointer flex items-center justify-center rounded-full bg-black text-white "
+      >
+        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+      </button>
 
-            return pages.map((p, i) => {
-              if (i > 0 && p - pages[i - 1] > 1) {
-                return (
-                  <div key={p} className="flex items-center gap-1">
-                    <span className="px-1 sm:px-2 text-gray-400">...</span>
-                    <button
-                      onClick={() => setPage(p)}
-                      className="px-3 py-1 rounded-md text-[10px] sm:text-[14px] font-medium cursor-pointer"
-                    >
-                      {p}
-                    </button>
-                  </div>
-                );
-              }
-
-              return (
-                <button
-                  key={p}
-                  onClick={() => setPage(p)}
-                  className={`px-3 py-1 rounded-md text-[10px] sm:text-[14px] font-medium cursor-pointer
-                     ${page === p
-                      ? "bg-[#6ABD11ED] text-white shadow"
-                      : "text-gray-900 hover:bg-gray-100"
-                    }`}
-                >
-                  {p}
-                </button>
-              );
-            });
-          })()}
-
-
-          <button
-            disabled={page === totalPages}
-            onClick={() => setPage(p => p + 1)}
-            className="w-[23px] sm:w-[25px] h-[23px] sm:h-[25px]
-              flex items-center justify-center rounded-full bg-black text-white
-              "
-          >
-            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button>
-
-        </div>
-
-      </div>
-
+    </div>
+  </div>
+)}
     </div>
   )
 }

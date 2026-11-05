@@ -1181,7 +1181,6 @@ const [filters, setFilters] = useState({
 });
 
 
-
   const userRole = useSelector((state) => state.user.role);
 const agentRole = useSelector((state) => state.agent.role);
 
@@ -2270,9 +2269,13 @@ const getPageNumbers = () => {
   <div className="text-base sm:text-lg font-bold text-slate-800 host-grotesk">
     {property.price}
   </div>
+  
 
-  {/* Note and Visit Count */}
+   {/* Note and Visit Count */}
   <div className="flex flex-wrap items-center gap-3 sm:gap-6">
+
+       {(agent?.isLoggedIn || agent?.accessToken) && (
+        <>
 
     {/* Note */}
     <button
@@ -2294,6 +2297,8 @@ const getPageNumbers = () => {
       <Eye size={14} />
       {property.visited_count}
     </div>
+    </>
+       )}
 
     {/* Edit and Delete */}
     {showEdit && (
