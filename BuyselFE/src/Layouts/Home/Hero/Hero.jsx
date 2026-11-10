@@ -109,8 +109,8 @@ useEffect(() => {
           <p className='instrument-sans md:text-[16px] text-[13px]'>Happy Clients</p>
         </div>
         <div className='count'>
-          <p className=' font-semibold md:text-[24px] text-[18px] instrument-sans'>12 lakh</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Site Visit</p>
+          <p className=' font-semibold md:text-[24px] text-[18px] instrument-sans'>12 lakh+</p>
+          <p className='instrument-sans md:text-[16px] text-[13px]'>Site Visitors</p>
         </div>
       </div>
 
