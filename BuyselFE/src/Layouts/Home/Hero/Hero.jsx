@@ -101,16 +101,16 @@ useEffect(() => {
       </div>
       <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-80px] md:mb-5 left-8 bottom-[80px] z-10">
         <div className=''>
-          <p className=' md:text-[24px] text-[18px] font-semibold instrument-sans'>10,00+</p>
+          <p className=' md:text-[24px] text-[18px] font-semibold instrument-sans'>5,000+</p>
           <p className='instrument-sans md:text-[16px] text-[13px]'>Verified Listings</p>
         </div>
         <div className='count'>
-          <p className='md:text-[24px] text-[18px] font-semibold instrument-sans'>5,000+</p>
+          <p className='md:text-[24px] text-[18px] font-semibold instrument-sans'>10,000+</p>
           <p className='instrument-sans md:text-[16px] text-[13px]'>Happy Clients</p>
         </div>
         <div className='count'>
-          <p className=' font-semibold md:text-[24px] text-[18px] instrument-sans'>100%</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Trusted Partners</p>
+          <p className=' font-semibold md:text-[24px] text-[18px] instrument-sans'>12 lakh</p>
+          <p className='instrument-sans md:text-[16px] text-[13px]'>Site Visit</p>
         </div>
       </div>
 
