@@ -14,6 +14,7 @@ import ButtonHead from "../../../Components/ButtonHead/ButtonHead";
 const Hero = () => {
    const images = [img, img2, img3];
 
+
 useEffect(() => {
   // Preload the first hero image with high priority
   const heroImage = new Image();
@@ -27,6 +28,28 @@ useEffect(() => {
   const thirdImage = new Image();
   thirdImage.src = img3;
 }, []);
+
+
+
+const [visitors, setVisitors] = useState(() => {
+    const saved = localStorage.getItem('visitors');
+    return saved ? Number(saved) : 1200000;
+  });
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    const change = Math.floor(Math.random() * 10) + 1; // always 1 to 10
+
+    setVisitors((prev) => prev + change);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, []);
+
+  // Save every time visitors changes
+  useEffect(() => {
+    localStorage.setItem('visitors', visitors);
+  }, [visitors]);
   
   // const images = [img, img2, img3];
   const [current, setCurrent] = useState(0);
@@ -99,19 +122,21 @@ useEffect(() => {
 
         </div>
       </div>
-      <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-80px] md:mb-5 left-8 bottom-[80px] z-10">
-        <div className=''>
-          <p className=' md:text-[24px] text-[18px] font-semibold instrument-sans'>10,00+</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Verified Listings</p>
-        </div>
-        <div className='count'>
-          <p className='md:text-[24px] text-[18px] font-semibold instrument-sans'>5,000+</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Happy Clients</p>
-        </div>
-        <div className='count'>
-          <p className=' font-semibold md:text-[24px] text-[18px] instrument-sans'>100%</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Trusted Partners</p>
-        </div>
+      <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-80px] sm:mb-5 left-8 bottom-[80px] z-10">
+        <div className="">
+  <p className="text-[18px] sm:text-[20px] md:text-[23px] font-semibold instrument-sans">5,000+</p>
+  <p className="instrument-sans text-[12px] sm:text-[14px] md:text-[16px]">Verified Listings</p>
+</div>
+<div className="count">
+  <p className="text-[18px] sm:text-[20px] md:text-[23px] font-semibold instrument-sans">10,000+</p>
+  <p className="instrument-sans text-[12px] sm:text-[14px] md:text-[16px]">Happy Clients</p>
+</div>
+<div className="count">
+  <p className="font-semibold text-[18px] sm:text-[20px] md:text-[23px] instrument-sans">
+    {visitors.toLocaleString('en-IN')}+
+  </p>
+  <p className="instrument-sans text-[12px] sm:text-[14px] md:text-[16px]">Site Visitors</p>
+</div>
       </div>
 
     </div>
