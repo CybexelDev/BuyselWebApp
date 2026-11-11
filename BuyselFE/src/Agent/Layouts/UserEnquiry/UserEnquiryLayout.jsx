@@ -29,6 +29,8 @@ useEffect(() => {
     try {
       const data = await getAgentInboxMessages();
 
+  
+
       if (Array.isArray(data)) {
         const mappedData = data.map((item) => ({
           id: item.id,
@@ -37,8 +39,15 @@ useEffect(() => {
           pincode: item.pincode || item.pin_code || "N/A",
           requirement: item.messages_text || item.enquiry || "No message",
           date: item.created_at
-            ? new Date(item.created_at).toLocaleString()
-            : "N/A",
+  ? (() => {
+      const [datePart, timePart] = item.created_at.split(" ");
+      const [day, month, year] = datePart.split("-");
+
+      return new Date(
+        `${year}-${month}-${day} ${timePart}`
+      ).toLocaleString();
+    })()
+  : "N/A",
           status: item.status || "New",
         }));
 

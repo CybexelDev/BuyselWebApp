@@ -9,7 +9,7 @@ import noimage from "../../../assets/images/propertDetail/noimage.png"
 import Chatbox from '../../Home/Chatbox/Chatbox';
 import { useSelector } from "react-redux";
 
-const ITEMS_PER_PAGE = 1; // you can also move this above the component
+const ITEMS_PER_PAGE = 12; // you can also move this above the component
 
 function PropertiesSection({ propertiesData, dataCount }) {
   const [page, setPage] = useState(1);
