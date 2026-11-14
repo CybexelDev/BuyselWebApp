@@ -873,7 +873,7 @@ function Header({ onchange, location, cityDataSend }) {
               <h2
                 className="
                   instrument-sans font-[600] leading-[140%] mb-2
-                  text-[24px] sm:text-[30px]
+                  text-[19px] sm:text-[30px]
                   min-[900px]:text-[24px] lg:text-[32px] 2xl:text-[38px]
                 "
               >
@@ -882,14 +882,14 @@ function Header({ onchange, location, cityDataSend }) {
               </h2>
 
               <p
-  className="max-w-[400px] max-lg:mx-auto max-sm:text-center
-    text-[#3e3131] host-grotesk font-[400] leading-[120%]
-    text-[14px] sm:text-[16px]
-    min-[900px]:text-[14px] lg:text-[15px] 2xl:text-[16px]"
->
-  Plot specialists, rental experts, and home sale
-  professionals—all in one place.
-</p>
+               className="max-w-[400px] max-lg:mx-auto max-sm:text-center
+             text-[#3e3131] host-grotesk font-[400] leading-[120%]
+               text-[13px] sm:text-[16px]
+               min-[900px]:text-[14px] lg:text-[15px] 2xl:text-[16px]"
+              >
+             Plot specialists, rental experts, and home sale
+             professionals—all in one place.
+           </p>
   
             </div>
 
