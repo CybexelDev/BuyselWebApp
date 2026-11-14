@@ -13,6 +13,7 @@ export default defineConfig({
   registerType: "autoUpdate",
 
   manifest: {
+    id: "/",
     name: "Buysel - Real Estate",
     short_name: "Buysel",
     description: "Find your dream property with Buysel.",
@@ -22,6 +23,7 @@ export default defineConfig({
     orientation: "portrait",
     start_url: "/",
     scope: "/",
+    prefer_related_applications: false,
 
     icons: [
       {
