@@ -12,10 +12,6 @@ const Agents = () => {
   const [locationDataa, setLocationDataa] = useState([]);
 
 
-  
-
-
-
   useEffect(() => {
 
     const handleSearch = async () => {

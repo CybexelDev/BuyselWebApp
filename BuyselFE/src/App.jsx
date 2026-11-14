@@ -42,6 +42,7 @@ import AgentProtectedRoute from './Agent/Components/ProtectionRouteAgent/Protect
 import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
 import CommonProtectedRoute from './Components/CommonProtectionRoute/CommonProtectedRoute'
 import Orders from './Agent/Pages/Orders/Orders'
+import InstallPrompt from './Components/InstallPrombt/InstallPrombt'
 
 function App() {
 
@@ -60,7 +61,9 @@ function App() {
     <>
       {/* App page */}
       <Router>
+        <InstallPrompt />
         <Routes>
+          
        <Route path="/" element={<Home />} />
 <Route path="*" element={<Home />} />
 <Route path="/propertyListing" element={<PropertListing />} />
