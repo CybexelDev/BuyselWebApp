@@ -12,7 +12,7 @@ function Pricing({ formData, setFormData, errors }) {
   };
 
   return (
-    <div className="bg-white p-9 rounded-2xl w-full">
+    <div className="bg-white py-5 sm:p-8 rounded-2xl w-full">
       <h2 className="lexend text-[24px] leading-[145%] font-[600]  mb-6">
         Pricing & Availability
       </h2>

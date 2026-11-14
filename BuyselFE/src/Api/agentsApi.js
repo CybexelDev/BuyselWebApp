@@ -728,3 +728,20 @@ export const AdvertisementRequest = async (formData) => {
     return false;
   }
 };
+
+
+export const saveAgentPropertyNote = async (propertyId, formData) => {
+  const res = await api.post(
+    `agent-property-mark/${propertyId}/`,
+    formData
+  );
+  return res.data;
+};
+
+
+export const getAgentPropertyNote = async (propertyId) => {
+  const res = await api.get(
+    `agent-property-mark/${propertyId}/`
+  );
+  return res.data;
+};

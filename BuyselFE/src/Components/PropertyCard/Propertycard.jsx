@@ -73,22 +73,19 @@ function Propertycard({ property, click, wishlistIcon, color = "bg-[#FFFFFF]", s
 
     const shareText = `
 🏠 ${property.label}
-
-${property.description || ""}
-
-📍 ${property.city || ""}
-
-📐 Land Area: ${property.land_area || ""}
-📏 Area: ${property.sq_ft || ""}
-💰 Price: ₹${property.price || ""}
-💵 Per Sq.Ft: ₹${property.perprice || ""}
-
-✨ Amenities: ${property.amenities || ""}
-
 View Property:
 ${propertyLink}
 
 BuySel - Find Your Perfect Property
+${property.description || ""}
+
+📍 ${property.city || ""}
+📐 Land Area: ${property.land_area || ""}
+📏 Area: ${property.sq_ft || ""}
+💰 Price: ₹${property.price || ""}
+💵 Per Sq.Ft: ₹${property.perprice || ""}
+✨ Amenities: ${property.amenities || ""}
+
 `;
 
     const response = await fetch(imageUrl);
