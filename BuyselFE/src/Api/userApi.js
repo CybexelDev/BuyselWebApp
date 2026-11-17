@@ -1211,3 +1211,28 @@ export const getSliderAdd = async () => {
     return null;
   }
 };
+
+
+export const secretUserLogin = async (username, password) => {
+  try {
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+
+    const res = await api.post("/secret-user/login/", formData);
+    return res.data;
+  } catch (error) {
+    console.error("Secret user login failed:", error);
+    throw error;
+  }
+};
+
+export const getSecretPropertiesUser = async () => {
+  try {
+    const res = await api.get("/secret-properties/");
+    return res.data?.data || res.data;
+  } catch (error) {
+    console.error("Failed to fetch secret properties:", error);
+    throw error;
+  }
+};

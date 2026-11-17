@@ -213,7 +213,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { FaUserCog } from "react-icons/fa";
 import { FaShoppingBag } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
-
+import { FaUserSecret } from "react-icons/fa";
 import {
   useLocation,
   useNavigate,
@@ -270,6 +270,12 @@ const navItems = [
     label: "User Enquiry",
     path: "/agent/user-enquiry",
   },
+  {
+  id: "secretproperty",
+  icon: FaUserSecret,
+  label: "Secret Properties",
+  path: "/agent/secret-properties", // change to your route
+},
 ];
 
 const Sidebar = () => {
@@ -311,22 +317,18 @@ const Sidebar = () => {
     agent = {};
   }
 
-  const isBasicAgent =
-    agent?.agent_type === "basic";
+ const isBasicAgent = agent?.agent_type === "basic";
+const isCompanyAgent = agent?.is_company_agent === true;
 
-  // =========================================
-  // FILTER BASIC AGENT MENU
-  // =========================================
-
-  const filteredNavItems = isBasicAgent
-    ? navItems.filter((item) =>
-        [
-          "profile",
-          "inbox",
-          "userenquiry",
-        ].includes(item.id)
-      )
-    : navItems;
+const filteredNavItems = navItems
+  .filter((item) =>
+    isBasicAgent
+      ? ["profile", "inbox", "userenquiry"].includes(item.id)
+      : true
+  )
+  .filter((item) =>
+    item.id === "secretproperty" ? isCompanyAgent : true
+  );
 
   return (
     <div className="relative">

@@ -48,12 +48,15 @@ function userReducer(state = initialUserState, action) {
 const initialAgentState = {
   agentName: null,
   accessToken: null,
+   is_company_agent: false,
   agentId: null,
   image: null,
   agent_type: null,
   role: null,
   isLoggedIn: false,
-  remainingPropertyAgent: null
+  remainingPropertyAgent: null,
+    secret_properties: false, 
+
 };
 
 function agentReducer(state = initialAgentState, action) {
@@ -69,8 +72,18 @@ function agentReducer(state = initialAgentState, action) {
         agent_type: action.payload.agent_type,
         role: action.payload.role,
         remainingPropertyAgent: action.payload.remainingPropertyAgent,
+            is_company_agent: action.payload.is_company_agent ?? false, 
+                secret_properties: action.payload.secret_properties ?? false,
+
+
         isLoggedIn: true
       };
+
+      case 'UPDATE_SECRET_PROPERTIES':
+  return {
+    ...state,
+    secret_properties: action.payload,
+  };
 
     case 'AGENT_LOGOUT':
       return initialAgentState;

@@ -56,18 +56,21 @@ const handleLogin = async () => {
     }
 
     if (response) {
-      dispatch({
-        type: "SET_AGENT",
-        payload: {
-          agentName: response?.agent_details?.username,
-          accessToken: response?.access,
-          agentId: response?.agent_details?.agent_id,
-          image: response?.agent_details?.profile_image,
-          agent_type: response?.agent_details?.agent_type,
-          role: response?.login_as,
-          isLoggedIn: true,
-        },
-      });
+     dispatch({
+  type: "SET_AGENT",
+  payload: {
+    agentName: response?.agent_details?.username,
+    accessToken: response?.access,
+    agentId: response?.agent_details?.agent_id,
+    image: response?.agent_details?.profile_image,
+    agent_type: response?.agent_details?.agent_type,
+        secret_properties: response?.agent_details?.secret_properties === true,
+
+    is_company_agent: response?.agent_details?.is_company_agent === true, // 👈 new
+    role: response?.login_as,
+    isLoggedIn: true,
+  },
+});
 
       localStorage.setItem("accessToken", response?.access);
       localStorage.setItem("refreshToken", response?.refresh);
