@@ -97,166 +97,181 @@ const handleSubmit = async (e) => {
 };
   return (
     <>
-    <div className='md:px-16 px-3 py-1  md:py-5'>
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-
-        <div class="md:col-span-8 ">
-          {/* description ivden da */}
-          <div className='w-full bg-[#efefef] rounded-[23px] px-5 py-6'>
-            <p className='text-[#181818] host-grotesk text-[20px] font-[700]'>Property Description</p>
-            <p className='text-[#808080] mt-3 text-[16px] font-[500]'><span className='inter'>Address:</span> {data.location}</p>
-            <p className='text-[#181818] font-[400] text-[16px] host-grotesk mt-3'>{detail.description}</p>
-
-            <p className='text-[#181818] host-grotesk text-[20px] font-[500] mt-3'>Key Selling Points</p>
-
-{detail?.keySellingPoint?.length > 0 ? (
-  <ul className="space-y-4 mt-2 host-grotesk">
-    {detail.keySellingPoint.map((item, index) => (
-      <li key={index} className="flex items-start gap-3">
-        <span className="mt-2 w-1 h-1 bg-[#4C4545] rounded-full flex-shrink-0" />
-        <p className="text-[#4C4545] text-sm leading-relaxed">
-          {item.content}
-        </p>
-      </li>
-    ))}
-  </ul>
-) : (
-  <p className="text-[#777777] host-grotesk text-[16px] mt-2">
-    No key selling points available
-  </p>
-)}
-          </div>
-          {/* aminties here daa */}
-          
-{detail?.amenities?.length > 0 ? (
-  // UI when amenities are available
-  <div>
-    <p className="host-grotesk text-[24px] font-[700] text-[#181818] mt-6">
-      Amenities & Features
-    </p>
-
-    <div className="flex flex-wrap gap-2 md:gap-4 host-grotesk mt-4">
-      {detail.amenities.map((item, index) => (
-        <div
-          key={index}
-          className="bg-[#74c222] rounded-[14px] px-3 md:px-7 py-2 md:py-3 flex gap-1 text-[14px] md:text-[15px] text-white"
-        >
-          {item?.icon && (
-            <img
-              className="w-[14px] h-[14px] object-contain mt-1"
-              src={item.icon}
-              alt=""
-            />
-          )}
-          {item?.name}
-        </div>
-      ))}
-    </div>
-  </div>
-) : (
-  // Alternative UI when amenities are unavailable
-  <div className="mt-6 min-h-[200px] lg:min-h-[500px] w-full rounded-2xl border border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white p-6 md:p-10 flex flex-col items-center justify-center text-center">
-  {/* Icon */}
-  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-gray-200">
-    <Sparkles className="h-7 w-7 text-gray-400" strokeWidth={1.5} />
-  </div>
-
-  {/* Heading */}
-  <h3 className="host-grotesk mt-5 text-[20px] md:text-[22px] font-bold text-[#181818]">
-    Amenities & Features
-  </h3>
-
-  {/* Description */}
-  <p className="host-grotesk mt-2 max-w-md text-[14px] leading-relaxed text-gray-500">
-    We're still updating the amenities for this property. Please contact us and we'll be happy to help.
-  </p>
-
-  {/* Optional CTA */}
-  <a
-    href="/contact"
-    className="host-grotesk mt-6 inline-flex items-center rounded-full bg-[#181818] px-5 py-2.5 text-[14px] font-medium text-white transition hover:bg-black/80"
-  >
-    Contact us for details
-  </a>
-</div>
-)}
-
-        </div>
-
-       <div className="md:col-span-4">
-      <form onSubmit={handleSubmit}>
-        <div className="bg-[#79C41A] p-10 rounded-[30px] max-w-xl mx-auto">
-
-          <h2 className="text-[20px] font-[700] text-black mb-3">
-            Interested in this property?
-          </h2>
-
-          <p className="text-white text-[16px] mb-6">
-            Fill in the form and we’ll arrange a tour so you can explore this for yourself.
+  <div className="md:px-16 px-3 py-1 md:py-5">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+ 
+      {/* LEFT */}
+      <div className="lg:col-span-8 flex flex-col">
+ 
+        {/* Description */}
+        <div className="w-full bg-[#efefef] rounded-[23px] px-5 py-6">
+          <p className="text-[#181818] host-grotesk text-[20px] font-[700]">
+            Property Description
           </p>
-
-          {/* NAME */}
-          <label className="block text-black font-medium mb-2">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Your Name"
-            className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
-          />
-          {errors.name && <p className="text-red-600 text-sm mb-2">{errors.name}</p>}
-
-          {/* PHONE */}
-          <label className="block text-black font-medium mb-2">Phone</label>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Your mobile number"
-            className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
-          />
-          {errors.phone && <p className="text-red-600 text-sm mb-2">{errors.phone}</p>}
-
-          {/* EMAIL */}
-          <label className="block text-black font-medium mb-2">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Your email"
-            className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
-          />
-          {errors.email && <p className="text-red-600 text-sm mb-2">{errors.email}</p>}
-
-          {/* MESSAGE */}
-          <label className="block text-black font-medium mb-2">Message</label>
-          <textarea
-            rows="4"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Your Message"
-            className="w-full mb-5 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none resize-none"
-          ></textarea>
-          {errors.message && <p className="text-red-600 text-sm mb-2">{errors.message}</p>}
-
-          {/* BUTTON */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-black text-[#79C41A] py-4 rounded-2xl text-lg font-medium shadow-lg hover:opacity-90 transition cursor-pointer"
-          >
-            {loading ? "Sending..." : "Submit"}
-          </button>
-
+          <p className="text-[#808080] mt-3 text-[16px] font-[500]">
+            <span className="inter">Address:</span> {data.location}
+          </p>
+          <p className="text-[#181818] font-[400] text-[16px] host-grotesk mt-3">
+            {detail.description}
+          </p>
+ 
+          <p className="text-[#181818] host-grotesk text-[20px] font-[500] mt-3">
+            Key Selling Points
+          </p>
+ 
+          {detail?.keySellingPoint?.length > 0 ? (
+            <ul className="space-y-4 mt-2 host-grotesk">
+              {detail.keySellingPoint.map((item, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <span className="mt-2 w-1 h-1 bg-[#4C4545] rounded-full flex-shrink-0" />
+                  <p className="text-[#4C4545] text-sm leading-relaxed">
+                    {item.content}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-[#777777] host-grotesk text-[16px] mt-2">
+              No key selling points available
+            </p>
+          )}
         </div>
-      </form>
-    </div>
+ 
+        {/* Amenities */}
+        {detail?.amenities?.length > 0 ? (
+          <div>
+            <p className="host-grotesk text-[24px] font-[700] text-[#181818] mt-6">
+              Amenities & Features
+            </p>
+ 
+            <div className="flex flex-wrap gap-2 md:gap-4 host-grotesk mt-4">
+              {detail.amenities.map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-[#74c222] rounded-[14px] px-3 md:px-7 py-2 md:py-3 flex gap-1 text-[14px] md:text-[15px] text-white"
+                >
+                  {item?.icon && (
+                    <img
+                      className="w-[14px] h-[14px] object-contain mt-1"
+                      src={item.icon}
+                      alt=""
+                    />
+                  )}
+                  {item?.name}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          // flex-1 fills the leftover height so left and right end together
+          <div className="mt-6 flex-1 min-h-[200px] w-full rounded-2xl border border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white p-6 md:p-10 flex flex-col items-center justify-center text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-gray-200">
+              <Sparkles className="h-7 w-7 text-gray-400" strokeWidth={1.5} />
+            </div>
+ 
+            <h3 className="host-grotesk mt-5 text-[20px] md:text-[22px] font-bold text-[#181818]">
+              Amenities & Features
+            </h3>
+ 
+            <p className="host-grotesk mt-2 max-w-md text-[14px] leading-relaxed text-gray-500">
+              We're still updating the amenities for this property. Please
+              contact us and we'll be happy to help.
+            </p>
+ 
+            <a
+              href="/contact"
+              className="host-grotesk mt-6 inline-flex items-center rounded-full bg-[#181818] px-5 py-2.5 text-[14px] font-medium text-white transition hover:bg-black/80"
+            >
+              Contact us for details
+            </a>
+          </div>
+        )}
       </div>
-    </div >
-    </>
+ 
+      {/* RIGHT */}
+      <div className="lg:col-span-4">
+        <form onSubmit={handleSubmit} className="h-full">
+          <div className="bg-[#79C41A] p-10 rounded-[30px] max-w-xl mx-auto h-full flex flex-col">
+ 
+            <h2 className="text-[20px] font-[700] text-black mb-3">
+              Interested in this property?
+            </h2>
+ 
+            <p className="text-white text-[16px] mb-6">
+              Fill in the form and we’ll arrange a tour so you can explore this
+              for yourself.
+            </p>
+ 
+            {/* NAME */}
+            <label className="block text-black font-medium mb-2">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Your Name"
+              className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
+            />
+            {errors.name && (
+              <p className="text-red-600 text-sm mb-2">{errors.name}</p>
+            )}
+ 
+            {/* PHONE */}
+            <label className="block text-black font-medium mb-2">Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Your mobile number"
+              className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
+            />
+            {errors.phone && (
+              <p className="text-red-600 text-sm mb-2">{errors.phone}</p>
+            )}
+ 
+            {/* EMAIL */}
+            <label className="block text-black font-medium mb-2">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Your email"
+              className="w-full mb-3 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none"
+            />
+            {errors.email && (
+              <p className="text-red-600 text-sm mb-2">{errors.email}</p>
+            )}
+ 
+            {/* MESSAGE */}
+            <label className="block text-black font-medium mb-2">Message</label>
+            <textarea
+              rows="4"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Your Message"
+              className="w-full mb-5 px-6 py-3.5 bg-white rounded-2xl shadow-md outline-none resize-none"
+            ></textarea>
+            {errors.message && (
+              <p className="text-red-600 text-sm mb-2">{errors.message}</p>
+            )}
+ 
+            {/* BUTTON: mt-auto pins it to the bottom if the card is taller */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-auto w-full bg-black text-[#79C41A] py-4 rounded-2xl text-lg font-medium shadow-lg hover:opacity-90 transition cursor-pointer"
+            >
+              {loading ? "Sending..." : "Submit"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</>
+
   )
 }

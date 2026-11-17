@@ -1,13 +1,15 @@
 
 import React, { useState, useEffect } from "react";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Eye, EyeOff, ClipboardList, Clock } from "lucide-react";
 
-function DescAndAminities({ data }) {
+function DescAndAminities({ data, notes=[],visitedCount }) {
   const [detail, setDetail] = useState({});
 
   useEffect(() => {
     setDetail(data || {});
   }, [data]);
+
+  
 
   return (
     <div className="md:px-7 px-3 py-1 md:py-5 sm:mb-8">
@@ -109,7 +111,60 @@ You haven't added any key selling points              </p>
 
         </div>
       </div>
+
+ {/* VISIT NOTES */}
+{notes.length > 0 && (
+  <div className="mt-6 max-w-6xl mx-auto w-full">
+    <div className="flex items-center justify-between">
+      <p className="host-grotesk text-[20px] font-[700] text-[#181818]">
+        Visit Notes
+      </p>
+
+      <div className="flex items-center gap-1 text-sm font-semibold text-[#3F8004] bg-[#6ABD11]/10 px-3 py-1.5 rounded-lg host-grotesk">
+        <Eye size={14} />
+        {visitedCount} visits
+      </div>
     </div>
+
+    <div className="mt-3 space-y-3">
+      {notes.map((n) => (
+        <div
+          key={n.id}
+          className="bg-[#efefef] rounded-2xl px-5 py-4 host-grotesk"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <div
+              className={`flex items-center gap-1 text-sm font-semibold ${
+                n.is_visited ? "text-[#3F8004]" : "text-slate-500"
+              }`}
+            >
+              {n.is_visited ? <Eye size={16} /> : <EyeOff size={16} />}
+              {n.is_visited ? "Visited" : "Not visited"}
+            </div>
+
+            <span className="text-xs text-slate-500">
+              {new Date(n.created_at).toLocaleString("en-IN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })}
+            </span>
+          </div>
+
+          {n.notes && (
+            <p className="text-[#4C4545] text-[15px] mt-2 leading-relaxed">
+              {n.notes}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+</div>
   );
 }
 

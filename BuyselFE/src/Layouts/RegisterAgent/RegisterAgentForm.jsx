@@ -78,6 +78,16 @@ import { useNavigate } from "react-router-dom";
       newErrors.plan_id = "Select a plan";
     }
 
+const cities = (formData.operating_cities || "")
+  .split(",")
+  .map((c) => c.trim())
+  .filter(Boolean);
+
+if (cities.length === 0) {
+  newErrors.operating_cities = "Enter at least one operating city";
+}
+
+
 
 
     setErrors(newErrors);
@@ -114,6 +124,10 @@ const handleSubmit = async (e) => {
     address: formData.address,
     years_of_experience: formData.yearsofexperience || "",
     total_deals_served: formData.TotalDealsServed || "",
+  operating_cities: (formData.operating_cities || "")
+    .split(",")
+    .map((city) => city.trim().toLowerCase())
+    .filter(Boolean),
   };
 
   try {
@@ -205,178 +219,188 @@ if (
   };
 
   return (
-    <div className="flex-1 bg-white rounded-xl p-8 sm:p-12 lg:px-[150px] lg:py-10 mt-[-50px]">
+   <div className="flex-1 bg-white rounded-xl p-8 sm:p-12 lg:px-[150px] lg:py-10 mt-[-50px]">
 
-      <h2 className="text-[22px] sm:text-[26px] lg:text-[32px] font-[550] mb-6 lexend">
-        Agent Registration
-      </h2>
+  <h2 className="text-[22px] sm:text-[26px] lg:text-[32px] font-[550] mb-6 lexend">
+    Agent Registration
+  </h2>
 
-      {/* Inputs */}
-      <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-6 sm:mt-8">
-          <Input
-            label="Full Name"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            error={errors.username}
-            required
-          />
+  {/* Inputs */}
+  <form onSubmit={handleSubmit}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-6 sm:mt-8">
+      <Input
+        label="Full Name"
+        name="username"
+        value={formData.username}
+        onChange={handleChange}
+        error={errors.username}
+        required
+      />
 
-          <Input
-            label="Email ID"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            error={errors.email}
-            required
-          />
+      <Input
+        label="Email ID"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        error={errors.email}
+        required
+      />
 
-          <Input
-            label="Phone Number"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            error={errors.phone}
-            required
-          />
+      <Input
+        label="Phone Number"
+        name="phone"
+        value={formData.phone}
+        onChange={handleChange}
+        error={errors.phone}
+        required
+      />
 
-          <Input
-            label="Password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            error={errors.password}
-            required
-          />
+      <Input
+        label="Password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        error={errors.password}
+        required
+      />
 
-          <Input
-            label="City"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            error={errors.city}
-            required
-          />
+      <Input
+        label="City"
+        name="city"
+        value={formData.city}
+        onChange={handleChange}
+        error={errors.city}
+        required
+      />
 
-          <Input
-            label="Pincode"
-            name="pincode"
-            value={formData.pincode}
-            onChange={handleChange}
-            error={errors.pincode}
-            required
-          />
-        </div>
-
-        {/* Select Fields */}  <div className="mt-6 sm:mt-8">
-          <Textarea
-            label="Address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            error={errors.address}
-            required
-          />
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
-          <Input
-            label="Years of Experience"
-            name="yearsofexperience"
-            value={formData.yearsofexperience}
-            onChange={handleChange}
-            required
-          />
-
-          <Input
-            label="Total Deals Served"
-            name="TotalDealsServed"
-            value={formData.TotalDealsServed}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
-
-          <SelectField
-            label="Agent Type"
-            options={agentPlans.map((item) => ({
-              label: item.name,
-              value: item.id
-            }))}
-            registeration="true"
-            value={formData.agent_type}
-            onChange={handleAgentTypeChange}
-            error={errors.agent_type}
-            required
-
-          />
-          <SelectField
-            label="Plan"
-            options={selectedPlans.map((item) => ({
-              label: item.label,
-              value: item.plan_id
-            }))}
-            value={formData.plan_id}
-            registeration="true"
-            onChange={handlePlanChange}
-            error={errors.plan_id}
-            required
-
-          />
-        </div>
-        {
-          selectedPlan && (
-            <div className="mt-10">
-
-              <h3 className="text-[22px] sm:text-[26px] font-semibold mb-6 lexend">
-                Plan Features
-              </h3>
-
-              <PlanCardUser
-                title={selectedPlan.label}
-                agentType={
-                  agentPlans.find(
-                    (item) =>
-                      item.id === formData.agent_type
-                  )?.name
-                }
-                price={selectedPlan.price}
-                savings={selectedPlan.duration}
-                features={selectedPlan.features || []}
-                buttonText="Current Plan"
-              />
-
-            </div>
-          )
-        }
-
-        {/* Address */}
-
-
-        {/* Submit Button */}
-        <div className="mt-8 flex justify-end">
-          <button
-            type="submit"
-            className="
-            bg-[#84CC16]
-            hover:bg-lime-600
-            text-white
-            font-semibold
-            px-6 sm:px-8
-            py-2.5 sm:py-3
-            rounded-full
-            text-[13px] sm:text-[14px]
-            transition
-            shadow-md
-          "
-          >
-            Submit Registrations
-          </button>
-        </div>
-      </form>
+      <Input
+        label="Pincode"
+        name="pincode"
+        value={formData.pincode}
+        onChange={handleChange}
+        error={errors.pincode}
+        required
+      />
     </div>
+
+      <div className="mt-6 sm:mt-8">
+      <Input
+        label="Operating Cities"
+        name="operating_cities"
+        value={formData.operating_cities}
+        onChange={handleChange}
+        error={errors.operating_cities}
+        placeholder="e.g. chennai, coimbatore"
+        required
+      />
+    </div>
+
+    {/* Address */}
+    <div className="mt-6 sm:mt-8">
+      <Textarea
+        label="Address"
+        name="address"
+        value={formData.address}
+        onChange={handleChange}
+        error={errors.address}
+        required
+      />
+    </div>
+
+    {/* Experience */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
+      <Input
+        label="Years of Experience"
+        name="yearsofexperience"
+        value={formData.yearsofexperience}
+        onChange={handleChange}
+        error={errors.yearsofexperience}
+        required
+      />
+
+      <Input
+        label="Total Deals Served"
+        name="TotalDealsServed"
+        value={formData.TotalDealsServed}
+        onChange={handleChange}
+        error={errors.TotalDealsServed}
+        required
+      />
+    </div>
+
+    {/* Operating Cities */}
+  
+
+    {/* Agent Type & Plan */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
+      <SelectField
+        label="Agent Type"
+        options={agentPlans.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }))}
+        registeration="true"
+        value={formData.agent_type}
+        onChange={handleAgentTypeChange}
+        error={errors.agent_type}
+        required
+      />
+
+      <SelectField
+        label="Plan"
+        options={selectedPlans.map((item) => ({
+          label: item.label,
+          value: item.plan_id,
+        }))}
+        value={formData.plan_id}
+        registeration="true"
+        onChange={handlePlanChange}
+        error={errors.plan_id}
+        required
+      />
+    </div>
+
+    {selectedPlan && (
+      <div className="mt-10">
+        <h3 className="text-[22px] sm:text-[26px] font-semibold mb-6 lexend">
+          Plan Features
+        </h3>
+
+        <PlanCardUser
+          title={selectedPlan.label}
+          agentType={
+            agentPlans.find((item) => item.id === formData.agent_type)?.name
+          }
+          price={selectedPlan.price}
+          savings={selectedPlan.duration}
+          features={selectedPlan.features || []}
+          buttonText="Current Plan"
+        />
+      </div>
+    )}
+
+    {/* Submit Button */}
+    <div className="mt-8 flex justify-end">
+      <button
+        type="submit"
+        className="
+          bg-[#84CC16]
+          hover:bg-lime-600
+          text-white
+          font-semibold
+          px-6 sm:px-8
+          py-2.5 sm:py-3
+          rounded-full
+          text-[13px] sm:text-[14px]
+          transition
+          shadow-md
+        "
+      >
+        Submit Registrations
+      </button>
+    </div>
+  </form>
+</div>
   );
 };
 
@@ -402,6 +426,10 @@ const Input = ({ label, name, value, onChange, error, required = false }) => {
 }
     if (["title", "city", "village", "taluk", "district", "state"].includes(name)) {
       val = val.replace(/[^a-zA-Z\s]/g, "");
+    }
+
+      if (name === "operating_cities") {
+      val = val.replace(/[^a-zA-Z\s,]/g, "");
     }
 
     onChange({

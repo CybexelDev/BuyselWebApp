@@ -98,6 +98,8 @@ setSelectedPlan({
 
     fetchPlan();
   }, []);
+
+  
 useEffect(() => {
   const fetchReelNotifications = async () => {
     const data = await getAgentReelNotifications();
@@ -132,20 +134,20 @@ useEffect(() => {
     )
   : 0;
 
-  const handleAdvertisementRequest = async (planId) => {
-  const result = await advertisementRequest(planId);
+//   const handleAdvertisementRequest = async (planId) => {
+//   const result = await advertisementRequest(planId);
 
-if (result) {
-  toast.success("Request submitted successfully!", {
-    description:
-      "Your advertisement request has been sent to our admin team. They will contact you shortly.",
-    duration: 5000,
-  });
-}    
+// if (result) {
+//   toast.success("Request submitted successfully!", {
+//     description:
+//       "Your advertisement request has been sent to our admin team. They will contact you shortly.",
+//     duration: 5000,
+//   });
+// }    
     
-  else {
-  }
-};
+//   else {
+//   }
+// };
 
 
   const confirmAdvertisementRequest = async (planId) => {

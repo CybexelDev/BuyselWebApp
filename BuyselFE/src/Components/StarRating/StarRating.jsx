@@ -33,7 +33,11 @@ const StarRating = ({ rating }) => {
         );
       })}
 
-      <span className="text-sm text-gray-600 ml-1">{rating}</span>
+      {Number(rating) !== 0 && (
+  <span className="text-[14px] host-grotesk text-gray-600 ml-1">
+    {rating}
+  </span>
+)}
     </div>
   );
 };

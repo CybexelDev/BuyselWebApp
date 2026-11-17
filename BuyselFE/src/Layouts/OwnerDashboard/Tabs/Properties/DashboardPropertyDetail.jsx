@@ -3,11 +3,16 @@ import HeaderDashboardProperty from '../../../../Components/DashboardLPropertyDe
 import DescAndAminities from '../../../../Components/DashboardLPropertyDetail/Description&Aminities/DescAndAminities'
 import { useParams } from 'react-router-dom'
 import { getPropertyDetail } from '../../../../Api/userApi'
+import { getAgentPropertyNote } from '../../../../Api/agentsApi'
 
 function DashboardPropertyDetail() {
   const { id } = useParams()
   const [productDetail, setProductDetail] = useState(null)
   const [loading, setLoading] = useState(true)
+    const [notes, setNotes] = useState([]);
+    const [visitedCount, setVisitedCount] = useState(0);
+
+
 
   const transformProperty = (data) => {
     return {
@@ -53,13 +58,29 @@ function DashboardPropertyDetail() {
     fetchData()
   }, [id])
 
+
+
+useEffect(() => {
+  const loadNotes = async () => {
+    try {
+      const res = await getAgentPropertyNote(id);
+      setNotes(res.notes || []);
+      setVisitedCount(res.visited_count || 0);
+    } catch (err) {
+      setNotes([]);
+    }
+  };
+
+  loadNotes();
+}, [id]);
+
   if (loading) return <div>Loading...</div>
   if (!productDetail) return <div>No Property Found</div>
 
   return (
     <div>
       <HeaderDashboardProperty property={productDetail} />
-      <DescAndAminities data={productDetail} />
+<DescAndAminities data={productDetail} notes={notes} visitedCount={visitedCount} />
     </div>
   )
 }

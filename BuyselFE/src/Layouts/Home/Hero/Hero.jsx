@@ -1,18 +1,19 @@
 
 import React, { useEffect, useState } from "react";
-import './hero.css'
-import logo from '../../../assets/images/logo/logo.png'
-import line from '../../../assets/images/header/line.png'
+import './hero.css';
+import logo from '../../../assets/images/logo/logo.png';
+import line from '../../../assets/images/header/line.png';
 import { ArrowUpRight } from 'lucide-react';
 import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
-import img from "../../../assets/images/carousel/he.webp"
-import img2 from "../../../assets/images/carousel/he2.webp"
-import img3 from "../../../assets/images/carousel/he3.webp"
+import img from "../../../assets/images/carousel/he.webp";
+import img2 from "../../../assets/images/carousel/he2.webp";
+import img3 from "../../../assets/images/carousel/he3.webp";
 import Navbar from "../../../Components/Navbar/Navbar";
 import ButtonHead from "../../../Components/ButtonHead/ButtonHead";
 
 const Hero = () => {
    const images = [img, img2, img3];
+
 
 useEffect(() => {
   // Preload the first hero image with high priority
@@ -27,6 +28,28 @@ useEffect(() => {
   const thirdImage = new Image();
   thirdImage.src = img3;
 }, []);
+
+
+
+const [visitors, setVisitors] = useState(() => {
+    const saved = localStorage.getItem('visitors');
+    return saved ? Number(saved) : 1200000;
+  });
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    const change = Math.floor(Math.random() * 10) + 1; // always 1 to 10
+
+    setVisitors((prev) => prev + change);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, []);
+
+  // Save every time visitors changes
+  useEffect(() => {
+    localStorage.setItem('visitors', visitors);
+  }, [visitors]);
   
   // const images = [img, img2, img3];
   const [current, setCurrent] = useState(0);
@@ -81,37 +104,39 @@ useEffect(() => {
             }}
           >
             <div className="absolute inset-0" />
-            <div className="absolute bottom-15 right-6 z-20 flex gap-3">
-              <button
-                onClick={prevSlide}
-                className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
-              >
-                 <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
-              >
-                <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
-              </button>
-            </div>
+<div className="absolute bottom-15 right-6 z-20 hidden lg:flex gap-3">
+  <button
+    onClick={prevSlide}
+    className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
+  >
+    <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
+  </button>
+  <button
+    onClick={nextSlide}
+    className="bg-white/80 hover:bg-white text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl transition cursor-pointer"
+  >
+    <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
+  </button>
+</div>
           </div>
 
         </div>
       </div>
-      <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-70px] md:mb-5 left-8 bottom-[80px] z-10">
-        <div className=''>
-          <p className=' md:text-[24px] text-[18px] font-semibold instrument-sans'>10,00+</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Verified Listings</p>
-        </div>
-        <div className='count'>
-          <p className='md:text-[24px] text-[18px] font-semibold instrument-sans'>5,000+</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Happy Clients</p>
-        </div>
-        <div className='count'>
-          <p className=' font-semibold md:text-[24px] text-[18px] instrument-sans'>100%</p>
-          <p className='instrument-sans md:text-[16px] text-[13px]'>Trusted Partners</p>
-        </div>
+      <div className="flex md:gap-5 gap-2 md:pr-5 pr-2 absolute mb-[-80px] sm:mb-5 left-8 bottom-[80px] z-10">
+        <div className="">
+  <p className="text-[18px] sm:text-[20px] md:text-[23px] font-semibold instrument-sans">5,000+</p>
+  <p className="instrument-sans text-[12px] sm:text-[14px] md:text-[16px]">Verified Listings</p>
+</div>
+<div className="count">
+  <p className="text-[18px] sm:text-[20px] md:text-[23px] font-semibold instrument-sans">10,000+</p>
+  <p className="instrument-sans text-[12px] sm:text-[14px] md:text-[16px]">Happy Clients</p>
+</div>
+<div className="count">
+  <p className="font-semibold text-[18px] sm:text-[20px] md:text-[23px] instrument-sans">
+    {visitors.toLocaleString('en-IN')}+
+  </p>
+  <p className="instrument-sans text-[12px] sm:text-[14px] md:text-[16px]">Site Visitors</p>
+</div>
       </div>
 
     </div>

@@ -42,7 +42,7 @@ const isHouse =
 };
 
   return (
-    <div className="bg-white p-9 rounded-2xl w-full">
+    <div className="bg-white py-5 sm:p-8 rounded-2xl w-full">
       <h2 className="text-[24px] font-[600] leading-[145%] lexend mb-[22px]">
         Media Upload
       </h2>

@@ -45,6 +45,7 @@ import Orders from './Agent/Pages/Orders/Orders'
 import SecretsPropertiesPage from './Agent/Pages/SecretsProperties/SecretsProperties'
 import VipLogin from './Pages/VipLogin/VipLogin'
 import VipDashboardPage from './Pages/VipDashboardPage/VipDashboard'
+import InstallPrompt from './Components/InstallPrombt/InstallPrombt'
 
 function App() {
 
@@ -63,7 +64,9 @@ function App() {
     <>
       {/* App page */}
       <Router>
+        <InstallPrompt />
         <Routes>
+          
        <Route path="/" element={<Home />} />
 <Route path="*" element={<Home />} />
 <Route path="/propertyListing" element={<PropertListing />} />

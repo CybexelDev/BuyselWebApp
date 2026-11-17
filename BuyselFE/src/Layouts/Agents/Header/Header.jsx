@@ -837,7 +837,7 @@ function Header({ onchange, location, cityDataSend }) {
     >
       <Navbar/>
 
-      <div className="absolute top-4 sm:top-5 md:top-4 lg:top-[21px] xl:top-7 left-1/2 -translate-x-1/2 z-40 w-[69px] sm:w-[85px] md:w-[100px]">
+      <div className="absolute top-4 sm:top-5 md:top-4 lg:top-[21px] xl:top-7 left-1/2 -translate-x-1/2 z-30 w-[69px] sm:w-[85px] md:w-[100px]">
         <img src={logo} alt="logo" className="w-[100px] 2xl:w-[200px]" />
       </div>
 
@@ -873,7 +873,7 @@ function Header({ onchange, location, cityDataSend }) {
               <h2
                 className="
                   instrument-sans font-[600] leading-[140%] mb-2
-                  text-[24px] sm:text-[30px]
+                  text-[19px] sm:text-[30px]
                   min-[900px]:text-[24px] lg:text-[32px] 2xl:text-[38px]
                 "
               >
@@ -882,14 +882,14 @@ function Header({ onchange, location, cityDataSend }) {
               </h2>
 
               <p
-  className="max-w-[400px] max-lg:mx-auto max-sm:text-center
-    text-[#3e3131] host-grotesk font-[400] leading-[120%]
-    text-[14px] sm:text-[16px]
-    min-[900px]:text-[14px] lg:text-[15px] 2xl:text-[16px]"
->
-  Plot specialists, rental experts, and home sale
-  professionals—all in one place.
-</p>
+               className="max-w-[400px] max-lg:mx-auto max-sm:text-center
+             text-[#3e3131] host-grotesk font-[400] leading-[120%]
+               text-[13px] sm:text-[16px]
+               min-[900px]:text-[14px] lg:text-[15px] 2xl:text-[16px]"
+              >
+             Plot specialists, rental experts, and home sale
+             professionals—all in one place.
+           </p>
   
             </div>
 

@@ -235,7 +235,7 @@ const toggleAmenity = (amenity) => {
 
   return (
     <div className="flex gap-8">
-      <div className="flex-1 bg-white rounded-xl p-8">
+      <div className="flex-1 bg-white rounded-xl p-0 sm:p-8">
         <h2 className="text-[24px] lexend font-[550] mb-6">Property Details</h2>
 
         {/* CATEGORY SECTION */}
@@ -726,89 +726,102 @@ updated.push({
 
         {/* PRICE + OWNER */}
 
-        <div className="grid grid-cols-3 gap-6 mt-8">
-          <div className="col-span-3">
-            <label className="flex items-center gap-2 lexend text-[16px]  font-semibold mb-2">
-              <Layers size={16} className="text-lime-500" />
-              Amenities
-            </label>
+       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+  {/* Amenities */}
+  <div className="col-span-1 md:col-span-3">
+    <label className="flex items-center gap-2 lexend text-[16px] font-semibold mb-2">
+      <Layers size={16} className="text-lime-500" />
+      Amenities
+    </label>
 
-            {formData.amenities?.length > 0 ? (
-              <div
-                className="flex items-center justify-between
-          shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)]
-          bg-[#F3F3F3] px-4 py-3 rounded-lg"
-              >
-                <div className="flex flex-wrap gap-2 flex-1">
-                  {formData.amenities.map((amenity) => (
-  <span
-    key={amenity.id}
-    className="flex items-center gap-1 px-3 py-[3px] rounded-full bg-lime-100 text-lime-700 text-xs"
-  >
-    {amenity.name}
+    {formData.amenities?.length > 0 ? (
+      <div className="flex items-center justify-between shadow-[inset_0px_1px_4px_rgba(0,0,0,0.25)] bg-[#F3F3F3] px-4 py-3 rounded-lg">
+        <div className="flex flex-wrap gap-2 flex-1">
+          {formData.amenities.map((amenity) => (
+            <span
+              key={amenity.id}
+              className="flex items-center gap-1 px-3 py-[3px] rounded-full bg-lime-100 text-lime-700 text-xs"
+            >
+              {amenity.name}
 
-    <button
-      type="button"
-      onClick={() => toggleAmenity(amenity)}
-      className="ml-1 text-lime-700 hover:text-red-500"
-    >
-      ×
-    </button>
-  </span>
-))}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={openAmenitiesModal}
-                  className="text-blue-600 text-sm font-medium hover:underline"
-                >
-                  + Add more
-                </button>
-              </div>
-            ) : (
               <button
                 type="button"
-                onClick={openAmenitiesModal}
-                className="text-[#6ABD11ED] text-sm font-medium hover:underline"
+                onClick={() => toggleAmenity(amenity)}
+                className="ml-1 text-lime-700 hover:text-red-500"
               >
-                + Add Amenities
+                ×
               </button>
-            )}
-             {errors?.amenities && (
-    <p className="text-red-500 text-xs mt-1 ml-2">
-      {errors.amenities}
-    </p>
-  )}
-          </div>
-
-          <Input
-            label="Owner Name"
-            name="owner"
-            value={formData.owner}
-            onChange={handleChange}
-            error={errors?.owner}
-            required={true}
-          />
-
-          <Input
-            label="Phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            error={errors?.phone}
-            required={true}
-          />
-
-          <Input
-            label="WhatsApp"
-            name="whatsapp"
-            value={formData.whatsapp}
-            onChange={handleChange}
-            error={errors?.whatsapp}
-            required={true}
-          />
+            </span>
+          ))}
         </div>
+
+        <button
+          type="button"
+          onClick={openAmenitiesModal}
+          className="text-blue-600 text-sm font-medium hover:underline ml-2 shrink-0"
+        >
+          + Add more
+        </button>
+      </div>
+    ) : (
+      <button
+        type="button"
+        onClick={openAmenitiesModal}
+        className="text-[#6ABD11ED] text-sm font-medium hover:underline"
+      >
+        + Add Amenities
+      </button>
+    )}
+
+    {errors?.amenities && (
+      <p className="text-red-500 text-xs mt-1 ml-2">
+        {errors.amenities}
+      </p>
+    )}
+  </div>
+
+  {/* Owner Name - full width on mobile */}
+{/* Owner Name, Phone, WhatsApp */}
+<div className="col-span-1 md:col-span-3 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-6">
+
+  {/* Owner Name - full line below sm */}
+  <div className="col-span-2 sm:col-span-1">
+    <Input
+      label="Owner Name"
+      name="owner"
+      value={formData.owner}
+      onChange={handleChange}
+      error={errors?.owner}
+      required={true}
+    />
+  </div>
+
+  {/* Phone */}
+  <div className="col-span-1">
+    <Input
+      label="Phone"
+      name="phone"
+      value={formData.phone}
+      onChange={handleChange}
+      error={errors?.phone}
+      required={true}
+    />
+  </div>
+
+  {/* WhatsApp */}
+  <div className="col-span-1">
+    <Input
+      label="WhatsApp"
+      name="whatsapp"
+      value={formData.whatsapp}
+      onChange={handleChange}
+      error={errors?.whatsapp}
+      required={true}
+    />
+  </div>
+
+</div>
+</div>
         {isAmenitiesOpen && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl p-8 w-[500px]">

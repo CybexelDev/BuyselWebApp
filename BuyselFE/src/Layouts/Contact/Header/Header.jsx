@@ -15,7 +15,7 @@ const Header = () => {
          bg-no-repeat
          bg-[position:right_100%]   
          md:bg-right              
-         bg-[length:90%_250px]                           
+         bg-[length:90%_250px]
          sm:bg-[length:87%]
          lg:bg-[length:79%]"
         style={{

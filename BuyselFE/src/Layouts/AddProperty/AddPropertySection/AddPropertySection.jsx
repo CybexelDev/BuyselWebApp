@@ -379,6 +379,7 @@ const transformedFeatures = (formData.features || [])
     if (isBhk) {
      const bhkValue = String(f.option ?? f.value ?? "").match(/\d+/)?.[0];
 
+
 return {
   name: "BHK types",
   option: null,

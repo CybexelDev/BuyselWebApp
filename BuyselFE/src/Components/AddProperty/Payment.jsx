@@ -83,7 +83,7 @@ function Payment() {
 
       
   
-<div className="max-w-6xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6">
+<div className="max-w-6xl mx-auto py-4 sm:p-4 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6">
   
   {/* LEFT CARD (your existing one) */}
   <div className="border-3 border-[#82CD28] rounded-[20px] p-5 sm:p-6 bg-white shadow-sm">
