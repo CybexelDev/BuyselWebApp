@@ -728,3 +728,90 @@ export const AdvertisementRequest = async (formData) => {
     return false;
   }
 };
+export const createSecretUser = async (username, password) => {
+  try {
+    const res = await api.post("secret-users/manage/", {
+      username,
+      password,
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateSecretUser = async (id, username, password) => {
+  try {
+    const res = await api.put("secret-users/manage/", {
+      id,
+      username,
+      ...(password ? { password } : {}),
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteSecretUser = async (id) => {
+  try {
+    const res = await api.delete("secret-users/manage/", {
+      data: { id },
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getSecretUsers = async () => {
+  try {
+    const res = await api.get("secret-users/");
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const toggleSecretProperty = async (id, secret) => {
+  try {
+    const formData = new FormData();
+    formData.append("secret", secret ? "True" : "False");
+
+    const res = await api.post(
+      `/agent/property/toggle-secret/${id}/`,
+      formData
+    );
+
+    return res.data?.data || res.data || null;
+  } catch (error) {
+    console.error("Failed to toggle secret property:", error);
+    throw error;
+  }
+};
+export const getSecretProperties = async () => {
+  try {
+    const res = await api.get("/agent/secret-property/list/");
+    return res.data?.data || res.data || null;
+  } catch (error) {
+    console.error("Failed to fetch secret properties:", error);
+    throw error;
+  }
+};
+
+
+export const toggleSecretPropertiesAccess = async (enabled) => {
+  try {
+    const res = await api.post("/agent/toggle-secret-properties/", {
+      secret_properties: enabled,
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Failed to toggle secret properties:", error);
+    throw error;
+  }
+};

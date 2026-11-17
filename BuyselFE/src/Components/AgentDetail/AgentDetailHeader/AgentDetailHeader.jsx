@@ -6,8 +6,14 @@ import crown from "../../../assets/images/agentDetail/crown.png";
 import elite from "../../../assets/images/agentDetail/elite.png";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const AgentDetailHeader = ({ agentData, isPremiumOrElite }) => {
   const [showLinks, setShowLinks] = useState(false);
+  const navigate=useNavigate()
+
+const hasSecretProperties =
+  agentData?.secret_properties === true || agentData?.secret_properties === "true";
+
   const dropdownRef = useRef(null);
   const roleStyles = {
     basic: "bg-white",
@@ -351,11 +357,43 @@ const hasSocialLinks =
           <span className="font-medium">Website</span>
         </a>
       )}
+  
 
     </div>
   </div>
 )}
+
 </div>
+
+{hasSecretProperties && (
+  <button
+    type="button"
+    onClick={() => {
+      setShowLinks(false);
+      navigate("/vip-login");
+    }}
+    className="flex items-center gap-3 text-left cursor-pointer hover:opacity-80 transition-all"
+  >
+          <span className="w-8 h-8  rounded-full bg-[#6ABD11ED] text-white flex items-center justify-center">
+      <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1em"
+  height="1em"
+  viewBox="0 0 24 24"
+>
+  <path
+    fill="currentColor"
+    d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5m3 8H9V6a3 3 0 1 1 6 0zm-3 4a2 2 0 0 0 1 3.73V18a1 1 0 1 1-2 0v-1.27A2 2 0 0 0 12 13"
+  />
+</svg>
+    </span>
+
+    <span className="text-black font-medium host-grotesk">
+      Hidden Properties
+    </span>
+  </button>
+)}
+
           </div>
         </div>
       </div>

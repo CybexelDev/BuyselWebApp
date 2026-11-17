@@ -42,6 +42,9 @@ import AgentProtectedRoute from './Agent/Components/ProtectionRouteAgent/Protect
 import UserProtectedRoute from './Components/ProtectionRoute/ProtectionRoute'
 import CommonProtectedRoute from './Components/CommonProtectionRoute/CommonProtectedRoute'
 import Orders from './Agent/Pages/Orders/Orders'
+import SecretsPropertiesPage from './Agent/Pages/SecretsProperties/SecretsProperties'
+import VipLogin from './Pages/VipLogin/VipLogin'
+import VipDashboardPage from './Pages/VipDashboardPage/VipDashboard'
 
 function App() {
 
@@ -218,6 +221,17 @@ function App() {
                 <Orders />
               </AgentProtectedRoute>
             } />
+               <Route path='/agent/secret-properties' element={
+              <AgentProtectedRoute>
+                <SecretsPropertiesPage />
+              </AgentProtectedRoute>
+            } />
+              <Route path='/vip-login' element={
+                <VipLogin />
+            } />
+            <Route path='/secret-properties' element={<VipDashboardPage/>}/>
+             
+
           </>
         </Routes>
       </Router>
